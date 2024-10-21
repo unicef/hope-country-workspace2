@@ -20,6 +20,7 @@ from country_workspace.state import state
 
 from ...datasources.rdi import import_from_rdi_job
 from ...models import AsyncJob, Batch
+from ...contrib.aurora.forms import ImportAuroraForm
 from ...utils.flex_fields import get_checker_fields
 from ..models import CountryProgram
 from ..options import WorkspaceModelAdmin
@@ -246,3 +247,32 @@ class CountryProgramAdmin(WorkspaceModelAdmin):
             form = BulkUpdateImportForm()
         context["form"] = form
         return render(request, "workspace/actions/bulk_update_import.html", context)
+
+    @button(label=_("Import from Aurora"))
+    def import_aurora(self, request: HttpRequest, pk: str) -> "HttpResponse":
+        context = self.get_common_context(request, pk, title="Import from Aurora")
+        program: CountryProgram = context["original"]
+        context["selected_program"] = context["original"]
+        if request.method == "POST":
+            form = ImportAuroraForm(request.POST)
+            if form.is_valid():
+                j: AsyncJob = AsyncJob.objects.create(
+                    program=program,
+                    type=AsyncJob.JobType.AURORA_SYNC,
+                    batch=None,
+                    file=None,
+                    config={**form.cleaned_data, "imported_by_id": request.user.id},
+                )
+                j.queue()
+                self.message_user(
+                    request,
+                    _("The import task from Aurora has been successfully queued. Asynchronous task ID: {0}.").format(
+                        j.curr_async_result_id
+                    ),
+                    level="success",
+                )
+                return HttpResponseRedirect(self.get_changelist_url())
+        else:
+            form = ImportAuroraForm()
+        context["form"] = form
+        return render(request, "workspace/program/import_aurora.html", context)

@@ -8,6 +8,7 @@ import sentry_sdk
 from redis_lock import Lock
 
 from country_workspace.config.celery import app
+from country_workspace.contrib.aurora.sync import sync_aurora_job
 from country_workspace.models import AsyncJob
 
 logger = logging.getLogger(__name__)
