@@ -29,9 +29,10 @@ class WorkspaceModelAdmin(ExtraButtonsMixin, AdminFiltersMixin, SmartFilterMixin
     object_history_template = "workspace/object_history.html"
     delete_selected_confirmation_template = "workspace/delete_selected_confirmation.html"
     delete_confirmation_template = "workspace/delete_confirmation.html"
+    list_select_related = True
     preserve_filters = True
     default_url_filters = {}
-    actions_selection_counter = True
+    actions_selection_counter = False
     show_facets = ShowFacets.NEVER
     show_full_result_count = False
 

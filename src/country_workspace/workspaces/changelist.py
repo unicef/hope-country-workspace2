@@ -11,6 +11,8 @@ if TYPE_CHECKING:
 
 
 class WorkspaceChangeList(DjangoChangeList):
+    selected_program_filter: str = ""
+
     def get_ordering_field(self, field_name: str) -> str:
         try:
             return super().get_ordering_field(field_name)

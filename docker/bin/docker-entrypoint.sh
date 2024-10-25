@@ -33,6 +33,7 @@ case "$1" in
       set -- gosu user:app celery -A country_workspace.config.celery beat --loglevel=ERROR --scheduler django_celery_beat.schedulers:DatabaseScheduler
       ;;
     flower)
+      export DATABASE_URL="sqlite://:memory:"
       set -- tini -- "$@"
       set -- gosu user:app celery -A country_workspace.config.celery flower
       ;;

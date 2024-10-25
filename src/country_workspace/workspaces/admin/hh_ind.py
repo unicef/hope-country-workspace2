@@ -28,33 +28,34 @@ if TYPE_CHECKING:
 
 class SelectedProgramMixin(WorkspaceModelAdmin):
 
-    def get_selected_program(self, request: HttpRequest, obj: "Optional[Validable]" = None) -> "CountryProgram | None":
+    def get_selected_program(
+        self, request: HttpRequest, obj: "Optional[Validable]" = None
+    ) -> "tuple[str|None, CountryProgram | None]":
+        # TOOO: Optimze for repetitive calls in same request/response
         from country_workspace.workspaces.models import CountryProgram
 
+        self.selected_program_filter = None
         selected_program = None
         if obj:
             selected_program = obj.batch.program
-        if "program" in request.GET:
-            selected_program = CountryProgram.objects.get(pk=request.GET["program"])
-        elif "program__exact" in request.GET:
-            selected_program = CountryProgram.objects.get(pk=request.GET["program__exact"])
-        elif "batch__program__exact" in request.GET:
-            selected_program = CountryProgram.objects.get(pk=request.GET["batch__program__exact"])
         elif cl_flt := request.GET.get("_changelist_filters", ""):
-            if prg := parse_qs(cl_flt).get("batch__program__exact"):
-                selected_program = CountryProgram.objects.get(pk=prg[0])
-            elif prg := parse_qs(cl_flt).get("program__exact"):
-                selected_program = CountryProgram.objects.get(pk=prg[0])
-
-        if not request.user.has_perm("workspaces.view_countryhousehold", selected_program):
-            raise PermissionDenied
+            for lookup in ["batch__program__exact", "program__exact"]:
+                if prg := parse_qs(cl_flt).get(lookup):
+                    self.selected_program_filter = lookup
+                    selected_program = CountryProgram.objects.get(pk=prg[0])
+        else:
+            for lookup in ["program", "program__exact", "batch__program__exact"]:
+                if pk := request.GET.get(lookup):
+                    self.selected_program_filter = lookup
+                    selected_program = CountryProgram.objects.get(pk=pk)
+        if selected_program:
+            if not request.user.has_perm("workspaces.view_countryhousehold", selected_program):
+                raise PermissionDenied
         return selected_program
 
     def get_common_context(self, request: HttpRequest, pk: Optional[str] = None, **kwargs: Any) -> dict[str, Any]:
         ret = super().get_common_context(request, pk, **kwargs)
-        # ret["datachecker"] = self.get_checker(request, ret.get("original"))
         ret["selected_program"] = self.get_selected_program(request, ret.get("original"))
-        # ret["preserved_filters"] = request.GET.get("_changelist_filters", "")
         return ret
 
     def get_checker(self, request: HttpRequest, obj: "Optional[Beneficiary]" = None) -> "DataChecker":
@@ -108,8 +109,6 @@ class BeneficiaryBaseAdmin(AdminAutoCompleteSearchMixin, SelectedProgramMixin, W
     def get_common_context(self, request: HttpRequest, pk: Optional[str] = None, **kwargs: Any) -> dict[str, Any]:
         ret = super().get_common_context(request, pk, **kwargs)
         ret["datachecker"] = self.get_checker(request, ret.get("original"))
-        # ret["selected_program"] = self.get_selected_program(request, ret.get("original"))
-        # ret["preserved_filters"] = request.GET.get("_changelist_filters", "")
         return ret
 
     @button(label=_("Validate"), enabled=lambda btn: btn.context["original"].checker)
@@ -119,7 +118,6 @@ class BeneficiaryBaseAdmin(AdminAutoCompleteSearchMixin, SelectedProgramMixin, W
             self.message_user(request, _("Validation successful!"))
         else:
             self.message_user(request, _("Validation failed!"), messages.ERROR)
-        # return HttpResponseRedirect(obj.get_change_url())
 
     @button(label=_("Validate Programme"), visible=lambda b: "batch__program__exact" in b.context["request"].GET)
     def validate_program(self, request: HttpRequest) -> "HttpResponse":
@@ -160,7 +158,11 @@ class BeneficiaryBaseAdmin(AdminAutoCompleteSearchMixin, SelectedProgramMixin, W
             return type(
                 "FlexFieldsChangeList",
                 (FlexFieldsChangeList,),
-                {"checker": self.get_checker(request), "selected_program": program},
+                {
+                    "checker": self.get_checker(request),
+                    "selected_program_filter": self.selected_program_filter,
+                    "selected_program": program,
+                },
             )
         return FlexFieldsChangeList
 

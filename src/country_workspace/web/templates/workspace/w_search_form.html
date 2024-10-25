@@ -8,7 +8,7 @@
 {% if show_result_count %}
     <span class="small quiet">
         {% blocktranslate count counter=cl.result_count %}{{ counter }} result{% plural %}{{ counter }} results{% endblocktranslate %}
-        (<a href="?batch__program__exact={{ cl.selected_program.pk }}&{% if cl.is_popup %}{{ is_popup_var }}=1{% if cl.add_facets %}&{% endif %}{% endif %}
+        (<a href="?{{ cl.selected_program_filter }}={{ cl.selected_program.pk }}&{% if cl.is_popup %}{{ is_popup_var }}=1{% if cl.add_facets %}&{% endif %}{% endif %}
 {% if cl.add_facets %}
 {{ is_facets_var }}
 {% endif %}">
