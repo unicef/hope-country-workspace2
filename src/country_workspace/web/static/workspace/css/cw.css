@@ -135,6 +135,7 @@ body.tenant .theme-toggle svg.theme-icon-when-auto, body.tenant .theme-toggle sv
   margin-right: auto;
   margin-left: auto;
   padding: 10px;
+  text-align: center;
 }
 
 .colMX {

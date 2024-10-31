@@ -22,7 +22,7 @@
             <button type="submit">{% translate 'Logout' %}</button>
         </form> |
         {% include "workspace/color_theme_toggle.html" %} |
-        {% if request.user.is_superuser %}<a href="{% url "admin:index" %}">admin</a>{% endif %}
+        {% if request.user.is_staff %}<a href="{% url "admin:index" %}">admin</a>{% endif %}
 {#    {% else %}#}
 {#        {{ block.super }}#}
 {#    {% endif %}#}

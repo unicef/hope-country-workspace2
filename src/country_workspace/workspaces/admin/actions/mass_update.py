@@ -62,7 +62,9 @@ class MassUpdateWidget(widgets.MultiWidget):
 
     def __init__(self, field: FlexFormMixin, attrs: Optional[dict[str, Any]] = None) -> None:
         _widgets = (
-            widgets.Select(choices=[("", "-")] + operations.get_choices_for_target(field.flex_field.field.field_type)),
+            widgets.Select(
+                choices=[("", "-")] + operations.get_choices_for_target(field.flex_field.definition.field_type)
+            ),
             field.widget,
         )
         super().__init__(_widgets, attrs)

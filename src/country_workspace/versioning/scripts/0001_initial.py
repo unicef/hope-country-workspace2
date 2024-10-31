@@ -16,7 +16,7 @@ def removes_hope_core_fieldset() -> None:
 def create_default_fields_definitions() -> None:
     from hope_flex_fields.models import FieldDefinition
     from hope_flex_fields.registry import field_registry
-    from hope_flex_fields.utils import get_default_attrs, get_kwargs_from_field_class
+    from hope_flex_fields.utils import get_common_attrs, get_kwargs_from_field_class
 
     for fld in field_registry:
         name = fld.__name__
@@ -25,7 +25,7 @@ def create_default_fields_definitions() -> None:
         FieldDefinition.objects.get_or_create(
             name=name,
             field_type=fqn(fld),
-            defaults={"attrs": get_kwargs_from_field_class(fld, get_default_attrs())},
+            defaults={"attrs": get_kwargs_from_field_class(fld, get_common_attrs())},
         )
 
 

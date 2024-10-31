@@ -1,4 +1,4 @@
-from typing import Any
+from typing import Any, Optional
 
 from django import forms
 from django.contrib.admin import register
@@ -72,6 +72,11 @@ class CountryProgramAdmin(WorkspaceModelAdmin):
     readonly_fields = (
         "individual_columns",
         "household_columns",
+        "active",
+        "programme_code",
+        "status",
+        "sector",
+        "name",
     )
     # form = ProgramForm
     ordering = ("name",)
@@ -103,6 +108,9 @@ class CountryProgramAdmin(WorkspaceModelAdmin):
         return CountryProgram.objects.filter(country_office=state.tenant)
 
     def has_add_permission(self, request: HttpResponse) -> bool:
+        return False
+
+    def has_delete_permission(self, request: HttpResponse, obj: Optional[CountryProgram] = None) -> bool:
         return False
 
     @link(change_list=False)

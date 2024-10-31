@@ -87,7 +87,7 @@ def app(django_app_factory: "MixinWithInstanceVariables") -> "DjangoTestApp":
 
 @pytest.mark.parametrize("field, validator", list(TYPES.items()))
 def test_validator(field, validator):
-    flex_field = FlexFieldFactory(field__field_type=field, field__attrs={"choices": [("a", "A")]})
+    flex_field = FlexFieldFactory(definition__field_type=field, definition__attrs={"choices": [("a", "A")]})
     assert validator(flex_field)()
 
 
