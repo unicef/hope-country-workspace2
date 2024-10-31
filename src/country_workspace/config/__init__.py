@@ -160,6 +160,7 @@ CONFIG: "Dict[str, ConfigItem]" = {
     # "SECURE_SSL_REDIRECT": (bool, True, setting("secure-ssl-redirect"), False),
     "SENTRY_DSN": (str, "", "", False, "Sentry DSN"),
     "SENTRY_URL": (str, "", "", False, "Sentry server url"),
+    "SENTRY_ENVIRONMENT": (str, ""),
     # "SESSION_COOKIE_DOMAIN": (
     #     str,
     #     "",
