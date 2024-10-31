@@ -9,7 +9,7 @@ SENTRY_URL = env("SENTRY_URL")
 if SENTRY_DSN:  # pragma: no cover
     sentry_sdk.init(
         dsn=SENTRY_DSN,
-        environment=env("ENVIRONMENT"),
+        environment=env("SENTRY_ENVIRONMENT"),
         send_default_pii=True,
         enable_tracing=True,
         integrations=[DjangoIntegration(), CeleryIntegration()],
