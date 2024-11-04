@@ -1,16 +1,13 @@
 $admin-main: rgb(55, 176, 248);
 $tenant-main: rgb(30, 58, 138);
 $unicef-blue: #37B0F8FF;
+
 html[data-theme],
 :root {
   --header-bg: #37B0F8FF;
   --accent: white;
   --header-color: #e8e8e8;
-  --unicef-blue: $unicef-blue;
-  //--header-bg: var(--primary);
-  //--accent: white;
-  //--link-fg: rgb(55, 176, 248);
-  //--header-link-color: white;
+  --unicef-blue: #37B0F8FF;
 }
 
 html[data-tenant="yes"][data-theme],
@@ -21,10 +18,6 @@ html[data-tenant="yes"][data-theme],
   --link-fg: #37b0f8;
   --accent: #f5dd5d;
   --header-color: #ffc
-  //--secondary: #417690;
-  //--link-fg: white;
-  //--header-bg: #1E3A8AFF;
-  //--breadcrumbs-bg: var(--secondary);
 }
 html, body
 {
@@ -148,6 +141,13 @@ body.tenant {
   left: 50%;
   //padding: 10px;
 }
+a.button{
+    padding: 10px 15px;
+}
+.h10{
+  height: 3em;
+  line-height: 3em;
+}
 
 .object-tools {
   a.superuser-only {
@@ -159,11 +159,19 @@ body.tenant {
   margin: auto;
   padding: 10px;
 }
+.center-y {
+  vertical-align: middle;
+
+}
 .center-x {
   margin-right: auto;
   margin-left: auto;
   padding: 10px;
+<<<<<<< Updated upstream
   text-align: center;
+=======
+  text-align:center;
+>>>>>>> Stashed changes
 }
 .colMX{
     margin-right: 400px;
@@ -188,7 +196,7 @@ div.tenant{
   padding: 30px;
   position: relative;
   top:50px;
-  height: 200px;
+  height: 100px;
   select{
     width: 100%;
   }

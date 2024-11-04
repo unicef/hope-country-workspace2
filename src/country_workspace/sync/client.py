@@ -1,3 +1,6 @@
+import re
+from http.client import RemoteDisconnected
+from json import JSONDecodeError
 from typing import TYPE_CHECKING, Generator, Optional, Union
 from urllib.parse import urljoin
 
@@ -13,13 +16,17 @@ if TYPE_CHECKING:
     FlatJsonType = dict[str, Union[str, int, bool]]
 
 
+def sanitize_url(url: str) -> str:
+    return re.sub(r"([^:]/)(/)+", r"\1", url)
+
+
 class HopeClient:
 
     def __init__(self, token: Optional[str] = None):
-        self.token = token or settings.HOPE_API_TOKEN
+        self.token = token or config.HOPE_API_TOKEN
 
     def get_url(self, path: str) -> str:
-        url = urljoin(config.HOPE_API_URL, path)
+        url = sanitize_url("/".join([config.HOPE_API_URL, path]))
         if not url.endswith("/"):
             url = url + "/"
         return url
@@ -36,13 +43,23 @@ class HopeClient:
         while True:
             if not url:
                 break
-            ret = requests.get(url, headers={"Authorization": f"Token {self.token}"})  # nosec
-            if ret.status_code != 200:
-                raise RemoteError(f"Error {ret.status_code} fetching {url}")
-            data = ret.json()
-            for record in data["results"]:
-                yield record
-            if "next" in data:
-                url = data["next"]
-            else:
-                url = None
+            try:
+                ret = requests.get(url, headers={"Authorization": f"Token {self.token}"}, timeout=10)  # nosec
+                if ret.status_code != 200:
+                    raise RemoteError(f"Error {ret.status_code} fetching {url}")
+            except RemoteDisconnected:
+                raise RemoteError(f"Remote Error fetching {url}")
+
+            try:
+                data = ret.json()
+            except JSONDecodeError:
+                raise RemoteError(f"Wrong JSON response fetching {url}")
+            try:
+                for record in data["results"]:
+                    yield record
+                if "next" in data:
+                    url = data["next"]
+                else:
+                    url = None
+            except TypeError:
+                raise RemoteError(f"Malformed JSON fetching {url}")

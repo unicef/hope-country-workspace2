@@ -142,7 +142,14 @@ CONFIG: "Dict[str, ConfigItem]" = {
         "django.contrib.staticfiles.storage.StaticFilesStorage",
         setting("storages"),
     ),
-    "HOPE_API_TOKEN": (str, "", "", True, "Hope API token"),
+    "HOPE_API_URL": (
+        str,
+        "https://hope.unicef.org/api/rest/",
+        "https://hope.unicef.org/api/rest/",
+        False,
+        "Hope API token",
+    ),
+    "HOPE_API_TOKEN": (str, "", "", False, "Hope API token"),
     "MEDIA_ROOT": (str, "/var/media/", "/tmp/media", True, setting("media-root")),  # nosec
     "MEDIA_URL": (str, "/media/", "/media", False, setting("media-root")),  # nosec
     # "ROOT_TOKEN": (str, "", ""),
