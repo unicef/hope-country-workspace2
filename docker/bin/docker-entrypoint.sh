@@ -19,6 +19,8 @@ case "$1" in
 	          --module country_workspace.config.wsgi \
 	          --uid user \
 	          --gid app \
+            --buffer-size 8192 \
+            --http-buffer-size 8192 \
 	          $MAPPING
 	    ;;
     upgrade)
