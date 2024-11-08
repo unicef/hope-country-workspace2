@@ -8,11 +8,10 @@ import openpyxl
 import pytest
 import xlsxwriter
 from pytest_django.fixtures import SettingsWrapper
-from testutils.factories import DataCheckerFactory, FlexFieldFactory
+from testutils.factories import FlexFieldFactory
 from testutils.utils import select_office
 from webtest import Checkbox, Upload
 
-from country_workspace.constants import HOUSEHOLD_CHECKER_NAME, INDIVIDUAL_CHECKER_NAME
 from country_workspace.models import AsyncJob
 from country_workspace.state import state
 from country_workspace.workspaces.admin.actions.bulk_export import TYPES, bulk_update_export_impl
@@ -36,13 +35,13 @@ def office():
 
 
 @pytest.fixture()
-def program(office, force_migrated_records):
+def program(office, force_migrated_records, household_checker, individual_checker):
     from testutils.factories import CountryProgramFactory
 
     return CountryProgramFactory(
         country_office=office,
-        household_checker=DataCheckerFactory(name=HOUSEHOLD_CHECKER_NAME),
-        individual_checker=DataCheckerFactory(name=INDIVIDUAL_CHECKER_NAME),
+        household_checker=household_checker,
+        individual_checker=individual_checker,
         household_columns="__str__\nid\nxx",
         individual_columns="__str__\nid\nxx",
     )

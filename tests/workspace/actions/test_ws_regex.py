@@ -3,9 +3,7 @@ from typing import TYPE_CHECKING
 from django.urls import reverse
 
 import pytest
-from testutils.factories import DataCheckerFactory
 
-from country_workspace.constants import HOUSEHOLD_CHECKER_NAME
 from country_workspace.state import state
 from country_workspace.workspaces.admin.actions.regex import regex_update_impl
 
@@ -28,13 +26,12 @@ def office():
 
 
 @pytest.fixture()
-def program(office, force_migrated_records):
+def program(office, force_migrated_records, household_checker, individual_checker):
     from testutils.factories import CountryProgramFactory
 
-    hdc = DataCheckerFactory(name=HOUSEHOLD_CHECKER_NAME)
     return CountryProgramFactory(
         country_office=office,
-        household_checker=hdc,
+        household_checker=individual_checker,
         household_columns="__str__\nid\nxx",
         individual_columns="__str__\nid\nxx",
     )

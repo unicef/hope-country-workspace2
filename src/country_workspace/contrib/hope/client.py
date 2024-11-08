@@ -1,10 +1,7 @@
 import re
 from http.client import RemoteDisconnected
 from json import JSONDecodeError
-from typing import TYPE_CHECKING, Generator, Optional, Union
-from urllib.parse import urljoin
-
-from django.conf import settings
+from typing import TYPE_CHECKING, Any, Generator, Optional, Union
 
 import requests
 from constance import config
@@ -38,13 +35,15 @@ class HopeClient:
             raise RemoteError(f"Error {ret.status_code} fetching {url}")
         return ret.json()
 
-    def get(self, path: str) -> "Generator[FlatJsonType, None, None]":
+    def get(self, path: str, params: Optional[dict[str, Any]] = None) -> "Generator[FlatJsonType, None, None]":
         url: "str|None" = self.get_url(path)
         while True:
             if not url:
                 break
             try:
-                ret = requests.get(url, headers={"Authorization": f"Token {self.token}"}, timeout=10)  # nosec
+                ret = requests.get(
+                    url, params=params, headers={"Authorization": f"Token {self.token}"}, timeout=10
+                )  # nosec
                 if ret.status_code != 200:
                     raise RemoteError(f"Error {ret.status_code} fetching {url}")
             except RemoteDisconnected:

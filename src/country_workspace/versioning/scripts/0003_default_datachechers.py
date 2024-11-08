@@ -15,6 +15,7 @@ def backward() -> None:
 
 
 class Scripts:
+    requires = []
     operations = [
         (create_hope_checkers, removes_hope_checkers),
     ]

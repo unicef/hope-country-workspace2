@@ -47,6 +47,7 @@ INSTALLED_APPS = (
     "country_workspace.apps.Config",
     "country_workspace.workspaces.apps.Config",
     "country_workspace.versioning",
+    *env("EXTRA_APPS"),
 )
 
 MIDDLEWARE = (

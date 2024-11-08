@@ -2,7 +2,7 @@
 from flags.state import enable_flag
 from hope_flex_fields.models import DataChecker, Fieldset
 
-from country_workspace.constants import HOUSEHOLD_CHECKER_NAME, INDIVIDUAL_CHECKER_NAME
+from country_workspace.contrib.hope.constants import HOUSEHOLD_CHECKER_NAME, INDIVIDUAL_CHECKER_NAME
 
 
 def removes_hope_core_fieldset() -> None:
@@ -34,6 +34,8 @@ def enable_local_login() -> None:
 
 
 class Scripts:
+    requires = []
+
     operations = [
         enable_local_login,
         create_default_fields_definitions,

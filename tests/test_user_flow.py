@@ -8,7 +8,6 @@ from django_webtest.pytest_plugin import MixinWithInstanceVariables
 from pytest_django.fixtures import SettingsWrapper
 from responses import RequestsMock
 
-from country_workspace.constants import HOUSEHOLD_CHECKER_NAME, INDIVIDUAL_CHECKER_NAME
 from country_workspace.state import state
 
 if TYPE_CHECKING:
@@ -24,12 +23,12 @@ def office():
 
 
 @pytest.fixture()
-def program(office):
-    from testutils.factories import CountryProgramFactory, DataCheckerFactory
+def program(office, household_checker, individual_checker):
+    from testutils.factories import CountryProgramFactory
 
     return CountryProgramFactory(
-        household_checker=DataCheckerFactory(name=HOUSEHOLD_CHECKER_NAME),
-        individual_checker=DataCheckerFactory(name=INDIVIDUAL_CHECKER_NAME),
+        household_checker=household_checker,
+        individual_checker=individual_checker,
         household_columns="name\nid\nxx",
         individual_columns="name\nid\nxx",
     )
@@ -50,12 +49,7 @@ def data(program):
 
 
 @pytest.fixture()
-def app(
-    django_app_factory: "MixinWithInstanceVariables",
-    mocked_responses: "RequestsMock",
-    settings: SettingsWrapper,
-) -> "DjangoTestApp":
-    settings.FLAGS = {"OLD_STYLE_UI": [("boolean", True)]}
+def app(django_app_factory: "MixinWithInstanceVariables", mocked_responses: "RequestsMock") -> "DjangoTestApp":
     django_app = django_app_factory(csrf_checks=False)
     state.reset()
     yield django_app

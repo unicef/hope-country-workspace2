@@ -4,8 +4,6 @@ from django import forms
 
 from hope_flex_fields.attributes.abstract import AbstractAttributeHandler, AttributeHandlerConfig
 
-from country_workspace.sync.client import HopeClient
-
 if TYPE_CHECKING:
     from hope_flex_fields.types import Json
 
@@ -26,10 +24,12 @@ class CountryAttributeHandler(AbstractAttributeHandler):
         pass
 
     def get(self) -> "Json":
+        from country_workspace.contrib.hope.client import HopeClient
+
         client = HopeClient()
         results = client.get(self.config["remote_url"])
         data = []
+        self.owner.strategy_config = {}
         for row in results:
-            data.append(row)
-            print(111.1, 111111, row)
-        return data
+            data.append((row["id"], row["name"]))
+        return {"choices": data}

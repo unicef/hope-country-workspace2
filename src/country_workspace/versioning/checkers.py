@@ -2,7 +2,7 @@ from django import forms
 
 from hope_flex_fields.models import DataChecker, FieldDefinition, Fieldset
 
-from country_workspace.constants import HOUSEHOLD_CHECKER_NAME, INDIVIDUAL_CHECKER_NAME
+from country_workspace.contrib.hope.constants import HOUSEHOLD_CHECKER_NAME, INDIVIDUAL_CHECKER_NAME
 
 
 def create_hope_checkers() -> None:

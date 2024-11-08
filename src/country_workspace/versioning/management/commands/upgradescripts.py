@@ -21,6 +21,7 @@ def backward():
 
 
 class Scripts:
+    requires = []
     operations = [(forward, backward)]
 """
 

@@ -18,8 +18,7 @@ from hope_smart_import.readers import open_xls_multi
 
 from country_workspace.state import state
 
-from ...models import AsyncJob, Batch
-from ...sync.office import sync_programs
+from ...models import AsyncJob, Batch, Household
 from ..models import CountryProgram
 from ..options import WorkspaceModelAdmin
 from ..sites import workspace
@@ -121,6 +120,8 @@ class CountryProgramAdmin(WorkspaceModelAdmin):
 
     @button()
     def sync(self, request: HttpResponse) -> None:
+        from country_workspace.contrib.hope.sync.office import sync_programs
+
         sync_programs(state.tenant)
 
     def _configure_columns(
@@ -190,6 +191,8 @@ class CountryProgramAdmin(WorkspaceModelAdmin):
                     )
                     hh_id_col = form.cleaned_data["pk_column_name"]
                     total_hh = total_ind = 0
+                    m_field_label = form.cleaned_data["master_column_label"]
+                    h_field_label = form.cleaned_data["detail_column_label"]
                     for sheet_index, sheet_generator in open_xls_multi(form.cleaned_data["file"], sheets=[0, 1]):
                         for line, raw_record in enumerate(sheet_generator, 1):
                             record = {}
@@ -198,12 +201,15 @@ class CountryProgramAdmin(WorkspaceModelAdmin):
                             if record[hh_id_col]:
                                 try:
                                     if sheet_index == 0:
-                                        hh = program.households.create(batch=batch, flex_fields=record)
+                                        hh: "Household" = program.households.create(
+                                            batch=batch, name=raw_record[m_field_label], flex_fields=record
+                                        )
                                         hh_ids[record[hh_id_col]] = hh.pk
                                         total_hh += 1
                                     elif sheet_index == 1:
                                         program.individuals.create(
                                             batch=batch,
+                                            name=raw_record[h_field_label],
                                             household_id=hh_ids[record[hh_id_col]],
                                             flex_fields=record,
                                         )

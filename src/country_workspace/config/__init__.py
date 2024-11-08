@@ -126,6 +126,7 @@ CONFIG: "Dict[str, ConfigItem]" = {
     "EMAIL_USE_SSL": (bool, False, False, False, setting("email-use-ssl")),
     "EMAIL_TIMEOUT": (str, None, None, False, setting("email-timeout")),
     "ENVIRONMENT": (str, "production", "develop", False, "Environment"),
+    "EXTRA_APPS": (list, "", "", False, ""),  # nosec
     "LOGGING_LEVEL": (str, "CRITICAL", "DEBUG", False, setting("logging-level")),
     "FILE_STORAGE_DEFAULT": (
         str,

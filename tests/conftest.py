@@ -49,6 +49,7 @@ def pytest_configure(config):
     os.environ["SOCIAL_AUTH_REDIRECT_IS_HTTPS"] = "0"
     os.environ["CELERY_TASK_ALWAYS_EAGER"] = "1"
     os.environ["SECURE_HSTS_PRELOAD"] = "0"
+    os.environ["EXTRA_APPS"] = "country_workspace.contrib.hope"
     # os.environ["SECRET_KEY"] = "kugiugiuygiuygiuygiuhgiuhgiuhgiugiu"
 
     os.environ["LOGGING_LEVEL"] = "CRITICAL"
@@ -107,7 +108,6 @@ def reporters(db, afghanistan, user):
 
 @pytest.fixture(scope="function")
 def active_marks(request):
-
     # Collect all the marks for this node (test)
     current_node = request.node
     marks = []
@@ -135,3 +135,21 @@ def force_migrated_records(request, active_marks):
     Manager().force_apply()
     with vcr.VCR(record_mode=RecordMode.ONCE).use_cassette(Path(__file__).parent / "sync_lookups.yaml"):
         SyncLog.objects.refresh()
+
+
+@pytest.fixture()
+def household_checker(request, active_marks):
+    from testutils.factories import DataCheckerFactory
+
+    from country_workspace.contrib.hope.constants import HOUSEHOLD_CHECKER_NAME
+
+    return DataCheckerFactory(name=HOUSEHOLD_CHECKER_NAME)
+
+
+@pytest.fixture()
+def individual_checker(request, active_marks):
+    from testutils.factories import DataCheckerFactory
+
+    from country_workspace.contrib.hope.constants import INDIVIDUAL_CHECKER_NAME
+
+    return DataCheckerFactory(name=INDIVIDUAL_CHECKER_NAME)

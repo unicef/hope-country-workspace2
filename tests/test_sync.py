@@ -8,7 +8,7 @@ import pytest
 import vcr
 from vcr.record_mode import RecordMode
 
-from country_workspace.sync.office import sync_all, sync_offices, sync_programs
+from country_workspace.contrib.hope.sync.office import sync_all, sync_offices, sync_programs
 
 
 def scrub_string(response):

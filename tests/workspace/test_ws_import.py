@@ -5,10 +5,8 @@ from django.urls import reverse
 import pytest
 from django_webtest import DjangoTestApp
 from django_webtest.pytest_plugin import MixinWithInstanceVariables
-from hope_flex_fields.models import DataChecker
 from webtest import Upload
 
-from country_workspace.constants import HOUSEHOLD_CHECKER_NAME, INDIVIDUAL_CHECKER_NAME
 from country_workspace.state import state
 
 
@@ -22,13 +20,13 @@ def office():
 
 
 @pytest.fixture()
-def program(request, office, force_migrated_records):
+def program(office, force_migrated_records, household_checker, individual_checker):
     from testutils.factories import CountryProgramFactory
 
     return CountryProgramFactory(
         country_office=office,
-        household_checker=DataChecker.objects.get(name=HOUSEHOLD_CHECKER_NAME),
-        individual_checker=DataChecker.objects.get(name=INDIVIDUAL_CHECKER_NAME),
+        household_checker=household_checker,
+        individual_checker=individual_checker,
         household_columns="name\nid\nxx",
         individual_columns="name\nid\nxx",
     )

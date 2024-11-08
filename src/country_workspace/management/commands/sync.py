@@ -3,7 +3,7 @@ from typing import Any
 
 from django.core.management import BaseCommand
 
-from country_workspace.sync.office import sync_all
+from country_workspace.contrib.hope.sync.office import sync_all
 
 logger = logging.getLogger(__name__)
 

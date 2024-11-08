@@ -5,7 +5,7 @@ from hope_flex_fields.models import DataChecker
 from country_workspace.models import Office, Program, SyncLog
 
 from .. import constants
-from .client import HopeClient
+from ..client import HopeClient
 
 
 def sync_offices() -> int:
