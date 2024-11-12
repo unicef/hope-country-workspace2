@@ -1,0 +1,22 @@
+
+body.web {
+  header {
+    color: white;
+    select{
+      @apply text-sm p-1;
+
+    }
+    svg.sidebar-button {
+      fill: white;
+      width: 1em;
+      height: 1em;
+      display: inline-block;
+      font-size: 1.5rem;
+      flex-shrink: 0;
+      user-select: none;
+      color: white;
+      border-color: white;
+    }
+  }
+
+}

@@ -5,6 +5,7 @@ from django.contrib.admin.forms import AdminAuthenticationForm
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 
+from ..state import state
 from . import models
 from .config import conf
 
@@ -34,6 +35,23 @@ class SelectTenantForm(forms.Form):
         self.request = kwargs.pop("request")
         super().__init__(*args, **kwargs)
         self.fields["tenant"].queryset = conf.auth.get_allowed_tenants(self.request)
+
+
+class SelectProgramForm(forms.Form):
+    program = forms.ModelChoiceField(
+        label=_("Program"),
+        queryset=None,
+        required=True,
+        blank=False,
+        limit_choices_to={"active": True},
+    )
+    next = forms.CharField(required=False, widget=forms.HiddenInput)
+
+    def __init__(self, *args: "Any", **kwargs: "Any") -> None:
+        self.request = kwargs.pop("request")
+        super().__init__(*args, **kwargs)
+        if state.tenant:
+            self.fields["program"].queryset = state.tenant.programs.filter().order_by("name").all()
 
 
 class ProgramForm(forms.ModelForm):

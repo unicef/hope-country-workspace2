@@ -1,11 +1,13 @@
 from typing import TYPE_CHECKING
 
+from django.db.models import QuerySet
 from django.http import HttpRequest
 from django.urls import reverse
 
 from admin_extra_buttons.buttons import LinkButton
 from admin_extra_buttons.decorators import link
 
+from ...state import state
 from .hh_ind import BeneficiaryBaseAdmin
 
 if TYPE_CHECKING:
@@ -21,7 +23,7 @@ from ..sites import workspace
 class CountryHouseholdAdmin(BeneficiaryBaseAdmin):
     list_display = ["name", "batch"]
     search_fields = ("name",)
-    change_list_template = "workspace/household/change_list.html"
+    change_list_template = "workspace/change_list.html"
     change_form_template = "workspace/household/change_form.html"
     ordering = ("name",)
 
@@ -35,11 +37,16 @@ class CountryHouseholdAdmin(BeneficiaryBaseAdmin):
             "is_valid",
         ]
 
-    # def get_queryset(self, request: HttpRequest) -> "QuerySet[CountryHousehold]":
-    #     return super().get_queryset(request).filter(batch__country_office=state.tenant)
+    def get_queryset(self, request: HttpRequest) -> "QuerySet[CountryHousehold]":
+        return (
+            super()
+            .get_queryset(request)
+            .select_related("batch__program", "batch__program__household_checker", "batch__country_office")
+            .filter(batch__country_office=state.tenant, batch__program=state.program)
+        )
 
     @link(change_list=False)
     def members(self, btn: LinkButton) -> None:
         base = reverse("workspace:workspaces_countryindividual_changelist")
         obj = btn.context["original"]
-        btn.href = f"{base}?household__exact={obj.pk}&batch__program__exact={obj.program.pk}"
+        btn.href = f"{base}?household__exact={obj.pk}"

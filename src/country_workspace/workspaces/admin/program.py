@@ -101,7 +101,7 @@ class CountryProgramAdmin(WorkspaceModelAdmin):
         ),
         # (_("Important dates"), {"fields": ("last_login", "date_joined")}),
     )
-    change_form_template = "workspace/program/change_form.html"
+    # change_form_template = "workspace/program/change_form.html"
 
     def get_queryset(self, request: HttpResponse) -> QuerySet[CountryProgram]:
         return CountryProgram.objects.filter(country_office=state.tenant)
@@ -112,11 +112,13 @@ class CountryProgramAdmin(WorkspaceModelAdmin):
     def has_delete_permission(self, request: HttpResponse, obj: Optional[CountryProgram] = None) -> bool:
         return False
 
+    def changelist_view(self, request, extra_context=None):
+        url = reverse("workspace:workspaces_countryprogram_change", args=[state.program.pk])
+        return HttpResponseRedirect(url)
+
     @link(change_list=False)
     def population(self, btn: LinkButton) -> None:
-        base = reverse("workspace:workspaces_countryhousehold_changelist")
-        obj = btn.context["original"]
-        btn.href = f"{base}?batch__program__exact={obj.pk}"
+        btn.href = reverse("workspace:workspaces_countryhousehold_changelist")
 
     @button()
     def sync(self, request: HttpResponse) -> None:

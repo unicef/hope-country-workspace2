@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.conf.urls import include
 from django.contrib import admin
 from django.urls import path
@@ -14,8 +15,13 @@ urlpatterns = [
     path(r"adminactions/", include("adminactions.urls")),
     path(r"sentry_debug/", lambda _: 1 / 0),
     path(r"__debug__/", include(debug_toolbar.urls)),
-    path(r"", workspace.urls),
 ]
+
+if "django_browser_reload" in settings.INSTALLED_APPS:
+    urlpatterns += [path(r"__reload__/", include("django_browser_reload.urls"))]
+
+urlpatterns += [path(r"", workspace.urls)]
+
 
 admin.site.site_header = "Workspace Admin"
 admin.site.site_title = "Workspace Admin Portal"

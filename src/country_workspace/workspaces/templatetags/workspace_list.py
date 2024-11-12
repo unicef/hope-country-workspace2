@@ -2,9 +2,15 @@ import datetime
 from typing import TYPE_CHECKING
 
 from django.contrib.admin import ModelAdmin
-from django.contrib.admin.templatetags import admin_list
 from django.contrib.admin.templatetags.admin_list import ResultList as DjangoResultList
-from django.contrib.admin.templatetags.admin_list import _coerce_field_name, result_hidden_fields
+from django.contrib.admin.templatetags.admin_list import (
+    _coerce_field_name,
+    admin_actions,
+    admin_list_filter,
+    pagination,
+    result_hidden_fields,
+    search_form,
+)
 from django.contrib.admin.utils import display_for_field, display_for_value, label_for_field, lookup_field
 from django.contrib.admin.views.main import ORDER_VAR
 from django.core.exceptions import ObjectDoesNotExist
@@ -25,11 +31,49 @@ if TYPE_CHECKING:
 
     from ..changelist import WorkspaceChangeList
 
+__all__ = [
+    "admin_actions",
+    "search_form_tag",
+    "result_list_tag",
+    "change_list_object_tools_tag",
+    "admin_list_filter",
+    "search_form_tag",
+]
 register = Library()
 
 
 class ResultList(DjangoResultList):
     pass
+
+
+admin_list_filter = register.simple_tag(admin_list_filter)
+
+
+@register.tag(name="admin_actions")
+def admin_actions_tag(parser, token):
+    return WorkspaceInclusionAdminNode(parser, token, func=admin_actions, template_name="actions.html")
+
+
+@register.tag(name="search_form")
+def search_form_tag(parser, token):
+    return WorkspaceInclusionAdminNode(
+        parser,
+        token,
+        func=search_form,
+        template_name="w_search_form.html",
+        takes_context=False,
+    )
+
+
+@register.tag(name="pagination")
+def pagination_tag(parser, token):
+    return WorkspaceInclusionAdminNode(
+        parser,
+        token,
+        func=pagination,
+        template_name="pagination.html",
+        takes_context=False,
+    )
 
 
 def flex_field_label_for_field(column_name: str, model: "Model", model_admin: "ModelAdmin") -> tuple[str, str]:
@@ -40,17 +84,6 @@ def flex_field_lookup_field(field_name: str, result, model_admin: "ModelAdmin") 
     dict_key = field_name.replace("flex_fields__", "")
     f, attr, value = lookup_field(lambda o: o.flex_fields.get(dict_key), result, model_admin)
     return f, attr, value
-
-
-@register.tag(name="search_form")
-def search_form_tag(parser, token):
-    return WorkspaceInclusionAdminNode(
-        parser,
-        token,
-        func=admin_list.search_form,
-        template_name="w_search_form.html",
-        takes_context=False,
-    )
 
 
 def result_headers(cl: "WorkspaceChangeList") -> "Generator[dict[str, str]]":  # noqa

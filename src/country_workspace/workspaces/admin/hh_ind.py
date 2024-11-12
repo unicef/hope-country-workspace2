@@ -1,5 +1,4 @@
 from typing import TYPE_CHECKING, Any, Optional
-from urllib.parse import parse_qs
 
 from django.contrib import admin, messages
 from django.contrib.admin.utils import unquote
@@ -13,10 +12,11 @@ from django.utils.translation import gettext as _
 
 from admin_extra_buttons.buttons import LinkButton
 from admin_extra_buttons.decorators import button, link
-from adminfilters.autocomplete import LinkedAutoCompleteFilter
 from adminfilters.mixin import AdminAutoCompleteSearchMixin
 from hope_flex_fields.models import DataChecker
 
+from ...state import state
+from ..filters import CWLinkedAutoCompleteFilter
 from ..options import WorkspaceModelAdmin
 from . import actions
 
@@ -31,35 +31,36 @@ class SelectedProgramMixin(WorkspaceModelAdmin):
     def get_selected_program(
         self, request: HttpRequest, obj: "Optional[Validable]" = None
     ) -> "tuple[str|None, CountryProgram | None]":
-        # TOOO: Optimze for repetitive calls in same request/response
-        from country_workspace.workspaces.models import CountryProgram
+        return state.program
+        # # TOOO: Optimze for repetitive calls in same request/response
+        # from country_workspace.workspaces.models import CountryProgram
+        #
+        # self.selected_program_filter = None
+        # selected_program = None
+        # if obj:
+        #     selected_program = obj.batch.program
+        # elif cl_flt := request.GET.get("_changelist_filters", ""):
+        #     for lookup in ["batch__program__exact", "program__exact"]:
+        #         if prg := parse_qs(cl_flt).get(lookup):
+        #             self.selected_program_filter = lookup
+        #             selected_program = CountryProgram.objects.get(pk=prg[0])
+        # else:
+        #     for lookup in ["program", "program__exact", "batch__program__exact"]:
+        #         if pk := request.GET.get(lookup):
+        #             self.selected_program_filter = lookup
+        #             selected_program = CountryProgram.objects.get(pk=pk)
+        # if selected_program:
+        #     if not request.user.has_perm("workspaces.view_countryhousehold", selected_program):
+        #         raise PermissionDenied
+        # return selected_program
 
-        self.selected_program_filter = None
-        selected_program = None
-        if obj:
-            selected_program = obj.batch.program
-        elif cl_flt := request.GET.get("_changelist_filters", ""):
-            for lookup in ["batch__program__exact", "program__exact"]:
-                if prg := parse_qs(cl_flt).get(lookup):
-                    self.selected_program_filter = lookup
-                    selected_program = CountryProgram.objects.get(pk=prg[0])
-        else:
-            for lookup in ["program", "program__exact", "batch__program__exact"]:
-                if pk := request.GET.get(lookup):
-                    self.selected_program_filter = lookup
-                    selected_program = CountryProgram.objects.get(pk=pk)
-        if selected_program:
-            if not request.user.has_perm("workspaces.view_countryhousehold", selected_program):
-                raise PermissionDenied
-        return selected_program
-
-    def get_common_context(self, request: HttpRequest, pk: Optional[str] = None, **kwargs: Any) -> dict[str, Any]:
-        ret = super().get_common_context(request, pk, **kwargs)
-        ret["selected_program"] = self.get_selected_program(request, ret.get("original"))
-        return ret
+    # def get_common_context(self, request: HttpRequest, pk: Optional[str] = None, **kwargs: Any) -> dict[str, Any]:
+    #     ret = super().get_common_context(request, pk, **kwargs)
+    #     # ret["selected_program"] = self.get_selected_program(request, ret.get("original"))
+    #     return ret
 
     def get_checker(self, request: HttpRequest, obj: "Optional[Beneficiary]" = None) -> "DataChecker":
-        if p := self.get_selected_program(request, obj=obj):
+        if p := state.program:
             checker = p.get_checker_for(self.model)
         else:
             checker = None
@@ -79,8 +80,8 @@ class SelectedProgramMixin(WorkspaceModelAdmin):
 
 class BeneficiaryBaseAdmin(AdminAutoCompleteSearchMixin, SelectedProgramMixin, WorkspaceModelAdmin):
     list_filter = (
-        ("batch__program", LinkedAutoCompleteFilter.factory(parent=None)),
-        ("batch", LinkedAutoCompleteFilter.factory(parent="batch__program")),
+        # ("batch__program", LinkedAutoCompleteFilter.factory(parent=None)),
+        ("batch", CWLinkedAutoCompleteFilter.factory(parent=None)),
     )
     actions = ["validate_queryset", actions.mass_update, actions.regex_update, actions.bulk_update_export]
 
@@ -160,7 +161,7 @@ class BeneficiaryBaseAdmin(AdminAutoCompleteSearchMixin, SelectedProgramMixin, W
                 (FlexFieldsChangeList,),
                 {
                     "checker": self.get_checker(request),
-                    "selected_program_filter": self.selected_program_filter,
+                    # "selected_program_filter": self.selected_program_filter,
                     "selected_program": program,
                 },
             )

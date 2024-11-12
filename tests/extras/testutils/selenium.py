@@ -31,7 +31,7 @@ def force_login(driver, user, tenant=None):
         signer = get_cookie_signer()
         driver.add_cookie(
             {
-                "name": conf.COOKIE_NAME,
+                "name": conf.TENANT_COOKIE_NAME,
                 "value": signer.sign(tenant.slug),
                 "secure": False,
                 "path": "/",

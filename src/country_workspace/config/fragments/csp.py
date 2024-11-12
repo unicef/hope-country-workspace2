@@ -9,7 +9,14 @@ CSP_STYLE_SRC = [
     "fonts.googleapis.com",
     "fonts.gstatic.com",
 ]
-CSP_SCRIPT_SRC = ["'self'", "'unsafe-inline'", "same-origin", "blob:", "cdnjs.cloudflare.com"]
+CSP_SCRIPT_SRC = [
+    "'self'",
+    "'unsafe-inline'",
+    "'unsafe-hashes'",
+    "same-origin",
+    "blob:",
+    "cdnjs.cloudflare.com",
+]
 CSP_IMG_SRC = [
     "'self'",
     "'unsafe-inline'",

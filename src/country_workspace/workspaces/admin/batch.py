@@ -32,18 +32,23 @@ class ProgramBatchFilter(CWLinkedAutoCompleteFilter):
 class CountryBatchAdmin(SelectedProgramMixin, WorkspaceModelAdmin):
     list_display = ["name", "program", "country_office"]
     search_fields = ("label",)
-    list_filter = (("program", ProgramBatchFilter),)
-    change_list_template = "workspace/batch/change_list.html"
+    change_list_template = "workspace/change_list.html"
     change_form_template = "workspace/change_form.html"
     ordering = ("name",)
     exclude = ("program", "country_office", "imported_by")
 
+    def get_search_results(self, request, queryset, search_term):
+
+        queryset = self.model.objects.filter(program=state.program)
+        return queryset, False
+
     def get_queryset(self, request: HttpRequest) -> "QuerySet[CountryBatch]":
-        qs = CountryBatch.objects.filter(country_office=state.tenant)
-        if prg := self.get_selected_program(request):
-            return qs.filter(program=prg)
-        else:
-            return qs.none()
+        return (
+            super()
+            .get_queryset(request)
+            .select_related("program", "country_office")
+            .filter(country_office=state.tenant, program=state.program)
+        )
 
     def has_add_permission(self, request: HttpRequest, obj: Optional[CountryBatch] = None) -> bool:
         return False

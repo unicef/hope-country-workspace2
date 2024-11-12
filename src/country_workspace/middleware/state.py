@@ -24,6 +24,7 @@ class StateSetMiddleware:
         with configure_scope() as scope:
             scope.set_tag("state:cookie", state.tenant_cookie)
             scope.set_tag("state:tenant", state.tenant)
+            scope.set_tag("state:program", state.program)
             scope.set_tag("state:state", state)
         response = self.get_response(request)
         return response

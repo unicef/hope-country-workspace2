@@ -16,6 +16,7 @@ DATABASES = {
 
 INSTALLED_APPS = (
     "country_workspace.web",
+    "country_workspace.workspaces.theme",
     "django.contrib.contenttypes",
     "django.contrib.auth",
     "django.contrib.humanize",
@@ -26,10 +27,12 @@ INSTALLED_APPS = (
     "django.contrib.staticfiles",
     "django.contrib.postgres",
     "django.contrib.admin",
+    # ddt
+    "debug_toolbar",
     # "country_workspace.admin_site.apps.AdminConfig",
     "flags",
+    "tailwind",
     "social_django",
-    "debug_toolbar",
     "admin_extra_buttons",
     "adminactions",
     "adminfilters",
@@ -61,16 +64,16 @@ MIDDLEWARE = (
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    # "unicef_security.middleware.UNICEFSocialAuthExceptionMiddleware",
     "country_workspace.middleware.state.StateClearMiddleware",
     "country_workspace.middleware.exception.ExceptionMiddleware",
+    *env("EXTRA_MIDDLEWARES"),
 )
 
 AUTHENTICATION_BACKENDS = (
     "social_core.backends.azuread_tenant.AzureADTenantOAuth2",
     "django.contrib.auth.backends.ModelBackend",
     "country_workspace.workspaces.backend.TenantBackend",
-    *env("AUTHENTICATION_BACKENDS"),
+    *env("EXTRA_AUTHENTICATION_BACKENDS"),
 )
 
 # path
@@ -225,3 +228,4 @@ from .fragments.sentry import *  # noqa
 # from .fragments.smart_admin import *  # noqa
 from .fragments.social_auth import *  # noqa
 from .fragments.spectacular import *  # noqa
+from .fragments.tailwind import *  # noqa
