@@ -1,0 +1,101 @@
+form {
+  input[type=text], input[type=number], input[type=password], input [ type = date ], select {
+    @apply text-xs py-1 font-normal rounded;
+  }
+
+  .helptext {
+    @apply text-xs italic;
+  }
+}
+
+
+a.button,   input[type=submit], button.button, a.closelink, a.deletelink  {
+
+  margin: 0;
+  color: white;
+  cursor: pointer;
+  font-size: 0.875rem;
+  vertical-align: middle;
+  justify-content: center;
+  min-width: 64px;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 1px -2px, rgba(0, 0, 0, 0.14) 0px 2px 2px 0px, rgba(0, 0, 0, 0.12) 0px 1px 5px 0px;
+  outline: 0;
+  border-width: 0;
+  border-style: initial;
+  border-color: initial;
+  border-image: initial;
+  text-decoration: none;
+  padding: 6px 16px;
+  border-radius: 4px;
+  transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1), box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1), border-color 250ms cubic-bezier(0.4, 0, 0.2, 1), color 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  background-color: rgb(0, 60, 143);
+}
+
+.submit-row {
+  @apply mt-5;
+  a.closelink {
+    @extend a.button;
+    background-color: rgba(99, 92, 15, 0.53);
+  }
+
+
+  a.deletelink {
+    background-color: rgb(207, 34, 34);
+    float: right;
+  }
+}
+
+fieldset.module {
+  border: none;
+  margin: 0;
+  margin-bottom: 30px;
+  background: var(--body-bg);
+  min-width: 0;
+  padding: 0;
+
+  .fieldBox {
+    margin-right: 20px;
+  }
+
+  .form-row {
+    overflow: hidden;
+    padding: 10px;
+    font-size: 0.8125rem;
+    border-bottom: 1px solid var(--hairline-color);
+    margin-bottom: 0;
+
+    input, select {
+      @apply text-sm py-1;
+    }
+
+    .flex-container {
+      display: flex;
+
+      .related-widget-wrapper {
+        display: flex;
+        gap: 0 10px;
+        flex-grow: 1;
+        flex-wrap: wrap;
+        margin-bottom: 5px;
+      }
+    }
+
+    label {
+      display: block;
+      padding: 4px 10px 0 0;
+      min-width: 160px;
+      width: 160px;
+      word-wrap: break-word;
+      color: var(--body-quiet-color);
+      font-size: 0.8125rem;
+    }
+  }
+}
+.beneficiary-form{
+  input[type=text], select{
+    @apply min-w-full;
+  }
+  .validation-error{
+    @apply italic;
+  }
+}

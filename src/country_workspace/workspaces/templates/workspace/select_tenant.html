@@ -1,0 +1,20 @@
+{% extends "workspace/layout.html" %}
+{% block sidebar %}
+{% endblock %}
+
+{% block content %}
+    <div class="flex items-center justify-center text-center">
+        <div class="w-1/4 mt-40">
+            {% if has_access %}
+                <form id="select-tenant" method="post" action="{% url 'workspace:select_tenant' %}">
+                    {% csrf_token %}{{ tenant_form }}
+                <div class="submit-row">
+                    <input type="submit" value="Enter">
+                </div>
+                </form>
+            {% else %}
+                <div>Seems you have not been granted to any Office.</div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

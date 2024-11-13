@@ -11,13 +11,15 @@ if TYPE_CHECKING:
 
 
 class AppSettings:
-    COOKIE_NAME: str
+    TENANT_COOKIE_NAME: str
+    PROGRAM_COOKIE_NAME: str
     TENANT_MODEL: str
     # STRATEGY: "BaseTenantStrategy"
     AUTH: "TenantBackend"
     defaults = {
         "NAMESPACE": "tenant_admin",
-        "COOKIE_NAME": "selected_tenant",
+        "PROGRAM_COOKIE_NAME": "selected_program",
+        "TENANT_COOKIE_NAME": "selected_tenant",
         "STRATEGY": "country_workspace.workspaces.strategy.DefaultStrategy",
         "AUTH": "country_workspace.workspaces.backend.TenantBackend",
     }

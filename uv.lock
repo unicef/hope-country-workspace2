@@ -492,6 +492,33 @@ wheels = [
 ]
 
 [[package]]
+name = "django-browser-reload"
+version = "1.17.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "asgiref" },
+    { name = "django" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/9f/bc/3c67f7daca53b826ec51888576fe5e117d9442d2d0acb58f4264d48b9dba/django_browser_reload-1.17.0.tar.gz", hash = "sha256:3667939cde0eee1a6d698dbe3b78cf10b573dabc4e711fb7933f1ba91fb98da4", size = 14312 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/7f/8f/62fc4fbf5c05c2210e6cb616f1c2a3da53871dfecbaa4c44b1f482ca3e8f/django_browser_reload-1.17.0-py3-none-any.whl", hash = "sha256:d372c12c1c5962c02279a53cac7e8a020c48f104592c637a06d0768b28d2d6be", size = 12228 },
+]
+
+[[package]]
+name = "django-cacheops"
+version = "7.1"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "django" },
+    { name = "funcy" },
+    { name = "redis" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/77/b6/b75807d706f7f1fca659627c2da21b70941c1f832a974fa922c05ff5e659/django_cacheops-7.1.tar.gz", hash = "sha256:ec079abb968557321ee208c6274820231820f98ca6377dda971f04981bc2ab52", size = 72352 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/1f/e8/4de8b0fecffdc1b30fc23d5d157c217f094c53614247bb1f68db03f35ef8/django_cacheops-7.1-py2.py3-none-any.whl", hash = "sha256:7d5e0f42e41ab4a8052130d33d9f3b26c47bef944ef2df0a64db92d70e51d87e", size = 44881 },
+]
+
+[[package]]
 name = "django-celery-beat"
 version = "2.7.0"
 source = { registry = "https://pypi.org/simple" }
@@ -770,6 +797,18 @@ wheels = [
 ]
 
 [[package]]
+name = "django-tailwind"
+version = "3.8.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "django" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/3c/ee/1065c57c87213f566d76b398f8391cd544380ef9661f7fdacdfe4264633c/django_tailwind-3.8.0.tar.gz", hash = "sha256:31c2f4a7879d685c2de0feaf0b63f246200b37337bea4d7dbafb59bc3f10c008", size = 8969 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/cf/14/20c40882d9ee91f7a2a20d3c0175cf813340c02ae31c975ce567de2c7c67/django_tailwind-3.8.0-py3-none-any.whl", hash = "sha256:fa969c5b95d314b173fe2b2ed2cb2c03f2e2c94fdc2c01ff73a993fa159085da", size = 12936 },
+]
+
+[[package]]
 name = "django-timezone-field"
 version = "7.0"
 source = { registry = "https://pypi.org/simple" }
@@ -928,6 +967,15 @@ wheels = [
 ]
 
 [[package]]
+name = "funcy"
+version = "2.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/70/b8/c6081521ff70afdff55cd9512b2220bbf4fa88804dae51d1b57b4b58ef32/funcy-2.0.tar.gz", hash = "sha256:3963315d59d41c6f30c04bc910e10ab50a3ac4a225868bfa96feed133df075cb", size = 537931 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/d5/08/c2409cb01d5368dcfedcbaffa7d044cc8957d57a9d0855244a5eb4709d30/funcy-2.0-py2.py3-none-any.whl", hash = "sha256:53df23c8bb1651b12f095df764bfb057935d49537a56de211b098f4c79614bb0", size = 30891 },
+]
+
+[[package]]
 name = "ghp-import"
 version = "2.1.0"
 source = { registry = "https://pypi.org/simple" }
@@ -971,6 +1019,7 @@ dependencies = [
     { name = "django-admin-extra-buttons" },
     { name = "django-adminactions" },
     { name = "django-adminfilters" },
+    { name = "django-cacheops" },
     { name = "django-celery-beat" },
     { name = "django-celery-boost" },
     { name = "django-celery-results" },
@@ -987,6 +1036,7 @@ dependencies = [
     { name = "django-smart-env" },
     { name = "django-storages", extra = ["azure"] },
     { name = "django-stubs-ext" },
+    { name = "django-tailwind" },
     { name = "djangorestframework" },
     { name = "flower" },
     { name = "hope-flex-fields" },
@@ -1017,6 +1067,7 @@ docs = [
 dev = [
     { name = "black" },
     { name = "bump2version" },
+    { name = "django-browser-reload" },
     { name = "django-webtest" },
     { name = "factory-boy" },
     { name = "flake8" },
@@ -1024,6 +1075,7 @@ dev = [
     { name = "isort" },
     { name = "mypy" },
     { name = "pdbpp" },
+    { name = "pip" },
     { name = "pre-commit" },
     { name = "pyquery" },
     { name = "pytest" },
@@ -1049,6 +1101,7 @@ requires-dist = [
     { name = "django-admin-extra-buttons", specifier = ">=1.6.0" },
     { name = "django-adminactions", specifier = ">=2.3.0" },
     { name = "django-adminfilters", specifier = ">=2.5.0" },
+    { name = "django-cacheops", specifier = ">=7.1" },
     { name = "django-celery-beat", specifier = ">=2.6.0" },
     { name = "django-celery-boost", specifier = ">=0.2.0" },
     { name = "django-celery-results", specifier = ">=2.5.1" },
@@ -1065,9 +1118,10 @@ requires-dist = [
     { name = "django-smart-env", specifier = ">=0.1.0" },
     { name = "django-storages", extras = ["azure"], specifier = ">=1.14.4" },
     { name = "django-stubs-ext" },
+    { name = "django-tailwind", specifier = ">=3.8.0" },
     { name = "djangorestframework", specifier = ">=3.15.1" },
     { name = "flower", specifier = ">=2.0.1" },
-    { name = "hope-flex-fields", specifier = ">=0.5.0" },
+    { name = "hope-flex-fields", specifier = ">=0.6.1" },
     { name = "hope-smart-export", specifier = ">=0.3.0" },
     { name = "hope-smart-import", specifier = ">=0.3.0" },
     { name = "mkdocs", marker = "extra == 'docs'", specifier = ">=1.6.1" },
@@ -1089,6 +1143,7 @@ requires-dist = [
 dev = [
     { name = "black", specifier = ">=24.4.2" },
     { name = "bump2version", specifier = ">=1.0.1" },
+    { name = "django-browser-reload", specifier = ">=1.17.0" },
     { name = "django-webtest", specifier = ">=1.9.11" },
     { name = "factory-boy", specifier = ">=3.3.0" },
     { name = "flake8", specifier = ">=7.1.0" },
@@ -1096,6 +1151,7 @@ dev = [
     { name = "isort", specifier = ">=5.13.2" },
     { name = "mypy", specifier = ">=1.11.2" },
     { name = "pdbpp", specifier = ">=0.10.3" },
+    { name = "pip", specifier = ">=24.3.1" },
     { name = "pre-commit", specifier = ">=3.7.1" },
     { name = "pyquery", specifier = ">=2.0.1" },
     { name = "pytest", specifier = ">=8.2.2" },
@@ -1114,7 +1170,7 @@ dev = [
 
 [[package]]
 name = "hope-flex-fields"
-version = "0.5.0"
+version = "0.6.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "deepdiff" },
@@ -1133,9 +1189,9 @@ dependencies = [
     { name = "responses" },
     { name = "xlsxwriter" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/d2/76/5e7b4b73b2ec23621f6334da4e780c0bf6eef92fddbed54985790f7bc66f/hope_flex_fields-0.5.0.tar.gz", hash = "sha256:0b907935ef5d4766a49e4b478f475ddfd9b9cb8ead432373275e266cb6447c06", size = 551132 }
+sdist = { url = "https://files.pythonhosted.org/packages/af/53/6701734cdb4194f2fa1be8889eb42dd95ad1103fcea9a2effc3d08260c1a/hope_flex_fields-0.6.1.tar.gz", hash = "sha256:31693276f0d02c712275219d8eec65e36676895eb2482c5cb140ed972f0a1d42", size = 556748 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/ad/6d/2fe5f2e6b68e57f9859d7f16b6c52c0d387edfd637007a648d2f2e8dc7a4/hope_flex_fields-0.5.0-py3-none-any.whl", hash = "sha256:59e28873e74861da34757adda59df160fe56cfd68c1c0b4781ec9c2ce24fae8b", size = 263952 },
+    { url = "https://files.pythonhosted.org/packages/ac/6d/abb11f1eafe2318d3324b049dc0bf58ad6f0bef453f4df2b4430cf216d3e/hope_flex_fields-0.6.1-py3-none-any.whl", hash = "sha256:b1cc55ff323e250476ee17baeb5695a4fb8a8a2dc416775aa66972db49a970fa", size = 276485 },
 ]
 
 [[package]]
@@ -1708,6 +1764,15 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/1f/a3/c4bd048256fd4b7d28767ca669c505e156f24d16355505c62e6fce3314df/pdbpp-0.10.3.tar.gz", hash = "sha256:d9e43f4fda388eeb365f2887f4e7b66ac09dce9b6236b76f63616530e2f669f5", size = 68116 }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/93/ee/491e63a57fffa78b9de1c337b06c97d0cd0753e88c00571c7b011680332a/pdbpp-0.10.3-py2.py3-none-any.whl", hash = "sha256:79580568e33eb3d6f6b462b1187f53e10cd8e4538f7d31495c9181e2cf9665d1", size = 23961 },
+]
+
+[[package]]
+name = "pip"
+version = "24.3.1"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/f4/b1/b422acd212ad7eedddaf7981eee6e5de085154ff726459cf2da7c5a184c1/pip-24.3.1.tar.gz", hash = "sha256:ebcb60557f2aefabc2e0f918751cd24ea0d56d8ec5445fe1807f1d2109660b99", size = 1931073 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/ef/7d/500c9ad20238fcfcb4cb9243eede163594d7020ce87bd9610c9e02771876/pip-24.3.1-py3-none-any.whl", hash = "sha256:3790624780082365f47549d032f3770eeb2b1e8bd1f7b2e02dace1afa361b4ed", size = 1822182 },
 ]
 
 [[package]]

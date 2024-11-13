@@ -9,7 +9,5 @@ class Config(AppConfig):
     name = __name__.rpartition(".")[0]
 
     # def ready(self) -> None:
-    #     from country_workspace.workspaces import models
-    #
-    #     from . import admin
-    #     from .sites import workspace
+    # from .cache import cache_manager
+    # cache_manager.init()

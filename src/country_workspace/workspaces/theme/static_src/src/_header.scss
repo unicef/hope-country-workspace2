@@ -1,0 +1,40 @@
+
+body.web {
+  header {
+    color: white;
+
+    select {
+      @apply text-sm p-1;
+
+    }
+
+    svg.sidebar-button {
+      fill: white;
+      width: 1em;
+      height: 1em;
+      display: inline-block;
+      font-size: 1.5rem;
+      flex-shrink: 0;
+      user-select: none;
+      color: white;
+      border-color: white;
+    }
+  }
+
+}
+
+.title-top {
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 4px -1px, rgba(0, 0, 0, 0.14) 0px 4px 5px 0px, rgba(0, 0, 0, 0.12) 0px 1px 10px 0px;
+  position: relative;
+  width: 100%;
+  background-color: rgb(255, 255, 255);
+
+  h2 {
+    font-size: 1.5rem;
+    font-weight: 400;
+    line-height: 1.334;
+    letter-spacing: 0;
+    color: rgba(0, 0, 0, 0.87);
+    padding: 28px 44px;
+  }
+}

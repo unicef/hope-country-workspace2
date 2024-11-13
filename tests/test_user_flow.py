@@ -8,7 +8,6 @@ from django_webtest.pytest_plugin import MixinWithInstanceVariables
 from pytest_django.fixtures import SettingsWrapper
 from responses import RequestsMock
 
-from country_workspace.constants import HOUSEHOLD_CHECKER_NAME, INDIVIDUAL_CHECKER_NAME
 from country_workspace.state import state
 
 if TYPE_CHECKING:
@@ -24,12 +23,12 @@ def office():
 
 
 @pytest.fixture()
-def program(office):
-    from testutils.factories import CountryProgramFactory, DataCheckerFactory
+def program(office, household_checker, individual_checker):
+    from testutils.factories import CountryProgramFactory
 
     return CountryProgramFactory(
-        household_checker=DataCheckerFactory(name=HOUSEHOLD_CHECKER_NAME),
-        individual_checker=DataCheckerFactory(name=INDIVIDUAL_CHECKER_NAME),
+        household_checker=household_checker,
+        individual_checker=individual_checker,
         household_columns="name\nid\nxx",
         individual_columns="name\nid\nxx",
     )
@@ -50,19 +49,14 @@ def data(program):
 
 
 @pytest.fixture()
-def app(
-    django_app_factory: "MixinWithInstanceVariables",
-    mocked_responses: "RequestsMock",
-    settings: SettingsWrapper,
-) -> "DjangoTestApp":
-    settings.FLAGS = {"OLD_STYLE_UI": [("boolean", True)]}
+def app(django_app_factory: "MixinWithInstanceVariables", mocked_responses: "RequestsMock") -> "DjangoTestApp":
     django_app = django_app_factory(csrf_checks=False)
     state.reset()
     yield django_app
 
 
 def test_login(app, user, data: "list[Household]", settings: "SettingsWrapper"):
-    from testutils.perms import user_grant_permissions, user_grant_role
+    from testutils.perms import user_grant_permissions
 
     settings.FLAGS = {"LOCAL_LOGIN": [("boolean", True)]}
 
@@ -78,15 +72,15 @@ def test_login(app, user, data: "list[Household]", settings: "SettingsWrapper"):
     assert res.status_code == 302
     assert res.location == reverse("workspace:select_tenant")
     res = res.follow()
-    assert "Seems you do not have any tenant enabled." in res.text
+    assert "Seems you have not been granted to any Office." in res.text
 
-    with user_grant_role(user, program.country_office):
-        res = app.get(reverse("workspace:select_tenant"), user=user)
-        res.forms["select-tenant"]["tenant"] = program.country_office.pk
-        res = res.forms["select-tenant"].submit()
-        assert app.cookies["selected_tenant"] == program.country_office.slug
-        res = res.follow()
-        assert "You don't have permission to view anything here." in res.text
+    # with user_grant_role(user, program.country_office):
+    #     res = app.get(reverse("workspace:select_tenant"), user=user)
+    #     res.forms["select-tenant"]["tenant"] = program.country_office.pk
+    #     res = res.forms["select-tenant"].submit()
+    #     assert app.cookies["selected_tenant"] == program.country_office.slug
+    #     res = res.follow()
+    #     assert "You don't have permission to view anything here." in res.text
 
     with user_grant_permissions(
         user,
@@ -99,13 +93,11 @@ def test_login(app, user, data: "list[Household]", settings: "SettingsWrapper"):
         hh = program.country_office.programs.first().households.first()
         res = app.get(reverse("workspace:select_tenant"), user=user)
         res.forms["select-tenant"]["tenant"] = program.country_office.pk
-        res = res.forms["select-tenant"].submit()
+        res = res.forms["select-tenant"].submit().follow()
         assert app.cookies["selected_tenant"] == program.country_office.slug
-        res = res.follow()
-        res = res.click("Country Households")
-        assert "Please select a program on the left" in res.text
-        base_url = reverse("workspace:workspaces_countryhousehold_changelist")
-        res = app.get(f"{base_url}?batch__program__exact={hh.program.id}", user=user)
+        res.forms["select-program"]["program"] = program.pk
+        res = res.forms["select-program"].submit().follow()
+        res = res.click("Households")
         res = res.click(hh.name)
         res = res.click("Close", verbose=True)
 

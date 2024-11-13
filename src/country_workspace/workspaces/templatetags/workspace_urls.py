@@ -12,8 +12,27 @@ from django.contrib.admin.templatetags.admin_urls import (
     urlunparse,
 )
 from django.db.models.options import Options
+from django.urls import reverse
+from django.utils.safestring import mark_safe
 
 register = template.Library()
+
+
+@register.simple_tag(takes_context=True)
+def admin_url(context, obj, attrs=None):
+    if obj:
+        if obj._meta.proxy_for_model:
+            opts = obj._meta.proxy_for_model._meta
+        else:
+            opts = obj._meta
+
+        url = reverse("admin:%s_%s_change" % (opts.app_label, opts.model_name), args=(obj.pk,))
+        return mark_safe(  # nosec
+            '<a class="admin-change-link" target="_admin" href="{url}">'
+            '<span class="icon icon-shield1"></span>'
+            "</a>".format(url=url)
+        )
+    return ""
 
 
 @register.filter

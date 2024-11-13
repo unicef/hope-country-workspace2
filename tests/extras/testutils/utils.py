@@ -102,20 +102,16 @@ def force_login(user, driver, base_url):
             "path": "/",
         }
     )
-    driver.add_cookie(
-        {
-            "name": "gdpr",
-            "value": '{"base":1, "set":1, "optionals": 1}',
-            "secure": False,
-            "path": "/",
-        }
-    )
     driver.refresh()
 
 
 @contextlib.contextmanager
-def select_office(app, country_office):
-    res = app.get("/").follow()
+def select_office(app, country_office, program=None):
+    res = app.get("/+st/")
     res.forms["select-tenant"]["tenant"] = country_office.pk
-    res.forms["select-tenant"].submit()
+    res = res.forms["select-tenant"].submit()
+    if program:
+        res = app.get("/")
+        res.forms["select-program"]["program"] = program.pk
+        res.forms["select-program"].submit()
     yield

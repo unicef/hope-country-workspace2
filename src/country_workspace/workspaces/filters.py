@@ -16,6 +16,7 @@ if TYPE_CHECKING:
 
 class CWLinkedAutoCompleteFilter(LinkedAutoCompleteFilter):
     parent_lookup_kwarg: str
+    template = "workspace/adminfilters/autocomplete.html"
 
     def __init__(
         self,
@@ -86,21 +87,13 @@ class BatchFilter(CWLinkedAutoCompleteFilter):
 class HouseholdFilter(CWLinkedAutoCompleteFilter):
     fk_name = "name"
 
-    def has_output(self) -> bool:
-        return bool(self.selected_program())
-
-    def selected_program(self) -> str:
-        return self.request.GET.get("batch__program__exact")
-
     def get_url(self) -> str:
         url = reverse("%s:autocomplete" % self.admin_site.namespace)
-        if oid := self.selected_program():
-            return f"{url}?batch__program={oid}"
         return url
 
     def queryset(self, request: HttpRequest, queryset: "QuerySet[Beneficiary]") -> "QuerySet[Beneficiary]":
         qs = super().queryset(request, queryset)
-        if oid := self.selected_program():
+        if oid := state.program:
             qs = qs.filter(batch__program__exact=oid)
         else:
             qs = qs.none()

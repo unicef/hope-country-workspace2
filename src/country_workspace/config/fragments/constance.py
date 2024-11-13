@@ -1,3 +1,5 @@
+from django.conf import settings
+
 from ..settings import NEW_USER_DEFAULT_GROUP
 
 CONSTANCE_BACKEND = "constance.backends.database.DatabaseBackend"
@@ -42,8 +44,8 @@ CONSTANCE_CONFIG = {
         "Group to assign to any new user",
         "group_select",
     ),
-    "HOPE_API_URL": ("https://hope.unicef.org/api/rest/", "HOPE API Server address", str),
-    "HOPE_API_TOKEN": ("", "HOPE API Access Token", "write_only_input"),
+    "HOPE_API_URL": (settings.HOPE_API_URL, "HOPE API Server address", str),
+    "HOPE_API_TOKEN": (settings.HOPE_API_TOKEN, "HOPE API Access Token", "write_only_input"),
     "AURORA_API_URL": ("https://register.unicef.org/api/", "Aurora API Server address", str),
     "AURORA_API_TOKEN": ("", "Aurora API Access Token", "write_only_input"),
     "KOBO_API_URL": ("", "Kobo API Server address", str),

@@ -6,7 +6,6 @@ from admin_extra_buttons.buttons import LinkButton
 from admin_extra_buttons.decorators import button, link
 
 from ..models import Office
-from ..sync.office import sync_offices
 from .base import BaseModelAdmin
 
 
@@ -26,4 +25,6 @@ class OfficeAdmin(BaseModelAdmin):
 
     @button()
     def sync(self, request: HttpRequest) -> None:
+        from country_workspace.contrib.hope.sync.office import sync_offices
+
         sync_offices()

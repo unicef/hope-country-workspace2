@@ -1,0 +1,47 @@
+{% extends "workspace/actions/base.html" %}{% load i18n %}
+{% block content %}
+    <div id="content">
+        <div id="content-main">
+            <div>
+                All selected {{ opts.verbose_name_plural }} will be updated based on the following Regular
+                Expression.<br/>
+                See https://regex101.com/ for help.
+            </div>
+        </div>
+    <div class="m-2 bg-white">
+        <form method="post" id="regex-update-form">
+            {% csrf_token %}
+            <ul>
+                {{ form.as_ul }}
+            </ul>
+            <div></div>
+            <div class="submit-row float-right">
+                <input type="submit" value="{% translate 'Preview' %}" class="default float-right" name="_preview">
+            </div>
+            {% if changes %}
+                <table>
+                    {% for pk, old, new in changes %}
+                        <tr>
+                            <td>{{ pk }}</td>
+                            <td>{{ old }}</td>
+                            <td>{{ new }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            {% endif %}
+            <div class="submit-row float-right">
+                <input type="submit" value="{% translate 'Apply' %}" class="default float-right" name="_apply">
+            </div>
+        </form>
+    </div>
+    </div>
+
+    {#    <style>#}
+    {#        ul {#}
+    {#            list-style: none;#}
+    {#            gap: 15px;#}
+    {#            display: flex;#}
+    {#        }#}
+    {#    </style>#}
+
+{% endblock %}

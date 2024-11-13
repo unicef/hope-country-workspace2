@@ -1,4 +1,4 @@
-from typing import Any
+from typing import Any, Optional
 
 from django import forms
 from django.contrib.admin import register
@@ -18,8 +18,7 @@ from hope_smart_import.readers import open_xls_multi
 
 from country_workspace.state import state
 
-from ...models import AsyncJob, Batch
-from ...sync.office import sync_programs
+from ...models import AsyncJob, Batch, Household
 from ..models import CountryProgram
 from ..options import WorkspaceModelAdmin
 from ..sites import workspace
@@ -72,6 +71,11 @@ class CountryProgramAdmin(WorkspaceModelAdmin):
     readonly_fields = (
         "individual_columns",
         "household_columns",
+        "active",
+        "programme_code",
+        "status",
+        "sector",
+        "name",
     )
     # form = ProgramForm
     ordering = ("name",)
@@ -97,7 +101,7 @@ class CountryProgramAdmin(WorkspaceModelAdmin):
         ),
         # (_("Important dates"), {"fields": ("last_login", "date_joined")}),
     )
-    change_form_template = "workspace/program/change_form.html"
+    # change_form_template = "workspace/program/change_form.html"
 
     def get_queryset(self, request: HttpResponse) -> QuerySet[CountryProgram]:
         return CountryProgram.objects.filter(country_office=state.tenant)
@@ -105,14 +109,21 @@ class CountryProgramAdmin(WorkspaceModelAdmin):
     def has_add_permission(self, request: HttpResponse) -> bool:
         return False
 
+    def has_delete_permission(self, request: HttpResponse, obj: Optional[CountryProgram] = None) -> bool:
+        return False
+
+    def changelist_view(self, request, extra_context=None):
+        url = reverse("workspace:workspaces_countryprogram_change", args=[state.program.pk])
+        return HttpResponseRedirect(url)
+
     @link(change_list=False)
     def population(self, btn: LinkButton) -> None:
-        base = reverse("workspace:workspaces_countryhousehold_changelist")
-        obj = btn.context["original"]
-        btn.href = f"{base}?batch__program__exact={obj.pk}"
+        btn.href = reverse("workspace:workspaces_countryhousehold_changelist")
 
     @button()
     def sync(self, request: HttpResponse) -> None:
+        from country_workspace.contrib.hope.sync.office import sync_programs
+
         sync_programs(state.tenant)
 
     def _configure_columns(
@@ -182,6 +193,8 @@ class CountryProgramAdmin(WorkspaceModelAdmin):
                     )
                     hh_id_col = form.cleaned_data["pk_column_name"]
                     total_hh = total_ind = 0
+                    m_field_label = form.cleaned_data["master_column_label"]
+                    h_field_label = form.cleaned_data["detail_column_label"]
                     for sheet_index, sheet_generator in open_xls_multi(form.cleaned_data["file"], sheets=[0, 1]):
                         for line, raw_record in enumerate(sheet_generator, 1):
                             record = {}
@@ -190,12 +203,15 @@ class CountryProgramAdmin(WorkspaceModelAdmin):
                             if record[hh_id_col]:
                                 try:
                                     if sheet_index == 0:
-                                        hh = program.households.create(batch=batch, flex_fields=record)
+                                        hh: "Household" = program.households.create(
+                                            batch=batch, name=raw_record[m_field_label], flex_fields=record
+                                        )
                                         hh_ids[record[hh_id_col]] = hh.pk
                                         total_hh += 1
                                     elif sheet_index == 1:
                                         program.individuals.create(
                                             batch=batch,
+                                            name=raw_record[h_field_label],
                                             household_id=hh_ids[record[hh_id_col]],
                                             flex_fields=record,
                                         )

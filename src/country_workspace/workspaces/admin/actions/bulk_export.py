@@ -111,7 +111,7 @@ TYPES = {
 
 
 def get_validation_for_field(fld: "FlexField") -> dict[str, Any]:
-    validate = TYPES.get(fld.field.field_type, XlsValidateRule)(fld)
+    validate = TYPES.get(fld.definition.field_type, XlsValidateRule)(fld)
     return validate()
 
 

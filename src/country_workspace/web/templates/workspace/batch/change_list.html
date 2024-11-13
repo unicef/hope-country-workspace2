@@ -1,8 +1,0 @@
-{% extends "workspace/change_list.html" %}
-{% block changelist %}
-    {% if selected_program %}
-        {{ block.super }}
-    {% else %}
-        Please select a program on the left
-    {% endif %}
-{% endblock %}

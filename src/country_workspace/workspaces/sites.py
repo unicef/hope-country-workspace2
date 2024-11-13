@@ -10,15 +10,15 @@ from django.http import Http404, HttpRequest, HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect
 from django.template.response import TemplateResponse
 from django.urls import NoReverseMatch, URLPattern, URLResolver, reverse
-from django.utils.decorators import method_decorator
 from django.utils.text import capfirst
 from django.utils.translation import gettext_lazy
-from django.views.decorators.cache import never_cache
 
 from smart_admin.autocomplete import SmartAutocompleteJsonView
 
-from .forms import SelectTenantForm, TenantAuthenticationForm
-from .utils import get_selected_tenant, is_tenant_valid, set_selected_tenant
+from ..state import state
+from .config import conf
+from .forms import SelectProgramForm, SelectTenantForm, TenantAuthenticationForm
+from .utils import get_selected_program, get_selected_tenant, is_tenant_valid
 
 if TYPE_CHECKING:
     from django.contrib.admin import ModelAdmin
@@ -102,14 +102,10 @@ class TenantAutocompleteJsonView(SmartAutocompleteJsonView):
 
 
 def force_tenant(view_func: "Callable[...]") -> "Callable[...]":
-    """
-    Decorator that adds headers to a response so that it will never be cached.
-    """
-
     def _view_wrapper(request: HttpRequest, *args: Any, **kwargs: Any) -> "Callable[...]":
         if not request.user.is_authenticated:
             return redirect("workspace:login")
-        if not is_tenant_valid() and "+select" not in request.path:  # TODO: Dry
+        if not is_tenant_valid() and "+st" not in request.path:  # TODO: Dry
             return redirect("workspace:select_tenant")
         response = view_func(request, *args, **kwargs)
         return response
@@ -133,10 +129,6 @@ class TenantAdminSite(admin.AdminSite):
     login_form = TenantAuthenticationForm
 
     namespace = "workspace"
-
-    @property
-    def urls(self) -> tuple[list[URLResolver | URLPattern], str, str]:
-        return self.get_urls(), self.namespace, self.name
 
     def _build_app_dict(self, request: HttpRequest, label: Optional[str] = None) -> dict[str, Any]:
         """
@@ -207,8 +199,11 @@ class TenantAdminSite(admin.AdminSite):
     def each_context(self, request: "HttpRequest") -> "dict[str, Any]":
         ret = super().each_context(request)
         selected_tenant = get_selected_tenant()
+        selected_program = get_selected_program()
         ret["tenant_form"] = SelectTenantForm(initial={"tenant": selected_tenant}, request=request)
+        ret["program_form"] = SelectProgramForm(initial={"program": selected_program}, request=request)
         ret["active_tenant"] = selected_tenant
+        ret["active_program"] = selected_program
         ret["namespace"] = self.namespace
         # ret["selected_program"] = "???"
         # else:
@@ -226,8 +221,12 @@ class TenantAdminSite(admin.AdminSite):
     def has_permission(self, request: "HttpRequest") -> bool:
         return request.user.is_active
 
-    def admin_view(self, view, cacheable: bool = False):
+    def admin_view(self, view, cacheable: bool = True):
         return force_tenant(super().admin_view(view, cacheable))
+
+    @property
+    def urls(self) -> tuple[list[URLResolver | URLPattern], str, str]:
+        return self.get_urls(), self.namespace, self.name
 
     def get_urls(self) -> "list[URLResolver | URLPattern]":
         from django.urls import path
@@ -242,7 +241,8 @@ class TenantAdminSite(admin.AdminSite):
             return update_wrapper(wrapper, view)
 
         urlpatterns = [
-            path("+select/", wrap(self.select_tenant), name="select_tenant"),
+            path("+st/", wrap(self.select_tenant), name="select_tenant"),
+            path("+sp/", wrap(self.select_program), name="select_program"),
         ]
         urlpatterns += super().get_urls()
         return urlpatterns
@@ -257,31 +257,47 @@ class TenantAdminSite(admin.AdminSite):
 
         return response
 
-    @method_decorator(never_cache)
+    # @method_decorator(never_cache)
     def index(
         self,
         request: "HttpRequest",
         extra_context: "dict[str,Any]|None" = None,
         **kwargs: "Any",
     ) -> "HttpResponse":
-        if not is_tenant_valid():
-            return redirect(f"{self.namespace}:select_tenant")
+        # if not is_tenant_valid():
+        #     return redirect(f"{self.namespace}:select_tenant")
         return super().index(request, extra_context, **kwargs)
 
-    @method_decorator(never_cache)
+    # @method_decorator(never_cache)
     def select_tenant(self, request: "HttpRequest") -> "HttpResponse":
         context = self.each_context(request)
+        context["has_access"] = conf.auth.get_allowed_tenants(request).exists()
         if request.method == "POST":
             form = SelectTenantForm(request.POST, request=request)
             if form.is_valid():
                 co = form.cleaned_data["tenant"]
-                set_selected_tenant(co)
+                state.set_selected_tenant(co)
                 return HttpResponseRedirect(reverse("workspace:index"))
 
         form = SelectTenantForm(request=request)
 
         context["form"] = form
         return TemplateResponse(request, "workspace/select_tenant.html", context)
+
+    # @method_decorator(never_cache)
+    def select_program(self, request: "HttpRequest") -> "HttpResponse":
+        # context = self.each_context(request)
+        if request.method == "POST":
+            form = SelectProgramForm(request.POST, request=request)
+            if form.is_valid():
+                co = form.cleaned_data["program"]
+                state.set_selected_program(co)
+                return HttpResponseRedirect(reverse("workspace:index"))
+
+        # form = SelectProgramForm(request=request)
+        #
+        # context["form"] = form
+        # return TemplateResponse(request, "workspace/select_program.html", context)
 
 
 workspace = TenantAdminSite(name="workspace")

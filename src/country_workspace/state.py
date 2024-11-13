@@ -3,13 +3,14 @@ from copy import copy
 from threading import local
 from typing import TYPE_CHECKING, Dict
 
+from django.core.signing import get_cookie_signer
 from django.http import HttpRequest, HttpResponse
-
-from .models import Office, Program
 
 if TYPE_CHECKING:
     from collections.abc import Iterator
     from typing import Any, List
+
+    from .models import Office, Program
 
 not_set = object()
 
@@ -17,6 +18,7 @@ not_set = object()
 class State(local):
     request: "HttpRequest|None" = None
     tenant_cookie: "str|None" = None
+    program_cookie: "str|None" = None
     tenant: "Office|None" = None
     program: "Program|None" = None
     cookies: "dict[str, List[Any]]" = {}
@@ -35,16 +37,6 @@ class State(local):
         for k, v in pre.items():
             setattr(self, k, v)
 
-    # @contextlib.contextmanager
-    # def activate_tenant(self, country_office: "Office") -> "Iterator[None]":
-    #     _country_office = self.tenant
-    #     _tenant_cookie = self.tenant_cookie
-    #     self.tenant = country_office
-    #     self.tenant_cookie = country_office.slug
-    #     yield
-    #     self.tenant = _country_office
-    #     self.tenant_cookie = _tenant_cookie
-
     @contextlib.contextmanager
     def set(self, **kwargs: "Dict[str,Any]") -> "Iterator[None]":
         pre = {}
@@ -60,6 +52,18 @@ class State(local):
                 delattr(self, k)
             else:
                 setattr(self, k, v)
+
+    def set_selected_tenant(self, tenant: "Office") -> None:
+        from country_workspace.workspaces.config import conf
+
+        self.tenant = tenant
+        signer = get_cookie_signer()
+        self.add_cookies(conf.TENANT_COOKIE_NAME, signer.sign(tenant.slug))
+
+    def set_selected_program(self, program: "Program") -> None:
+        self.program = program
+        signer = get_cookie_signer()
+        self.add_cookies("selected_program", signer.sign(program.id))
 
     def add_cookies(
         self,

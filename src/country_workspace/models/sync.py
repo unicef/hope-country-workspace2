@@ -6,7 +6,6 @@ from django.db.models import Model
 from django.utils import timezone
 
 from country_workspace.models.base import BaseManager, BaseModel
-from country_workspace.sync.client import HopeClient
 
 
 class SyncManager(BaseManager):
@@ -50,6 +49,8 @@ class SyncLog(BaseModel):
     objects = SyncManager()
 
     def refresh(self) -> None:
+        from country_workspace.contrib.hope.client import HopeClient
+
         fd = self.content_object
         if not fd:
             return

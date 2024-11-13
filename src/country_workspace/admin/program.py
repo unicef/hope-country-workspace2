@@ -8,7 +8,6 @@ from admin_extra_buttons.api import button, confirm_action, link
 from adminfilters.autocomplete import AutoCompleteFilter
 
 from ..models import Program
-from ..sync.office import sync_programs
 from .base import BaseModelAdmin
 
 if TYPE_CHECKING:
@@ -55,4 +54,6 @@ class ProgramAdmin(BaseModelAdmin):
 
     @button()
     def sync(self, request: HttpRequest) -> None:
+        from country_workspace.contrib.hope.sync.office import sync_programs
+
         sync_programs()

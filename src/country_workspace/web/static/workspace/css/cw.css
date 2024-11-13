@@ -3,7 +3,7 @@ html[data-theme],
   --header-bg: #37B0F8FF;
   --accent: white;
   --header-color: #e8e8e8;
-  --unicef-blue: $unicef-blue;
+  --unicef-blue: #37B0F8FF;
 }
 
 html[data-tenant=yes][data-theme],
@@ -13,8 +13,7 @@ html[data-tenant=yes][data-theme],
   --breadcrumbs-bg: #0f2f3b;
   --link-fg: #37b0f8;
   --accent: #f5dd5d;
-  --header-color: #ffc
-  //--secondary: #417690;
+  --header-color: #ffc ;
 }
 
 html, body {
@@ -122,6 +121,15 @@ body.tenant .theme-toggle svg.theme-icon-when-auto, body.tenant .theme-toggle sv
   left: 50%;
 }
 
+a.button {
+  padding: 10px 15px;
+}
+
+.h10 {
+  height: 3em;
+  line-height: 3em;
+}
+
 .object-tools a.superuser-only {
   background-color: var(--delete-button-bg);
 }
@@ -131,10 +139,15 @@ body.tenant .theme-toggle svg.theme-icon-when-auto, body.tenant .theme-toggle sv
   padding: 10px;
 }
 
+.center-y {
+  vertical-align: middle;
+}
+
 .center-x {
   margin-right: auto;
   margin-left: auto;
   padding: 10px;
+  text-align: center;
 }
 
 .colMX {
@@ -162,7 +175,7 @@ div.tenant {
   padding: 30px;
   position: relative;
   top: 50px;
-  height: 200px;
+  height: 100px;
 }
 div.tenant select {
   width: 100%;
