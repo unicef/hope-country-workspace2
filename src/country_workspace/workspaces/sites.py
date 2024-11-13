@@ -10,10 +10,8 @@ from django.http import Http404, HttpRequest, HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect
 from django.template.response import TemplateResponse
 from django.urls import NoReverseMatch, URLPattern, URLResolver, reverse
-from django.utils.decorators import method_decorator
 from django.utils.text import capfirst
 from django.utils.translation import gettext_lazy
-from django.views.decorators.cache import never_cache
 
 from smart_admin.autocomplete import SmartAutocompleteJsonView
 
@@ -104,10 +102,6 @@ class TenantAutocompleteJsonView(SmartAutocompleteJsonView):
 
 
 def force_tenant(view_func: "Callable[...]") -> "Callable[...]":
-    """
-    Decorator that adds headers to a response so that it will never be cached.
-    """
-
     def _view_wrapper(request: HttpRequest, *args: Any, **kwargs: Any) -> "Callable[...]":
         if not request.user.is_authenticated:
             return redirect("workspace:login")
@@ -135,10 +129,6 @@ class TenantAdminSite(admin.AdminSite):
     login_form = TenantAuthenticationForm
 
     namespace = "workspace"
-
-    @property
-    def urls(self) -> tuple[list[URLResolver | URLPattern], str, str]:
-        return self.get_urls(), self.namespace, self.name
 
     def _build_app_dict(self, request: HttpRequest, label: Optional[str] = None) -> dict[str, Any]:
         """
@@ -177,9 +167,6 @@ class TenantAdminSite(admin.AdminSite):
             if perms.get("change") or perms.get("view"):
                 model_dict["view_only"] = not perms.get("change")
                 try:
-                    opts = model._meta
-                    print("%s:%s_%s_changelist" % (self.namespace, opts.app_label, opts.model_name))
-
                     model_dict["admin_url"] = self._registry[model].get_changelist_index_url(request)
                     # model_dict["admin_url"] = reverse(
                     #     "%s:%s_%s_changelist" % info, current_app=self.name
@@ -234,8 +221,12 @@ class TenantAdminSite(admin.AdminSite):
     def has_permission(self, request: "HttpRequest") -> bool:
         return request.user.is_active
 
-    def admin_view(self, view, cacheable: bool = False):
+    def admin_view(self, view, cacheable: bool = True):
         return force_tenant(super().admin_view(view, cacheable))
+
+    @property
+    def urls(self) -> tuple[list[URLResolver | URLPattern], str, str]:
+        return self.get_urls(), self.namespace, self.name
 
     def get_urls(self) -> "list[URLResolver | URLPattern]":
         from django.urls import path
@@ -260,13 +251,13 @@ class TenantAdminSite(admin.AdminSite):
         self, request: "HttpRequest", extra_context: "dict[str, Any] | None" = None
     ) -> "HttpResponse|HttpResponseRedirect":
         response = super().login(request, extra_context)
-        # if request.method == "POST":
-        #     if request.user.is_authenticated:
-        #         return redirect(f"{self.namespace}:select_tenant")
+        if request.method == "POST":
+            if request.user.is_authenticated:
+                return redirect(f"{self.namespace}:select_tenant")
 
         return response
 
-    @method_decorator(never_cache)
+    # @method_decorator(never_cache)
     def index(
         self,
         request: "HttpRequest",
@@ -277,7 +268,7 @@ class TenantAdminSite(admin.AdminSite):
         #     return redirect(f"{self.namespace}:select_tenant")
         return super().index(request, extra_context, **kwargs)
 
-    @method_decorator(never_cache)
+    # @method_decorator(never_cache)
     def select_tenant(self, request: "HttpRequest") -> "HttpResponse":
         context = self.each_context(request)
         context["has_access"] = conf.auth.get_allowed_tenants(request).exists()
@@ -293,7 +284,7 @@ class TenantAdminSite(admin.AdminSite):
         context["form"] = form
         return TemplateResponse(request, "workspace/select_tenant.html", context)
 
-    @method_decorator(never_cache)
+    # @method_decorator(never_cache)
     def select_program(self, request: "HttpRequest") -> "HttpResponse":
         # context = self.each_context(request)
         if request.method == "POST":

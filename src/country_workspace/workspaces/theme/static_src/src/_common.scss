@@ -28,7 +28,7 @@ $tenant-main: rgb(30, 58, 138);
 
 
 ul.object-tools {
-  @apply flex py-1 ml-3;
+  @apply flex py-1 ml-3 my-5;
   justify-content: flex-end;
 
   li {
@@ -36,7 +36,24 @@ ul.object-tools {
     a {
       @apply text-white bg-unicef-dark px-3 py-1 my-2 ;
       text-decoration: none;
-
+      margin: 0;
+      color: white;
+      cursor: pointer;
+      font-size: 0.875rem;
+      vertical-align: middle;
+      justify-content: center;
+      min-width: 64px;
+      box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 1px -2px, rgba(0, 0, 0, 0.14) 0px 2px 2px 0px, rgba(0, 0, 0, 0.12) 0px 1px 5px 0px;
+      outline: 0;
+      border-width: 0;
+      border-style: initial;
+      border-color: initial;
+      border-image: initial;
+      text-decoration: none;
+      padding: 6px 16px;
+      border-radius: 4px;
+      transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1), box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1), border-color 250ms cubic-bezier(0.4, 0, 0.2, 1), color 250ms cubic-bezier(0.4, 0, 0.2, 1);
+      background-color: rgb(0, 60, 143);
       &.disabled {
         @apply border border-unicef-dark;
       }

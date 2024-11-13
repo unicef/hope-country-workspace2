@@ -1,4 +1,6 @@
+import hashlib
 import re
+import time
 from http.client import RemoteDisconnected
 from json import JSONDecodeError
 from typing import TYPE_CHECKING, Any, Generator, Optional, Union
@@ -7,6 +9,8 @@ import requests
 from constance import config
 
 from country_workspace.exceptions import RemoteError
+
+from .signals import hope_request_end, hope_request_start
 
 if TYPE_CHECKING:
     JsonType = Union[None, int, str, bool, list["JsonType"], dict[str, "JsonType"]]
@@ -37,6 +41,9 @@ class HopeClient:
 
     def get(self, path: str, params: Optional[dict[str, Any]] = None) -> "Generator[FlatJsonType, None, None]":
         url: "str|None" = self.get_url(path)
+        signature = hashlib.sha256(f"{url}{params}{time.perf_counter_ns()}".encode("utf-8")).hexdigest()
+        pages = 0
+        hope_request_start.send(self.__class__, url=url, params=params, signature=signature)
         while True:
             if not url:
                 break
@@ -46,6 +53,7 @@ class HopeClient:
                 )  # nosec
                 if ret.status_code != 200:
                     raise RemoteError(f"Error {ret.status_code} fetching {url}")
+                pages += 1
             except RemoteDisconnected:
                 raise RemoteError(f"Remote Error fetching {url}")
 
@@ -62,3 +70,4 @@ class HopeClient:
                     url = None
             except TypeError:
                 raise RemoteError(f"Malformed JSON fetching {url}")
+        hope_request_end.send(self.__class__, url=url, params=params, pages=pages, signature=signature)

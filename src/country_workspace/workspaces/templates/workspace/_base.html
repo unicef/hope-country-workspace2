@@ -86,12 +86,7 @@
     </ul>
 {% endblock %}
 {% block page-top %}
-    {#    <div class="box">#}
-    {#        <h2>{% block page-title %}{{ title }}=== {{ active_tenant }} == {{ active_program }}{% endblock %}#}
-    {#            {% if object and object.get_admin_url and user.is_staff %}#}
-    {#                <small class="float-right"><a target="_admin" href="{{ object.get_admin_url }}">View in#}
-    {#                    Admin</a></small>#}
-    {#                </h2>#}
-    {#            {% endif %}#}
-    {#    </div>#}
+        <div class="title-top">
+            <h2>{% block page-title %}{{ title|default_if_none:"" }}{% endblock %}</h2>
+        </div>
 {% endblock %}

@@ -3,6 +3,7 @@ from typing import TYPE_CHECKING
 from django.db.models import QuerySet
 from django.http import HttpRequest
 from django.urls import reverse
+from django.utils.translation import gettext as _
 
 from admin_extra_buttons.buttons import LinkButton
 from admin_extra_buttons.decorators import link
@@ -23,9 +24,11 @@ from ..sites import workspace
 class CountryHouseholdAdmin(BeneficiaryBaseAdmin):
     list_display = ["name", "batch"]
     search_fields = ("name",)
-    change_list_template = "workspace/change_list.html"
+    change_list_template = "workspace/household/change_list.html"
     change_form_template = "workspace/household/change_form.html"
     ordering = ("name",)
+    title = _("Household")
+    title_plural = _("Households")
 
     def get_list_display(self, request: HttpRequest) -> list[str]:
         program: "CountryProgram | None"

@@ -1,0 +1,26 @@
+{% extends "workspace/hh_ind_change_form.html" %}
+{% load i18n  static admin_modify workspace_urls workspace_modify %}
+{% block page-title %}
+        &rsaquo; <a href="{% url "workspace:workspaces_countryhousehold_changelist" %}">Households</a>
+        &rsaquo; {{ original }}
+{#    <a href="{% add_preserved_filters ".." %}">#}
+{#    <svg style="width:1em;display: inline-flex" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="ArrowBackRoundedIcon"><path d="M19 11H7.83l4.88-4.88c.39-.39.39-1.03 0-1.42a.9959.9959 0 0 0-1.41 0l-6.59 6.59c-.39.39-.39 1.02 0 1.41l6.59 6.59c.39.39 1.02.39 1.41 0 .39-.39.39-1.02 0-1.41L7.83 13H19c.55 0 1-.45 1-1s-.45-1-1-1"></path></svg>#}
+{#    </a>#}
+{#    {{ title }}: {{ original }}{% admin_url original %}#}
+
+{% endblock %}
+{#    {% block breadcrumbs %}#}
+{#        <div class="breadcrumbs">#}
+{#            <a href="{% url 'workspace:index' %}">{% translate 'Workspaces' %}</a>#}
+{#            &rsaquo; <a#}
+{#                href="{% url 'workspace:app_list' app_label=opts.app_label %}">{{ opts.app_config.verbose_name }}</a>#}
+{#            &rsaquo; {% if has_view_permission %}#}
+{#            {% url opts|workspace_urlname:'changelist' as wcl %}#}
+{#            <a href="{% add_preserved_filters wcl %}">{{ opts.verbose_name_plural|capfirst }}</a>{% else %}#}
+{#            {{ opts.verbose_name_plural|capfirst }}{% endif %}#}
+{##}
+{#            &rsaquo;#}
+{#            {% if add %}{% blocktranslate with name=opts.verbose_name %}Add {{ name }}{% endblocktranslate %}{% else %}#}
+{#                {{ original|truncatewords:"18" }}{% endif %}#}
+{#        </div>#}
+{#    {% endblock %}#}

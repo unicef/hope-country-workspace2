@@ -28,6 +28,8 @@
 }
 
 ul.object-tools {
+  margin-top: 1.25rem;
+  margin-bottom: 1.25rem;
   margin-left: 0.75rem;
   display: flex;
   padding-top: 0.25rem;
@@ -54,7 +56,25 @@ ul.object-tools li a {
   padding-bottom: 0.25rem;
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
+  margin: 0;
+  color: white;
+  cursor: pointer;
+  font-size: 0.875rem;
+  vertical-align: middle;
+  justify-content: center;
+  min-width: 64px;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 1px -2px, rgba(0, 0, 0, 0.14) 0px 2px 2px 0px, rgba(0, 0, 0, 0.12) 0px 1px 5px 0px;
+  outline: 0;
+  border-width: 0;
+  border-style: initial;
+  border-color: initial;
+  -o-border-image: initial;
+     border-image: initial;
   text-decoration: none;
+  padding: 6px 16px;
+  border-radius: 4px;
+  transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1), box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1), border-color 250ms cubic-bezier(0.4, 0, 0.2, 1), color 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  background-color: rgb(0, 60, 143);
 }
 
 ul.object-tools li a.disabled {
@@ -375,7 +395,7 @@ body.web {
   justify-content: space-between;
 }
 
-#changelist .changelist-form-container{
+#changelist .changelist-form-container {
 }
 
 #changelist .clear {
@@ -395,7 +415,7 @@ body.web {
 }
 
 #changelist table thead th {
-  background: var(--selected-bg);
+  //background: var(--selected-bg);
   font-size: 0.6875rem;
   border: none;
   border-bottom: 1px solid var(--hairline-color);
@@ -467,32 +487,56 @@ body.web {
   text-align: center;
 }
 
-#changelist table tbody td {
-  white-space: nowrap;
-  font-size: 0.8125rem;
+#changelist table tbody tr:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(243 244 246 / var(--tw-bg-opacity));
 }
 
-#changelist table tbody td.action-checkbox {
+#changelist table tbody tr {
+  border-width: 1px;
+  --tw-border-opacity: 1;
+  border-bottom-color: rgb(243 244 246 / var(--tw-border-opacity));
+}
+
+#changelist table tbody td,#changelist table tbody th {
+  padding: 20px;
+  white-space: nowrap;
+  font-size: 0.8125rem;
+  overflow: auto;
+  cursor: pointer;
+}
+
+#changelist table tbody td.action-checkbox, #changelist table tbody th.action-checkbox {
   width: 1.5em;
   text-align: center;
 }
 
-#changelist table tbody tr:nth-child(odd):hover {
+#changelist table tbody tr:nth-child(odd) {
+  --tw-border-opacity: 1;
+  border-bottom-color: rgb(75 85 99 / var(--tw-border-opacity));
   --tw-bg-opacity: 1;
-  background-color: rgb(147 197 253 / var(--tw-bg-opacity));
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+  padding-top: 3rem;
+  padding-bottom: 3rem;
 }
 
-#changelist table tbody tr:nth-child(odd) {
-  //background: var(--body-bg);
+#changelist table tbody tr:nth-child(odd):hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(243 244 246 / var(--tw-bg-opacity));
+}
+
+#changelist table tbody tr:nth-child(even) {
+  --tw-border-opacity: 1;
+  border-bottom-color: rgb(75 85 99 / var(--tw-border-opacity));
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+  padding-top: 3rem;
+  padding-bottom: 3rem;
 }
 
 #changelist table tbody tr:nth-child(even):hover {
   --tw-bg-opacity: 1;
-  background-color: rgb(147 197 253 / var(--tw-bg-opacity));
-}
-
-#changelist table tbody tr:nth-child(even) {
-  background: var(--darkened-bg);
+  background-color: rgb(243 244 246 / var(--tw-bg-opacity));
 }
 
 #changelist-filter {
@@ -731,6 +775,22 @@ body.web header svg.sidebar-button {
           user-select: none;
   color: white;
   border-color: white;
+}
+
+.title-top {
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 4px -1px, rgba(0, 0, 0, 0.14) 0px 4px 5px 0px, rgba(0, 0, 0, 0.12) 0px 1px 10px 0px;
+  position: relative;
+  width: 100%;
+  background-color: rgb(255, 255, 255);
+}
+
+.title-top h2 {
+  font-size: 1.5rem;
+  font-weight: 400;
+  line-height: 1.334;
+  letter-spacing: 0;
+  color: rgba(0, 0, 0, 0.87);
+  padding: 28px 44px;
 }
 
 *, ::before, ::after {
@@ -1562,6 +1622,10 @@ select {
 
 .mt-40 {
   margin-top: 10rem;
+}
+
+.mt-5 {
+  margin-top: 1.25rem;
 }
 
 .block {

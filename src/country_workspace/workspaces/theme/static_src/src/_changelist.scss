@@ -3,8 +3,10 @@
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  .changelist-form-container{
+
+  .changelist-form-container {
   }
+
   .clear {
     clear: both;
   }
@@ -20,7 +22,7 @@
       unicode-bidi: isolate;
 
       th {
-        background: var(--selected-bg);
+        //background: var(--selected-bg);
         font-size: 0.6875rem;
         border: none;
         border-bottom: 1px solid var(--hairline-color);
@@ -34,11 +36,13 @@
         text-transform: uppercase;
         vertical-align: middle;
         white-space: nowrap;
-        &.sorted{
-           .text {
-             margin-right: 42px;
-           }
+
+        &.sorted {
+          .text {
+            margin-right: 42px;
+          }
         }
+
         .text {
           span {
             padding: 8px 10px;
@@ -97,10 +101,18 @@
     }
 
     tbody {
+      tr {
+        @apply hover:bg-gray-100;
+        @apply border-b-gray-100 border;
+      }
 
-      td {
+      td,th {
+        padding: 20px;
+
         white-space: nowrap;
         font-size: 0.8125rem;
+        overflow: auto;
+        cursor: pointer;
 
         &.action-checkbox {
           width: 1.5em;
@@ -109,13 +121,11 @@
       }
 
       tr:nth-child(odd) {
-        @apply hover:bg-blue-300;
-        //background: var(--body-bg);
+        @apply hover:bg-gray-100 bg-white py-12 border-b-gray-600;
       }
 
       tr:nth-child(even) {
-        @apply hover:bg-blue-300;
-        background: var(--darkened-bg);
+        @apply hover:bg-gray-100 bg-white py-12 border-b-gray-600;
       }
     }
   }
@@ -159,9 +169,11 @@
     font-size: 0.875rem;
     color: var(--link-hover-color);
   }
-  .filter-content{
+
+  .filter-content {
     @apply p-0;
   }
+
   details[open] > summary::before {
     content: '↓';
   }
@@ -170,9 +182,10 @@
     margin: 0 0;
     @apply px-0;
     border-bottom: 1px solid var(--hairline-color);
-    li{
+
+    li {
       @apply min-w-full;
-      .select2-container{
+      .select2-container {
         @apply min-w-full;
       }
     }

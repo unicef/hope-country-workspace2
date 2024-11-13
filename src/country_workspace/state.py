@@ -6,11 +6,11 @@ from typing import TYPE_CHECKING, Dict
 from django.core.signing import get_cookie_signer
 from django.http import HttpRequest, HttpResponse
 
-from .models import Office, Program
-
 if TYPE_CHECKING:
     from collections.abc import Iterator
     from typing import Any, List
+
+    from .models import Office, Program
 
 not_set = object()
 

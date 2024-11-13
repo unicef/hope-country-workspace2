@@ -1,3 +1,4 @@
+from datetime import timedelta
 from typing import TYPE_CHECKING, Any, Optional
 
 from django.contrib import admin, messages
@@ -8,10 +9,12 @@ from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.template.response import TemplateResponse
 from django.urls import reverse
+from django.utils.decorators import method_decorator
+from django.utils.timezone import now
 from django.utils.translation import gettext as _
+from django.views.decorators.http import etag, last_modified
 
-from admin_extra_buttons.buttons import LinkButton
-from admin_extra_buttons.decorators import button, link
+from admin_extra_buttons.decorators import button
 from adminfilters.mixin import AdminAutoCompleteSearchMixin
 from hope_flex_fields.models import DataChecker
 
@@ -78,30 +81,39 @@ class SelectedProgramMixin(WorkspaceModelAdmin):
         return super().changelist_view(request, context)
 
 
+def etag_func(request, *args):
+    return "111"
+
+
+def last_modified_func(request, *args):
+    return now() + timedelta(days=-10)
+
+
 class BeneficiaryBaseAdmin(AdminAutoCompleteSearchMixin, SelectedProgramMixin, WorkspaceModelAdmin):
     list_filter = (
         # ("batch__program", LinkedAutoCompleteFilter.factory(parent=None)),
         ("batch", CWLinkedAutoCompleteFilter.factory(parent=None)),
     )
     actions = ["validate_queryset", actions.mass_update, actions.regex_update, actions.bulk_update_export]
+    title = None
+    title_plural = None
 
-    @link()
-    def import_rdi(self, btn: LinkButton) -> None:
-        btn.visible = False
-        if prg := self.get_selected_program(btn.context["request"]):
-            btn.href = reverse("workspace:workspaces_countryprogram_import_rdi", args=[prg.pk])
-            btn.visible = self.get_checker(btn.context.get("request"), btn.context.get("original"))
+    # @link()
+    # def import_rdi(self, btn: LinkButton) -> None:
+    #     btn.visible = False
+    #     if prg := self.get_selected_program(btn.context["request"]):
+    #         btn.href = reverse("workspace:workspaces_countryprogram_import_rdi", args=[prg.pk])
+    #         btn.visible = self.get_checker(btn.context.get("request"), btn.context.get("original"))
 
-    @link()
-    def import_file_updates(self, btn: LinkButton) -> None:
-        btn.visible = False
-        if prg := self.get_selected_program(btn.context["request"]):
-            btn.href = reverse("workspace:workspaces_countryprogram_import_file_updates", args=[prg.pk])
-            btn.visible = self.get_checker(btn.context.get("request"), btn.context.get("original"))
+    # @link()
+    # def import_file_updates(self, btn: LinkButton) -> None:
+    #     btn.visible = False
+    #     if prg := self.get_selected_program(btn.context["request"]):
+    #         btn.href = reverse("workspace:workspaces_countryprogram_import_file_updates", args=[prg.pk])
+    #         btn.visible = self.get_checker(btn.context.get("request"), btn.context.get("original"))
 
     def get_queryset(self, request: HttpRequest) -> "QuerySet[Beneficiary]":
         qs = super().get_queryset(request)
-        # TODO: make program filter mandatory by url
         if prg := self.get_selected_program(request):
             return qs.filter(batch__program=prg)
         else:
@@ -110,6 +122,9 @@ class BeneficiaryBaseAdmin(AdminAutoCompleteSearchMixin, SelectedProgramMixin, W
     def get_common_context(self, request: HttpRequest, pk: Optional[str] = None, **kwargs: Any) -> dict[str, Any]:
         ret = super().get_common_context(request, pk, **kwargs)
         ret["datachecker"] = self.get_checker(request, ret.get("original"))
+        ret["modeladmin"] = self
+        ret["title"] = self.title_plural
+
         return ret
 
     @button(label=_("Validate"), enabled=lambda btn: btn.context["original"].checker)
@@ -174,7 +189,7 @@ class BeneficiaryBaseAdmin(AdminAutoCompleteSearchMixin, SelectedProgramMixin, W
         self, request: HttpRequest, object_id: str, form_url: str, extra_context: dict[str, Any]
     ) -> HttpResponse:
         context = self.get_common_context(request, object_id, **extra_context)
-        add = object_id is None
+        # add = object_id is None
         obj = self.get_object(request, unquote(object_id))
         dc: "DataChecker" = self.get_checker(request, obj)
         try:
@@ -206,14 +221,15 @@ class BeneficiaryBaseAdmin(AdminAutoCompleteSearchMixin, SelectedProgramMixin, W
                     self.message_user(request, "Please fixes the errors below", messages.ERROR)
         else:
             form = form_class(prefix="flex_field", initial=initials)
-        if add:
-            title = _("Add %s")
-        elif self.has_change_permission(request, obj):
-            title = _("Change %s")
-        else:
-            title = _("View %s")
-        context["title"] = title % obj._meta.verbose_name
+
+        context["title"] = self.title
         context["checker_form"] = form
         context["has_change_permission"] = self.has_change_permission(request)
 
         return TemplateResponse(request, self.change_form_template, context)
+
+    @method_decorator(etag(etag_func))
+    @method_decorator(last_modified(last_modified_func))
+    def changelist_view(self, request: HttpRequest, extra_context: Optional[dict[str, Any]] = None) -> HttpResponse:
+        response = super().changelist_view(request, extra_context)
+        return response

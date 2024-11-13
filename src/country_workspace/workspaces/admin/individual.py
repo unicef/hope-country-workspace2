@@ -1,8 +1,10 @@
 from typing import Any, Optional
+from urllib.parse import parse_qs
 
 from django.contrib.admin import AdminSite, register
 from django.db.models import Model, QuerySet
 from django.http import HttpRequest
+from django.utils.translation import gettext as _
 
 from ...state import state
 from ..filters import HouseholdFilter
@@ -28,6 +30,7 @@ class CountryIndividualAdmin(BeneficiaryBaseAdmin):
     change_list_template = "workspace/individual/change_list.html"
     change_form_template = "workspace/individual/change_form.html"
     ordering = ("name",)
+    title = _("Individual")
 
     def __init__(self, model: Model, admin_site: "AdminSite"):
         self._selected_household = None
@@ -59,10 +62,14 @@ class CountryIndividualAdmin(BeneficiaryBaseAdmin):
         self._selected_household = None
         if "household__exact" in request.GET:
             self._selected_household = CountryHousehold.objects.get(pk=request.GET["household__exact"])
+        elif cl_flt := request.GET.get("_changelist_filters", ""):
+            if prg := parse_qs(cl_flt).get("household__exact"):
+                self._selected_household = CountryHousehold.objects.get(pk=prg[0])
         elif obj:
             self._selected_household = obj.household
         return self._selected_household
 
     def get_common_context(self, request: HttpRequest, pk: Optional[str] = None, **kwargs: Any) -> dict[str, Any]:
         kwargs["selected_household"] = self.get_selected_household(request)
+        kwargs["title"] = self.get_selected_household(request)
         return super().get_common_context(request, pk, **kwargs)

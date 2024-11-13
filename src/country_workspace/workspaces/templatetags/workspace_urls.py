@@ -21,7 +21,11 @@ register = template.Library()
 @register.simple_tag(takes_context=True)
 def admin_url(context, obj, attrs=None):
     if obj:
-        opts = obj._meta
+        if obj._meta.proxy_for_model:
+            opts = obj._meta.proxy_for_model._meta
+        else:
+            opts = obj._meta
+
         url = reverse("admin:%s_%s_change" % (opts.app_label, opts.model_name), args=(obj.pk,))
         return mark_safe(  # nosec
             '<a class="admin-change-link" target="_admin" href="{url}">'

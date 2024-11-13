@@ -68,7 +68,7 @@ def test_login(app, user, data: "list[Household]", settings: "SettingsWrapper"):
     res = res.follow()
     res.forms["login-form"]["username"] = user.username
     res.forms["login-form"]["password"] = user._password
-    res = res.forms["login-form"].submit().follow()
+    res = res.forms["login-form"].submit()
     assert res.status_code == 302
     assert res.location == reverse("workspace:select_tenant")
     res = res.follow()

@@ -1,0 +1,76 @@
+{% load i18n %}{% load static %}
+<h4>get</h4>
+<table class="djdt-max-height-100">
+    <thead>
+        <tr>
+            <th>{% trans "time" %}</th>
+            <th>{% trans "key" %}</th>
+            <th>{% trans "args" %}</th>
+            <th>{% trans "kwargs" %}</th>
+            <th>{% trans "hit" %}</th>
+        </tr>
+    </thead>
+    <tbody id="djdtHistoryRequests">
+        {% for entry in gets %}
+            <tr>
+            <td>{{ entry.timestamp }}</td>
+            <td>{{ entry.key }}</td>
+            <td>{{ entry.tenant }}</td>
+            <td>{{ entry.key }}</td>
+            <td>{{ entry.2 }}</td>
+            <td>{{ entry.hit }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<h4>set</h4>
+
+<table class="djdt-max-height-100">
+    <thead>
+        <tr>
+            <th>{% trans "time" %}</th>
+            <th>{% trans "key" %}</th>
+            <th>{% trans "tenant" %}</th>
+{#            <th>{% trans "hit" %}</th>#}
+        </tr>
+    </thead>
+    <tbody id="djdtHistoryRequests">
+        {% for entry in sets %}
+            <tr>
+            <td>{{ entry.timestamp }}</td>
+            <td>{{ entry.key }}</td>
+            <td>{{ entry.tenant }}</td>
+{#            <td>{{ entry.hit }}</td>#}
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+
+<h4>store</h4>
+<table class="djdt-max-height-100">
+    <thead>
+        <tr>
+            <th>{% trans "time" %}</th>
+            <th>{% trans "key" %}</th>
+            <th>{% trans "Office" %}</th>
+            <th>{% trans "Program" %}</th>
+            <th>{% trans "path" %}</th>
+        </tr>
+    </thead>
+    <tbody id="djdtHistoryRequests">
+        {% for entry in stores %}
+            <tr>
+            <td>{{ entry.timestamp }}</td>
+            <td>{{ entry.key }}</td>
+            <td>{{ entry.tenant }}</td>
+            <td>{{ entry.key }}</td>
+            <td>{{ entry.extra.path }}</td>
+{#            <td>{{ entry.hit }}</td>#}
+{#            <td>{{ entry.2 }}</td>#}
+{#            <td>{{ entry.3 }}</td>#}
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>

@@ -1,4 +1,16 @@
 {% extends "workspace/change_list.html" %}
+{% load i18n static admin_modify workspace_urls workspace_modify %}
+{% block page-title %}
+    {% if selected_household %}
+        &rsaquo; <a href="{% url "workspace:workspaces_countryhousehold_changelist" %}">Households</a>
+        &rsaquo; <a href="{% url "workspace:workspaces_countryhousehold_change"  selected_household.pk %}">{{ selected_household }}</a>
+        &rsaquo; members
+    {% else %}
+        &rsaquo; Individuals
+    {% endif %}
+
+{% endblock %}
+
 {#{% load i18n admin_urls static admin_list workspace_urls workspace_list  %}#}
 {#{% block pretitle %}#}
 {#    {% include "~workspace/includes/program_title.html" with program=selected_program household=selected_household %}#}

@@ -1,37 +1,16 @@
 {% extends "workspace/hh_ind_change_form.html" %}
-{% load i18n  static admin_modify workspace_urls workspace_modify %}
-    {% block breadcrumbs %}
-        <div class="breadcrumbs">
-            &rsaquo; {% if has_view_permission %}
-            {% url 'workspace:workspace_countryhousehold_changelist' as wcl %}
-            <a href="{% add_preserved_filters wcl %}">{{ original.household }}</a>{% else %}
-            {{ opts.verbose_name_plural|capfirst }}{% endif %}
+{% load i18n static admin_modify workspace_urls workspace_modify %}
+{% block page-title %}
+    {% if selected_household %}
+        &rsaquo; <a href="{% url "workspace:workspaces_countryhousehold_changelist" %}">Households</a>
+        &rsaquo; <a href="{% url "workspace:workspaces_countryhousehold_change"  selected_household.pk %}">{{ selected_household }}</a>{% admin_url selected_household %}
+        &rsaquo; <a href="{% url "workspace:workspaces_countryindividual_changelist" %}?household__exact={{ selected_household.pk }}">members</a>
+        &rsaquo;{{ original }}{% admin_url original %}
+    {% else %}
+        &rsaquo; <a href="{% url "workspace:workspaces_countryhousehold_changelist" %}">Households</a>
+        &rsaquo; <a href="{% url "workspace:workspaces_countryhousehold_change"  original.household.pk %}">{{ original.household }}</a>{% admin_url selected_household %}
+        &rsaquo; <a href="{% url "workspace:workspaces_countryindividual_changelist" %}?household__exact={{ original.household.pk }}">members</a>
+        &rsaquo;{{ original }}{% admin_url original %}
+    {% endif %}
 
-            &rsaquo; {{ original|truncatewords:"18" }}
-        </div>
-    {% endblock %}
-{##}
-{#{% if not is_popup %}#}
-{#    {% block breadcrumbs %}#}
-{#        <div class="breadcrumbs">#}
-{#            <a href="{% url 'workspace:index' %}">{% translate 'Home' %}</a>#}
-{#            &rsaquo; <a#}
-{#                href="{% url 'workspace:app_list' app_label=opts.app_label %}">{{ opts.app_config.verbose_name }}</a>#}
-{#            &rsaquo; {% if has_view_permission %}#}
-{#            <a href="{% url opts|workspace_urlname:'changelist' %}">{{ opts.verbose_name_plural|capfirst }}</a>{% else %}#}
-{#            {{ opts.verbose_name_plural|capfirst }}{% endif %}#}
-{#            &rsaquo;#}
-{#            {% if add %}{% blocktranslate with name=opts.verbose_name %}Add {{ name }}{% endblocktranslate %}{% else %}#}
-{#                {{ original|truncatewords:"18" }}{% endif %}#}
-{#        </div>#}
-{#    {% endblock %}#}
-{#{% endif %}#}
-{#{% block pre_checker_form %}#}
-{#    <tr>#}
-{#        <th>Household</th>#}
-{#        <td>#}
-{#            {% url "workspace:workspaces_countryhousehold_change" original.household.pk as hh_url %}#}
-{#            <a href="{% add_preserved_filters hh_url %}">{{ original.household }}</a>#}
-{#        </td>#}
-{#    </tr>#}
-{#{% endblock %}#}
+{% endblock %}
