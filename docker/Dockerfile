@@ -1,10 +1,11 @@
-FROM python:3.12-slim-bookworm AS python_base
+FROM python:3.12-slim-bookworm AS base_os
 ARG GOSU_VERSION=1.17
 ARG GOSU_SHA256=bbc4136d03ab138b1ad66fa4fc051bafc6cc7ffae632b069a53657279a450de3
 
 
 RUN set -x \
   && runtimeDeps=" \
+    libmagic1 \
     libxml2 \
   " \
   && buildDeps=" \
@@ -17,12 +18,12 @@ wget \
   && chmod +x /usr/local/bin/gosu \
   && apt-get purge -y --auto-remove $buildDeps
 
-RUN groupadd --gid 1024 app \
-    && adduser --disabled-login --disabled-password --no-create-home --ingroup app -q user
+RUN groupadd --gid 1024 unicef \
+    && adduser --disabled-login --disabled-password --no-create-home --ingroup unicef -q hope
 
 
 # ------- builder -------
-FROM python_base AS builder
+FROM base_os AS builder
 RUN set -x \
     && buildDeps="build-essential \
 cmake \
@@ -56,19 +57,7 @@ RUN apt-get update && \
     unzip /chromedriver/chromedriver* -d /usr/local/bin/ && \
     rm -rf /chromedriver
 
-RUN pip install uv
-
-
-#COPY AUTHORS LICENSE README.md MANIFEST.in /app/
-
-WORKDIR /app
-RUN --mount=type=cache,target=/root/.uv-cache \
-    --mount=type=bind,source=uv.lock,target=/app/uv.lock \
-    --mount=type=bind,source=pyproject.toml,target=/app/pyproject.toml \
-    --mount=type=bind,source=MANIFEST.in,target=/app/MANIFEST.in \
-    --mount=type=bind,source=./src/country_workspace,target=/app/src/country_workspace \
-    uv sync --cache-dir=/root/.uv-cache --no-dev --no-editable --frozen --extra distribution
-
+RUN pip install uv uwsgi
 
 # ------- tests -------
 FROM builder AS tests
@@ -86,12 +75,16 @@ ENV PATH=/app/.venv/bin:/usr/local/bin/:/usr/bin:/bin \
     PYTHONPATH=""\
     UWSGI_PROCESSES=4
 WORKDIR /app
+COPY uv.lock README.md MANIFEST.in pyproject.toml /app/
+COPY src /app/src/
+
 RUN --mount=type=cache,target=/root/.uv-cache \
-    --mount=type=bind,source=uv.lock,target=/app/uv.lock \
-    --mount=type=bind,source=pyproject.toml,target=/app/pyproject.toml \
-    --mount=type=bind,source=MANIFEST.in,target=/app/MANIFEST.in \
-    --mount=type=bind,source=./src/country_workspace,target=/app/src/country_workspace \
-    uv sync --cache-dir=/root/.uv-cache --no-editable --frozen --extra distribution
+    uv sync --cache-dir=/root/.uv-cache \
+        --python=/usr/local/bin/python \
+        --python-preference=system \
+        --frozen
+
+
 
 # ------- production only deps-------
 FROM builder AS production
@@ -102,16 +95,19 @@ ENV PATH=/app/.venv/bin:/usr/local/bin/:/usr/bin:/bin \
     PYTHONPATH=""\
     UWSGI_PROCESSES=4
 WORKDIR /app
+COPY uv.lock README.md MANIFEST.in pyproject.toml /app/
+COPY src /app/src/
 
 RUN --mount=type=cache,target=/root/.uv-cache \
-    --mount=type=bind,source=uv.lock,target=/app/uv.lock \
-    --mount=type=bind,source=pyproject.toml,target=/app/pyproject.toml \
-    --mount=type=bind,source=MANIFEST.in,target=/app/MANIFEST.in \
-    --mount=type=bind,source=./src/country_workspace,target=/app/src/country_workspace \
-    uv sync --cache-dir=/root/.uv-cache --no-dev --no-editable --frozen --extra distribution
+    uv sync --cache-dir=/root/.uv-cache \
+        --python=/usr/local/bin/python \
+        --python-preference=system \
+        --no-dev --no-editable --frozen --extra distribution
+
+
 
 # ------- dist -------
-FROM python_base AS dist
+FROM base_os AS dist
 ARG BUILD_DATE
 ARG VERSION
 ARG GIT_SHA
@@ -134,12 +130,26 @@ EOF
 WORKDIR /app
 COPY docker/conf /conf/
 COPY docker/bin/* /usr/local/bin/
-COPY AUTHORS LICENSE README.md /
-COPY --chown=user:app --from=production /app/.venv /app/.venv
+COPY LICENSE.md README.md /
+COPY src /app/src/
+RUN rm -fr /app/src/
+
+
+COPY --chown=hope:unicef --from=production /app/.venv /app/.venv
+COPY --from=builder /usr/local/bin/uwsgi /usr/local/bin/uv /usr/local/bin/
+RUN --mount=type=cache,target=/root/.uv-cache \
+    --mount=type=bind,source=uv.lock,target=/app/uv.lock \
+    --mount=type=bind,source=pyproject.toml,target=/app/pyproject.toml \
+    --mount=type=bind,source=MANIFEST.in,target=/app/MANIFEST.in \
+    --mount=type=bind,source=README.md,target=/app/README.md \
+    --mount=type=bind,source=./src/country_workspace,target=/app/src/country_workspace \
+    uv --cache-dir=/root/.uv-cache pip install --no-deps .
+
 
 EXPOSE 8000
 ENTRYPOINT exec docker-entrypoint.sh "$0" "$@"
 CMD ["run"]
+
 
 LABEL maintainer="hope@unicef.org"
 LABEL org.opencontainers.image.authors="hope@unicef.org"

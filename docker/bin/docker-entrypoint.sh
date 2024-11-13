@@ -17,8 +17,8 @@ case "$1" in
       set -- tini -- "$@"
 	    set -- uwsgi --http :8000 \
 	          --module country_workspace.config.wsgi \
-	          --uid user \
-	          --gid app \
+	          --uid hope \
+	          --gid unicef \
             --buffer-size 8192 \
             --http-buffer-size 8192 \
 	          $MAPPING

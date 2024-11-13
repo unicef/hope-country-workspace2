@@ -8,7 +8,7 @@ include README.md
 include MANIFEST.in
 include AUTHORS
 include CHANGES.md
-include LICENSE
+include LICENSE.md
 include pyproject.toml
 include *.py
 include uv.lock
