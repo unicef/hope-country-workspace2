@@ -1121,7 +1121,7 @@ requires-dist = [
     { name = "django-tailwind", specifier = ">=3.8.0" },
     { name = "djangorestframework", specifier = ">=3.15.1" },
     { name = "flower", specifier = ">=2.0.1" },
-    { name = "hope-flex-fields", specifier = ">=0.5.0" },
+    { name = "hope-flex-fields", specifier = ">=0.6.1" },
     { name = "hope-smart-export", specifier = ">=0.3.0" },
     { name = "hope-smart-import", specifier = ">=0.3.0" },
     { name = "mkdocs", marker = "extra == 'docs'", specifier = ">=1.6.1" },
@@ -1170,7 +1170,7 @@ dev = [
 
 [[package]]
 name = "hope-flex-fields"
-version = "0.5.0"
+version = "0.6.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "deepdiff" },
@@ -1189,9 +1189,9 @@ dependencies = [
     { name = "responses" },
     { name = "xlsxwriter" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/d2/76/5e7b4b73b2ec23621f6334da4e780c0bf6eef92fddbed54985790f7bc66f/hope_flex_fields-0.5.0.tar.gz", hash = "sha256:0b907935ef5d4766a49e4b478f475ddfd9b9cb8ead432373275e266cb6447c06", size = 551132 }
+sdist = { url = "https://files.pythonhosted.org/packages/af/53/6701734cdb4194f2fa1be8889eb42dd95ad1103fcea9a2effc3d08260c1a/hope_flex_fields-0.6.1.tar.gz", hash = "sha256:31693276f0d02c712275219d8eec65e36676895eb2482c5cb140ed972f0a1d42", size = 556748 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/ad/6d/2fe5f2e6b68e57f9859d7f16b6c52c0d387edfd637007a648d2f2e8dc7a4/hope_flex_fields-0.5.0-py3-none-any.whl", hash = "sha256:59e28873e74861da34757adda59df160fe56cfd68c1c0b4781ec9c2ce24fae8b", size = 263952 },
+    { url = "https://files.pythonhosted.org/packages/ac/6d/abb11f1eafe2318d3324b049dc0bf58ad6f0bef453f4df2b4430cf216d3e/hope_flex_fields-0.6.1-py3-none-any.whl", hash = "sha256:b1cc55ff323e250476ee17baeb5695a4fb8a8a2dc416775aa66972db49a970fa", size = 276485 },
 ]
 
 [[package]]
