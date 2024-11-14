@@ -65,6 +65,9 @@ def pytest_configure(config):
     settings.CELERY_TASK_ALWAYS_EAGER = True
     settings.SOCIAL_AUTH_REDIRECT_IS_HTTPS = False
     django.setup()
+    from country_workspace.cache.manager import cache_manager
+
+    cache_manager.active = False
 
 
 @pytest.fixture(autouse=True)

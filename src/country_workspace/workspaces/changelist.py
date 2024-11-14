@@ -6,6 +6,8 @@ from django.urls import reverse
 
 from hope_flex_fields.models import DataChecker
 
+from ..cache.manager import cache_manager
+
 if TYPE_CHECKING:
     from .templatetags.workspace_list import ResultList
 
@@ -34,6 +36,24 @@ class WorkspaceChangeList(DjangoChangeList):
             args=(quote(pk),),
             current_app=self.model_admin.admin_site.name,
         )
+
+    def get_queryset(self, request, exclude_parameters=None):
+        (
+            self.filter_specs,
+            self.has_filters,
+            remaining_lookup_params,
+            filters_may_have_duplicates,
+            self.has_active_filters,
+        ) = self.get_filters(request)
+        key = cache_manager.build_key_from_request(request, "qs")
+        if not (qs := cache_manager.get(key)):
+            qs = super().get_queryset(request, exclude_parameters)
+            cache_manager.set(key, qs)
+        self.clear_all_filters_qs = self.get_query_string(
+            new_params=remaining_lookup_params,
+            remove=self.get_filters_params(),
+        )
+        return qs
 
 
 class FlexFieldsChangeList(WorkspaceChangeList):

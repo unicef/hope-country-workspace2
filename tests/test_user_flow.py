@@ -74,31 +74,19 @@ def test_login(app, user, data: "list[Household]", settings: "SettingsWrapper"):
     res = res.follow()
     assert "Seems you have not been granted to any Office." in res.text
 
-    # with user_grant_role(user, program.country_office):
-    #     res = app.get(reverse("workspace:select_tenant"), user=user)
-    #     res.forms["select-tenant"]["tenant"] = program.country_office.pk
-    #     res = res.forms["select-tenant"].submit()
-    #     assert app.cookies["selected_tenant"] == program.country_office.slug
-    #     res = res.follow()
-    #     assert "You don't have permission to view anything here." in res.text
-
     with user_grant_permissions(
-        user,
-        [
-            "workspaces.view_countryhousehold",
-            "workspaces.view_countryindividual",
-        ],
-        program.country_office,
+        user, ["workspaces.view_countryhousehold", "workspaces.view_countryindividual"], program.country_office
     ):
         hh = program.country_office.programs.first().households.first()
         res = app.get(reverse("workspace:select_tenant"), user=user)
         res.forms["select-tenant"]["tenant"] = program.country_office.pk
         res = res.forms["select-tenant"].submit().follow()
         assert app.cookies["selected_tenant"] == program.country_office.slug
+
         res.forms["select-program"]["program"] = program.pk
         res = res.forms["select-program"].submit().follow()
         res = res.click("Households")
         res = res.click(hh.name)
         res = res.click("Close", verbose=True)
 
-        # res = res.pyquery('a.closelink')[0].click()
+    # res = res.pyquery('a.closelink')[0].click()

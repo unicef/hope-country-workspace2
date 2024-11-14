@@ -9,6 +9,7 @@ from admin_extra_buttons.buttons import LinkButton
 from admin_extra_buttons.decorators import link
 
 from ...state import state
+from ..filters import CWLinkedAutoCompleteFilter, IsValidFilter
 from .hh_ind import BeneficiaryBaseAdmin
 
 if TYPE_CHECKING:
@@ -29,6 +30,11 @@ class CountryHouseholdAdmin(BeneficiaryBaseAdmin):
     ordering = ("name",)
     title = _("Household")
     title_plural = _("Households")
+    list_per_page = 20
+    list_filter = (
+        ("batch", CWLinkedAutoCompleteFilter.factory(parent=None)),
+        IsValidFilter,
+    )
 
     def get_list_display(self, request: HttpRequest) -> list[str]:
         program: "CountryProgram | None"

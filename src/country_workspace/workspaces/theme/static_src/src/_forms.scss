@@ -1,6 +1,6 @@
 form {
   input[type=text], input[type=number], input[type=password], input [ type = date ], select {
-    @apply text-xs py-1 font-normal rounded;
+    @apply text-xs py-2 font-normal rounded border border-gray-500;
   }
 
   .helptext {

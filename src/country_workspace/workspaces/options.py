@@ -1,6 +1,8 @@
 from typing import TYPE_CHECKING, Any
 from urllib.parse import urlencode
 
+from django import forms
+from django.conf import settings
 from django.contrib import admin
 from django.contrib.admin import ShowFacets
 from django.db.models import Model
@@ -35,6 +37,17 @@ class WorkspaceModelAdmin(ExtraButtonsMixin, AdminFiltersMixin, SmartFilterMixin
     actions_selection_counter = False
     show_facets = ShowFacets.NEVER
     show_full_result_count = False
+
+    @property
+    def media(self):
+        extra = "" if settings.DEBUG else ".min"
+        base = super().media
+        return base + forms.Media(
+            js=[
+                "workspace/js/cl%s.js" % extra,
+            ],
+            css={},
+        )
 
     def get_preserved_filters(self, request: HttpRequest) -> dict[str, str]:
         """

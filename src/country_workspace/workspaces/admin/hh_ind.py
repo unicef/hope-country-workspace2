@@ -18,8 +18,9 @@ from admin_extra_buttons.decorators import button
 from adminfilters.mixin import AdminAutoCompleteSearchMixin
 from hope_flex_fields.models import DataChecker
 
+from country_workspace.cache.manager import cache_manager
+
 from ...state import state
-from ..filters import CWLinkedAutoCompleteFilter
 from ..options import WorkspaceModelAdmin
 from . import actions
 
@@ -35,32 +36,6 @@ class SelectedProgramMixin(WorkspaceModelAdmin):
         self, request: HttpRequest, obj: "Optional[Validable]" = None
     ) -> "tuple[str|None, CountryProgram | None]":
         return state.program
-        # # TOOO: Optimze for repetitive calls in same request/response
-        # from country_workspace.workspaces.models import CountryProgram
-        #
-        # self.selected_program_filter = None
-        # selected_program = None
-        # if obj:
-        #     selected_program = obj.batch.program
-        # elif cl_flt := request.GET.get("_changelist_filters", ""):
-        #     for lookup in ["batch__program__exact", "program__exact"]:
-        #         if prg := parse_qs(cl_flt).get(lookup):
-        #             self.selected_program_filter = lookup
-        #             selected_program = CountryProgram.objects.get(pk=prg[0])
-        # else:
-        #     for lookup in ["program", "program__exact", "batch__program__exact"]:
-        #         if pk := request.GET.get(lookup):
-        #             self.selected_program_filter = lookup
-        #             selected_program = CountryProgram.objects.get(pk=pk)
-        # if selected_program:
-        #     if not request.user.has_perm("workspaces.view_countryhousehold", selected_program):
-        #         raise PermissionDenied
-        # return selected_program
-
-    # def get_common_context(self, request: HttpRequest, pk: Optional[str] = None, **kwargs: Any) -> dict[str, Any]:
-    #     ret = super().get_common_context(request, pk, **kwargs)
-    #     # ret["selected_program"] = self.get_selected_program(request, ret.get("original"))
-    #     return ret
 
     def get_checker(self, request: HttpRequest, obj: "Optional[Beneficiary]" = None) -> "DataChecker":
         if p := state.program:
@@ -75,42 +50,20 @@ class SelectedProgramMixin(WorkspaceModelAdmin):
     def delete_model(self, request: HttpRequest, obj: "Beneficiary") -> None:
         super().delete_model(request, obj)
 
-    def changelist_view(self, request: HttpRequest, extra_context: Optional[dict[str, Any]] = None) -> HttpResponse:
-        context = self.get_common_context(request, title="")
-        context.update(extra_context or {})
-        return super().changelist_view(request, context)
+
+def etag_func(request: HttpRequest, *args, **kwargs):
+    return cache_manager.build_key_from_request(request)
 
 
-def etag_func(request, *args):
-    return "111"
-
-
-def last_modified_func(request, *args):
+def last_modified_func(request: HttpRequest, *args, **kwargs):
     return now() + timedelta(days=-10)
 
 
 class BeneficiaryBaseAdmin(AdminAutoCompleteSearchMixin, SelectedProgramMixin, WorkspaceModelAdmin):
-    list_filter = (
-        # ("batch__program", LinkedAutoCompleteFilter.factory(parent=None)),
-        ("batch", CWLinkedAutoCompleteFilter.factory(parent=None)),
-    )
     actions = ["validate_queryset", actions.mass_update, actions.regex_update, actions.bulk_update_export]
     title = None
     title_plural = None
-
-    # @link()
-    # def import_rdi(self, btn: LinkButton) -> None:
-    #     btn.visible = False
-    #     if prg := self.get_selected_program(btn.context["request"]):
-    #         btn.href = reverse("workspace:workspaces_countryprogram_import_rdi", args=[prg.pk])
-    #         btn.visible = self.get_checker(btn.context.get("request"), btn.context.get("original"))
-
-    # @link()
-    # def import_file_updates(self, btn: LinkButton) -> None:
-    #     btn.visible = False
-    #     if prg := self.get_selected_program(btn.context["request"]):
-    #         btn.href = reverse("workspace:workspaces_countryprogram_import_file_updates", args=[prg.pk])
-    #         btn.visible = self.get_checker(btn.context.get("request"), btn.context.get("original"))
+    list_per_page = 20
 
     def get_queryset(self, request: HttpRequest) -> "QuerySet[Beneficiary]":
         qs = super().get_queryset(request)
@@ -121,6 +74,7 @@ class BeneficiaryBaseAdmin(AdminAutoCompleteSearchMixin, SelectedProgramMixin, W
 
     def get_common_context(self, request: HttpRequest, pk: Optional[str] = None, **kwargs: Any) -> dict[str, Any]:
         ret = super().get_common_context(request, pk, **kwargs)
+        ret["aaa"] = "222"
         ret["datachecker"] = self.get_checker(request, ret.get("original"))
         ret["modeladmin"] = self
         ret["title"] = self.title_plural
@@ -208,8 +162,10 @@ class BeneficiaryBaseAdmin(AdminAutoCompleteSearchMixin, SelectedProgramMixin, W
         else:
             if not self.has_view_or_change_permission(request, obj):
                 raise PermissionDenied
-        initials = {k.replace("flex_fields__", ""): v for k, v in obj.flex_fields.items()}
-
+        if obj.flex_fields:
+            initials = {k.replace("flex_fields__", ""): v for k, v in obj.flex_fields.items()}
+        else:
+            initials = {}
         if request.method == "POST":
             if obj:
                 form = form_class(request.POST, prefix="flex_field", initial=initials)
@@ -231,5 +187,17 @@ class BeneficiaryBaseAdmin(AdminAutoCompleteSearchMixin, SelectedProgramMixin, W
     @method_decorator(etag(etag_func))
     @method_decorator(last_modified(last_modified_func))
     def changelist_view(self, request: HttpRequest, extra_context: Optional[dict[str, Any]] = None) -> HttpResponse:
-        response = super().changelist_view(request, extra_context)
+        context = self.get_common_context(request, title="----")
+        context.update(extra_context or {})
+        response = super().changelist_view(request, context)
+        return response
+
+    @method_decorator(etag(etag_func))
+    @method_decorator(last_modified(last_modified_func))
+    def change_view(
+        self, request: HttpRequest, object_id: str, form_url: str = "", extra_context: Optional[dict[str, Any]] = None
+    ) -> HttpResponse:
+        context = self.get_common_context(request, object_id, title="")
+        context.update(extra_context or {})
+        response = super().change_view(request, object_id, form_url, context)
         return response

@@ -4,6 +4,7 @@
     <thead>
         <tr>
             <th>{% trans "time" %}</th>
+            <th>{% trans "tenant" %}</th>
             <th>{% trans "key" %}</th>
             <th>{% trans "args" %}</th>
             <th>{% trans "kwargs" %}</th>
@@ -14,10 +15,10 @@
         {% for entry in gets %}
             <tr>
             <td>{{ entry.timestamp }}</td>
-            <td>{{ entry.key }}</td>
             <td>{{ entry.tenant }}</td>
             <td>{{ entry.key }}</td>
-            <td>{{ entry.2 }}</td>
+            <td>{{ entry.args }}</td>
+            <td>{{ entry.kwargs }}</td>
             <td>{{ entry.hit }}</td>
             </tr>
         {% endfor %}
@@ -30,8 +31,8 @@
     <thead>
         <tr>
             <th>{% trans "time" %}</th>
-            <th>{% trans "key" %}</th>
             <th>{% trans "tenant" %}</th>
+            <th>{% trans "key" %}</th>
 {#            <th>{% trans "hit" %}</th>#}
         </tr>
     </thead>
@@ -39,8 +40,8 @@
         {% for entry in sets %}
             <tr>
             <td>{{ entry.timestamp }}</td>
-            <td>{{ entry.key }}</td>
             <td>{{ entry.tenant }}</td>
+            <td>{{ entry.key }}</td>
 {#            <td>{{ entry.hit }}</td>#}
             </tr>
         {% endfor %}

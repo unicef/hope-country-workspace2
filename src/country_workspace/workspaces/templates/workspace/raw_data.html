@@ -1,11 +1,22 @@
 {% extends "workspace/action_page.html" %}{% load i18n workspace_urls workspace_modify %}
 {% block page-title %}
-        <a href="../../">
-    <svg style="width:1em;display: inline-flex" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="ArrowBackRoundedIcon"><path d="M19 11H7.83l4.88-4.88c.39-.39.39-1.03 0-1.42a.9959.9959 0 0 0-1.41 0l-6.59 6.59c-.39.39-.39 1.02 0 1.41l6.59 6.59c.39.39 1.02.39 1.41 0 .39-.39.39-1.02 0-1.41L7.83 13H19c.55 0 1-.45 1-1s-.45-1-1-1"></path></svg>
-    </a>
-    {{ original }}: Raw Data{% endblock %}
-
+    {% if selected_household %}
+        &rsaquo; <a href="{% url "workspace:workspaces_countryhousehold_changelist" %}">Households</a>
+        &rsaquo; <a href="{% url "workspace:workspaces_countryhousehold_change"  selected_household.pk %}">{{ selected_household }}</a>{% admin_url selected_household %}
+        &rsaquo; <a href="{% url "workspace:workspaces_countryindividual_changelist" %}?household__exact={{ selected_household.pk }}">members</a> {% admin_url modeladmin household__exact=selected_household.pk %}
+        &rsaquo;{{ original }}{% admin_url original %}
+        &rsaquo; Raw Data
+    {% else %}
+        &rsaquo; <a href="{% url "workspace:workspaces_countryhousehold_changelist" %}">Households</a>
+        &rsaquo; <a href="{% url "workspace:workspaces_countryhousehold_change"  original.household.pk %}">{{ original.household }}</a>{% admin_url selected_household %}
+        &rsaquo; <a href="{% url "workspace:workspaces_countryindividual_changelist" %}?household__exact={{ original.household.pk }}">members</a> {% admin_url modeladmin household__exact=selected_household.pk %}
+        &rsaquo;{{ original }}{% admin_url original %}
+        &rsaquo; Raw Data
+    {% endif %}
+{% endblock %}
 {% block content %}
+        <div id="content"  class="min-w-full">
+        <div id="content-main"  class="min-w-full">
     <table>
         {% for name, value in original.flex_fields.items %}
             <tr>
@@ -14,4 +25,6 @@
             </tr>
         {% endfor %}
     </table>
+        </div>
+        </div>
 {% endblock %}

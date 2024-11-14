@@ -1,6 +1,9 @@
+import urllib.parse
 from typing import Any, Optional
 
 from django import template
+from django.apps import apps
+from django.contrib.admin import ModelAdmin
 from django.contrib.admin.templatetags.admin_urls import (
     Resolver404,
     get_script_prefix,
@@ -11,6 +14,7 @@ from django.contrib.admin.templatetags.admin_urls import (
     urlparse,
     urlunparse,
 )
+from django.db.models import Model
 from django.db.models.options import Options
 from django.urls import reverse
 from django.utils.safestring import mark_safe
@@ -19,18 +23,31 @@ register = template.Library()
 
 
 @register.simple_tag(takes_context=True)
-def admin_url(context, obj, attrs=None):
+def admin_url(context, obj, **extra):
+    url = ""
+    filters = ""
     if obj:
-        if obj._meta.proxy_for_model:
-            opts = obj._meta.proxy_for_model._meta
-        else:
-            opts = obj._meta
+        if isinstance(obj, Model):
+            if obj._meta.proxy_for_model:
+                opts = obj._meta.proxy_for_model._meta
+            else:
+                opts = obj._meta
+            url = reverse("admin:%s_%s_change" % (opts.app_label, opts.model_name), args=(obj.pk,))
+        elif isinstance(obj, ModelAdmin):
+            opts = obj.opts.proxy_for_model._meta
+            url = reverse("admin:%s_%s_changelist" % (opts.app_label, opts.model_name))
+        elif isinstance(obj, str):
+            model = apps.get_model(obj)
+            opts = model._meta
+            url = reverse("admin:%s_%s_changelist" % (opts.app_label, opts.model_name))
 
-        url = reverse("admin:%s_%s_change" % (opts.app_label, opts.model_name), args=(obj.pk,))
+        if extra:
+            filters = urllib.parse.urlencode(extra)
+
         return mark_safe(  # nosec
-            '<a class="admin-change-link" target="_admin" href="{url}">'
+            '<a class="admin-change-link" target="_admin" href="{url}?{filters}">'
             '<span class="icon icon-shield1"></span>'
-            "</a>".format(url=url)
+            "</a>".format(url=url, filters=filters)
         )
     return ""
 

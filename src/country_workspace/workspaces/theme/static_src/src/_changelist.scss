@@ -59,10 +59,8 @@
         }
 
         .sortoptions {
-          display: block;
           padding: 9px 5px 0 5px;
-          float: right;
-          text-align: right;
+          @apply block float-right text-right;
 
           a {
             position: relative;
@@ -83,15 +81,16 @@
           }
 
           a:link {
-            color: var(--body-quiet-color);
             transition: color 0.15s, background 0.15s;
           }
 
           a.sortremove {
             background-position: 0 0;
           }
-        }
+          span.sortpriority{
 
+          }
+        }
 
         &.action-checkbox-column {
           width: 1.5em;
@@ -180,13 +179,16 @@
 
   ul {
     margin: 0 0;
-    @apply px-0;
+    @apply px-2;
     border-bottom: 1px solid var(--hairline-color);
 
     li {
       @apply min-w-full;
       .select2-container {
         @apply min-w-full;
+      }
+      &.selected{
+        @apply font-bold text-unicef-blue;
       }
     }
   }
@@ -200,15 +202,25 @@
 .actions {
   @apply mb-2;
   select {
-    @apply text-sm pt-1 pb-1;
+    @apply text-sm py-2;
   }
 
-  button {
-    @apply text-sm border px-2 py-1 bg-unicef-blue border-gray-500;
+  button[type=submit] {
+    @apply text-sm
   }
 }
 
 table thead th.action-checkbox-column {
   width: 1.5em;
   text-align: center;
+}
+
+.paginator{
+  @apply flex bg-gray-100 border p-2;
+  a, span {
+    @apply px-2 mx-1 border border-gray-600;
+  }
+  span{
+    @apply bg-gray-400 text-white;
+  }
 }

@@ -37,7 +37,7 @@ def sync_programs(limit_to_office: "Optional[Office]" = None) -> int:
             if limit_to_office and record["business_area_code"] != office.code:
                 continue
             else:
-                office = Office.objects.get(code=record["business_area_code"])
+                office = Office.objects.get(hope_id=record["id"])
             p, created = Program.objects.get_or_create(
                 hope_id=record["id"],
                 defaults={

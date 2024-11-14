@@ -56,8 +56,8 @@ class Command(BaseCommand):
         from testutils.factories import BatchFactory, HouseholdFactory
         from vcr.record_mode import RecordMode
 
+        from country_workspace.contrib.hope.sync.office import sync_all
         from country_workspace.models import Batch, Household
-        from country_workspace.sync.office import sync_all
 
         SyncLog.objects.create_lookups()
         if settings.HOPE_API_TOKEN:
@@ -66,7 +66,11 @@ class Command(BaseCommand):
                 sync_all()
         else:
             print("Syncing using cassette")
-            with vcr.use_cassette(test_utils_dir.parent / "sync_all.yaml", record_mode=RecordMode.NONE):
+            with vcr.use_cassette(
+                test_utils_dir.parent / "sync_all.yaml",
+                record_mode=RecordMode.NONE,
+                match_on=("path",),
+            ):
                 sync_all()
 
         Batch.objects.all().delete()

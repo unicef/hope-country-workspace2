@@ -1,7 +1,9 @@
 from typing import TYPE_CHECKING, Any
 
+from django.contrib.admin import SimpleListFilter
 from django.http import HttpRequest
 from django.urls import reverse
+from django.utils.translation import gettext as _
 
 from adminfilters.autocomplete import LinkedAutoCompleteFilter
 
@@ -98,3 +100,28 @@ class HouseholdFilter(CWLinkedAutoCompleteFilter):
         else:
             qs = qs.none()
         return qs
+
+
+class IsValidFilter(SimpleListFilter):
+    title = "Valid"
+    # lookup_val = "valid"
+    parameter_name = "valid"
+
+    def lookups(self, request, model_admin):
+        return (
+            ("v", _("Valid")),
+            ("i", _("Invalid")),
+            ("u", _("Not Verified")),
+        )
+
+    def queryset(self, request, queryset):
+        if self.value() == "v":
+            return queryset.filter(last_checked__isnull=False).filter(errors__iexact="{}")
+        elif self.value() == "i":
+            return queryset.filter(last_checked__isnull=False).exclude(errors__iexact="{}")
+        elif self.value() == "u":
+            return queryset.filter(last_checked__isnull=True)
+        return queryset
+
+    def has_output(self):
+        return True

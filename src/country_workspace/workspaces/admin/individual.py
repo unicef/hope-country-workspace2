@@ -7,7 +7,7 @@ from django.http import HttpRequest
 from django.utils.translation import gettext as _
 
 from ...state import state
-from ..filters import HouseholdFilter
+from ..filters import CWLinkedAutoCompleteFilter, HouseholdFilter, IsValidFilter
 from ..models import CountryHousehold, CountryIndividual, CountryProgram
 from ..sites import workspace
 from .hh_ind import BeneficiaryBaseAdmin
@@ -20,7 +20,12 @@ class CountryIndividualAdmin(BeneficiaryBaseAdmin):
         "household",
     ]
     search_fields = ("name",)
-    list_filter = (("household", HouseholdFilter),)
+
+    list_filter = (
+        ("batch", CWLinkedAutoCompleteFilter.factory(parent=None)),
+        ("household", HouseholdFilter),
+        IsValidFilter,
+    )
     exclude = [
         "household",
         # "country_office",
