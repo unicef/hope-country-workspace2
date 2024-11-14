@@ -113,6 +113,9 @@ ARG VERSION
 ARG GIT_SHA
 
 ENV PATH=/app/.venv/bin:/usr/local/bin/:/usr/bin:/bin \
+    BUILD_DATE=$BUILD_DATE \
+    GIT_SHA=$GIT_SHA \
+    VERSION=$VERSION \
     DJANGO_SETTINGS_MODULE=country_workspace.config.settings \
     PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 \

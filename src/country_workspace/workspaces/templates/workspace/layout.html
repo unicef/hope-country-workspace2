@@ -7,9 +7,9 @@
         <meta charset="utf-8">
     {% endblock %}
     {% block stylesheet %}
-{#        <link rel="stylesheet" href="{% static "power_query.css" %}" type="text/css">#}
+        {#        <link rel="stylesheet" href="{% static "power_query.css" %}" type="text/css">#}
         <link rel="stylesheet" href="{% static "icons.css" %}" type="text/css">
-{#        <link rel="stylesheet" href="{% static "css/styles.css" %}" type="text/css">#}
+        {#        <link rel="stylesheet" href="{% static "css/styles.css" %}" type="text/css">#}
         {% tailwind_css %}
     {% endblock %}
     {% block scripts %}
@@ -78,13 +78,15 @@
             {% block content %}{% endblock %}
         </div>
     </div>
-{#        <div class="flex items-center p-2">#}
-    {#        <div class="m-auto">#}
-    {#            <span>HOPE Reporting</span>#}
-    {#            <span>{{ version }}</span>#}
-    {#            <span>{{ release_date }}</span>#}
-    {#        </div>#}
-    {#    </div>#}
+    <div class="footer-signature">
+        <div>
+            <span>HOPE Workspace</span>
+            <span>{{ app.version }}</span>
+            <span>{{ app.build_date }}</span>
+            <span>{{ app.commit }}</span>
+            <span>(c) 2024 - UNICEF</span>
+        </div>
+    </div>
 </main>
 </body>
 </html>

@@ -820,6 +820,24 @@ body.web header svg.sidebar-button {
   padding: 28px 44px;
 }
 
+div.footer-signature {
+  display: block;
+  align-items: center;
+  padding: 0.5rem;
+  text-align: center;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+div.footer-signature div {
+  margin: auto;
+}
+
+div.footer-signature div span {
+  --tw-text-opacity: 1;
+  color: rgb(156 163 175 / var(--tw-text-opacity));
+}
+
 *, ::before, ::after {
   --tw-border-spacing-x: 0;
   --tw-border-spacing-y: 0;
