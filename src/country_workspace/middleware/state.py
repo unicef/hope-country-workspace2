@@ -26,6 +26,7 @@ class StateSetMiddleware:
             scope.set_tag("state:tenant", state.tenant)
             scope.set_tag("state:program", state.program)
             scope.set_tag("state:state", state)
+            scope.set_tag("user", request.user)
         response = self.get_response(request)
         return response
 
