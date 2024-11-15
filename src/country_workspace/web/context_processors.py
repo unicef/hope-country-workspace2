@@ -11,9 +11,10 @@ def current_state(request: HttpRequest) -> dict[str, Any]:
     ret = {
         "state": state,
         "app": {
-            "version": os.environ.get("VERSION", VERSION),
+            "version": VERSION,
             "build_date": os.environ.get("BUILD_DATE", ""),
             "commit": os.environ.get("GIT_SHA", "-"),
+            "branch": os.environ.get("BRANCH", "-"),
         },
     }
     return ret

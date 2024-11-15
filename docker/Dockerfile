@@ -111,11 +111,13 @@ FROM base_os AS dist
 ARG BUILD_DATE
 ARG VERSION
 ARG GIT_SHA
+ARG BRANCH
 
 ENV PATH=/app/.venv/bin:/usr/local/bin/:/usr/bin:/bin \
     BUILD_DATE=$BUILD_DATE \
     GIT_SHA=$GIT_SHA \
     VERSION=$VERSION \
+    BRANCH=$BRANCH \
     DJANGO_SETTINGS_MODULE=country_workspace.config.settings \
     PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 \

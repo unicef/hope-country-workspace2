@@ -176,6 +176,7 @@ jobs:
                 --cache-from "type=gha" \
                 --cache-to "type=gha,mode=max" \
                 --build-arg "VERSION=${{needs.test.outputs.commit}}" \
+                --build-arg "GIT_SHA=${{needs.test.outputs.commit}}" \
                 --build-arg "BUILD_DATE=${{needs.test.outputs.build_date}}" \
                 --build-arg "BRANCH=${{needs.test.outputs.branch}}" \
                 -t ${{needs.test.outputs.image}} \
