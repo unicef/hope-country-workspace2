@@ -17,6 +17,7 @@ case "$1" in
       set -- tini -- "$@"
 	    set -- uwsgi --http :8000 \
 	          --module country_workspace.config.wsgi \
+	          --mimefile=/conf/mime.types \
 	          --uid hope \
 	          --gid unicef \
             --buffer-size 8192 \

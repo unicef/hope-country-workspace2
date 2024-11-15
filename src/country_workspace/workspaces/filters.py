@@ -55,35 +55,39 @@ class CWLinkedAutoCompleteFilter(LinkedAutoCompleteFilter):
             return f"{url}?{flt}={oid}"
         return url
 
-    # @classmethod
-    # def factory(cls, **kwargs):
-    #     kwargs.setdefault(**{
-    #         "filter_title": None,
-    #         "lookup_name": "exact",
-    #     })
-    #     # kwargs["filter_title"] = title
-    #     # kwargs["lookup_name"] = lookup_name
-    #     return type("LinkedAutoCompleteFilter", (cls,), kwargs)
-
-
-class ProgramFilter(CWLinkedAutoCompleteFilter):
-
-    def queryset(self, request: HttpRequest, queryset: "QuerySet[Beneficiary]") -> "QuerySet[Beneficiary]":
+    def html_attrs(self):
+        classes = f"adminfilters  {self.__class__.__name__.lower()}"
+        if self.error_message:
+            classes += " error"
         if self.lookup_val:
-            p = state.tenant.programs.get(pk=self.lookup_val)
-            # if request.usser.has_perm()
-            queryset = super().queryset(request, queryset).filter(batch__program=p)
-        return queryset
+            classes += " active"
+
+        return {
+            "class": classes,
+            "id": "_".join(self.expected_parameters()),
+        }
 
 
-class BatchFilter(CWLinkedAutoCompleteFilter):
-    def has_output(self) -> bool:
-        return bool("batch__program__exact" in self.request.GET)
-
-    def queryset(self, request: HttpRequest, queryset: "QuerySet[Beneficiary]") -> "QuerySet[Beneficiary]":
-        if self.lookup_val:
-            queryset = super().queryset(request, queryset).filter(batch=self.lookup_val)
-        return queryset
+#
+# class ProgramFilter(CWLinkedAutoCompleteFilter):
+#
+#     def queryset(self, request: HttpRequest, queryset: "QuerySet[Beneficiary]") -> "QuerySet[Beneficiary]":
+#         if self.lookup_val:
+#             p = state.tenant.programs.get(pk=self.lookup_val)
+#             # if request.usser.has_perm()
+#             queryset = super().queryset(request, queryset).filter(batch__program=p)
+#         return queryset
+#
+#
+# class BatchFilter(CWLinkedAutoCompleteFilter):
+#     def has_output(self) -> bool:
+#         return bool("batch__program__exact" in self.request.GET)
+#
+#     def queryset(self, request: HttpRequest, queryset: "QuerySet[Beneficiary]") -> "QuerySet[Beneficiary]":
+#         if self.lookup_val:
+#             queryset = super().queryset(request, queryset).filter(batch=self.lookup_val)
+#         return queryset
+#
 
 
 class HouseholdFilter(CWLinkedAutoCompleteFilter):
@@ -106,6 +110,7 @@ class IsValidFilter(SimpleListFilter):
     title = "Valid"
     # lookup_val = "valid"
     parameter_name = "valid"
+    template = "workspace/adminfilters/combobox.html"
 
     def lookups(self, request, model_admin):
         return (
@@ -125,3 +130,13 @@ class IsValidFilter(SimpleListFilter):
 
     def has_output(self):
         return True
+
+    def html_attrs(self):
+        classes = f"adminfilters  {self.__class__.__name__.lower()}"
+        if self.value():
+            classes += " active"
+
+        return {
+            "class": classes,
+            "id": "_".join(self.expected_parameters()),
+        }

@@ -14,13 +14,14 @@
             </ul>
         {% endblock %}
         <div id="content-main">
-            {% if cl.formset and cl.formset.errors %}
-                <p class="errornote">
-                    {% blocktranslate count counter=cl.formset.total_error_count %}Please correct the error below.
-                        {% plural %}Please correct the errors below.{% endblocktranslate %}
-                </p>
-                {{ cl.formset.non_form_errors }}
-            {% endif %}
+{#            {% if cl.formset and cl.formset.errors %}#}
+{#                <p class="errornote">#}
+{#                    {% blocktranslate count counter=cl.formset.total_error_count %}Please correct the error below.#}
+{#                        {% plural %}Please correct the errors below.{% endblocktranslate %}#}
+{#                </p>#}
+{#                {{ cl.formset.non_form_errors }}#}
+{#            {% endif %}#}
+
             <div class="module{% if cl.has_filters %} filtered{% endif %}  min-w-full  flex" id="changelist">
                 <div class="changelist-form-container flex-1">
                     {% block search %}{% search_form cl %}{% endblock %}
