@@ -37,15 +37,16 @@ def is_hq_active() -> bool:
     return bool(get_selected_tenant() and get_selected_tenant().name == settings.TENANT_HQ)
 
 
-# def set_selected_tenant(tenant: "Office") -> None:
-#     state.tenant = tenant
-#     signer = get_cookie_signer()
-#     state.add_cookies(conf.COOKIE_NAME, signer.sign(tenant.slug))
-#
-# def set_selected_program(program: "Program") -> None:
-#     state.program = program
-#     signer = get_cookie_signer()
-#     state.add_cookies(conf.COOKIE_NAME, signer.sign(program.id))
+def set_selected_tenant(tenant: "Office") -> None:
+    state.tenant = tenant
+    signer = get_cookie_signer()
+    state.add_cookies(conf.TENANT_COOKIE_NAME, signer.sign(tenant.slug))
+
+
+def set_selected_program(program: "Program") -> None:
+    state.program = program
+    signer = get_cookie_signer()
+    state.add_cookies(conf.PROGRAM_COOKIE_NAME, signer.sign(program.id))
 
 
 def is_tenant_valid() -> bool:
