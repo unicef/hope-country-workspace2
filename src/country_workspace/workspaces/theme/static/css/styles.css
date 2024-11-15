@@ -686,7 +686,7 @@ form .helptext {
   font-style: italic;
 }
 
-a.button,   input[type=submit], button.button, a.closelink, a.deletelink  {
+a.button, input[type=submit], button.button, a.closelink, a.deletelink {
   margin: 0;
   color: white;
   cursor: pointer;
@@ -1395,50 +1395,8 @@ video {
   display: none;
 }
 
-.container {
-  width: 100%;
-}
-
-@media (min-width: 640px) {
-  .container {
-    max-width: 640px;
-  }
-}
-
-@media (min-width: 768px) {
-  .container {
-    max-width: 768px;
-  }
-}
-
-@media (min-width: 1024px) {
-  .container {
-    max-width: 1024px;
-  }
-}
-
-@media (min-width: 1280px) {
-  .container {
-    max-width: 1280px;
-  }
-}
-
-@media (min-width: 1536px) {
-  .container {
-    max-width: 1536px;
-  }
-}
-
 .static {
   position: static;
-}
-
-.fixed {
-  position: fixed;
-}
-
-.sticky {
-  position: sticky;
 }
 
 .float-right {
@@ -1576,10 +1534,6 @@ video {
 
 .flex-col {
   flex-direction: column;
-}
-
-.content-start {
-  align-content: flex-start;
 }
 
 .items-center {

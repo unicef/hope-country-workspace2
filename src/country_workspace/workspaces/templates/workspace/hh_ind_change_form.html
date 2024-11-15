@@ -1,41 +1,15 @@
 {% extends "workspace/change_form.html" %}
 {% load i18n  static admin_modify workspace_urls workspace_modify %}
 {% block content_title %}{% endblock %}
-{% block coltype %}colMX{% endblock %}
-
-{#{% if not is_popup %}#}
-{#    {% block breadcrumbs %}#}
-{#        <div class="breadcrumbs">#}
-{#            <a href="{% url 'workspace:index' %}">{% translate 'Workspaces' %}</a>#}
-{#            &rsaquo; <a#}
-{#                href="{% url 'workspace:app_list' app_label=opts.app_label %}">{{ opts.app_config.verbose_name }}</a>#}
-{#            &rsaquo; {% if has_view_permission %}#}
-{#            {% url opts|workspace_urlname:'changelist' as wcl %}#}
-{#            <a href="{% add_preserved_filters wcl %}">{{ opts.verbose_name_plural|capfirst }}</a>{% else %}#}
-{#            {{ opts.verbose_name_plural|capfirst }}{% endif %}#}
-{##}
-{#            &rsaquo;#}
-{#            {% if add %}{% blocktranslate with name=opts.verbose_name %}Add {{ name }}{% endblocktranslate %}{% else %}#}
-{#                {{ original|truncatewords:"18" }}{% endif %}#}
-{#        </div>#}
-{#    {% endblock %}#}
-{#{% endif %}#}
+{#{% block coltype %}colMX{% endblock %}#}
 
 
 {% block content %}
     {% block object-tools %}
         {{ block.super }}
-{#        {% if change and not is_popup %}#}
-{#            <ul class="object-tools">#}
-{#                {% block object-tools-items %}#}
-{#                    {% change_form_object_tools %}#}
-{#                    {% include "admin_extra_buttons/includes/change_form_buttons.html" %}#}
-{#                {% endblock %}#}
-{#            </ul>#}
-{#        {% endif %}#}
     {% endblock %}
-    <div id="content"  class="min-w-full">
-        <div id="content-main"  class="min-w-full">
+    <div id="content">
+        <div id="content-main">
             <form  class="min-w-full beneficiary-form" {% if has_file_field %}enctype="multipart/form-data" {% endif %}{% if form_url %}action="{{ form_url }}" {% endif %}method="post"
                   id="{{ opts.model_name }}_form" novalidate>{% csrf_token %}{% block form_top %}{% endblock %}
                 <div  class="min-w-full">
@@ -73,4 +47,5 @@
                 </div>
             </form>
         </div>
+    </div>
 {% endblock %}

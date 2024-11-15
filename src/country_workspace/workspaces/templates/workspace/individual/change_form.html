@@ -8,8 +8,8 @@
         &rsaquo;{{ original }}{% admin_url original %}
     {% else %}
         &rsaquo; <a href="{% url "workspace:workspaces_countryhousehold_changelist" %}">Households</a>
-        &rsaquo; <a href="{% url "workspace:workspaces_countryhousehold_change"  original.household.pk %}">{{ original.household }}</a>{% admin_url selected_household %}
-        &rsaquo; <a href="{% url "workspace:workspaces_countryindividual_changelist" %}?household__exact={{ original.household.pk }}">members</a> {% admin_url modeladmin household__exact=selected_household.pk %}
+        &rsaquo; <a href="{% url "workspace:workspaces_countryhousehold_change"  original.household.pk %}">{{ original.household }}</a>{% admin_url original.household %}
+        &rsaquo; <a href="{% url "workspace:workspaces_countryindividual_changelist" %}?household__exact={{ original.household.pk }}">members</a> {% admin_url modeladmin household__exact=original.household.pk %}
         &rsaquo;{{ original }}{% admin_url original %}
     {% endif %}
 {% endblock %}

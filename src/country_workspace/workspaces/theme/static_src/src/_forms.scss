@@ -9,7 +9,7 @@ form {
 }
 
 
-a.button,   input[type=submit], button.button, a.closelink, a.deletelink  {
+a.button, input[type=submit], button.button, a.closelink, a.deletelink {
 
   margin: 0;
   color: white;
@@ -37,7 +37,6 @@ a.button,   input[type=submit], button.button, a.closelink, a.deletelink  {
     @extend a.button;
     background-color: rgba(99, 92, 15, 0.53);
   }
-
 
   a.deletelink {
     background-color: rgb(207, 34, 34);
@@ -91,11 +90,13 @@ fieldset.module {
     }
   }
 }
-.beneficiary-form{
-  input[type=text], select{
+
+.beneficiary-form {
+  input[type=text], select {
     @apply min-w-full;
   }
-  .validation-error{
+
+  .validation-error {
     @apply italic;
   }
 }

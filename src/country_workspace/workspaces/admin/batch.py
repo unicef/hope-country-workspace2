@@ -57,4 +57,4 @@ class CountryBatchAdmin(SelectedProgramMixin, WorkspaceModelAdmin):
     def imported_records(self, btn: LinkButton) -> None:
         base = reverse("workspace:workspaces_countryhousehold_changelist")
         obj = btn.context["original"]
-        btn.href = f"{base}?batch__exact={obj.pk}&batch__program__exact={obj.program.pk}"
+        btn.href = f"{base}?batch__exact={obj.pk}"
