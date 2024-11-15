@@ -12,8 +12,6 @@ from flags.conditions import conditions
 
 from country_workspace.state import state
 
-from .http import get_client_ip
-
 logger = logging.getLogger(__name__)
 
 
@@ -70,23 +68,3 @@ def header_key(value: str, **kwargs: Any) -> bool:
     else:
         value = f"HTTP_{value.strip()}"
         return value in state.request.META
-
-
-try:
-    import pytricia
-
-    pyt = pytricia.PyTricia()
-
-    def client_ip(value: str, **kwargs: Any) -> bool:
-        remote = get_client_ip()
-        pyt.insert(value, "")
-        return remote in pyt
-
-except ImportError:
-    logger.warning("pytricia not installed. 'client_ip' flag not registared ")
-
-    def client_ip(value: str, **kwargs: Any) -> bool:
-        return True
-
-
-conditions.register("User IP", client_ip)

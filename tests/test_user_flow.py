@@ -72,7 +72,7 @@ def test_login(app, user, data: "list[Household]", settings: "SettingsWrapper"):
     assert res.status_code == 302
     assert res.location == reverse("workspace:select_tenant")
     res = res.follow()
-    assert "Seems you have not been granted to any Office." in res.text
+    assert "You do not have any Office enabled." in res.text
 
     with user_grant_permissions(
         user, ["workspaces.view_countryhousehold", "workspaces.view_countryindividual"], program.country_office

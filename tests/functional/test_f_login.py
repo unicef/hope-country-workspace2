@@ -35,4 +35,4 @@ def test_login(selenium, user):
     selenium.find_by_css("input[name=username").send_keys(user.username)
     selenium.find_by_css("input[name=password").send_keys(user._password)
     selenium.find_by_css("button.primary").click()
-    assert "Seems you do not have any Office enabled." in selenium.page_source
+    assert "You do not have any Office enabled." in selenium.page_source

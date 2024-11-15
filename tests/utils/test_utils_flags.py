@@ -7,23 +7,7 @@ from django.test.client import RequestFactory
 import pytest
 
 from country_workspace.state import state
-from country_workspace.utils.flags import client_ip, debug, env_var, header_key, hostname, superuser, validate_bool
-
-
-@pytest.mark.parametrize(
-    "subnet, ip, result",
-    [
-        ("192.168.1.0/24", "192.168.1.1", True),
-        ("192.168.1.1/32", "192.168.1.1", True),
-        ("192.168.1.1", "192.168.1.1", True),
-        ("192.168.1.0/24", "192.168.66.1", False),
-        ("192.168.0.0/16", "192.168.1.1", True),
-    ],
-)
-def test_client_ip(rf: RequestFactory, subnet: str, ip: str, result: str) -> None:
-    request = rf.get("/", REMOTE_ADDR=ip)
-    with state.configure(request=request):
-        assert client_ip(subnet) == result
+from country_workspace.utils.flags import debug, env_var, header_key, hostname, superuser, validate_bool
 
 
 @pytest.mark.parametrize(

@@ -1052,7 +1052,6 @@ dependencies = [
 
 [package.optional-dependencies]
 distribution = [
-    { name = "pytricia" },
     { name = "uwsgi" },
 ]
 docs = [
@@ -1131,7 +1130,6 @@ requires-dist = [
     { name = "mkdocstrings-python", marker = "extra == 'docs'" },
     { name = "openpyxl", specifier = ">=3.1.5" },
     { name = "psycopg2-binary", specifier = ">=2.9.9" },
-    { name = "pytricia", marker = "extra == 'distribution'", specifier = ">=1.0.2" },
     { name = "redis" },
     { name = "sentry-sdk", specifier = ">=2.7.1" },
     { name = "social-auth-app-django" },
@@ -2281,12 +2279,6 @@ sdist = { url = "https://files.pythonhosted.org/packages/5f/4a/29feb8da6c44f7700
 wheels = [
     { url = "https://files.pythonhosted.org/packages/e0/a5/c6ba13860bdf5525f1ab01e01cc667578d6f1efc8a1dba355700fb04c29b/python3_openid-3.2.0-py3-none-any.whl", hash = "sha256:6626f771e0417486701e0b4daff762e7212e820ca5b29fcc0d05f6f8736dfa6b", size = 133681 },
 ]
-
-[[package]]
-name = "pytricia"
-version = "1.0.2"
-source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/4e/99/6d6c7cea1a4d52b8882d6a6103f4079373ae3a71d945e4e56742a5324844/pytricia-1.0.2.tar.gz", hash = "sha256:7f6c0afdce55a1b7651a1a56d8b621c228a211dd23f3f8c5c1fdec3af2c19b15", size = 20766 }
 
 [[package]]
 name = "pytz"
