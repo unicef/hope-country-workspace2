@@ -1,6 +1,6 @@
 {% spaceless %}
     <li>
-        <select {% include "~admin_extra_buttons/includes/attrs.html" with button=button %}
+        <select {% include "admin_extra_buttons/includes/attrs.html" with button=button %}
             onchange="window.location = this.options[this.selectedIndex].value">
             <option value="#">{{ button.label }}</option>
             {% for choice in button.get_choices %}
