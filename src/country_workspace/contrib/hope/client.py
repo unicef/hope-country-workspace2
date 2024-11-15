@@ -1,12 +1,12 @@
 import hashlib
 import re
 import time
-from http.client import RemoteDisconnected
 from json import JSONDecodeError
 from typing import TYPE_CHECKING, Any, Generator, Optional, Union
 
 import requests
 from constance import config
+from requests.exceptions import RequestException
 
 from country_workspace.exceptions import RemoteError
 
@@ -54,7 +54,7 @@ class HopeClient:
                 if ret.status_code != 200:
                     raise RemoteError(f"Error {ret.status_code} fetching {url}")
                 pages += 1
-            except RemoteDisconnected:
+            except RequestException:
                 raise RemoteError(f"Remote Error fetching {url}")
 
             try:

@@ -119,6 +119,9 @@ class IsValidFilter(SimpleListFilter):
             ("u", _("Not Verified")),
         )
 
+    def get_title(self):
+        return self.title
+
     def queryset(self, request, queryset):
         if self.value() == "v":
             return queryset.filter(last_checked__isnull=False).filter(errors__iexact="{}")

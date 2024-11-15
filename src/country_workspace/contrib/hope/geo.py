@@ -1,3 +1,4 @@
+import logging
 from typing import Any
 
 from django import forms
@@ -8,7 +9,10 @@ from hope_flex_fields.mixin import ChildFieldMixin
 
 from country_workspace.cache.manager import cache_manager
 
+from ...exceptions import RemoteError
 from .client import HopeClient
+
+logger = logging.getLogger(__name__)
 
 
 class DynamicChoiceField(ChildFieldMixin, forms.ChoiceField):
@@ -23,14 +27,18 @@ class DynamicChoiceField(ChildFieldMixin, forms.ChoiceField):
         if not parent_value:
             return []
         key = slugify(f"{parent_value}-{self.level}")
+        ret = []
         if not (data := cache_manager.get(key)):
             client = HopeClient()
-            data = list(
-                client.get("areas", params={"area_type_area_level": self.level, "country_iso_code3": parent_value})
-            )
-            # cache_manager.set(key, data, timeout=300)
+            try:
+                data = list(
+                    client.get("areas", params={"area_type_area_level": self.level, "country_iso_code3": parent_value})
+                )
+                cache_manager.set(key, data, timeout=300)
+            except RemoteError as e:
+                logger.exception(e)
+                return ret
 
-        ret = []
         for i, record in enumerate(data):
             if only_codes:
                 ret.append(record["p_code"])
@@ -46,10 +54,15 @@ class CountryChoice(forms.ChoiceField):
         key = "lookups/country"
         if not (data := cache_manager.get(key)):
             client = HopeClient()
-            data = list(client.get("lookups/country"))
-            cache_manager.set(key, data, timeout=300)
+            try:
+                data = list(client.get("lookups/country"))
+                cache_manager.set(key, data, timeout=300)
+            except RemoteError as e:
+                logger.exception(e)
+                return ret
         for i, record in enumerate(data):
             ret.append((record["iso_code3"], record["name"]))
+
         return ret
 
     def __init__(self, **kwargs):
