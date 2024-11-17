@@ -1,4 +1,4 @@
-{% extends "workspace/action_page.html" %}{% load i18n workspace_urls workspace_modify %}
+{% extends "workspace/raw_data.html" %}{% load i18n workspace_urls workspace_modify %}
 {% block page-title %}
     {% if selected_household %}
         &rsaquo; <a href="{% url "workspace:workspaces_countryhousehold_changelist" %}">Households</a>
@@ -13,18 +13,4 @@
         &rsaquo;{{ original }}{% admin_url original %}
         &rsaquo; Raw Data
     {% endif %}
-{% endblock %}
-{% block content %}
-        <div id="content"  class="min-w-full">
-        <div id="content-main"  class="min-w-full">
-    <table>
-        {% for name, value in original.flex_fields.items %}
-            <tr>
-                <th>{{ name }}</th>
-                <td>{{ value }}</td>
-            </tr>
-        {% endfor %}
-    </table>
-        </div>
-        </div>
 {% endblock %}

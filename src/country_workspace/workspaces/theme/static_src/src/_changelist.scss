@@ -114,6 +114,7 @@
       tr {
         @apply hover:bg-gray-100;
         @apply border-b-gray-100 border;
+
       }
 
       td, th {
@@ -136,6 +137,9 @@
 
       tr:nth-child(even) {
         @apply hover:bg-gray-100 bg-white py-12 border-b-gray-600;
+      }
+      tr.selected:nth-child(odd),tr.selected:nth-child(even){
+        @apply bg-blue-100
       }
     }
   }
@@ -166,6 +170,7 @@
   }
 
   details {
+    @apply mt-1;
     > * {
       display: inline;
     }
@@ -178,9 +183,12 @@
       cursor: pointer;
 
       &::before {
-        content: '→';
+        //content: '→';
+        content: '►';
+        //content: '▷';
         font-weight: bolder;
-        font-size: 0.875rem;
+        font-size: 18px;
+        font-family: "Courier New", Courier, monospace;
         color: var(--link-hover-color);
       }
     }
@@ -197,19 +205,30 @@
   }
 
   details[open] > summary::before {
-    content: '↓';
+    //content: '↓';
+    content: '▼';
   }
 
   ul {
     margin: 0 0;
     @apply px-2;
-      select{
-        @apply min-w-full p-1 text-sm;
+    select {
+      @apply min-w-full p-1 text-sm;
+      border-radius: 4px;
+      min-height: 30px;
+      height: 28px;
+      border-color: rgb(204, 204, 204);
+
+      &:active {
+        border-color: rgb(204, 204, 204)
+
       }
+    }
 
     li {
       @apply min-w-full;
       .select2-container {
+        border-radius: 4px;
         @apply min-w-full;
       }
 
@@ -228,7 +247,7 @@
 .actions {
   @apply mb-2;
   select {
-    @apply text-sm py-2;
+    @apply text-sm py-2 pt-1 pb-1;
   }
 
   button[type=submit] {

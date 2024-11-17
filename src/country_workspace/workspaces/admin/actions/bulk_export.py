@@ -189,6 +189,7 @@ def bulk_update_export(
 ) -> HttpResponse:
     ctx = model_admin.get_common_context(request, title=_("Export data for bulk update"))
     ctx["checker"] = checker = model_admin.get_checker(request)
+    ctx["preserved_filters"] = model_admin.get_preserved_filters(request)
     form = BulkUpdateForm(request.POST, checker=checker)
     ctx["form"] = form
     if "_export" in request.POST:

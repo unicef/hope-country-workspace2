@@ -120,6 +120,7 @@ def mass_update(
 ) -> HttpResponse:
     ctx = model_admin.get_common_context(request, title=_("Mass update"))
     ctx["checker"] = checker = model_admin.get_checker(request)
+    ctx["preserved_filters"] = model_admin.get_preserved_filters(request)
     form = MassUpdateForm(request.POST, checker=checker)
     ctx["form"] = form
     if "_apply" in request.POST:

@@ -8,6 +8,8 @@ from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render
 from django.utils.translation import gettext as _
 
+from country_workspace.utils.flex_fields import get_checker_fields
+
 from .base import BaseActionForm
 
 if TYPE_CHECKING:
@@ -38,8 +40,7 @@ class RegexUpdateForm(BaseActionForm):
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         checker: "DataChecker" = kwargs.pop("checker")
         super().__init__(*args, **kwargs)
-        field_names = checker.get_form()().fields.keys()
-        self.fields["field"].choices = zip(field_names, field_names)
+        self.fields["field"].choices = list(get_checker_fields(checker))
 
 
 def regex_update_impl(
@@ -70,7 +71,7 @@ def regex_update(
     ctx["checker"] = checker = model_admin.get_checker(request)
     ctx["queryset"] = queryset
     ctx["opts"] = model_admin.model._meta
-
+    ctx["preserved_filters"] = model_admin.get_preserved_filters(request)
     if "_preview" in request.POST:
         form = RegexUpdateForm(request.POST, checker=checker)
         if form.is_valid():
@@ -82,11 +83,14 @@ def regex_update(
             regex_update_impl(queryset.all(), form.cleaned_data)
             model_admin.message_user(request, "Records updated successfully")
     else:
-        form = RegexUpdateForm(request.POST, checker=checker)
+        form = RegexUpdateForm(
+            checker=checker,
+            initial={
+                "action": request.POST["action"],
+                "select_across": request.POST["select_across"],
+                "_selected_action": request.POST.getlist("_selected_action"),
+            },
+        )
 
     ctx["form"] = form
     return render(request, "workspace/actions/regex.html", ctx)
-
-
-# regex_update.allowed_permissions = []
-# regex_update.short_description = []

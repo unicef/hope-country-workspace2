@@ -28,7 +28,7 @@ $tenant-main: rgb(30, 58, 138);
 
 
 ul.object-tools {
-  @apply flex py-1 ml-3 my-5;
+  @apply flex py-1 ml-3 my-5 pr-5;
   justify-content: flex-end;
 
   li {

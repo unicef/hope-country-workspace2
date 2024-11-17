@@ -18,6 +18,7 @@ class IndividualAdmin(BaseModelAdmin):
         ("batch__country_office", LinkedAutoCompleteFilter.factory(parent=None)),
         ("batch__program", LinkedAutoCompleteFilter.factory(parent="batch__country_office")),
     )
+    autocomplete_fields = ("batch",)
 
     @link(change_list=True, change_form=False)
     def view_in_workspace(self, btn: "LinkButton") -> None:

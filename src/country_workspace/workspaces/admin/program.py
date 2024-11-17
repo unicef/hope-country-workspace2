@@ -1,6 +1,7 @@
 from typing import Any, Optional
 
 from django import forms
+from django.conf import settings
 from django.contrib.admin import register
 from django.db.models import QuerySet
 from django.db.transaction import atomic
@@ -19,6 +20,7 @@ from hope_smart_import.readers import open_xls_multi
 from country_workspace.state import state
 
 from ...models import AsyncJob, Batch, Household
+from ...utils.flex_fields import get_checker_fields
 from ..models import CountryProgram
 from ..options import WorkspaceModelAdmin
 from ..sites import workspace
@@ -34,12 +36,9 @@ class SelectColumnsForm(forms.Form):
         super().__init__(*args, **kwargs)
         columns: list[tuple[str, str]] = []
 
-        for fs in self.checker.members.select_related("fieldset").all():
-            for field in fs.fieldset.get_fields():
-                columns.append((f"flex_fields__{field.name}", field.attrs.get("label", field.name)))
+        for name, label in get_checker_fields(self.checker):
+            columns.append((f"flex_fields__{name}", label))
 
-        # for k, f in self.checker.get_form().declared_fields.items():
-        #     columns.append((f"flex_fields__{k}", f.label))
         self.fields["columns"].choices = self.model_core_fields + sorted(columns)
 
 
@@ -82,7 +81,7 @@ class CountryProgramAdmin(WorkspaceModelAdmin):
         "sector",
         "name",
     )
-    # form = ProgramForm
+    form = ProgramForm
     ordering = ("name",)
     fieldsets = (
         (
@@ -106,8 +105,19 @@ class CountryProgramAdmin(WorkspaceModelAdmin):
         ),
         # (_("Important dates"), {"fields": ("last_login", "date_joined")}),
     )
-    # change_form_template = "workspace/program/change_form.html"
 
+    @property
+    def media(self):
+        extra = "" if settings.DEBUG else ".min"
+        base = super().media
+        return base + forms.Media(
+            js=[
+                "workspace/js/program%s.js" % extra,
+            ],
+            css={},
+        )
+
+    # change_form_template = "workspace/program/change_form.html"
     def get_queryset(self, request: HttpResponse) -> QuerySet[CountryProgram]:
         return CountryProgram.objects.filter(country_office=state.tenant)
 
@@ -124,12 +134,6 @@ class CountryProgramAdmin(WorkspaceModelAdmin):
     @link(change_list=False)
     def population(self, btn: LinkButton) -> None:
         btn.href = reverse("workspace:workspaces_countryhousehold_changelist")
-
-    @button()
-    def sync(self, request: HttpResponse) -> None:
-        from country_workspace.contrib.hope.sync.office import sync_programs
-
-        sync_programs(state.tenant)
 
     def _configure_columns(
         self,

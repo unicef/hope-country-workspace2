@@ -1,30 +1,26 @@
-from datetime import timedelta
 from typing import TYPE_CHECKING, Any, Optional
 
 from django.contrib import admin, messages
 from django.contrib.admin.utils import unquote
 from django.core.exceptions import PermissionDenied
-from django.db.models import QuerySet
+from django.db.models import Model, QuerySet
 from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.template.response import TemplateResponse
 from django.urls import reverse
-from django.utils.decorators import method_decorator
-from django.utils.timezone import now
 from django.utils.translation import gettext as _
-from django.views.decorators.http import etag, last_modified
 
 from admin_extra_buttons.decorators import button
 from adminfilters.mixin import AdminAutoCompleteSearchMixin
 from hope_flex_fields.models import DataChecker
-
-from country_workspace.cache.manager import cache_manager
 
 from ...state import state
 from ..options import WorkspaceModelAdmin
 from . import actions
 
 if TYPE_CHECKING:
+    from hope_flex_fields.forms import FlexForm
+
     from ...models.base import Validable
     from ...types import Beneficiary
     from .program import CountryProgram
@@ -51,12 +47,13 @@ class SelectedProgramMixin(WorkspaceModelAdmin):
         super().delete_model(request, obj)
 
 
-def etag_func(request: HttpRequest, *args, **kwargs):
-    return cache_manager.build_key_from_request(request)
-
-
-def last_modified_func(request: HttpRequest, *args, **kwargs):
-    return now() + timedelta(days=-10)
+# def etag_func(request: HttpRequest, *args, **kwargs):
+#
+#     return cache_manager.build_key_from_request(request)
+#
+#
+# def last_modified_func(request: HttpRequest, *args, **kwargs):
+#     return now() + timedelta(days=-10)
 
 
 class BeneficiaryBaseAdmin(AdminAutoCompleteSearchMixin, SelectedProgramMixin, WorkspaceModelAdmin):
@@ -74,11 +71,10 @@ class BeneficiaryBaseAdmin(AdminAutoCompleteSearchMixin, SelectedProgramMixin, W
 
     def get_common_context(self, request: HttpRequest, pk: Optional[str] = None, **kwargs: Any) -> dict[str, Any]:
         ret = super().get_common_context(request, pk, **kwargs)
-        ret["aaa"] = "222"
         ret["datachecker"] = self.get_checker(request, ret.get("original"))
         ret["modeladmin"] = self
-        ret["title"] = self.title_plural
-
+        ret["title_plural"] = self.title_plural
+        ret.update(**kwargs)
         return ret
 
     @button(label=_("Validate"), enabled=lambda btn: btn.context["original"].checker)
@@ -112,7 +108,7 @@ class BeneficiaryBaseAdmin(AdminAutoCompleteSearchMixin, SelectedProgramMixin, W
     @button()
     def view_raw_data(self, request: HttpRequest, pk: str) -> "HttpResponse":
         context = self.get_common_context(request, pk, title="Raw Data")
-        return render(request, "workspace/raw_data.html", context)
+        return render(request, f"workspace/{self.model._meta.proxy_for_model._meta.model_name}/raw_data.html", context)
 
     def is_valid(self, obj: "Validable") -> bool | None:
         if not obj.last_checked:
@@ -130,13 +126,15 @@ class BeneficiaryBaseAdmin(AdminAutoCompleteSearchMixin, SelectedProgramMixin, W
                 (FlexFieldsChangeList,),
                 {
                     "checker": self.get_checker(request),
-                    # "selected_program_filter": self.selected_program_filter,
                     "selected_program": program,
                 },
             )
         return FlexFieldsChangeList
 
     def has_add_permission(self, request: HttpRequest) -> bool:
+        return False
+
+    def has_delete_permission(self, request: HttpRequest, obj: Model = None):
         return False
 
     def _changeform_view(
@@ -162,13 +160,14 @@ class BeneficiaryBaseAdmin(AdminAutoCompleteSearchMixin, SelectedProgramMixin, W
         else:
             if not self.has_view_or_change_permission(request, obj):
                 raise PermissionDenied
+
         if obj.flex_fields:
             initials = {k.replace("flex_fields__", ""): v for k, v in obj.flex_fields.items()}
         else:
             initials = {}
         if request.method == "POST":
             if obj:
-                form = form_class(request.POST, prefix="flex_field", initial=initials)
+                form: "FlexForm" = form_class(request.POST, prefix="flex_field", initial=initials)
                 if form.is_valid():
                     obj.flex_fields = form.cleaned_data
                     obj.save()
@@ -184,16 +183,12 @@ class BeneficiaryBaseAdmin(AdminAutoCompleteSearchMixin, SelectedProgramMixin, W
 
         return TemplateResponse(request, self.change_form_template, context)
 
-    @method_decorator(etag(etag_func))
-    @method_decorator(last_modified(last_modified_func))
     def changelist_view(self, request: HttpRequest, extra_context: Optional[dict[str, Any]] = None) -> HttpResponse:
         context = self.get_common_context(request, title="----")
         context.update(extra_context or {})
         response = super().changelist_view(request, context)
         return response
 
-    @method_decorator(etag(etag_func))
-    @method_decorator(last_modified(last_modified_func))
     def change_view(
         self, request: HttpRequest, object_id: str, form_url: str = "", extra_context: Optional[dict[str, Any]] = None
     ) -> HttpResponse:
@@ -201,3 +196,28 @@ class BeneficiaryBaseAdmin(AdminAutoCompleteSearchMixin, SelectedProgramMixin, W
         context.update(extra_context or {})
         response = super().change_view(request, object_id, form_url, context)
         return response
+
+    # def log_change(self, request, obj, message):
+    #     from django.contrib.admin.models import CHANGE, LogEntry
+    #
+    #     return LogEntry.objects.log_actions(
+    #         user_id=request.user.pk,
+    #         queryset=[obj],
+    #         action_flag=CHANGE,
+    #         change_message=message,
+    #         single_object=True,
+    #     )
+
+    # def history_view(self, request, object_id, extra_context=None):
+    #     self.object_history_template = self._get_object_history_template()
+    #     extra_context = self.get_common_context(request, object_id)
+    #     key = self.object.get_object_key("history")
+    #     if not (data := cache_manager.get(key)):
+    #         data = []
+    #         self.object.history.get("entries", [])
+    #         for d, entry in self.object.history.items():
+    #             data.append({"date": d,
+    #                         "diff": list(dictdiffer.diff(entry, self.object.flex_fields))})
+    #             cache_manager.set(key, data)
+    #     extra_context["history"] = data
+    #     return super().history_view(request, object_id, extra_context)

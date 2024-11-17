@@ -32,10 +32,11 @@ class CountryIndividualAdmin(BeneficiaryBaseAdmin):
         # "program",
         "user_fields",
     ]
-    change_list_template = "workspace/individual/change_list.html"
-    change_form_template = "workspace/individual/change_form.html"
+    # change_list_template = "workspace/individual/change_list.html"
+    # change_form_template = "workspace/individual/change_form.html"
     ordering = ("name",)
     title = _("Individual")
+    title_plural = _("Individuals")
 
     def __init__(self, model: Model, admin_site: "AdminSite"):
         self._selected_household = None
@@ -76,5 +77,5 @@ class CountryIndividualAdmin(BeneficiaryBaseAdmin):
 
     def get_common_context(self, request: HttpRequest, pk: Optional[str] = None, **kwargs: Any) -> dict[str, Any]:
         kwargs["selected_household"] = self.get_selected_household(request)
-        kwargs["title"] = self.get_selected_household(request)
+        # kwargs["title"] = self.get_selected_household(request)
         return super().get_common_context(request, pk, **kwargs)

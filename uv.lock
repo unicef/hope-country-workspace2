@@ -428,6 +428,15 @@ wheels = [
 ]
 
 [[package]]
+name = "dictdiffer"
+version = "0.9.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/61/7b/35cbccb7effc5d7e40f4c55e2b79399e1853041997fcda15c9ff160abba0/dictdiffer-0.9.0.tar.gz", hash = "sha256:17bacf5fbfe613ccf1b6d512bd766e6b21fb798822a133aa86098b8ac9997578", size = 31513 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/47/ef/4cb333825d10317a36a1154341ba37e6e9c087bac99c1990ef07ffdb376f/dictdiffer-0.9.0-py2.py3-none-any.whl", hash = "sha256:442bfc693cfcadaf46674575d2eba1c53b42f5e404218ca2c2ff549f2df56595", size = 16754 },
+]
+
+[[package]]
 name = "distlib"
 version = "0.3.9"
 source = { registry = "https://pypi.org/simple" }
@@ -1015,6 +1024,7 @@ source = { editable = "." }
 dependencies = [
     { name = "celery" },
     { name = "deepdiff" },
+    { name = "dictdiffer" },
     { name = "django" },
     { name = "django-admin-extra-buttons" },
     { name = "django-adminactions" },
@@ -1096,6 +1106,7 @@ dev = [
 requires-dist = [
     { name = "celery", specifier = ">=5.4.0" },
     { name = "deepdiff", specifier = ">=8.0.1" },
+    { name = "dictdiffer", specifier = ">=0.9.0" },
     { name = "django", specifier = ">=5.1" },
     { name = "django-admin-extra-buttons", specifier = ">=1.6.0" },
     { name = "django-adminactions", specifier = ">=2.3.0" },

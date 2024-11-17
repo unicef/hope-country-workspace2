@@ -17,8 +17,11 @@ class BatchAdmin(BaseModelAdmin):
         # ("country_office", LinkedAutoCompleteFilter.factory(parent=None)),
         # ("program", LinkedAutoCompleteFilter.factory(parent="country_office")),
     )
-    readonly_fields = ("country_office", "program")
+    readonly_fields = ("country_office", "program", "imported_by")
     search_fields = ("name",)
+
+    def has_add_permission(self, request):
+        return False
 
     @link(change_list=False)
     def members(self, button: LinkButton) -> None:

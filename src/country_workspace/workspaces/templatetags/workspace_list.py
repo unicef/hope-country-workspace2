@@ -199,7 +199,7 @@ def items_for_result(cl, result, form):  # noqa
     pk = cl.lookup_opts.pk.attname
     for field_index, field_name in enumerate(cl.list_display):
         empty_value_display = cl.model_admin.get_empty_value_display()
-        row_classes = ["field-%s" % _coerce_field_name(field_name, field_index)]
+        row_classes = ["field field-%s" % _coerce_field_name(field_name, field_index)]
         try:
             if field_name.startswith("flex_fields__"):
                 f, attr, value = flex_field_lookup_field(field_name, result, cl.model_admin)

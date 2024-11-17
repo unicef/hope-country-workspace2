@@ -1,6 +1,7 @@
 {% extends "workspace/hh_ind_change_form.html" %}
 {% load i18n  static admin_modify workspace_urls workspace_modify %}
 {% block page-title %}
-        &rsaquo; <a href="{% url "workspace:workspaces_countryhousehold_changelist" %}">Households</a>{% admin_url modeladmin %}
+    {% url "workspace:workspaces_countryhousehold_changelist" as wcl %}
+        &rsaquo; <a href="{% add_preserved_filters wcl %}">Households</a>{% admin_url modeladmin %}
         &rsaquo; {{ original }}{% admin_url original %}
 {% endblock %}

@@ -19,6 +19,7 @@ class HouseholdAdmin(BaseModelAdmin):
     )
     # readonly_fields = ("country_office", "program")
     search_fields = ("name",)
+    autocomplete_fields = ("batch",)
 
     @link(change_list=False)
     def members(self, button: LinkButton) -> None:

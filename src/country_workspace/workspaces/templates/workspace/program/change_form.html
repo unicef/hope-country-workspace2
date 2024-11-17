@@ -1,0 +1,5 @@
+{% extends "workspace/change_form.html" %}
+{% load i18n  static admin_modify workspace_urls workspace_modify %}
+{% block page-title %}
+    &rsaquo; {{ original }}{% admin_url original %}
+{% endblock %}

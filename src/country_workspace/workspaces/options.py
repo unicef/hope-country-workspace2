@@ -26,8 +26,8 @@ class WorkspaceAutoCompleteFilter(AutoCompleteFilter):
 
 
 class WorkspaceModelAdmin(ExtraButtonsMixin, AdminFiltersMixin, SmartFilterMixin, admin.ModelAdmin):
-    change_list_template = "workspace/change_list.html"
-    change_form_template = "workspace/change_form.html"
+    # change_list_template = "workspace/change_list.html"
+    # change_form_template = "workspace/change_form.html"
     object_history_template = "workspace/object_history.html"
     delete_selected_confirmation_template = "workspace/delete_selected_confirmation.html"
     delete_confirmation_template = "workspace/delete_confirmation.html"
@@ -37,6 +37,28 @@ class WorkspaceModelAdmin(ExtraButtonsMixin, AdminFiltersMixin, SmartFilterMixin
     actions_selection_counter = False
     show_facets = ShowFacets.NEVER
     show_full_result_count = False
+
+    def _get_change_form_template(self):
+        return [
+            # "workspace/%s/%s/change_form.html" % (self.opts.app_label, self.opts.model_name),
+            "workspace/%s/change_form.html" % self.opts.proxy_for_model._meta.model_name,
+            # "workspace/%s/change_form.html" % self.opts.app_label,
+            "workspace/change_form.html",
+        ]
+
+    def _get_changelist_template(self):
+        return [
+            # "workspace/%s/%s/change_form.html" % (self.opts.app_label, self.opts.model_name),
+            "workspace/%s/change_list.html" % self.opts.proxy_for_model._meta.model_name,
+            # "workspace/%s/change_form.html" % self.opts.app_label,
+            "workspace/change_list.html",
+        ]
+
+    def _get_object_history_template(self):
+        return [
+            "workspace/%s/object_history.html" % self.opts.proxy_for_model._meta.model_name,
+            "workspace/object_history.html",
+        ]
 
     @property
     def media(self):
@@ -112,16 +134,22 @@ class WorkspaceModelAdmin(ExtraButtonsMixin, AdminFiltersMixin, SmartFilterMixin
 
     # @csrf_protect_m
     def changeform_view(self, request: "HttpRequest", object_id=None, form_url="", extra_context=None):
-        #     self._selected_program = None
         extra_context = extra_context or {}
         extra_context["show_save_and_add_another"] = False
         extra_context["show_save_and_continue"] = True
         extra_context["show_save"] = False
         extra_context["preserved_filters"] = self.get_preserved_filters(request)
-        # extra_context["changelist_url2"] = self.add_preserved_filters(
-        #     request, self.get_changelist_url(request)
-        # )
         return super().changeform_view(request, object_id, form_url, extra_context=extra_context)
+
+    def changelist_view(self, request, extra_context=None):
+        self.change_list_template = self._get_changelist_template()
+        extra_context = extra_context or {}
+        extra_context["preserved_filters"] = self.get_preserved_filters(request)
+        return super().changelist_view(request, extra_context=extra_context)
+
+    def change_view(self, request, object_id, form_url="", extra_context=None):
+        self.change_form_template = self._get_change_form_template()
+        return super().change_view(request, object_id, form_url=form_url, extra_context=extra_context)
 
     def _response_post_save(self, request: "HttpRequest", obj):
         return HttpResponseRedirect(self.add_preserved_filters(request, self.get_changelist_url()))
