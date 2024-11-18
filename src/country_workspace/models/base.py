@@ -1,11 +1,15 @@
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING, Any, Optional
 
 from django.db import models
 from django.urls import reverse
 from django.utils import timezone
 from django.utils.translation import gettext as _
 
+import dictdiffer
+import reversion
+
 from country_workspace.cache.manager import cache_manager
+from country_workspace.state import state
 
 if TYPE_CHECKING:
     from hope_flex_fields.models import DataChecker
@@ -58,16 +62,12 @@ class Validable(Cachable, models.Model):
         return self.name or "%s %s" % (self._meta.verbose_name, self.id)
 
     def save(self, *args, force_insert=False, force_update=False, using=None, update_fields=None):
-        # current = self.__class__.objects.get(pk=self.pk).flex_fields
-        # if current != self.flex_fields:
-        #     self.history.append({"current": current,
-        #                          "date": str(timezone.now()),
-        #                          "user": state.request.user.username
-        #                          })
-
-        super().save(
-            *args, force_insert=force_insert, force_update=force_update, using=using, update_fields=update_fields
-        )
+        with reversion.create_revision():
+            super().save(
+                *args, force_insert=force_insert, force_update=force_update, using=using, update_fields=update_fields
+            )
+            if state.request:
+                reversion.set_user(state.request.user)
 
     def checker(self) -> "DataChecker":
         raise NotImplementedError
@@ -81,6 +81,28 @@ class Validable(Cachable, models.Model):
         self.last_checked = timezone.now()
         self.save(update_fields=["last_checked", "errors"])
         return not bool(errors)
+
+    def last_changes(self) -> "Any":
+        from reversion.models import Version
+
+        last_version = Version.objects.get_for_object(self).latest("-pk")
+        stored_status = last_version.field_dict["flex_fields"]
+        current_status = self.flex_fields
+        return list(dictdiffer.diff(stored_status, current_status))
+
+    def diff(self, first: Optional[int] = None, second: Optional[int] = None) -> "Any":
+        from reversion.models import Version
+
+        qs = Version.objects.get_for_object(self).order_by("pk")
+        versions = list(qs.values_list("pk", flat=True))
+        if first is None:
+            first = len(versions) - 1
+        if second is None:
+            second = first - 1
+        v1, v2 = list(qs.filter(pk__in=[versions[first], versions[second]]))
+        status1 = v1.field_dict["flex_fields"]
+        status2 = v2.field_dict["flex_fields"]
+        return list(dictdiffer.diff(status2, status1))
 
 
 class BaseModel(models.Model):

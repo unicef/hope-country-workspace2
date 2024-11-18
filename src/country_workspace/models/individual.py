@@ -1,12 +1,14 @@
 from django.db import models
 from django.utils.functional import cached_property
 
+import reversion
 from hope_flex_fields.models import DataChecker
 
 from .base import BaseModel, Validable
 from .household import Household
 
 
+@reversion.register()
 class Individual(Validable, BaseModel):
     household = models.ForeignKey(Household, on_delete=models.CASCADE, null=True, blank=True, related_name="members")
     system_fields = models.JSONField(default=dict, blank=True)

@@ -428,6 +428,18 @@ wheels = [
 ]
 
 [[package]]
+name = "deprecation"
+version = "2.1.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "packaging" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/5a/d3/8ae2869247df154b64c1884d7346d412fed0c49df84db635aab2d1c40e62/deprecation-2.1.0.tar.gz", hash = "sha256:72b3bde64e5d778694b0cf68178aed03d15e15477116add3fb773e581f9518ff", size = 173788 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/02/c3/253a89ee03fc9b9682f1541728eb66db7db22148cd94f89ab22528cd1e1b/deprecation-2.1.0-py2.py3-none-any.whl", hash = "sha256:a10811591210e1fb0e768a8c25517cabeabcba6f0bf96564f8ff45189f90b14a", size = 11178 },
+]
+
+[[package]]
 name = "dictdiffer"
 version = "0.9.0"
 source = { registry = "https://pypi.org/simple" }
@@ -712,6 +724,18 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/ca/90/2f794e40e5a512abfa227efb7edd8ea50d780848aba98a74fc4f46998078/django-regex-field-3.1.0.tar.gz", hash = "sha256:e17e7296e8d8c6fb68f30342eb6c88ec0336d811a22f7f180717f71e6c1e3fd6", size = 8231 }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/d8/99/99aaaf79948f032883f156dfe107a877c5a48467f2cf90aea32b7aebe55c/django_regex_field-3.1.0-py2.py3-none-any.whl", hash = "sha256:8d4f5c8dd60f187cf45e11ea01011b86fc18bc15ff31de91a7fd438e2b1037a2", size = 8120 },
+]
+
+[[package]]
+name = "django-reversion"
+version = "5.1.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "django" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/d8/aa/d7e9d98b23041b24d2b35cefcbbfa51e6e557e8e58c1c1bddabdb0baf13f/django_reversion-5.1.0.tar.gz", hash = "sha256:3309821e5b6fceedcce6b6975f1a9c7fab6ae7c7d0e1276a90e345946fa0dcb8", size = 73178 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/5a/84/898fec51294e6764ab5fdde5db079ca89d528cef039c05447ca41d6f4c74/django_reversion-5.1.0-py3-none-any.whl", hash = "sha256:084d4f117d9e2b4e8dfdfaad83ebb34410a03eed6071c96089e6811fdea82ad3", size = 84857 },
 ]
 
 [[package]]
@@ -1024,6 +1048,7 @@ source = { editable = "." }
 dependencies = [
     { name = "celery" },
     { name = "deepdiff" },
+    { name = "deprecation" },
     { name = "dictdiffer" },
     { name = "django" },
     { name = "django-admin-extra-buttons" },
@@ -1041,6 +1066,7 @@ dependencies = [
     { name = "django-jsoneditor" },
     { name = "django-mptt" },
     { name = "django-regex" },
+    { name = "django-reversion" },
     { name = "django-select2" },
     { name = "django-smart-admin" },
     { name = "django-smart-env" },
@@ -1106,6 +1132,7 @@ dev = [
 requires-dist = [
     { name = "celery", specifier = ">=5.4.0" },
     { name = "deepdiff", specifier = ">=8.0.1" },
+    { name = "deprecation", specifier = ">=2.1.0" },
     { name = "dictdiffer", specifier = ">=0.9.0" },
     { name = "django", specifier = ">=5.1" },
     { name = "django-admin-extra-buttons", specifier = ">=1.6.0" },
@@ -1123,6 +1150,7 @@ requires-dist = [
     { name = "django-jsoneditor", specifier = ">=0.2.4" },
     { name = "django-mptt", specifier = ">=0.16.0" },
     { name = "django-regex", specifier = ">=0.5.0" },
+    { name = "django-reversion", specifier = ">=5.1.0" },
     { name = "django-select2" },
     { name = "django-smart-admin", specifier = ">=2.6.0" },
     { name = "django-smart-env", specifier = ">=0.1.0" },

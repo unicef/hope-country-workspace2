@@ -31,6 +31,7 @@ INSTALLED_APPS = (
     "debug_toolbar",
     # "country_workspace.admin_site.apps.AdminConfig",
     "flags",
+    "reversion",
     "tailwind",
     "social_django",
     "admin_extra_buttons",

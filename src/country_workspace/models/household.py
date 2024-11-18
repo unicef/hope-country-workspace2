@@ -3,6 +3,8 @@ from typing import TYPE_CHECKING
 
 from django.db import models
 
+import reversion
+
 from .base import BaseModel, Validable
 
 if TYPE_CHECKING:
@@ -12,6 +14,7 @@ if TYPE_CHECKING:
     from .program import Program
 
 
+@reversion.register()
 class Household(Validable, BaseModel):
     system_fields = models.JSONField(default=dict, blank=True)
 

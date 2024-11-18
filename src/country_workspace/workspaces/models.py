@@ -3,6 +3,7 @@ from typing import cast
 from django.db import models
 from django.utils.functional import cached_property
 
+import reversion
 from hope_flex_fields.models import DataChecker
 
 from country_workspace.models import AsyncJob, Batch, Household, Individual, Office, Program
@@ -17,6 +18,7 @@ class CountryBatch(Batch):
         verbose_name_plural = "Country Batches"
 
 
+@reversion.register()
 class CountryHousehold(Household):
     class Meta:
         proxy = True
@@ -32,6 +34,7 @@ class CountryHousehold(Household):
         return self.batch.program.country_office
 
 
+@reversion.register()
 class CountryIndividual(Individual):
     class Meta:
         proxy = True
