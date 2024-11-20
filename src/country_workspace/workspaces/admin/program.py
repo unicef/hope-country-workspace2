@@ -249,7 +249,7 @@ class CountryProgramAdmin(WorkspaceModelAdmin):
         return render(request, "workspace/actions/bulk_update_import.html", context)
 
     @button(label=_("Import from Aurora"))
-    def import_aurora(self, request: HttpRequest, pk: str) -> "HttpResponse":
+    def import_aurora(self, request: HttpRequest, pk: str) -> HttpResponse:
         context = self.get_common_context(request, pk, title="Import from Aurora")
         program: CountryProgram = context["original"]
         context["selected_program"] = context["original"]
@@ -269,7 +269,7 @@ class CountryProgramAdmin(WorkspaceModelAdmin):
                     _("The import task from Aurora has been successfully queued. Asynchronous task ID: {0}.").format(
                         j.curr_async_result_id
                     ),
-                    level="success",
+                    level=messages.SUCCESS,
                 )
                 return HttpResponseRedirect(self.get_changelist_url())
         else:

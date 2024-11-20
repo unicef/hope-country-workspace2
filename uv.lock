@@ -1171,6 +1171,7 @@ dev = [
     { name = "pytest-django" },
     { name = "pytest-echo" },
     { name = "pytest-factoryboy" },
+    { name = "pytest-mock" },
     { name = "pytest-selenium" },
     { name = "pytest-xdist" },
     { name = "responses" },
@@ -1253,6 +1254,7 @@ dev = [
     { name = "pytest-django", specifier = ">=4.8.0" },
     { name = "pytest-echo", specifier = ">=1.7.3" },
     { name = "pytest-factoryboy", specifier = ">=2.7.0" },
+    { name = "pytest-mock", specifier = ">=3.14.0" },
     { name = "pytest-selenium", specifier = ">=4.1.0" },
     { name = "pytest-xdist", specifier = ">=3.6.1" },
     { name = "responses", specifier = ">=0.25.3" },
@@ -1460,7 +1462,7 @@ version = "5.4.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "amqp" },
-    { name = "tzdata" },
+    { name = "tzdata", marker = "python_full_version == '3.12.*'" },
     { name = "vine" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/38/4d/b93fcb353d279839cc35d0012bee805ed0cf61c07587916bfc35dbfddaf1/kombu-5.4.2.tar.gz", hash = "sha256:eef572dd2fd9fc614b37580e3caeafdd5af46c1eff31e7fba89138cdb406f2cf", size = 442858 }
@@ -2311,6 +2313,18 @@ wheels = [
 ]
 
 [[package]]
+name = "pytest-mock"
+version = "3.14.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "pytest" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/c6/90/a955c3ab35ccd41ad4de556596fa86685bf4fc5ffcc62d22d856cfd4e29a/pytest-mock-3.14.0.tar.gz", hash = "sha256:2719255a1efeceadbc056d6bf3df3d1c5015530fb40cf347c0f9afac88410bd0", size = 32814 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/f2/3b/b26f90f74e2986a82df6e7ac7e319b8ea7ccece1caec9f8ab6104dc70603/pytest_mock-3.14.0-py3-none-any.whl", hash = "sha256:0b72c38033392a5f4621342fe11e9219ac11ec9d375f8e2a0c164539e0d70f6f", size = 9863 },
+]
+
+[[package]]
 name = "pytest-selenium"
 version = "4.1.0"
 source = { registry = "https://pypi.org/simple" }
@@ -2915,7 +2929,7 @@ source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "pyyaml" },
     { name = "urllib3", version = "1.26.20", source = { registry = "https://pypi.org/simple" }, marker = "platform_python_implementation == 'PyPy'" },
-    { name = "urllib3", version = "2.2.3", source = { registry = "https://pypi.org/simple" }, marker = "platform_python_implementation != 'PyPy'" },
+    { name = "urllib3", version = "2.2.3", source = { registry = "https://pypi.org/simple" }, marker = "platform_python_implementation != 'PyPy' and python_full_version == '3.12.*'" },
     { name = "wrapt" },
     { name = "yarl" },
 ]

@@ -1,8 +1,11 @@
+from json import JSONDecodeError
 from typing import Any, Generator
 from urllib.parse import urljoin
 
 import requests
 from constance import config
+
+from country_workspace.exceptions import RemoteError
 
 
 class AuroraClient:
@@ -49,14 +52,23 @@ class AuroraClient:
             dict[str, Any]: Individual records from the API.
 
         Raises:
-            Exception: If the API response has a status code other than 200.
+            RemoteError: If the API response has a non-200 status code,
+                         if there's an issue with the network request,
+                         or if the response contains invalid JSON.
         """
         url = self._get_url(path)
         while url:
-            ret = requests.get(url, headers={"Authorization": f"Token {self.token}"}, timeout=10)
-            if ret.status_code != 200:
-                raise Exception(f"Error {ret.status_code} fetching {url}")
-            data = ret.json()
+            try:
+                ret = requests.get(url, headers={"Authorization": f"Token {self.token}"}, timeout=10)
+                if ret.status_code != 200:
+                    raise RemoteError(f"Error {ret.status_code} fetching {url}")
+            except requests.RequestException:
+                raise RemoteError(f"Remote Error fetching {url}")
+
+            try:
+                data = ret.json()
+            except JSONDecodeError:
+                raise RemoteError(f"Wrong JSON response fetching {url}")
 
             for record in data["results"]:
                 yield record

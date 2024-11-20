@@ -1,0 +1,311 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Token [FILTERED]
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.32.3
+    method: GET
+    uri: https://uni-hope-ukr-sr-dev.unitst.org/api/record/
+  response:
+    body:
+      string: "{\"next\":\"https://uni-hope-ukr-sr-dev.unitst.org/api/record/?cursor=cD0zMTQ5\",\"previous\":null,\"results\":[{\"id\":3158,\"registration_url\":\"https://uni-hope-ukr-sr-dev.unitst.org/api/registration/24/\",\"registrar\":null,\"project\":9,\"organization\":5,\"project_slug\":\"ukraine_child_protection\",\"organization_slug\":\"ukraine\",\"unique_field\":null,\"remote_ip\":\"105.235.213.90\",\"timestamp\":\"2024-11-12T13:01:02.521747Z\",\"ignored\":false,\"size\":5365,\"counters\":{\"start\":\"Tue
+        Nov 12 2024 13:58:44 GMT+0100 (Central European Standard Time)\",\"total\":\"137713\",\"rounds\":\"2\",\"elapsed\":\"55759\"},\"fields\":{\"ip\":\"105.235.213.90\",\"counters\":{\"start\":\"Tue
+        Nov 12 2024 13:58:44 GMT+0100 (Central European Standard Time)\",\"total\":\"137713\",\"rounds\":\"2\",\"elapsed\":\"55759\"},\"household\":[{\"admin1_h_c\":\"UA05\",\"admin2_h_c\":\"UA0502\",\"admin3_h_c\":\"UA0502001\"}],\"marketing\":[{\"can_unicef_contact_you\":[\"1\"]}],\"enumerator\":\"639723\",\"individuals\":[{\"id_type\":\"tax_id\",\"role_i_c\":\"y\",\"birth_date\":\"1991-01-01\",\"gender_i_c\":\"male\",\"patronymic\":\"sdf\",\"phone_no_i_c\":\"+380123451234\",\"tax_id_no_i_c\":\"1234512345\",\"disability_i_c\":\"n\",\"given_name_i_c\":\"sf\",\"family_name_i_c\":\"sdf\",\"bank_account_h_f\":\"n\",\"relationship_i_c\":\"head\"}],\"validator_uk\":[{\"validation\":\"y\"}]},\"index1\":null,\"index2\":null,\"index3\":null,\"is_offline\":false,\"registration\":24},{\"id\":3157,\"registration_url\":\"https://uni-hope-ukr-sr-dev.unitst.org/api/registration/24/\",\"registrar\":null,\"project\":9,\"organization\":5,\"project_slug\":\"ukraine_child_protection\",\"organization_slug\":\"ukraine\",\"unique_field\":null,\"remote_ip\":\"105.235.213.90\",\"timestamp\":\"2024-11-12T06:16:15.873388Z\",\"ignored\":false,\"size\":6024,\"counters\":{\"start\":\"Tue
+        Nov 12 2024 07:14:51 GMT+0100 (Central European Standard Time)\",\"total\":\"82180\",\"rounds\":\"1\",\"elapsed\":\"82180\"},\"fields\":{\"ip\":\"105.235.213.90\",\"counters\":{\"start\":\"Tue
+        Nov 12 2024 07:14:51 GMT+0100 (Central European Standard Time)\",\"total\":\"82180\",\"rounds\":\"1\",\"elapsed\":\"82180\"},\"household\":[{\"size_h_c\":-2,\"admin1_h_c\":\"UA05\",\"admin2_h_c\":\"UA0504\",\"admin3_h_c\":\"UA0504003\",\"f_adults_above_18_h_f\":1,\"m_adullts_above_18_h_f\":1,\"f_children_under_18_h_f\":1,\"m_children_under_18_h_f\":1}],\"marketing\":[{\"can_unicef_contact_you\":[\"1\"]}],\"enumerator\":\"639723\",\"individuals\":[{\"id_type\":\"tax_id\",\"role_i_c\":\"y\",\"birth_date\":\"1990-12-31\",\"gender_i_c\":\"female\",\"patronymic\":\"asd\",\"bank_account\":\"UA123456789012345678901234567\",\"phone_no_i_c\":\"+380123123123\",\"tax_id_no_i_c\":\"1234567890\",\"disability_i_c\":\"n\",\"given_name_i_c\":\"asd\",\"family_name_i_c\":\"ads\",\"bank_account_h_f\":\"y\",\"relationship_i_c\":\"head\",\"bank_account_number\":\"UA123456789012345678901234567\"}],\"validator_uk\":[{\"validation\":\"y\"}]},\"index1\":null,\"index2\":null,\"index3\":null,\"is_offline\":false,\"registration\":24},{\"id\":3156,\"registration_url\":\"https://uni-hope-ukr-sr-dev.unitst.org/api/registration/24/\",\"registrar\":null,\"project\":9,\"organization\":5,\"project_slug\":\"ukraine_child_protection\",\"organization_slug\":\"ukraine\",\"unique_field\":null,\"remote_ip\":\"105.235.213.90\",\"timestamp\":\"2024-11-12T06:14:27.175648Z\",\"ignored\":false,\"size\":6023,\"counters\":{\"start\":\"Tue
+        Nov 12 2024 07:11:57 GMT+0100 (Central European Standard Time)\",\"total\":\"147844\",\"rounds\":\"1\",\"elapsed\":\"147844\"},\"fields\":{\"ip\":\"105.235.213.90\",\"counters\":{\"start\":\"Tue
+        Nov 12 2024 07:11:57 GMT+0100 (Central European Standard Time)\",\"total\":\"147844\",\"rounds\":\"1\",\"elapsed\":\"147844\"},\"household\":[{\"size_h_c\":-1,\"admin1_h_c\":\"UA05\",\"admin2_h_c\":\"UA0504\",\"admin3_h_c\":\"UA0504003\",\"f_adults_above_18_h_f\":1,\"m_adullts_above_18_h_f\":1,\"f_children_under_18_h_f\":1,\"m_children_under_18_h_f\":1}],\"marketing\":[{\"can_unicef_contact_you\":[\"1\"]}],\"enumerator\":\"639723\",\"individuals\":[{\"id_type\":\"tax_id\",\"role_i_c\":\"y\",\"birth_date\":\"1989-02-08\",\"gender_i_c\":\"male\",\"patronymic\":\"asd\",\"bank_account\":\"UA123456789012345678901234567\",\"phone_no_i_c\":\"+380123123123\",\"tax_id_no_i_c\":\"1234512345\",\"disability_i_c\":\"n\",\"given_name_i_c\":\"ad\",\"family_name_i_c\":\"ads\",\"bank_account_h_f\":\"y\",\"relationship_i_c\":\"head\",\"bank_account_number\":\"UA123456789012345678901234567\"}],\"validator_uk\":[{\"validation\":\"y\"}]},\"index1\":null,\"index2\":null,\"index3\":null,\"is_offline\":false,\"registration\":24},{\"id\":3155,\"registration_url\":\"https://uni-hope-ukr-sr-dev.unitst.org/api/registration/24/\",\"registrar\":null,\"project\":9,\"organization\":5,\"project_slug\":\"ukraine_child_protection\",\"organization_slug\":\"ukraine\",\"unique_field\":null,\"remote_ip\":\"176.36.71.119\",\"timestamp\":\"2024-10-24T08:02:30.034120Z\",\"ignored\":false,\"size\":6143,\"counters\":{\"start\":\"Thu
+        Oct 24 2024 11:00:53 GMT+0300 (Eastern European Summer Time)\",\"total\":\"96747\",\"rounds\":\"2\",\"elapsed\":\"15246\"},\"fields\":{\"ip\":\"176.36.71.119\",\"counters\":{\"start\":\"Thu
+        Oct 24 2024 11:00:53 GMT+0300 (Eastern European Summer Time)\",\"total\":\"96747\",\"rounds\":\"2\",\"elapsed\":\"15246\"},\"household\":[{\"size_h_c\":12,\"admin1_h_c\":\"UA14\",\"admin2_h_c\":\"UA1408\",\"admin3_h_c\":\"UA1408009\",\"f_adults_above_18_h_f\":1,\"m_adullts_above_18_h_f\":1,\"f_children_under_18_h_f\":1,\"m_children_under_18_h_f\":1}],\"marketing\":[{\"can_unicef_contact_you\":[\"1\"]}],\"enumerator\":\"979198\",\"individuals\":[{\"id_type\":\"tax_id\",\"role_i_c\":\"y\",\"birth_date\":\"1999-01-04\",\"gender_i_c\":\"male\",\"patronymic\":\"\u0415\u0434\u0443\u0430\u0440\u0434\u043E\u0432\u0438\u0447\",\"bank_account\":\"UA123456789012345678901234567\",\"phone_no_i_c\":\"+380505097343\",\"tax_id_no_i_c\":\"1234567890\",\"disability_i_c\":\"n\",\"given_name_i_c\":\"\u0420\u043E\u043C\u0430\u043D\",\"family_name_i_c\":\"\u041B\u0443\u043D\u0456\u043D\",\"bank_account_h_f\":\"y\",\"relationship_i_c\":\"head\",\"bank_account_number\":\"UA123456789012345678901234567\"}],\"validator_uk\":[{\"validation\":\"y\"}]},\"index1\":null,\"index2\":null,\"index3\":null,\"is_offline\":false,\"registration\":24},{\"id\":3154,\"registration_url\":\"https://uni-hope-ukr-sr-dev.unitst.org/api/registration/24/\",\"registrar\":null,\"project\":9,\"organization\":5,\"project_slug\":\"ukraine_child_protection\",\"organization_slug\":\"ukraine\",\"unique_field\":null,\"remote_ip\":\"176.36.71.119\",\"timestamp\":\"2024-10-24T07:20:29.761397Z\",\"ignored\":false,\"size\":6186,\"counters\":{\"start\":\"Thu
+        Oct 24 2024 10:15:04 GMT+0300 (Eastern European Summer Time)\",\"total\":\"325508\",\"rounds\":\"2\",\"elapsed\":\"11953\"},\"fields\":{\"ip\":\"176.36.71.119\",\"counters\":{\"start\":\"Thu
+        Oct 24 2024 10:15:04 GMT+0300 (Eastern European Summer Time)\",\"total\":\"325508\",\"rounds\":\"2\",\"elapsed\":\"11953\"},\"household\":[{\"size_h_c\":55,\"admin1_h_c\":\"UA05\",\"admin2_h_c\":\"UA0506\",\"admin3_h_c\":\"UA0506009\",\"f_adults_above_18_h_f\":1,\"m_adullts_above_18_h_f\":3,\"f_children_under_18_h_f\":12,\"m_children_under_18_h_f\":2}],\"marketing\":[{\"can_unicef_contact_you\":[\"1\"]}],\"enumerator\":\"795818\",\"individuals\":[{\"id_type\":\"tax_id\",\"role_i_c\":\"y\",\"birth_date\":\"1999-01-04\",\"gender_i_c\":\"male\",\"patronymic\":\"\u0415\u0434\u0443\u0430\u0440\u0434\u043E\u0432\u0438\u0447\",\"bank_account\":\"UA123456789012345678901234567\",\"phone_no_i_c\":\"+380505097343\",\"tax_id_no_i_c\":\"1234567890\",\"disability_i_c\":\"y\",\"given_name_i_c\":\"\u0420\u043E\u043C\u0430\u043D\",\"family_name_i_c\":\"\u041B\u0443\u043D\u0456\u043D\",\"bank_account_h_f\":\"y\",\"relationship_i_c\":\"head\",\"bank_account_number\":\"UA123456789012345678901234567\"}],\"validator_uk\":[{\"validation\":\"y\"}]},\"index1\":null,\"index2\":null,\"index3\":null,\"is_offline\":false,\"registration\":24},{\"id\":3153,\"registration_url\":\"https://uni-hope-ukr-sr-dev.unitst.org/api/registration/13/\",\"registrar\":null,\"project\":7,\"organization\":5,\"project_slug\":\"ukraine-project-1\",\"organization_slug\":\"ukraine\",\"unique_field\":null,\"remote_ip\":\"217.20.174.77\",\"timestamp\":\"2024-08-30T08:27:18.457661Z\",\"ignored\":false,\"size\":6999,\"counters\":{\"start\":\"Fri
+        Aug 30 2024 10:19:39 GMT+0300 (Eastern European Summer Time)\",\"total\":\"4058946\",\"rounds\":\"1\",\"elapsed\":\"4058946\"},\"fields\":{\"ip\":\"217.20.174.77\",\"counters\":{\"start\":\"Fri
+        Aug 30 2024 10:19:39 GMT+0300 (Eastern European Summer Time)\",\"total\":\"4058946\",\"rounds\":\"1\",\"elapsed\":\"4058946\"},\"household\":[{\"admin1_h_c\":\"UA05\",\"admin2_h_c\":\"UA0508\",\"admin3_h_c\":\"UA0508009\"}],\"marketing\":[{\"can_unicef_contact_you\":[\"1\"]}],\"enumerator\":\"888202\",\"individuals\":[{\"id_type\":\"tax_id\",\"role_i_c\":\"y\",\"birth_date\":\"1990-08-15\",\"gender_i_c\":\"male\",\"patronymic\":\"\u0406\u0432\u0430\u043D\u043E\u0432\u0438\u0447\",\"bank_account\":\"UA123456789012345678901234567\",\"phone_no_i_c\":\"+380505097343\",\"tax_id_no_i_c\":\"1234657890\",\"disability_i_c\":\"n\",\"given_name_i_c\":\"\u0406\u0432\u0430\u043D\",\"family_name_i_c\":\"\u0406\u0432\u0430\u043D\u043E\u0432\",\"bank_account_h_f\":\"y\",\"relationship_i_c\":\"head\",\"bank_account_number\":\"UA123456789012345678901234567\"},{\"birth_date\":\"2021-02-09\",\"gender_i_c\":\"female\",\"patronymic\":\"\u0406\u0432\u0430\u043D\u043E\u0432\u043D\u0430\",\"disability_i_c\":\"n\",\"given_name_i_c\":\"\u0406\u0432\u0430\u043D\u043D\u0430\",\"family_name_i_c\":\"\u0406\u0432\u0430\u043D\u043E\u0432\u0430\",\"relationship_i_c\":\"son_daughter\",\"birth_certificate_no_i_c\":\"I-BK123456\"}],\"validator_uk\":[{\"validation\":\"y\"}]},\"index1\":null,\"index2\":null,\"index3\":null,\"is_offline\":false,\"registration\":13},{\"id\":3152,\"registration_url\":\"https://uni-hope-ukr-sr-dev.unitst.org/api/registration/13/\",\"registrar\":null,\"project\":7,\"organization\":5,\"project_slug\":\"ukraine-project-1\",\"organization_slug\":\"ukraine\",\"unique_field\":null,\"remote_ip\":\"217.20.174.77\",\"timestamp\":\"2024-08-22T09:12:09.741988Z\",\"ignored\":false,\"size\":5782,\"counters\":{\"start\":\"Thu
+        Aug 22 2024 12:10:46 GMT+0300 (Eastern European Summer Time)\",\"total\":\"83289\",\"rounds\":\"2\",\"elapsed\":\"30753\"},\"fields\":{\"ip\":\"217.20.174.77\",\"counters\":{\"start\":\"Thu
+        Aug 22 2024 12:10:46 GMT+0300 (Eastern European Summer Time)\",\"total\":\"83289\",\"rounds\":\"2\",\"elapsed\":\"30753\"},\"household\":[{\"admin1_h_c\":\"UA05\",\"admin2_h_c\":\"UA0504\",\"admin3_h_c\":\"UA0504003\"}],\"marketing\":[{\"can_unicef_contact_you\":[\"1\"]}],\"enumerator\":\"565164\",\"individuals\":[{\"id_type\":\"tax_id\",\"role_i_c\":\"y\",\"birth_date\":\"1989-01-31\",\"gender_i_c\":\"male\",\"patronymic\":\"rgds\",\"phone_no_i_c\":\"+380505064646\",\"tax_id_no_i_c\":\"1234567891\",\"disability_i_c\":\"n\",\"given_name_i_c\":\"gdsr\",\"family_name_i_c\":\"ergsw\",\"bank_account_h_f\":\"n\",\"relationship_i_c\":\"head\"}],\"validator_uk\":[{\"validation\":\"y\"}]},\"index1\":null,\"index2\":null,\"index3\":null,\"is_offline\":false,\"registration\":13},{\"id\":3151,\"registration_url\":\"https://uni-hope-ukr-sr-dev.unitst.org/api/registration/13/\",\"registrar\":null,\"project\":7,\"organization\":5,\"project_slug\":\"ukraine-project-1\",\"organization_slug\":\"ukraine\",\"unique_field\":null,\"remote_ip\":\"176.113.164.17\",\"timestamp\":\"2024-07-12T12:36:11.213120Z\",\"ignored\":false,\"size\":7027,\"counters\":{\"start\":\"Fri
+        Jul 12 2024 14:49:33 GMT+0300 (Eastern European Summer Time)\",\"total\":\"2804487\",\"rounds\":\"3\",\"elapsed\":\"29675\"},\"fields\":{\"ip\":\"176.113.164.17\",\"counters\":{\"start\":\"Fri
+        Jul 12 2024 14:49:33 GMT+0300 (Eastern European Summer Time)\",\"total\":\"2804487\",\"rounds\":\"3\",\"elapsed\":\"29675\"},\"household\":[{\"admin1_h_c\":\"UA65\",\"admin2_h_c\":\"UA6502\",\"admin3_h_c\":\"UA6502007\"}],\"marketing\":[{\"can_unicef_contact_you\":[\"1\"]}],\"enumerator\":\"287432\",\"individuals\":[{\"id_type\":\"tax_id\",\"role_i_c\":\"y\",\"birth_date\":\"1990-01-30\",\"gender_i_c\":\"male\",\"patronymic\":\"\u0406\u0432\u0430\u043D\u043E\u0432\u0438\u0447\",\"bank_account\":\"UA123456789123456789123456789\",\"phone_no_i_c\":\"+380505097343\",\"tax_id_no_i_c\":\"000000000\",\"disability_i_c\":\"y\",\"given_name_i_c\":\"\u0406\u0432\u0430\u043D\",\"family_name_i_c\":\"\u0406\u0432\u0430\u043D\u043E\u0432\",\"bank_account_h_f\":\"y\",\"relationship_i_c\":\"head\",\"bank_account_number\":\"UA123456789123456789123456789\"},{\"id_type\":\"tax_id\",\"role_i_c\":\"n\",\"birth_date\":\"1989-06-13\",\"gender_i_c\":\"male\",\"patronymic\":\"\u0406\u0432\u0430\u043D\u043E\u0432\u043D\u0430\",\"tax_id_no_i_c\":\"0123456789\",\"disability_i_c\":\"n\",\"given_name_i_c\":\"\u0406\u0432\u0430\u043D\u043D\u0430\",\"family_name_i_c\":\"\u0406\u0432\u0430\u043D\u043E\u0432\u0430\",\"relationship_i_c\":\"wife_husband\"}],\"validator_uk\":[{\"validation\":\"y\"}]},\"index1\":null,\"index2\":null,\"index3\":null,\"is_offline\":false,\"registration\":13},{\"id\":3150,\"registration_url\":\"https://uni-hope-ukr-sr-dev.unitst.org/api/registration/23/\",\"registrar\":null,\"project\":15,\"organization\":5,\"project_slug\":\"ukraine_shock\",\"organization_slug\":\"ukraine\",\"unique_field\":null,\"remote_ip\":\"217.20.174.77\",\"timestamp\":\"2024-07-12T09:09:08.479934Z\",\"ignored\":false,\"size\":7006,\"counters\":{\"start\":\"Fri
+        Jul 12 2024 12:08:13 GMT+0300 (Eastern European Summer Time)\",\"total\":\"61442\",\"rounds\":\"1\",\"elapsed\":\"61442\"},\"fields\":{\"ip\":\"217.20.174.77\",\"counters\":{\"start\":\"Fri
+        Jul 12 2024 12:08:13 GMT+0300 (Eastern European Summer Time)\",\"total\":\"61442\",\"rounds\":\"1\",\"elapsed\":\"61442\"},\"household\":[{\"admin1_h_c\":\"UA80\",\"admin2_h_c\":\"UA8000\",\"admin3_h_c\":\"UA8000000\"}],\"marketing\":[{\"can_unicef_contact_you\":[\"1\"]}],\"enumerator\":\"081005\",\"individuals\":[{\"id_type\":\"tax_id\",\"role_i_c\":\"y\",\"birth_date\":\"1989-07-13\",\"gender_i_c\":\"male\",\"patronymic\":\"\u0415\u0434\u0443\u0430\u0440\u0434\u043E\u0432\u0438\u0447\",\"bank_account\":\"UA123456789012345678901234567\",\"phone_no_i_c\":\"+380505097343\",\"tax_id_no_i_c\":\"1234567890\",\"disability_i_c\":\"n\",\"given_name_i_c\":\"\u0420\u043E\u043C\u0430\u043D\",\"family_name_i_c\":\"\u041B\u0443\u043D\u0456\u043D\",\"bank_account_h_f\":\"y\",\"relationship_i_c\":\"head\",\"bank_account_number\":\"UA123456789012345678901234567\"},{\"birth_date\":\"2024-06-04\",\"gender_i_c\":\"female\",\"patronymic\":\"\u043A\u0443\u043F\u0456\",\"disability_i_c\":\"n\",\"given_name_i_c\":\"\u0443\u043F\",\"family_name_i_c\":\"\u0446\u0443\u0430\",\"relationship_i_c\":\"son_daughter\",\"birth_certificate_no_i_c\":\"\u0430\u0443\u0446\u0430\u0443\u0446\u0456\u0430\"}],\"validator_uk\":[{\"validation\":\"y\"}]},\"index1\":null,\"index2\":null,\"index3\":null,\"is_offline\":false,\"registration\":23},{\"id\":3149,\"registration_url\":\"https://uni-hope-ukr-sr-dev.unitst.org/api/registration/23/\",\"registrar\":\"abed\",\"project\":15,\"organization\":5,\"project_slug\":\"ukraine_shock\",\"organization_slug\":\"ukraine\",\"unique_field\":null,\"remote_ip\":\"84.226.125.222\",\"timestamp\":\"2024-07-12T09:07:36.770639Z\",\"ignored\":false,\"size\":5779,\"counters\":{\"start\":\"Fri
+        Jul 12 2024 11:06:44 GMT+0200 (Central European Summer Time)\",\"total\":\"52511\",\"rounds\":\"2\",\"elapsed\":\"9105\"},\"fields\":{\"ip\":\"84.226.125.222\",\"counters\":{\"start\":\"Fri
+        Jul 12 2024 11:06:44 GMT+0200 (Central European Summer Time)\",\"total\":\"52511\",\"rounds\":\"2\",\"elapsed\":\"9105\"},\"household\":[{\"admin1_h_c\":\"UA14\",\"admin2_h_c\":\"UA1412\",\"admin3_h_c\":\"UA1412003\"}],\"marketing\":[{\"can_unicef_contact_you\":[\"1\"]}],\"enumerator\":\"081005\",\"individuals\":[{\"id_type\":\"tax_id\",\"role_i_c\":\"y\",\"birth_date\":\"1991-01-01\",\"gender_i_c\":\"female\",\"patronymic\":\"dsf\",\"phone_no_i_c\":\"+380123123123\",\"tax_id_no_i_c\":\"1234512345\",\"disability_i_c\":\"n\",\"given_name_i_c\":\"ad\",\"family_name_i_c\":\"sdf\",\"bank_account_h_f\":\"n\",\"relationship_i_c\":\"head\"}],\"validator_uk\":[{\"validation\":\"y\"}]},\"index1\":null,\"index2\":null,\"index3\":null,\"is_offline\":false,\"registration\":23}]}"
+    headers:
+      Accept-Ranges:
+      - bytes
+      Allow:
+      - GET, HEAD, OPTIONS
+      Connection:
+      - keep-alive
+      Content-Encoding:
+      - gzip
+      Content-Language:
+      - en-us
+      Content-Length:
+      - '2035'
+      Content-Security-Policy:
+      - 'default-src ''self'' inline unsafe-inline data: blob: ''unsafe-inline'' localhost:8000
+        unpkg.com browser.sentry-cdn.com cdnjs.cloudflare.com unisitetracker.unicef.io
+        cdn.jsdelivr.net register.unicef.org uni-hope-ukr-sr.azurefd.net uni-hope-ukr-sr-dev.azurefd.net
+        uni-hope-ukr-sr-dev.unitst.org; frame-ancestors ''self'''
+      Content-Type:
+      - application/json
+      Cross-Origin-Opener-Policy:
+      - same-origin
+      Date:
+      - Thu, 21 Nov 2024 08:08:28 GMT
+      Referrer-Policy:
+      - same-origin
+      Strict-Transport-Security:
+      - max-age=60; includeSubDomains
+      Vary:
+      - Accept, Accept-Encoding, Cookie, Accept-Language, origin
+      X-Aurora-Build:
+      - 2024-10-22 12:14
+      X-Aurora-Time:
+      - Thursday, 21-Nov-2024 08:08:27 GMT
+      X-Aurora-Version:
+      - 49a94cc
+      X-Cache:
+      - CONFIG_NOCACHE
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - SAMEORIGIN
+      x-azure-ref:
+      - 20241121T080827Z-r188b85d859bjstlhC1BUEyhbc0000000120000000005tx1
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Token [FILTERED]
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.32.3
+    method: GET
+    uri: https://uni-hope-ukr-sr-dev.unitst.org/api/record/?cursor=cD0zMTQ5
+  response:
+    body:
+      string: "{\"next\":\"https://uni-hope-ukr-sr-dev.unitst.org/api/record/?cursor=cD0zMTM5\",\"previous\":\"https://uni-hope-ukr-sr-dev.unitst.org/api/record/?cursor=cj0xJnA9MzE0OA%3D%3D\",\"results\":[{\"id\":3148,\"registration_url\":\"https://uni-hope-ukr-sr-dev.unitst.org/api/registration/19/\",\"registrar\":null,\"project\":9,\"organization\":5,\"project_slug\":\"ukraine_child_protection\",\"organization_slug\":\"ukraine\",\"unique_field\":null,\"remote_ip\":\"91.196.194.77\",\"timestamp\":\"2024-06-11T12:57:43.419641Z\",\"ignored\":false,\"size\":6065,\"counters\":{\"start\":\"Tue
+        Jun 11 2024 15:56:43 GMT+0300 (Eastern European Summer Time)\",\"total\":\"55728\",\"rounds\":\"1\",\"elapsed\":\"55728\"},\"fields\":{\"ip\":\"91.196.194.77\",\"counters\":{\"start\":\"Tue
+        Jun 11 2024 15:56:43 GMT+0300 (Eastern European Summer Time)\",\"total\":\"55728\",\"rounds\":\"1\",\"elapsed\":\"55728\"},\"household\":[{\"admin1_h_c\":\"UA12\",\"admin2_h_c\":\"UA1208\",\"admin3_h_c\":\"UA1208007\"}],\"marketing\":[{\"can_unicef_contact_you\":[\"1\"]}],\"enumerator\":\"953253\",\"individuals\":[{\"id_type\":\"tax_id\",\"role_i_c\":\"y\",\"birth_date\":\"1989-01-02\",\"gender_i_c\":\"male\",\"patronymic\":\"\u0406\u0432\u0430\u043D\u043E\u0432\u0438\u0447\",\"bank_account\":\"UA123456789123456789123456789\",\"phone_no_i_c\":\"+380505097343\",\"tax_id_no_i_c\":\"1234567891\",\"disability_i_c\":\"y\",\"given_name_i_c\":\"\u0406\u0432\u0430\u043D\",\"family_name_i_c\":\"\u0406\u0432\u0430\u043D\u043E\u0432\",\"bank_account_h_f\":\"y\",\"relationship_i_c\":\"head\",\"bank_account_number\":\"UA123456789123456789123456789\"}],\"validator_uk\":[{\"validation\":\"y\"}]},\"index1\":null,\"index2\":null,\"index3\":null,\"is_offline\":false,\"registration\":19},{\"id\":3147,\"registration_url\":\"https://uni-hope-ukr-sr-dev.unitst.org/api/registration/19/\",\"registrar\":null,\"project\":9,\"organization\":5,\"project_slug\":\"ukraine_child_protection\",\"organization_slug\":\"ukraine\",\"unique_field\":null,\"remote_ip\":\"37.73.204.39\",\"timestamp\":\"2024-06-11T11:54:34.995660Z\",\"ignored\":false,\"size\":6165,\"counters\":{\"start\":\"Tue
+        Jun 11 2024 14:52:51 GMT+0300 (Eastern European Summer Time)\",\"total\":\"103512\",\"rounds\":\"3\",\"elapsed\":\"28481\"},\"fields\":{\"ip\":\"37.73.204.39\",\"counters\":{\"start\":\"Tue
+        Jun 11 2024 14:52:51 GMT+0300 (Eastern European Summer Time)\",\"total\":\"103512\",\"rounds\":\"3\",\"elapsed\":\"28481\"},\"household\":[{\"admin1_h_c\":\"UA07\",\"admin2_h_c\":\"UA0706\",\"admin3_h_c\":\"UA0706007\"}],\"marketing\":[{\"can_unicef_contact_you\":[\"1\"]}],\"enumerator\":\"779546\",\"individuals\":[{\"id_type\":\"tax_id\",\"role_i_c\":\"y\",\"birth_date\":\"1989-01-31\",\"gender_i_c\":\"male\",\"patronymic\":\"\u0406\u0432\u0430\u043D\u043E\u0432\u0438\u0447\",\"bank_account\":\"UA123456789123456789123456789\",\"phone_no_i_c\":\"+380505097343\",\"tax_id_no_i_c\":\"1234567891\",\"disability_i_c\":\"n\",\"given_name_i_c\":\"\u0406\u0432\u0430\u043D\",\"family_name_i_c\":\"\u0406\u0432\u0430\u043D\u043E\u0432\",\"bank_account_h_f\":\"y\",\"relationship_i_c\":\"head\",\"bank_account_number\":\"UA123456789123456789123456789\"}],\"validator_uk\":[{\"validation\":\"y\"}]},\"index1\":null,\"index2\":null,\"index3\":null,\"is_offline\":false,\"registration\":19},{\"id\":3146,\"registration_url\":\"https://uni-hope-ukr-sr-dev.unitst.org/api/registration/13/\",\"registrar\":null,\"project\":7,\"organization\":5,\"project_slug\":\"ukraine-project-1\",\"organization_slug\":\"ukraine\",\"unique_field\":null,\"remote_ip\":\"176.113.164.17\",\"timestamp\":\"2024-06-06T11:17:27.918084Z\",\"ignored\":false,\"size\":6998,\"counters\":{\"start\":\"Thu
+        Jun 06 2024 14:09:43 GMT+0300 (Eastern European Summer Time)\",\"total\":\"463652\",\"rounds\":\"1\",\"elapsed\":\"463652\"},\"fields\":{\"ip\":\"176.113.164.17\",\"counters\":{\"start\":\"Thu
+        Jun 06 2024 14:09:43 GMT+0300 (Eastern European Summer Time)\",\"total\":\"463652\",\"rounds\":\"1\",\"elapsed\":\"463652\"},\"household\":[{\"admin1_h_c\":\"UA05\",\"admin2_h_c\":\"UA0504\",\"admin3_h_c\":\"UA0504003\"}],\"marketing\":[{\"can_unicef_contact_you\":[\"1\"]}],\"enumerator\":\"888202\",\"individuals\":[{\"id_type\":\"tax_id\",\"role_i_c\":\"y\",\"birth_date\":\"1989-01-01\",\"gender_i_c\":\"male\",\"patronymic\":\"\u0406\u0432\u0430\u043D\u043E\u0432\u0438\u0447\",\"bank_account\":\"UA123456789123456789123456789\",\"phone_no_i_c\":\"+380505097343\",\"tax_id_no_i_c\":\"1234567891\",\"disability_i_c\":\"n\",\"given_name_i_c\":\"\u0406\u0432\u0430\u043D\",\"family_name_i_c\":\"\u0406\u0432\u0430\u043D\u043E\u0432\",\"bank_account_h_f\":\"y\",\"relationship_i_c\":\"head\",\"bank_account_number\":\"UA123456789123456789123456789\"},{\"birth_date\":\"2024-05-06\",\"gender_i_c\":\"female\",\"patronymic\":\"\u0406\u0432\u0430\u043D\u043E\u0432\u043D\u0430\",\"disability_i_c\":\"n\",\"given_name_i_c\":\"\u0406\u0432\u0430\u043D\u043D\u0430\",\"family_name_i_c\":\"\u0406\u0432\u0430\u043D\u043E\u0432\u0430\",\"relationship_i_c\":\"son_daughter\",\"birth_certificate_no_i_c\":\"I-BK123456\"}],\"validator_uk\":[{\"validation\":\"y\"}]},\"index1\":null,\"index2\":null,\"index3\":null,\"is_offline\":false,\"registration\":13},{\"id\":3145,\"registration_url\":\"https://uni-hope-ukr-sr-dev.unitst.org/api/registration/13/\",\"registrar\":null,\"project\":7,\"organization\":5,\"project_slug\":\"ukraine-project-1\",\"organization_slug\":\"ukraine\",\"unique_field\":null,\"remote_ip\":\"91.196.194.77\",\"timestamp\":\"2024-06-05T06:26:03.387053Z\",\"ignored\":false,\"size\":5832,\"counters\":{\"start\":\"Wed
+        Jun 05 2024 09:24:00 GMT+0300 (Eastern European Summer Time)\",\"total\":\"122231\",\"rounds\":\"1\",\"elapsed\":\"122231\"},\"fields\":{\"ip\":\"91.196.194.77\",\"counters\":{\"start\":\"Wed
+        Jun 05 2024 09:24:00 GMT+0300 (Eastern European Summer Time)\",\"total\":\"122231\",\"rounds\":\"1\",\"elapsed\":\"122231\"},\"household\":[{\"admin1_h_c\":\"UA07\",\"admin2_h_c\":\"UA0704\",\"admin3_h_c\":\"UA0704005\"}],\"marketing\":[{\"can_unicef_contact_you\":[\"1\"]}],\"enumerator\":\"888202\",\"individuals\":[{\"id_type\":\"tax_id\",\"role_i_c\":\"y\",\"birth_date\":\"1989-01-15\",\"gender_i_c\":\"male\",\"patronymic\":\"\u0406\u0432\u0430\u043D\u043E\u0432\u0438\u0447\",\"phone_no_i_c\":\"+380505097343\",\"tax_id_no_i_c\":\"1234567891\",\"disability_i_c\":\"n\",\"given_name_i_c\":\"\u0406\u0432\u0430\u043D\",\"family_name_i_c\":\"\u0406\u0432\u0430\u043D\u043E\u0432\",\"bank_account_h_f\":\"n\",\"relationship_i_c\":\"head\"}],\"validator_uk\":[{\"validation\":\"y\"}]},\"index1\":null,\"index2\":null,\"index3\":null,\"is_offline\":false,\"registration\":13},{\"id\":3144,\"registration_url\":\"https://uni-hope-ukr-sr-dev.unitst.org/api/registration/13/\",\"registrar\":null,\"project\":7,\"organization\":5,\"project_slug\":\"ukraine-project-1\",\"organization_slug\":\"ukraine\",\"unique_field\":null,\"remote_ip\":\"176.113.164.17\",\"timestamp\":\"2024-06-03T08:01:00.879240Z\",\"ignored\":false,\"size\":7904,\"counters\":{\"start\":\"Mon
+        Jun 03 2024 10:47:31 GMT+0300 (Eastern European Summer Time)\",\"total\":\"809588\",\"rounds\":\"2\",\"elapsed\":\"27024\"},\"fields\":{\"ip\":\"176.113.164.17\",\"counters\":{\"start\":\"Mon
+        Jun 03 2024 10:47:31 GMT+0300 (Eastern European Summer Time)\",\"total\":\"809588\",\"rounds\":\"2\",\"elapsed\":\"27024\"},\"household\":[{\"admin1_h_c\":\"UA05\",\"admin2_h_c\":\"UA0508\",\"admin3_h_c\":\"UA0508005\"}],\"marketing\":[{\"can_unicef_contact_you\":[\"1\"]}],\"enumerator\":\"888202\",\"individuals\":[{\"id_type\":\"tax_id\",\"role_i_c\":\"y\",\"birth_date\":\"1989-01-02\",\"gender_i_c\":\"male\",\"patronymic\":\"\u0406\u0432\u0430\u043D\u043E\u0432\u0438\u0447\",\"bank_account\":\"UA123456789123456789123456789\",\"phone_no_i_c\":\"+380505097343\",\"tax_id_no_i_c\":\"1234567891\",\"disability_i_c\":\"n\",\"given_name_i_c\":\"\u0406\u0432\u0430\u043D\",\"family_name_i_c\":\"\u0406\u0432\u0430\u043D\u043E\u0432\",\"bank_account_h_f\":\"y\",\"relationship_i_c\":\"head\",\"bank_account_number\":\"UA123456789123456789123456789\"},{\"id_type\":\"tax_id\",\"role_i_c\":\"n\",\"birth_date\":\"1989-01-01\",\"gender_i_c\":\"female\",\"patronymic\":\"\u0406\u0432\u0430\u043D\u043E\u0432\u043D\u0430\",\"tax_id_no_i_c\":\"1234567890\",\"disability_i_c\":\"n\",\"given_name_i_c\":\"\u0406\u0432\u0430\u043D\u043D\u0430\",\"family_name_i_c\":\"\u0406\u0432\u0430\u043D\u043E\u0432\u0430\",\"relationship_i_c\":\"wife_husband\"},{\"birth_date\":\"2024-05-31\",\"gender_i_c\":\"female\",\"patronymic\":\"\u0406\u0432\u0430\u043D\u043E\u0432\u043D\u0430\",\"disability_i_c\":\"n\",\"given_name_i_c\":\"\u0406\u0432\u0430\u043D\u043D\u0430\",\"family_name_i_c\":\"\u0406\u0432\u0430\u043D\u043E\u0432\u0430\",\"relationship_i_c\":\"son_daughter\",\"birth_certificate_no_i_c\":\"00000\"}],\"validator_uk\":[{\"validation\":\"y\"}]},\"index1\":null,\"index2\":null,\"index3\":null,\"is_offline\":false,\"registration\":13},{\"id\":3143,\"registration_url\":\"https://uni-hope-ukr-sr-dev.unitst.org/api/registration/20/\",\"registrar\":\"enqueteur_test\",\"project\":11,\"organization\":1,\"project_slug\":\"vaccinateurs-rdc\",\"organization_slug\":\"unicef\",\"unique_field\":null,\"remote_ip\":\"185.247.199.4\",\"timestamp\":\"2024-05-28T08:14:45.555842Z\",\"ignored\":false,\"size\":1509,\"counters\":{},\"fields\":{\"gender_i_c\":\"male\",\"admin_1_i_c\":\"CD5407\",\"admin_3_i_c\":\"CD5407ZS02\",\"phone_input\":\"21025141405\",\"birth_date_i_c\":\"2024-05-07\",\"given_name_i_c\":\"fewgwr\",\"family_name_i_c\":\"htrehtw\",\"middle_name_i_c\":\"rhrehe\",\"wallet_provider_i_f\":\"airtel;airtel\",\"electoral_card_no_i_c\":\"123123\"},\"index1\":null,\"index2\":null,\"index3\":null,\"is_offline\":false,\"registration\":20},{\"id\":3142,\"registration_url\":\"https://uni-hope-ukr-sr-dev.unitst.org/api/registration/19/\",\"registrar\":null,\"project\":9,\"organization\":5,\"project_slug\":\"ukraine_child_protection\",\"organization_slug\":\"ukraine\",\"unique_field\":null,\"remote_ip\":\"91.196.194.77\",\"timestamp\":\"2024-05-24T13:56:51.850488Z\",\"ignored\":false,\"size\":6099,\"counters\":{\"start\":\"Fri
+        May 24 2024 16:56:13 GMT+0300 (Eastern European Summer Time)\",\"total\":\"38433\",\"rounds\":\"1\",\"elapsed\":\"38432\"},\"fields\":{\"ip\":\"91.196.194.77\",\"counters\":{\"start\":\"Fri
+        May 24 2024 16:56:13 GMT+0300 (Eastern European Summer Time)\",\"total\":\"38433\",\"rounds\":\"1\",\"elapsed\":\"38432\"},\"household\":[{\"admin1_h_c\":\"UA12\",\"admin2_h_c\":\"UA1210\",\"admin3_h_c\":\"UA1210003\"}],\"marketing\":[{\"can_unicef_contact_you\":[\"1\"]}],\"enumerator\":\"947255\",\"individuals\":[{\"id_type\":\"tax_id\",\"role_i_c\":\"y\",\"birth_date\":\"1989-07-13\",\"gender_i_c\":\"female\",\"patronymic\":\"esfes\",\"bank_account\":\"UA123456789012345678901234567\",\"phone_no_i_c\":\"+380505097343\",\"tax_id_no_i_c\":\"1234567890\",\"disability_i_c\":\"y\",\"given_name_i_c\":\"sefs\",\"family_name_i_c\":\"wefwe\",\"bank_account_h_f\":\"y\",\"relationship_i_c\":\"head\",\"other_phone_no_i_c\":\"+380505097343\",\"bank_account_number\":\"UA123456789012345678901234567\"}],\"validator_uk\":[{\"validation\":\"y\"}]},\"index1\":null,\"index2\":null,\"index3\":null,\"is_offline\":false,\"registration\":19},{\"id\":3141,\"registration_url\":\"https://uni-hope-ukr-sr-dev.unitst.org/api/registration/21/\",\"registrar\":null,\"project\":12,\"organization\":5,\"project_slug\":\"ukraine_evacuation\",\"organization_slug\":\"ukraine\",\"unique_field\":null,\"remote_ip\":\"91.196.194.77\",\"timestamp\":\"2024-05-24T06:50:11.473037Z\",\"ignored\":false,\"size\":6891,\"counters\":{\"start\":\"Fri
+        May 24 2024 09:47:39 GMT+0300 (Eastern European Summer Time)\",\"total\":\"153048\",\"rounds\":\"3\",\"elapsed\":\"29946\"},\"fields\":{\"ip\":\"91.196.194.77\",\"counters\":{\"start\":\"Fri
+        May 24 2024 09:47:39 GMT+0300 (Eastern European Summer Time)\",\"total\":\"153048\",\"rounds\":\"3\",\"elapsed\":\"29946\"},\"household\":[{\"admin1_h_c\":\"UA14\",\"admin2_h_c\":\"UA1412\",\"admin3_h_c\":\"UA1412009\"}],\"marketing\":[{\"can_unicef_contact_you\":[\"1\"]}],\"individuals\":[{\"id_type\":\"tax_id\",\"role_i_c\":\"y\",\"birth_date\":\"1990-01-30\",\"gender_i_c\":\"female\",\"patronymic\":\"\u0406\u0432\u0430\u043D\u043E\u0432\u0438\u0447\",\"bank_account\":\"UA123456789123456789123456789\",\"phone_no_i_c\":\"+380505097343\",\"tax_id_no_i_c\":\"1790310057\",\"disability_i_c\":\"y\",\"given_name_i_c\":\"\u0406\u0432\u0430\u043D\",\"family_name_i_c\":\"\u0406\u0432\u0430\u043D\u043E\u0432\",\"bank_account_h_f\":\"y\",\"relationship_i_c\":\"head\",\"bank_account_number\":\"UA123456789123456789123456789\"},{\"birth_date\":\"2010-02-02\",\"gender_i_c\":\"female\",\"patronymic\":\"edtrh\",\"tax_id_no_i_c\":\"1842317220\",\"disability_i_c\":\"n\",\"given_name_i_c\":\"rthdr\",\"family_name_i_c\":\"hterh\",\"relationship_i_c\":\"wife_husband\",\"birth_certificate_no_i_c\":\"I-BK123456\"}],\"validator_uk\":[{\"validation\":\"y\"}]},\"index1\":null,\"index2\":null,\"index3\":null,\"is_offline\":false,\"registration\":21},{\"id\":3140,\"registration_url\":\"https://uni-hope-ukr-sr-dev.unitst.org/api/registration/21/\",\"registrar\":\"abed\",\"project\":12,\"organization\":5,\"project_slug\":\"ukraine_evacuation\",\"organization_slug\":\"ukraine\",\"unique_field\":null,\"remote_ip\":\"194.230.146.201\",\"timestamp\":\"2024-05-23T17:13:32.706726Z\",\"ignored\":false,\"size\":5960,\"counters\":{\"start\":\"Thu
+        May 23 2024 19:12:03 GMT+0200 (Central European Summer Time)\",\"total\":\"90699\",\"rounds\":\"2\",\"elapsed\":\"20229\"},\"fields\":{\"ip\":\"194.230.146.201\",\"counters\":{\"start\":\"Thu
+        May 23 2024 19:12:03 GMT+0200 (Central European Summer Time)\",\"total\":\"90699\",\"rounds\":\"2\",\"elapsed\":\"20229\"},\"household\":[{\"admin1_h_c\":\"UA01\",\"admin2_h_c\":\"UA0104\",\"admin3_h_c\":\"UA0104003\"}],\"marketing\":[{\"can_unicef_contact_you\":[\"1\"]}],\"individuals\":[{\"id_type\":\"tax_id\",\"role_i_c\":\"y\",\"birth_date\":\"1991-01-01\",\"gender_i_c\":\"male\",\"patronymic\":\"azsdsad\",\"bank_account\":\"UA123456789012345678901234567\",\"phone_no_i_c\":\"+380123123123\",\"tax_id_no_i_c\":\"2832515466\",\"disability_i_c\":\"n\",\"given_name_i_c\":\"xzcfdxz\",\"family_name_i_c\":\"asda\",\"bank_account_h_f\":\"y\",\"relationship_i_c\":\"head\",\"bank_account_number\":\"UA123456789012345678901234567\"}],\"validator_uk\":[{\"validation\":\"y\"}]},\"index1\":null,\"index2\":null,\"index3\":null,\"is_offline\":false,\"registration\":21},{\"id\":3139,\"registration_url\":\"https://uni-hope-ukr-sr-dev.unitst.org/api/registration/20/\",\"registrar\":\"enqueteur_test\",\"project\":11,\"organization\":1,\"project_slug\":\"vaccinateurs-rdc\",\"organization_slug\":\"unicef\",\"unique_field\":null,\"remote_ip\":\"185.247.199.4\",\"timestamp\":\"2024-05-20T09:54:18.680072Z\",\"ignored\":false,\"size\":1509,\"counters\":{},\"fields\":{\"gender_i_c\":\"male\",\"admin_2_i_c\":\"CD6111\",\"admin_3_i_c\":\"CD6111ZS01\",\"phone_no_i_c\":\"813455654\",\"birth_date_i_c\":\"1995-05-05\",\"given_name_i_c\":\"Pierre\",\"family_name_i_c\":\"Ngoy\",\"middle_name_i_c\":\"Felix\",\"wallet_provider_i_f\":\"vodacom;vodacom\",\"electoral_card_no_i_c\":\"145852214\"},\"index1\":null,\"index2\":null,\"index3\":null,\"is_offline\":false,\"registration\":20}]}"
+    headers:
+      Accept-Ranges:
+      - bytes
+      Allow:
+      - GET, HEAD, OPTIONS
+      Connection:
+      - keep-alive
+      Content-Encoding:
+      - gzip
+      Content-Language:
+      - en-us
+      Content-Length:
+      - '2014'
+      Content-Security-Policy:
+      - 'default-src ''self'' inline unsafe-inline data: blob: ''unsafe-inline'' localhost:8000
+        unpkg.com browser.sentry-cdn.com cdnjs.cloudflare.com unisitetracker.unicef.io
+        cdn.jsdelivr.net register.unicef.org uni-hope-ukr-sr.azurefd.net uni-hope-ukr-sr-dev.azurefd.net
+        uni-hope-ukr-sr-dev.unitst.org; frame-ancestors ''self'''
+      Content-Type:
+      - application/json
+      Cross-Origin-Opener-Policy:
+      - same-origin
+      Date:
+      - Thu, 21 Nov 2024 08:08:29 GMT
+      Referrer-Policy:
+      - same-origin
+      Strict-Transport-Security:
+      - max-age=60; includeSubDomains
+      Vary:
+      - Accept, Accept-Encoding, Cookie, Accept-Language, origin
+      X-Aurora-Build:
+      - 2024-10-22 12:14
+      X-Aurora-Time:
+      - Thursday, 21-Nov-2024 08:08:29 GMT
+      X-Aurora-Version:
+      - 49a94cc
+      X-Cache:
+      - CONFIG_NOCACHE
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - SAMEORIGIN
+      x-azure-ref:
+      - 20241121T080828Z-r188b85d859wqvkrhC1BUE580400000002bg000000005hkh
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Token [FILTERED]
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.32.3
+    method: GET
+    uri: https://uni-hope-ukr-sr-dev.unitst.org/api/record/?cursor=cD0zMTM5
+  response:
+    body:
+      string: '{"next":"https://uni-hope-ukr-sr-dev.unitst.org/api/record/?cursor=cD0zMTI5","previous":"https://uni-hope-ukr-sr-dev.unitst.org/api/record/?cursor=cj0xJnA9MzEzOA%3D%3D","results":[{"id":3138,"registration_url":"https://uni-hope-ukr-sr-dev.unitst.org/api/registration/20/","registrar":"gabriele","project":11,"organization":1,"project_slug":"vaccinateurs-rdc","organization_slug":"unicef","unique_field":null,"remote_ip":"31.10.171.159","timestamp":"2024-05-17T11:25:55.307299Z","ignored":false,"size":1444,"counters":{},"fields":{"gender_i_c":"male","admin_2_i_c":"CD6105","admin_3_i_c":"CD6105ZS01","phone_no_i_c":"3334895699","birth_date_i_c":"2024-05-12","given_name_i_c":"e","family_name_i_c":"d","middle_name_i_c":"d","wallet_provider_i_f":"vodacom;vodacom","electoral_card_no_i_c":"ddddd"},"index1":null,"index2":null,"index3":null,"is_offline":false,"registration":20},{"id":3137,"registration_url":"https://uni-hope-ukr-sr-dev.unitst.org/api/registration/20/","registrar":"enqueteur_test","project":11,"organization":1,"project_slug":"vaccinateurs-rdc","organization_slug":"unicef","unique_field":null,"remote_ip":"169.159.218.82","timestamp":"2024-05-17T10:37:49.583365Z","ignored":false,"size":1532,"counters":{},"fields":{"gender_i_c":"male","admin_2_i_c":"CD6105","admin_3_i_c":"CD6105ZS01","phone_no_i_c":"085526152887","birth_date_i_c":"2024-05-14","given_name_i_c":"Alidor","family_name_i_c":"SABUE","middle_name_i_c":"TSHIBANGU","wallet_provider_i_f":"orange_money;orange
+        money","electoral_card_no_i_c":"28282739282938"},"index1":null,"index2":null,"index3":null,"is_offline":false,"registration":20},{"id":3136,"registration_url":"https://uni-hope-ukr-sr-dev.unitst.org/api/registration/20/","registrar":"enqueteur_test","project":11,"organization":1,"project_slug":"vaccinateurs-rdc","organization_slug":"unicef","unique_field":null,"remote_ip":"169.159.218.138","timestamp":"2024-05-17T10:28:14.862741Z","ignored":false,"size":1530,"counters":{},"fields":{"gender_i_c":"male","admin_2_i_c":"CD6201","admin_3_i_c":"CD6201ZS01","phone_no_i_c":"0855261528","birth_date_i_c":"2024-05-08","given_name_i_c":"Alidor","family_name_i_c":"SABUE","middle_name_i_c":"TSHIBANGU","wallet_provider_i_f":"orange_money;orange
+        money","electoral_card_no_i_c":"28282739282938"},"index1":null,"index2":null,"index3":null,"is_offline":false,"registration":20},{"id":3135,"registration_url":"https://uni-hope-ukr-sr-dev.unitst.org/api/registration/20/","registrar":"enqueteur_test","project":11,"organization":1,"project_slug":"vaccinateurs-rdc","organization_slug":"unicef","unique_field":null,"remote_ip":"169.159.218.138","timestamp":"2024-05-17T10:27:22.510335Z","ignored":false,"size":1528,"counters":{},"fields":{"gender_i_c":"male","admin_2_i_c":"CD6201","admin_3_i_c":"CD6201ZS01","phone_no_i_c":"0855261528","birth_date_i_c":"1996-05-28","given_name_i_c":"Alidor","family_name_i_c":"SABUE","middle_name_i_c":"TSHIBANGU","wallet_provider_i_f":"orange_money;orange
+        money","electoral_card_no_i_c":"829282928938"},"index1":null,"index2":null,"index3":null,"is_offline":false,"registration":20},{"id":3134,"registration_url":"https://uni-hope-ukr-sr-dev.unitst.org/api/registration/20/","registrar":"enqueteur_test","project":11,"organization":1,"project_slug":"vaccinateurs-rdc","organization_slug":"unicef","unique_field":null,"remote_ip":"213.55.244.85","timestamp":"2024-05-17T10:14:43.704017Z","ignored":false,"size":1521,"counters":{},"fields":{"gender_i_c":"male","admin_2_i_c":"CD6105","admin_3_i_c":"CD6105ZS01","phone_no_i_c":"123","birth_date_i_c":"2024-05-20","given_name_i_c":"ewgworpigpo","family_name_i_c":"poipoipo","middle_name_i_c":"oiipoipoi","wallet_provider_i_f":"orange_money;orange
+        money","electoral_card_no_i_c":"1234"},"index1":null,"index2":null,"index3":null,"is_offline":false,"registration":20},{"id":3133,"registration_url":"https://uni-hope-ukr-sr-dev.unitst.org/api/registration/20/","registrar":"enqueteur_test","project":11,"organization":1,"project_slug":"vaccinateurs-rdc","organization_slug":"unicef","unique_field":null,"remote_ip":"213.55.244.85","timestamp":"2024-05-17T10:14:21.289732Z","ignored":false,"size":1505,"counters":{},"fields":{"gender_i_c":"male","admin_2_i_c":"CD6105","admin_3_i_c":"CD6105ZS01","phone_no_i_c":"123","birth_date_i_c":"2024-05-20","given_name_i_c":"popop","family_name_i_c":"poipoipo","middle_name_i_c":"poipoipoi","wallet_provider_i_f":"vodacom;vodacom","electoral_card_no_i_c":"1234"},"index1":null,"index2":null,"index3":null,"is_offline":false,"registration":20},{"id":3132,"registration_url":"https://uni-hope-ukr-sr-dev.unitst.org/api/registration/20/","registrar":"enqueteur_test","project":11,"organization":1,"project_slug":"vaccinateurs-rdc","organization_slug":"unicef","unique_field":null,"remote_ip":"213.55.244.85","timestamp":"2024-05-17T10:13:56.435094Z","ignored":false,"size":1513,"counters":{},"fields":{"gender_i_c":"male","admin_2_i_c":"CD6105","admin_3_i_c":"CD6105ZS01","phone_no_i_c":"123","birth_date_i_c":"2024-05-14","given_name_i_c":"fewfewgfew","family_name_i_c":"hpijpijio","middle_name_i_c":"grhtrjhtr","wallet_provider_i_f":"vodacom;vodacom","electoral_card_no_i_c":"123123"},"index1":null,"index2":null,"index3":null,"is_offline":false,"registration":20},{"id":3131,"registration_url":"https://uni-hope-ukr-sr-dev.unitst.org/api/registration/20/","registrar":"enqueteur_test","project":11,"organization":1,"project_slug":"vaccinateurs-rdc","organization_slug":"unicef","unique_field":null,"remote_ip":"2a04:ee41:82:a47d:d813:9e85:d7d8:2262","timestamp":"2024-05-17T10:09:14.373046Z","ignored":false,"size":1511,"counters":{},"fields":{"gender_i_c":"female","admin_2_i_c":"CD6105","admin_3_i_c":"CD6105ZS01","phone_no_i_c":"123","birth_date_i_c":"1989-01-21","given_name_i_c":"fatou","family_name_i_c":"fwepoirw","middle_name_i_c":"mananaan","wallet_provider_i_f":"vodacom;vodacom","electoral_card_no_i_c":"123123123"},"index1":null,"index2":null,"index3":null,"is_offline":false,"registration":20},{"id":3130,"registration_url":"https://uni-hope-ukr-sr-dev.unitst.org/api/registration/20/","registrar":"enqueteur_test","project":11,"organization":1,"project_slug":"vaccinateurs-rdc","organization_slug":"unicef","unique_field":null,"remote_ip":"2a04:ee41:82:a47d:d813:9e85:d7d8:2262","timestamp":"2024-05-17T10:08:45.394330Z","ignored":false,"size":1513,"counters":{},"fields":{"gender_i_c":"female","admin_2_i_c":"CD6105","admin_3_i_c":"CD6105ZS01","phone_no_i_c":"123","birth_date_i_c":"2000-01-01","given_name_i_c":"Anana","family_name_i_c":"winamano","middle_name_i_c":"fatouamismis","wallet_provider_i_f":"airtel;airtel","electoral_card_no_i_c":"123123123"},"index1":null,"index2":null,"index3":null,"is_offline":false,"registration":20},{"id":3129,"registration_url":"https://uni-hope-ukr-sr-dev.unitst.org/api/registration/20/","registrar":null,"project":11,"organization":1,"project_slug":"vaccinateurs-rdc","organization_slug":"unicef","unique_field":null,"remote_ip":"185.247.199.4","timestamp":"2024-05-16T13:52:50.123868Z","ignored":false,"size":1208,"counters":{},"fields":{"admin_4_i_c":"cd5407zs01;cd5407;angumu","phone_no_i_c":"0881554556","given_name_i_c":"Jean
+        Marie","family_name_i_c":"Ngoy","middle_name_i_c":"Theophane","wallet_provider_i_f":"airtel;airtel","electoral_card_no_i_c":"123456456"},"index1":null,"index2":null,"index3":null,"is_offline":false,"registration":20}]}'
+    headers:
+      Accept-Ranges:
+      - bytes
+      Allow:
+      - GET, HEAD, OPTIONS
+      Connection:
+      - keep-alive
+      Content-Encoding:
+      - gzip
+      Content-Language:
+      - en-us
+      Content-Length:
+      - '1098'
+      Content-Security-Policy:
+      - 'default-src ''self'' inline unsafe-inline data: blob: ''unsafe-inline'' localhost:8000
+        unpkg.com browser.sentry-cdn.com cdnjs.cloudflare.com unisitetracker.unicef.io
+        cdn.jsdelivr.net register.unicef.org uni-hope-ukr-sr.azurefd.net uni-hope-ukr-sr-dev.azurefd.net
+        uni-hope-ukr-sr-dev.unitst.org; frame-ancestors ''self'''
+      Content-Type:
+      - application/json
+      Cross-Origin-Opener-Policy:
+      - same-origin
+      Date:
+      - Thu, 21 Nov 2024 08:08:30 GMT
+      Referrer-Policy:
+      - same-origin
+      Strict-Transport-Security:
+      - max-age=60; includeSubDomains
+      Vary:
+      - Accept, Accept-Encoding, Cookie, Accept-Language, origin
+      X-Aurora-Build:
+      - 2024-10-22 12:14
+      X-Aurora-Time:
+      - Thursday, 21-Nov-2024 08:08:30 GMT
+      X-Aurora-Version:
+      - 49a94cc
+      X-Cache:
+      - CONFIG_NOCACHE
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - SAMEORIGIN
+      x-azure-ref:
+      - 20241121T080829Z-r188b85d859qg266hC1BUExns000000003c0000000000t0a
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Token [FILTERED]
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.32.3
+    method: GET
+    uri: https://uni-hope-ukr-sr-dev.unitst.org/api/record/?cursor=cD0zMTI5
+  response:
+    body:
+      string: "{\"next\":null,\"previous\":\"https://uni-hope-ukr-sr-dev.unitst.org/api/record/?cursor=cj0xJnA9MzEyOA%3D%3D\",\"results\":[{\"id\":3128,\"registration_url\":\"https://uni-hope-ukr-sr-dev.unitst.org/api/registration/20/\",\"registrar\":null,\"project\":11,\"organization\":1,\"project_slug\":\"vaccinateurs-rdc\",\"organization_slug\":\"unicef\",\"unique_field\":null,\"remote_ip\":\"185.247.199.4\",\"timestamp\":\"2024-05-16T09:48:18.124350Z\",\"ignored\":false,\"size\":1189,\"counters\":{},\"fields\":{\"admin_4_i_c\":\"cd6105zs01;cd6105;alimbongo\",\"phone_no_i_c\":\"bsfbs\",\"given_name_i_c\":\"vbfdb\",\"family_name_i_c\":\"bdfbfd\",\"middle_name_i_c\":\"bfbfd\",\"wallet_provider_i_f\":\"bfsbfs\",\"electoral_card_no_i_c\":\"bfbfds\"},\"index1\":null,\"index2\":null,\"index3\":null,\"is_offline\":false,\"registration\":20},{\"id\":3127,\"registration_url\":\"https://uni-hope-ukr-sr-dev.unitst.org/api/registration/10/\",\"registrar\":\"abed\",\"project\":4,\"organization\":4,\"project_slug\":\"test\",\"organization_slug\":\"test\",\"unique_field\":null,\"remote_ip\":\"185.247.199.4\",\"timestamp\":\"2024-05-15T10:08:44.123224Z\",\"ignored\":false,\"size\":838,\"counters\":{},\"fields\":{\"test\":\"sad\",\"location\":{\"accuracy\":11.556,\"latitude\":46.2297752,\"longitude\":6.1341459}},\"index1\":null,\"index2\":null,\"index3\":null,\"is_offline\":false,\"registration\":10},{\"id\":3126,\"registration_url\":\"https://uni-hope-ukr-sr-dev.unitst.org/api/registration/10/\",\"registrar\":\"abed\",\"project\":4,\"organization\":4,\"project_slug\":\"test\",\"organization_slug\":\"test\",\"unique_field\":null,\"remote_ip\":\"185.247.199.4\",\"timestamp\":\"2024-05-15T08:57:49.174952Z\",\"ignored\":false,\"size\":19748,\"counters\":{},\"fields\":{\"test\":\"asdsd\",\"location\":{\"accuracy\":13.618,\"latitude\":46.2297642,\"longitude\":6.1341413}},\"index1\":null,\"index2\":null,\"index3\":null,\"is_offline\":false,\"registration\":10},{\"id\":3125,\"registration_url\":\"https://uni-hope-ukr-sr-dev.unitst.org/api/registration/10/\",\"registrar\":null,\"project\":4,\"organization\":4,\"project_slug\":\"test\",\"organization_slug\":\"test\",\"unique_field\":null,\"remote_ip\":\"217.20.174.77\",\"timestamp\":\"2024-05-14T13:23:41.039155Z\",\"ignored\":false,\"size\":167777,\"counters\":{},\"fields\":{\"test\":\"answer\",\"master\":\"22\",\"test_1\":\"1\",\"location\":{\"accuracy\":60,\"latitude\":50.445984,\"longitude\":30.545418},\"dependant\":\"11\"},\"index1\":null,\"index2\":null,\"index3\":null,\"is_offline\":false,\"registration\":10},{\"id\":3124,\"registration_url\":\"https://uni-hope-ukr-sr-dev.unitst.org/api/registration/10/\",\"registrar\":null,\"project\":4,\"organization\":4,\"project_slug\":\"test\",\"organization_slug\":\"test\",\"unique_field\":null,\"remote_ip\":\"185.247.199.4\",\"timestamp\":\"2024-05-14T13:19:34.426327Z\",\"ignored\":false,\"size\":3972536,\"counters\":{},\"fields\":{\"test\":\"Hhb\",\"location\":{\"accuracy\":35,\"altitude\":450.9066619873047,\"latitude\":46.23003586727006,\"longitude\":6.134132665074615,\"altitudeAccuracy\":16.6236572265625}},\"index1\":null,\"index2\":null,\"index3\":null,\"is_offline\":false,\"registration\":10},{\"id\":3123,\"registration_url\":\"https://uni-hope-ukr-sr-dev.unitst.org/api/registration/10/\",\"registrar\":null,\"project\":4,\"organization\":4,\"project_slug\":\"test\",\"organization_slug\":\"test\",\"unique_field\":null,\"remote_ip\":\"185.247.199.4\",\"timestamp\":\"2024-05-14T13:14:38.322876Z\",\"ignored\":false,\"size\":117219,\"counters\":{},\"fields\":{\"test\":\"vcxv\",\"location\":{\"accuracy\":13.905,\"latitude\":46.2297686,\"longitude\":6.1341358}},\"index1\":null,\"index2\":null,\"index3\":null,\"is_offline\":false,\"registration\":10},{\"id\":3122,\"registration_url\":\"https://uni-hope-ukr-sr-dev.unitst.org/api/registration/19/\",\"registrar\":null,\"project\":9,\"organization\":5,\"project_slug\":\"ukraine_child_protection\",\"organization_slug\":\"ukraine\",\"unique_field\":null,\"remote_ip\":\"176.113.164.17\",\"timestamp\":\"2024-05-13T14:38:02.701501Z\",\"ignored\":false,\"size\":6076,\"counters\":{\"start\":\"Mon
+        May 13 2024 17:36:27 GMT+0300 (Eastern European Summer Time)\",\"total\":\"95275\",\"rounds\":\"3\",\"elapsed\":\"24104\"},\"fields\":{\"ip\":\"176.113.164.17\",\"counters\":{\"start\":\"Mon
+        May 13 2024 17:36:27 GMT+0300 (Eastern European Summer Time)\",\"total\":\"95275\",\"rounds\":\"3\",\"elapsed\":\"24104\"},\"household\":[{\"admin1_h_c\":\"UA05\",\"admin2_h_c\":\"UA0506\",\"admin3_h_c\":\"UA0506005\"}],\"marketing\":[{\"can_unicef_contact_you\":[\"1\"]}],\"enumerator\":\"363033\",\"individuals\":[{\"id_type\":\"tax_id\",\"role_i_c\":\"y\",\"birth_date\":\"1989-07-13\",\"gender_i_c\":\"male\",\"patronymic\":\"1\",\"bank_account\":\"UA132456789012345678901234567\",\"phone_no_i_c\":\"+380505097343\",\"tax_id_no_i_c\":\"1234567890\",\"disability_i_c\":\"n\",\"given_name_i_c\":\"\u0420\u043E\u043C\u0430\u043D\",\"family_name_i_c\":\"\u041B\u0443\u043D\u0456\u043D\",\"bank_account_h_f\":\"y\",\"relationship_i_c\":\"head\",\"bank_account_number\":\"UA132456789012345678901234567\"}],\"validator_uk\":[{\"validation\":\"y\"}]},\"index1\":null,\"index2\":null,\"index3\":null,\"is_offline\":false,\"registration\":19},{\"id\":3121,\"registration_url\":\"https://uni-hope-ukr-sr-dev.unitst.org/api/registration/19/\",\"registrar\":null,\"project\":9,\"organization\":5,\"project_slug\":\"ukraine_child_protection\",\"organization_slug\":\"ukraine\",\"unique_field\":null,\"remote_ip\":\"176.113.164.17\",\"timestamp\":\"2024-05-01T11:16:52.186493Z\",\"ignored\":false,\"size\":6121,\"counters\":{\"start\":\"Wed
+        May 01 2024 14:07:49 GMT+0300 (Eastern European Summer Time)\",\"total\":\"543023\",\"rounds\":\"2\",\"elapsed\":\"42574\"},\"fields\":{\"ip\":\"176.113.164.17\",\"counters\":{\"start\":\"Wed
+        May 01 2024 14:07:49 GMT+0300 (Eastern European Summer Time)\",\"total\":\"543023\",\"rounds\":\"2\",\"elapsed\":\"42574\"},\"household\":[{\"admin1_h_c\":\"UA07\",\"admin2_h_c\":\"UA0704\",\"admin3_h_c\":\"UA0704005\"}],\"marketing\":[{\"can_unicef_contact_you\":[\"1\"]}],\"enumerator\":\"363033\",\"individuals\":[{\"id_type\":\"tax_id\",\"role_i_c\":\"y\",\"birth_date\":\"1989-07-13\",\"gender_i_c\":\"male\",\"patronymic\":\"\u0415\u0434\u0443\u0430\u0440\u0434\u043E\u0432\u0438\u0447\",\"bank_account\":\"UA123456789012345679801234567\",\"phone_no_i_c\":\"+380934561218\",\"tax_id_no_i_c\":\"1234567890\",\"disability_i_c\":\"y\",\"given_name_i_c\":\"\u0420\u043E\u043C\u0430\u043D\",\"family_name_i_c\":\"\u041B\u0443\u043D\u0456\u043D\",\"bank_account_h_f\":\"y\",\"relationship_i_c\":\"head\",\"bank_account_number\":\"UA123456789012345679801234567\"}],\"validator_uk\":[{\"validation\":\"y\"}]},\"index1\":null,\"index2\":null,\"index3\":null,\"is_offline\":false,\"registration\":19},{\"id\":3120,\"registration_url\":\"https://uni-hope-ukr-sr-dev.unitst.org/api/registration/19/\",\"registrar\":null,\"project\":9,\"organization\":5,\"project_slug\":\"ukraine_child_protection\",\"organization_slug\":\"ukraine\",\"unique_field\":null,\"remote_ip\":\"217.20.174.77\",\"timestamp\":\"2024-05-01T10:57:49.526341Z\",\"ignored\":false,\"size\":6169,\"counters\":{\"start\":\"Wed
+        May 01 2024 13:38:27 GMT+0300 (Eastern European Summer Time)\",\"total\":\"1162136\",\"rounds\":\"2\",\"elapsed\":\"9886\"},\"fields\":{\"ip\":\"217.20.174.77\",\"counters\":{\"start\":\"Wed
+        May 01 2024 13:38:27 GMT+0300 (Eastern European Summer Time)\",\"total\":\"1162136\",\"rounds\":\"2\",\"elapsed\":\"9886\"},\"household\":[{\"admin1_h_c\":\"UA07\",\"admin2_h_c\":\"UA0704\",\"admin3_h_c\":\"UA0704005\"}],\"marketing\":[{\"can_unicef_contact_you\":[\"1\"]}],\"enumerator\":\"363033\",\"individuals\":[{\"id_type\":\"tax_id\",\"role_i_c\":\"y\",\"birth_date\":\"1975-07-16\",\"gender_i_c\":\"male\",\"patronymic\":\"\u0415\u0434\u0443\u0430\u0440\u0434\u043E\u0432\u0438\u0447\",\"bank_account\":\"UA123456789012345678901324567\",\"phone_no_i_c\":\"+380505097343\",\"tax_id_no_i_c\":\"000000000\",\"disability_i_c\":\"n\",\"given_name_i_c\":\"\u0420\u043E\u043C\u0430\u043D\",\"family_name_i_c\":\"\u041B\u0443\u043D\u0456\u043D\",\"bank_account_h_f\":\"y\",\"relationship_i_c\":\"head\",\"bank_account_number\":\"UA123456789012345678901324567\"}],\"validator_uk\":[{\"validation\":\"y\"}]},\"index1\":null,\"index2\":null,\"index3\":null,\"is_offline\":false,\"registration\":19},{\"id\":3119,\"registration_url\":\"https://uni-hope-ukr-sr-dev.unitst.org/api/registration/19/\",\"registrar\":null,\"project\":9,\"organization\":5,\"project_slug\":\"ukraine_child_protection\",\"organization_slug\":\"ukraine\",\"unique_field\":null,\"remote_ip\":\"176.113.164.17\",\"timestamp\":\"2024-05-01T08:59:56.685288Z\",\"ignored\":false,\"size\":6252,\"counters\":{\"start\":\"Wed
+        May 01 2024 11:56:31 GMT+0300 (Eastern European Summer Time)\",\"total\":\"203544\",\"rounds\":\"1\",\"elapsed\":\"203544\"},\"fields\":{\"ip\":\"176.113.164.17\",\"counters\":{\"start\":\"Wed
+        May 01 2024 11:56:31 GMT+0300 (Eastern European Summer Time)\",\"total\":\"203544\",\"rounds\":\"1\",\"elapsed\":\"203544\"},\"household\":[{\"admin1_h_c\":\"UA05\",\"admin2_h_c\":\"UA0506\",\"admin3_h_c\":\"UA0506007\"}],\"marketing\":[{\"can_unicef_contact_you\":[\"1\"]}],\"enumerator\":\"862729\",\"individuals\":[{\"id_type\":\"tax_id\",\"role_i_c\":\"y\",\"birth_date\":\"1989-01-02\",\"gender_i_c\":\"female\",\"patronymic\":\"\u0415\u0434\u0443\u0430\u0440\u0434\u043E\u0432\u0438\u0447\",\"bank_account\":\"UA123456789012345679801245670\",\"phone_no_i_c\":\"+380505097343\",\"tax_id_no_i_c\":\"000000000\",\"disability_i_c\":\"n\",\"given_name_i_c\":\"\u0420\u043E\u043C\u0430\u043D\",\"family_name_i_c\":\"\u041B\u0443\u043D\u0456\u043D\",\"bank_account_h_f\":\"y\",\"relationship_i_c\":\"head\",\"other_phone_no_i_c\":\"+380505097343\",\"bank_account_number\":\"UA123456789012345679801245670\"}],\"validator_uk\":[{\"validation\":\"y\"}]},\"index1\":null,\"index2\":null,\"index3\":null,\"is_offline\":false,\"registration\":19}]}"
+    headers:
+      Accept-Ranges:
+      - bytes
+      Allow:
+      - GET, HEAD, OPTIONS
+      Connection:
+      - keep-alive
+      Content-Encoding:
+      - gzip
+      Content-Language:
+      - en-us
+      Content-Length:
+      - '1630'
+      Content-Security-Policy:
+      - 'frame-ancestors ''self''; default-src ''self'' inline unsafe-inline data:
+        blob: ''unsafe-inline'' localhost:8000 unpkg.com browser.sentry-cdn.com cdnjs.cloudflare.com
+        unisitetracker.unicef.io cdn.jsdelivr.net register.unicef.org uni-hope-ukr-sr.azurefd.net
+        uni-hope-ukr-sr-dev.azurefd.net uni-hope-ukr-sr-dev.unitst.org'
+      Content-Type:
+      - application/json
+      Cross-Origin-Opener-Policy:
+      - same-origin
+      Date:
+      - Thu, 21 Nov 2024 08:08:31 GMT
+      Referrer-Policy:
+      - same-origin
+      Strict-Transport-Security:
+      - max-age=60; includeSubDomains
+      Vary:
+      - Accept, Accept-Encoding, Cookie, Accept-Language, origin
+      X-Aurora-Build:
+      - 2024-10-22 12:14
+      X-Aurora-Time:
+      - Thursday, 21-Nov-2024 08:08:31 GMT
+      X-Aurora-Version:
+      - 49a94cc
+      X-Cache:
+      - CONFIG_NOCACHE
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - SAMEORIGIN
+      x-azure-ref:
+      - 20241121T080830Z-r188b85d859f44z9hC1BUEk69w00000001u0000000003udw
+    status:
+      code: 200
+      message: OK
+version: 1
