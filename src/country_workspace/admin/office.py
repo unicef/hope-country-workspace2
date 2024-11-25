@@ -11,8 +11,8 @@ from .base import BaseModelAdmin
 
 @admin.register(Office)
 class OfficeAdmin(BaseModelAdmin):
-    list_display = ("name", "long_name", "active")
-    search_fields = ("name",)
+    list_display = ("name", "long_name", "slug", "code", "active")
+    search_fields = ("name", "slug", "code")
     list_filter = ("active",)
     readonly_fields = ("hope_id", "slug")
     ordering = ("name",)
@@ -27,4 +27,5 @@ class OfficeAdmin(BaseModelAdmin):
     def sync(self, request: HttpRequest) -> None:
         from country_workspace.contrib.hope.sync.office import sync_offices
 
-        sync_offices()
+        totals = sync_offices()
+        self.message_user(request, f"{totals["add"]} created - {totals["upd"]} updated")
