@@ -14,7 +14,26 @@
         table {
         }
       }
+    .actions {
+      @apply mb-2;
+      select {
+        @apply text-sm py-2 pt-1 pb-1;
+      }
+
+      button[type=submit] {
+        @apply text-sm
+      }
+
+      .action-counter, .all {
+        @apply ml-5;
+      }
+      .question a, .clear a{
+        @apply text-unicef-dark
+      }
     }
+    }
+
+
   }
 
   .clear {
@@ -138,7 +157,8 @@
       tr:nth-child(even) {
         @apply hover:bg-gray-100 bg-white py-12 border-b-gray-600;
       }
-      tr.selected:nth-child(odd),tr.selected:nth-child(even){
+
+      tr.selected:nth-child(odd), tr.selected:nth-child(even) {
         @apply bg-blue-100
       }
     }
@@ -243,17 +263,6 @@
   }
 }
 
-
-.actions {
-  @apply mb-2;
-  select {
-    @apply text-sm py-2 pt-1 pb-1;
-  }
-
-  button[type=submit] {
-    @apply text-sm
-  }
-}
 
 table thead th.action-checkbox-column {
   width: 1.5em;

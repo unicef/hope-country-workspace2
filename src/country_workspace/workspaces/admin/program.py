@@ -2,6 +2,7 @@ from typing import Any, Optional
 
 from django import forms
 from django.conf import settings
+from django.contrib import messages
 from django.contrib.admin import register
 from django.db.models import QuerySet
 from django.db.transaction import atomic
@@ -192,6 +193,7 @@ class CountryProgramAdmin(WorkspaceModelAdmin):
         if request.method == "POST":
             form = ImportFileForm(request.POST, request.FILES)
             if form.is_valid():
+                # TODO: Move to AsyncJob
                 with atomic():
                     batch_name = form.cleaned_data["batch_name"]
                     batch, __ = Batch.objects.get_or_create(
@@ -231,7 +233,7 @@ class CountryProgramAdmin(WorkspaceModelAdmin):
                                     )
                 hh_msg = ngettext("%(c)d Household", "%(c)d Households", total_hh) % {"c": total_hh}
                 ind_msg = ngettext("%(c)d Individual", "%(c)d Individuals", total_ind) % {"c": total_ind}
-                self.message_user(request, _("Imported {0} and {1}").format(hh_msg, ind_msg))
+                self.message_user(request, _("Imported {0} and {1}").format(hh_msg, ind_msg), messages.SUCCESS)
                 context["form"] = form
 
         else:

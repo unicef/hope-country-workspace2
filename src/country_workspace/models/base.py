@@ -10,6 +10,7 @@ import reversion
 
 from country_workspace.cache.manager import cache_manager
 from country_workspace.state import state
+from country_workspace.utils.flex_fields import get_obj_checksum
 
 if TYPE_CHECKING:
     from hope_flex_fields.models import DataChecker
@@ -28,6 +29,15 @@ class BaseQuerySet(models.QuerySet["models.Model"]):
 
 class BaseManager(models.Manager["models.Model"]):
     _queryset_class = BaseQuerySet
+
+
+class ValidableQuerySet(BaseQuerySet["Validable"]):
+    def all(self):
+        return super().all().defer("flex_files")
+
+
+class ValidableManager(models.Manager["Validable"]):
+    _queryset_class = ValidableQuerySet
 
 
 class Cachable:
@@ -54,15 +64,26 @@ class Validable(Cachable, models.Model):
 
     name = models.CharField(_("Name"), max_length=255)
     removed = models.BooleanField(_("Removed"), default=False)
+    checksum = models.CharField(_("checksum"), max_length=300, blank=True, null=True, db_index=True)
+
+    objects = ValidableManager()
 
     class Meta:
         abstract = True
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._checksum = self.checksum
 
     def __str__(self) -> str:
         return self.name or "%s %s" % (self._meta.verbose_name, self.id)
 
     def save(self, *args, force_insert=False, force_update=False, using=None, update_fields=None):
-        with reversion.create_revision():
+        checksum = get_obj_checksum(self)
+        with reversion.create_revision(manage_manually=True):
+            if checksum != self._checksum:
+                reversion.add_to_revision(self)
+            self.checksum = checksum
             super().save(
                 *args, force_insert=force_insert, force_update=force_update, using=using, update_fields=update_fields
             )

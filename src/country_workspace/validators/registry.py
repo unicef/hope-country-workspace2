@@ -7,6 +7,11 @@ class NoopValidator(BeneficiaryGroupValidator):
     pass
 
 
-beneficiary_validator_registry = Registry(BeneficiaryGroupValidator)
+class BeneficiaryValidatorRegistry(Registry):
+    def get_name(self, entry):
+        return entry.__name__
+
+
+beneficiary_validator_registry = BeneficiaryValidatorRegistry(BeneficiaryGroupValidator)
 
 beneficiary_validator_registry.register(NoopValidator)

@@ -131,8 +131,9 @@ CACHE_URL = env("CACHE_URL")
 REDIS_URL = urlparse(CACHE_URL).hostname
 CACHES = {
     "default": {
-        "BACKEND": "django.core.cache.backends.redis.RedisCache",
+        "BACKEND": "redis_lock.django_cache.RedisCache",
         "LOCATION": CACHE_URL,
+        "OPTIONS": {"CLIENT_CLASS": "django_redis.client.DefaultClient"},
     }
 }
 X_FRAME_OPTIONS = "SAMEORIGIN"

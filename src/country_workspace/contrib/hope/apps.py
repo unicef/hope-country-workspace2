@@ -19,3 +19,8 @@ class Config(AppConfig):
         field_registry.register(Admin2Choice)
         field_registry.register(Admin3Choice)
         field_registry.register(Admin4Choice)
+
+        from country_workspace.contrib.hope.validators import FullHouseholdValidator
+        from country_workspace.validators.registry import beneficiary_validator_registry
+
+        beneficiary_validator_registry.register(FullHouseholdValidator)

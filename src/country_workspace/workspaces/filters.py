@@ -6,6 +6,7 @@ from django.urls import reverse
 from django.utils.translation import gettext as _
 
 from adminfilters.autocomplete import LinkedAutoCompleteFilter
+from adminfilters.combo import ChoicesFieldComboFilter
 
 from country_workspace.state import state
 
@@ -143,3 +144,7 @@ class IsValidFilter(SimpleListFilter):
             "class": classes,
             "id": "_".join(self.expected_parameters()),
         }
+
+
+class ChoiceFilter(ChoicesFieldComboFilter):
+    template = "workspace/adminfilters/combobox.html"

@@ -51,7 +51,7 @@ def pytest_configure(config):
     os.environ["SECURE_HSTS_PRELOAD"] = "0"
     os.environ["EXTRA_APPS"] = "country_workspace.contrib.hope"
     os.environ["HOPE_API_URL"] = "https://dev-hope.unitst.org/api/rest/"
-    os.environ["HOPE_API_TOKEN"] = "kugiugiuygiuygiuygiuhgiuhgiuhgiugiu"
+    # os.environ["HOPE_API_TOKEN"] = "kugiugiuygiuygiuygiuhgiuhgiuhgiugiu"
     # os.environ["SECRET_KEY"] = "kugiugiuygiuygiuygiuhgiuhgiuhgiugiu"
 
     os.environ["LOGGING_LEVEL"] = "CRITICAL"

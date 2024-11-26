@@ -1,6 +1,6 @@
 from typing import TYPE_CHECKING, Any, Optional
 
-from django.contrib import admin, messages
+from django.contrib import messages
 from django.contrib.admin.utils import unquote
 from django.core.exceptions import PermissionDenied
 from django.db.models import Model, QuerySet
@@ -11,6 +11,7 @@ from django.urls import reverse
 from django.utils.translation import gettext as _
 
 from admin_extra_buttons.decorators import button
+from adminactions.duplicates import find_duplicates_action
 from adminfilters.mixin import AdminAutoCompleteSearchMixin
 from hope_flex_fields.models import DataChecker
 
@@ -57,7 +58,14 @@ class SelectedProgramMixin(WorkspaceModelAdmin):
 
 
 class BeneficiaryBaseAdmin(AdminAutoCompleteSearchMixin, SelectedProgramMixin, WorkspaceModelAdmin):
-    actions = ["validate_queryset", actions.mass_update, actions.regex_update, actions.bulk_update_export]
+    actions = [
+        "validate_queryset",
+        find_duplicates_action,
+        actions.mass_update,
+        actions.calculate_checksum,
+        actions.regex_update,
+        actions.bulk_update_export,
+    ]
     title = None
     title_plural = None
     list_per_page = 20
@@ -85,25 +93,11 @@ class BeneficiaryBaseAdmin(AdminAutoCompleteSearchMixin, SelectedProgramMixin, W
         else:
             self.message_user(request, _("Validation failed!"), messages.ERROR)
 
-    @button(label=_("Validate Programme"), visible=lambda b: "batch__program__exact" in b.context["request"].GET)
+    @button(label=_("Validate Programme"))
     def validate_program(self, request: HttpRequest) -> "HttpResponse":
         if prg := self.get_selected_program(request):
             qs = self.get_queryset(request).filter(batch__program=prg)
             self.validate_queryset(request, qs)
-
-    @admin.action(description="Validate selected")
-    def validate_queryset(self, request: HttpRequest, queryset: QuerySet) -> HttpResponseRedirect | None:
-        try:
-            num = valid = invalid = 0
-            for num, entry in enumerate(queryset.all(), 1):
-                entry.validate_with_checker()
-                if entry.validate_with_checker():
-                    valid += 1
-                else:
-                    invalid += 1
-            self.message_user(request, _("%s validated. Found:  %s valid - %s invalid." % (num, valid, invalid)))
-        except AttributeError:
-            return HttpResponseRedirect(request.META["HTTP_REFERER"])
 
     @button()
     def view_raw_data(self, request: HttpRequest, pk: str) -> "HttpResponse":

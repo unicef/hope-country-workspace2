@@ -9,8 +9,7 @@ form {
 }
 
 
-a.button, input[type=submit], button.button, a.closelink, a.deletelink {
-
+a.button, input[type=submit], input[type=button], button.button, a.closelink, a.deletelink {
   margin: 0;
   color: white;
   cursor: pointer;
@@ -25,10 +24,19 @@ a.button, input[type=submit], button.button, a.closelink, a.deletelink {
   border-color: initial;
   border-image: initial;
   text-decoration: none;
+  line-height: inherit;
+  height: 33px;
+  display: inline-block;
   padding: 6px 16px;
   border-radius: 4px;
   transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1), box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1), border-color 250ms cubic-bezier(0.4, 0, 0.2, 1), color 250ms cubic-bezier(0.4, 0, 0.2, 1);
   background-color: rgb(0, 60, 143);
+  &.default{
+    background-color: rgb(0, 60, 143);
+  }
+  &.closelink{
+    background-color: rgba(99, 92, 15, 0.53);
+  }
 }
 
 .submit-row {

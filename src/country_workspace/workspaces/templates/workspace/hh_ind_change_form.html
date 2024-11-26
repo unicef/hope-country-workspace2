@@ -25,6 +25,7 @@
                     {% endif %}
                     {% if original.errors %}
                         <div class="error"> Record does not validate and cannot be sent to HOPE</div>
+                        {{ original.errors.dct }}
                     {% endif %}
                     {% block field_sets %}
                         <table  class="min-w-full">

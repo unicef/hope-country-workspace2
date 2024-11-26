@@ -3,8 +3,9 @@ from io import BytesIO
 from typing import TYPE_CHECKING, Any
 
 from django import forms
+from django.contrib import admin, messages
 from django.db.models import QuerySet
-from django.http import HttpRequest, HttpResponse
+from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.utils.translation import gettext as _
 
@@ -125,7 +126,6 @@ def dc_get_field(dc: "DataChecker", name: str) -> "FlexField | None":
 def create_xls_importer(
     queryset: "QuerySet[Beneficiary]", dc: "DataChecker", columns: list[str]
 ) -> [io.BytesIO, Workbook]:
-
     out = BytesIO()
     workbook = Workbook(out, {"in_memory": True, "default_date_format": "yyyy/mm/dd"})
 
@@ -167,11 +167,6 @@ def create_xls_importer(
         for col, fld in enumerate(columns):
             worksheet.write(row, col, getattr(record, fld, record.flex_fields.get(fld)))
 
-    # worksheet.set_column(0,0, width=10, options={"locked": True})
-    # worksheet.set_column(1, 9999, None, options={"locked": False})
-    # worksheet.protect('password')
-    # worksheet.unprotect_range('B:ZZZZ', None, 'password')
-
     workbook.close()
     out.seek(0)
     return out, workbook
@@ -184,6 +179,19 @@ def bulk_update_export_impl(
     return create_xls_importer(records, dc, config["fields"])[0]
 
 
+def bulk_update_export_async(records: "QuerySet[Beneficiary]", program: "Program", config: "dict[str, Any]"):
+    from country_workspace.models import AsyncJob
+
+    opts = records.model._meta
+    job = AsyncJob.objects.create(
+        type=AsyncJob.JobType.CREATE_XLS_IMPORTER,
+        program=program,
+        config={"records": list(records.values_list("pk", flat=True)), "fields": config["fields"], "model": opts.label},
+    )
+    return job
+
+
+@admin.action
 def bulk_update_export(
     model_admin: "BeneficiaryBaseAdmin", request: HttpRequest, queryset: "QuerySet[Beneficiary]"
 ) -> HttpResponse:
@@ -195,13 +203,8 @@ def bulk_update_export(
     if "_export" in request.POST:
         if form.is_valid():
             config = {"fields": ["id"] + sorted(form.cleaned_data["fields"])}
-            out = bulk_update_export_impl(queryset.all(), model_admin.get_selected_program(request), config)
-            filename = "%s.xls" % queryset.model._meta.verbose_name_plural.lower().replace(" ", "_")
-            response = HttpResponse(
-                out.read(),
-                content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-            )
-            response["Content-Disposition"] = 'attachment;filename="%s"' % filename
-            return response
+            bulk_update_export_async(queryset.all(), model_admin.get_selected_program(request), config)
+            model_admin.message_user(request, _("Export scheduled"), messages.SUCCESS)
+            return HttpResponseRedirect(".")
 
     return render(request, "workspace/actions/bulk_update_export.html", ctx)

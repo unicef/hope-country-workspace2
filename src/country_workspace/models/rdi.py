@@ -6,6 +6,7 @@ from .program import Program
 
 
 class Rdi(BaseModel):
+    name = models.CharField(max_length=255, blank=True, null=True)
     program = models.ForeignKey(Program, on_delete=models.CASCADE)
     hhs = ArrayField(models.IntegerField(), help_text="List of HH primary key for this RDI")
     inds = ArrayField(models.IntegerField(), help_text="List of IND primary key for this RDI. Empty if HH is set")

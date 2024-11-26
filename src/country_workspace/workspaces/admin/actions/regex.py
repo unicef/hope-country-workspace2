@@ -2,6 +2,7 @@ import re
 from typing import TYPE_CHECKING, Any
 
 from django import forms
+from django.contrib import messages
 from django.db import transaction
 from django.db.models import QuerySet
 from django.http import HttpRequest, HttpResponse
@@ -55,7 +56,6 @@ def regex_update_impl(
         for record in records:
             old_value = record.flex_fields.get(field_name, "")
             new_value = config["regex"].sub(config["subst"], old_value, 1)
-
             record.flex_fields[field_name] = new_value
             if save:
                 record.save()
@@ -81,7 +81,7 @@ def regex_update(
         form = RegexUpdateForm(request.POST, checker=checker)
         if form.is_valid():
             regex_update_impl(queryset.all(), form.cleaned_data)
-            model_admin.message_user(request, "Records updated successfully")
+            model_admin.message_user(request, "Records updated successfully", messages.SUCCESS)
     else:
         form = RegexUpdateForm(
             checker=checker,

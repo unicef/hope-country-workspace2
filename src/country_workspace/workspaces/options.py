@@ -34,7 +34,7 @@ class WorkspaceModelAdmin(ExtraButtonsMixin, AdminFiltersMixin, SmartFilterMixin
     list_select_related = True
     preserve_filters = True
     default_url_filters = {}
-    actions_selection_counter = False
+    actions_selection_counter = True
     show_facets = ShowFacets.NEVER
     show_full_result_count = False
 
@@ -59,6 +59,16 @@ class WorkspaceModelAdmin(ExtraButtonsMixin, AdminFiltersMixin, SmartFilterMixin
             "workspace/%s/object_history.html" % self.opts.proxy_for_model._meta.model_name,
             "workspace/object_history.html",
         ]
+
+    def get_common_context(self, request, pk=None, **kwargs):
+        kwargs["modeladmin"] = self
+        return super().get_common_context(request, pk, **kwargs)
+
+    def formfield_for_choice_field(self, db_field, request, **kwargs):
+        return super().formfield_for_choice_field(db_field, request, **kwargs)
+
+    def formfield_for_dbfield(self, db_field, request, **kwargs):
+        return super().formfield_for_dbfield(db_field, request, **kwargs)
 
     @property
     def media(self):

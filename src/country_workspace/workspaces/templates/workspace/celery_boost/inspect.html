@@ -1,0 +1,52 @@
+{% extends "workspace/action_page.html" %}{% load i18n  static admin_modify workspace_urls workspace_modify %}
+{% block page-title %}
+    {% url "workspace:workspaces_countryjob_changelist" as wcl %}
+        &rsaquo; <a href="{% add_preserved_filters wcl %}">Background jobs</a>{% admin_url modeladmin %}
+        &rsaquo; {{ original }}{% admin_url original %}
+{% endblock %}
+{% block action-content %}
+    {% if flower_addr %}
+        <a class="button" target="flower" href="{{ flower_addr }}/task/{{ original.curr_async_result_id }}">Flower</a>
+    {% endif %}
+    <h3 class="text-xl">Task Info</h3>
+    <table>
+        {% for k,v in original.task_info.items %}
+            <tr>
+                <th>{{ k }}</th>
+                <td>{{ v }}</td>
+            </tr>
+        {% endfor %}
+            <tr>
+                <th>Position in queue</th>
+                <td>{{ original.queue_position }}</td>
+            </tr>
+    </table>
+
+
+    <h3 class="text-xl">Queue Info</h3>
+    <table>
+        {% for k,v in original.queue_info.items %}
+            {% if k == "headers" %}
+                <tr>
+                    <th>{{ k }}</th>
+                    <td>
+                        <table>
+                            {% for k1,v1 in original.queue_info.headers.items %}
+                                <tr>
+                                    <td>{{ k1 }}</td>
+                                    <td>{{ v1 }}</td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <th>{{ k }}</th>
+                    <td>{{ v }}</td>
+                </tr>
+            {% endif %}
+        {% endfor %}
+    </table>
+
+{% endblock %}

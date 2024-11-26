@@ -49,9 +49,11 @@ class CountryChecker(DataChecker):
     country_office = models.ForeignKey(Office, on_delete=models.CASCADE)
 
 
-class CountryJob(AsyncJob):
+class CountryAsyncJob(AsyncJob):
     class Meta:
         proxy = True
+        verbose_name = "Background Job"
+        verbose_name_plural = "Background Jobs"
 
     # class Meta:
     #     app_label = "workspaces"

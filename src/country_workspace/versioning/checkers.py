@@ -18,7 +18,7 @@ def create_hope_checkers() -> None:
     _i_relationship = FieldDefinition.objects.get(slug="hope-ind-relationship")
 
     hh_fs, __ = Fieldset.objects.get_or_create(name=HOUSEHOLD_CHECKER_NAME)
-    hh_fs.fields.get_or_create(name="address", attrs={"label": "Household ID", "required": True}, definition=_char)
+    hh_fs.fields.get_or_create(name="address", attrs={"label": "Address", "required": True}, definition=_char)
     hh_fs.fields.get_or_create(name="admin1", definition=_char)
     hh_fs.fields.get_or_create(name="admin2", definition=_char)
     hh_fs.fields.get_or_create(name="admin3", definition=_char)
@@ -64,7 +64,7 @@ def create_hope_checkers() -> None:
     # hh_fs.fields.get_or_create(definition=_bf, name="hh_electricity_h_f")
 
     ind_fs, __ = Fieldset.objects.get_or_create(name=INDIVIDUAL_CHECKER_NAME)
-    ind_fs.fields.get_or_create(name="address", attrs={"label": "Household ID", "required": True}, definition=_char)
+    ind_fs.fields.get_or_create(name="address", attrs={"label": "Address", "required": True}, definition=_char)
     ind_fs.fields.get_or_create(
         name="alternate_collector_id", attrs={"label": "Alternative Collector for"}, definition=_char
     )

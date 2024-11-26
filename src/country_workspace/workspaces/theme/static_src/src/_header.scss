@@ -7,7 +7,9 @@ body.web {
       @apply text-sm p-1;
 
     }
-
+    select{
+      @apply min-w-48 py-2 text-sm;
+    }
     svg.sidebar-button {
       fill: white;
       width: 1em;

@@ -1,21 +1,16 @@
 {% extends "workspace/change_form.html" %}{% load i18n static extra_buttons workspace_urls workspace_list %}
 
 {% block content %}
-    <div id="content-main">
-{#        {% block object-tools %}#}
-{#            <ul class="object-tools">#}
-{#                {% block object-tools-items %}#}
-{#                    {% include "workspace/includes/action_buttons.html" %}#}
-{#                {% endblock %}#}
-{#            </ul>#}
-{#        {% endblock %}#}
-        <div class="module">
-            {% block action-content %}{% endblock %}
-        </div>
-        {% block admin_change_form_document_ready %}
-            {% block document_ready %}
+    <div id="content">
+        <div id="content-main">
+            <div class="module">
+                {% block action-content %}{% endblock %}
+            </div>
+            {% block admin_change_form_document_ready %}
+                {% block document_ready %}
 
+                {% endblock %}
             {% endblock %}
-        {% endblock %}
+        </div>
     </div>
 {% endblock %}
