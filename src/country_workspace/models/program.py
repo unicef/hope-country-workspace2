@@ -45,7 +45,7 @@ class Program(BaseModel):
     hope_id = models.CharField(max_length=200, unique=True, editable=False)
     country_office = models.ForeignKey(Office, on_delete=models.CASCADE, related_name="programs")
     name = models.CharField(max_length=255)
-    programme_code = models.CharField(max_length=255, blank=True, null=True)
+    code = models.CharField(max_length=255, blank=True, null=True)
     status = models.CharField(max_length=10, choices=STATUS_CHOICE, db_index=True)
     sector = models.CharField(max_length=50, choices=SECTOR_CHOICE, db_index=True)
     active = models.BooleanField(default=False)

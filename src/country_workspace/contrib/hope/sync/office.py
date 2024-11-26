@@ -50,7 +50,7 @@ def sync_programs(limit_to_office: "Optional[Office]" = None) -> dict[str, int]:
                 hope_id=record["id"],
                 defaults={
                     "name": record["name"],
-                    "programme_code": record["programme_code"],
+                    "code": record["programme_code"],
                     "status": record["status"],
                     "sector": record["sector"],
                     "country_office": office,

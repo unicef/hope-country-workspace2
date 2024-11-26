@@ -14,6 +14,7 @@ from hope_flex_fields.xlsx import get_format_for_field
 from xlsxwriter import Workbook
 
 from country_workspace.models import Program
+from country_workspace.state import state
 from country_workspace.workspaces.admin.actions.base import BaseActionForm
 
 if TYPE_CHECKING:
@@ -184,7 +185,9 @@ def bulk_update_export_async(records: "QuerySet[Beneficiary]", program: "Program
 
     opts = records.model._meta
     job = AsyncJob.objects.create(
+        description="Export records for updates",
         type=AsyncJob.JobType.CREATE_XLS_IMPORTER,
+        owner=state.request.user,
         program=program,
         config={"records": list(records.values_list("pk", flat=True)), "fields": config["fields"], "model": opts.label},
     )

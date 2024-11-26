@@ -18,6 +18,7 @@ from hope_flex_fields.models import DataChecker
 from ...state import state
 from ..options import WorkspaceModelAdmin
 from . import actions
+from .actions.validate import validate_queryset_async
 
 if TYPE_CHECKING:
     from hope_flex_fields.forms import FlexForm
@@ -59,7 +60,7 @@ class SelectedProgramMixin(WorkspaceModelAdmin):
 
 class BeneficiaryBaseAdmin(AdminAutoCompleteSearchMixin, SelectedProgramMixin, WorkspaceModelAdmin):
     actions = [
-        "validate_queryset",
+        validate_queryset_async,
         find_duplicates_action,
         actions.mass_update,
         actions.calculate_checksum,

@@ -1,8 +1,10 @@
-{% extends "workspace/action_page.html" %}{% load i18n  static admin_modify workspace_urls workspace_modify %}
+{% extends "workspace/action_page.html" %}{% load i18n celery_boost static admin_modify workspace_urls workspace_modify %}
 {% block page-title %}
-    {% url "workspace:workspaces_countryjob_changelist" as wcl %}
+    {% url "workspace:workspaces_countryasyncjob_changelist" as wcl %}
+    {% url "workspace:workspaces_countryasyncjob_change" original.pk as wcc %}
         &rsaquo; <a href="{% add_preserved_filters wcl %}">Background jobs</a>{% admin_url modeladmin %}
-        &rsaquo; {{ original }}{% admin_url original %}
+        &rsaquo; <a href="{% add_preserved_filters wcc %}">{{ original }}</a>{% admin_url original %}
+        &rsaquo; Inspect
 {% endblock %}
 {% block action-content %}
     {% if flower_addr %}
@@ -11,13 +13,15 @@
     <h3 class="text-xl">Task Info</h3>
     <table>
         {% for k,v in original.task_info.items %}
-            <tr>
-                <th>{{ k }}</th>
-                <td>{{ v }}</td>
-            </tr>
+            {% if k|is_safe_celery_info %}
+                <tr>
+                    <th>{{ k }}</th>
+                    <td>{{ v|default_if_none:"-" }}</td>
+                </tr>
+            {% endif %}
         {% endfor %}
             <tr>
-                <th>Position in queue</th>
+                <th>position in queue</th>
                 <td>{{ original.queue_position }}</td>
             </tr>
     </table>

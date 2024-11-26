@@ -4,7 +4,7 @@
     {% url "workspace:workspaces_countryasyncjob_change" original.pk as wcc %}
         &rsaquo; <a href="{% add_preserved_filters wcl %}">Background jobs</a>{% admin_url modeladmin %}
         &rsaquo; <a href="{% add_preserved_filters wcc %}">{{ original }}</a>{% admin_url original %}
-        &rsaquo; Queue
+        &rsaquo; Terminate
 {% endblock %}
 {% block action-content %}
 {{block.super }}

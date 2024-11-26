@@ -1,20 +1,21 @@
-import datetime
 from typing import TYPE_CHECKING
 
 from django.urls import reverse
 
-import freezegun
 import pytest
-from django_webtest import DjangoTestApp
-from django_webtest.pytest_plugin import MixinWithInstanceVariables
 from pytest_django.fixtures import SettingsWrapper
 from testutils.utils import select_office
 
 from country_workspace.state import state
+from country_workspace.workspaces.admin.actions.mass_update import mass_update_impl
 
 if TYPE_CHECKING:
-    from country_workspace.models import AsyncJob
+    from django_webtest import DjangoTestApp
+    from django_webtest.pytest_plugin import MixinWithInstanceVariables
+
     from country_workspace.workspaces.models import CountryHousehold
+
+pytestmark = [pytest.mark.admin, pytest.mark.smoke, pytest.mark.django_db]
 
 
 @pytest.fixture()
@@ -33,7 +34,6 @@ def program(office, force_migrated_records, household_checker, individual_checke
     return CountryProgramFactory(
         country_office=office,
         household_checker=household_checker,
-        individual_checker=individual_checker,
         household_columns="__str__\nid\nxx",
         individual_columns="__str__\nid\nxx",
     )
@@ -43,13 +43,14 @@ def program(office, force_migrated_records, household_checker, individual_checke
 def household(program):
     from testutils.factories import CountryHouseholdFactory
 
-    return CountryHouseholdFactory(
-        batch__program=program, batch__country_office=program.country_office, flex_fields={"size": 5}
-    )
+    return CountryHouseholdFactory(batch__program=program, batch__country_office=program.country_office)
 
 
 @pytest.fixture()
-def app(django_app_factory: "MixinWithInstanceVariables") -> "DjangoTestApp":
+def app(
+    django_app_factory: "MixinWithInstanceVariables",
+    settings: SettingsWrapper,
+) -> "DjangoTestApp":
     from testutils.factories import SuperUserFactory
 
     django_app = django_app_factory(csrf_checks=False)
@@ -59,22 +60,31 @@ def app(django_app_factory: "MixinWithInstanceVariables") -> "DjangoTestApp":
     yield django_app
 
 
-def test_ws_validate(
-    app: "DjangoTestApp", force_migrated_records, settings: "SettingsWrapper", household: "CountryHousehold"
-) -> None:
+def test_mass_update_impl(household):
+    from country_workspace.models import Household
+
+    mass_update_impl(Household.objects.all(), {"address": ("djangoformsfieldsfield_set_lambda", "__NEW VALUE__")})
+
+    household.refresh_from_db()
+    assert household.flex_fields["address"] == "__NEW VALUE__"
+
+
+def test_mass_update(app: "DjangoTestApp", household: "CountryHousehold") -> None:
     url = reverse("workspace:workspaces_countryhousehold_changelist")
-    settings.CELERY_TASK_ALWAYS_EAGER = True
     with select_office(app, household.country_office, household.program):
+        # res = app.get(url)
+        # res.forms["select-tenant"]["tenant"] = household.country_office.pk
+        # res.forms["select-tenant"].submit()
         res = app.get(url)
         form = res.forms["changelist-form"]
+        form["action"] = "mass_update"
         form.set("_selected_action", True)
-        form["action"].select("validate_queryset_async")
         res = form.submit()
-        assert res.status_code == 302
 
-        with freezegun.freeze_time("2020-01-01 00:00:00"):
-            job: "AsyncJob" = household.program.jobs.first()
-            job.queue()
-            household.refresh_from_db()
-            assert household.last_checked.date() == datetime.date(2020, 1, 1)
-            assert household.errors
+        form = res.forms["mass-update-form"]
+        form["flex_fields__address_0"].select(text="set")
+        form["flex_fields__address_1"] = "__NEW VALUE__"
+        res = form.submit("_apply")
+
+        household.refresh_from_db()
+        assert household.flex_fields["address"] == "__NEW VALUE__"

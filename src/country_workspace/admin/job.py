@@ -12,3 +12,4 @@ class AsyncJobAdmin(CeleryTaskModelAdmin, BaseModelAdmin):
         "program",
         "type",
     )
+    readonly_fields = ("program", "batch", "owner")

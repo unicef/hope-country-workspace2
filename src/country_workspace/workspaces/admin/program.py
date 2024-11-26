@@ -77,7 +77,7 @@ class CountryProgramAdmin(WorkspaceModelAdmin):
         "individual_columns",
         "household_columns",
         "active",
-        "programme_code",
+        "code",
         "status",
         "sector",
         "name",
@@ -89,7 +89,7 @@ class CountryProgramAdmin(WorkspaceModelAdmin):
             None,
             {
                 "fields": (
-                    ("name", "programme_code"),
+                    ("name", "code"),
                     ("status", "sector", "active"),
                 )
             },
