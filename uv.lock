@@ -578,6 +578,20 @@ wheels = [
 ]
 
 [[package]]
+name = "django-celery-boost"
+version = "0.3.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "celery" },
+    { name = "django-admin-extra-buttons" },
+    { name = "django-concurrency" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/df/b6/9459afa6f696bc465ba81edcda96b68539cd5898d395691537ce703c5f9d/django_celery_boost-0.3.0.tar.gz", hash = "sha256:a02b1ef3f37104e087e90762c919be76f8457f054771a28b07ba7835550710a5", size = 11081 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/9d/66/175bfb0c315af46825c314a7bf67f9a834a434598b1c75b7d1a091d81727/django_celery_boost-0.3.0-py3-none-any.whl", hash = "sha256:a1e7ac0cb7c30f6ef8a7312ba25cd4b23e203157890528f97c1d500e4b7f1b59", size = 7849 },
+]
+
+[[package]]
 name = "django-celery-results"
 version = "2.5.1"
 source = { registry = "https://pypi.org/simple" }
@@ -1084,6 +1098,7 @@ dependencies = [
     { name = "django-adminfilters" },
     { name = "django-cacheops" },
     { name = "django-celery-beat" },
+    { name = "django-celery-boost" },
     { name = "django-celery-results" },
     { name = "django-concurrency" },
     { name = "django-constance" },
@@ -1169,6 +1184,7 @@ requires-dist = [
     { name = "django-adminfilters", specifier = ">=2.5.0" },
     { name = "django-cacheops", specifier = ">=7.1" },
     { name = "django-celery-beat", specifier = ">=2.6.0" },
+    { name = "django-celery-boost", specifier = ">=0.3.0" },
     { name = "django-celery-results", specifier = ">=2.5.1" },
     { name = "django-concurrency", specifier = ">=2.6.0" },
     { name = "django-constance", specifier = ">=3.1.0" },
