@@ -18,7 +18,7 @@ dependencies = [
     "django-adminfilters>=2.5.0",
     "django-cacheops>=7.1",
     "django-celery-beat>=2.6.0",
-    "django-celery-boost>=0.4.0",
+    "django-celery-boost>=0.4.1",
     "django-celery-results>=2.5.1",
     "django-concurrency>=2.6.0",
     "django-constance>=3.1.0",
@@ -50,6 +50,8 @@ dependencies = [
     "social-auth-app-django",
     "unicef-security>=1.5.1",
 ]
+
+
 [project.optional-dependencies]
 docs = [
     "mkdocs>=1.6.1",
@@ -93,7 +95,8 @@ dev-dependencies = [
     "types-requests>=2.31.0.6",
     "vcrpy>=6.0.2",
 ]
-[tool.uv.sources]
+#[tool.uv.sources]
+#django-celery-boost= { path = "/Users/sax/Documents/data/PROGETTI/UNICEF/django-celery-model" }
 
 [tool.black]
 line-length = 120
