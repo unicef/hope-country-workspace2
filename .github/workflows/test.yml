@@ -80,7 +80,7 @@ jobs:
       DOCKER_DEFAULT_PLATFORM: linux/amd64
       DOCKER_METADATA_ANNOTATIONS_LEVELS: manifest,index
       DATABASE_URL: postgres://postgres:postgres@localhost:15432/country_workspace
-      CELERY_BROKER_URL: redis://localhost:16379/1"
+      CELERY_BROKER_URL: redis://localhost:16379/1
       CACHE_URL: redis://localhost:16379/1
       DOCKER_BUILDKIT: 1
     steps:
