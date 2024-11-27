@@ -67,6 +67,13 @@ CONFIG: "Dict[str, ConfigItem]" = {
         False,
         celery_doc("#std-setting-task_always_eager"),
     ),
+    "CELERY_TASK_STORE_EAGER_RESULT": (
+        bool,
+        False,
+        True,
+        False,
+        celery_doc("#std-setting-task_store_eager_result"),
+    ),
     "CELERY_TASK_EAGER_PROPAGATES": (
         bool,
         True,

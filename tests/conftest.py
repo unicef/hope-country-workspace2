@@ -48,6 +48,7 @@ def pytest_configure(config):
     os.environ["MAILJET_SECRET_KEY"] = "11"
     os.environ["SOCIAL_AUTH_REDIRECT_IS_HTTPS"] = "0"
     os.environ["CELERY_TASK_ALWAYS_EAGER"] = "1"
+    os.environ["CELERY_TASK_STORE_EAGER_RESULT"] = "1"
     os.environ["SECURE_HSTS_PRELOAD"] = "0"
     os.environ["EXTRA_APPS"] = "country_workspace.contrib.hope"
     os.environ["HOPE_API_URL"] = "https://dev-hope.unitst.org/api/rest/"
@@ -65,6 +66,7 @@ def pytest_configure(config):
     settings.SECRET_KEY = "kugiugiuygiuygiuygiuhgiuhgiuhgiugiu"
     settings.CSRF_TRUSTED_ORIGINS = ["http://testserver"]
     settings.CELERY_TASK_ALWAYS_EAGER = True
+    settings.CELERY_TASK_STORE_EAGER_RESULT = True
     settings.SOCIAL_AUTH_REDIRECT_IS_HTTPS = False
     django.setup()
     from country_workspace.cache.manager import cache_manager
