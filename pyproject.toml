@@ -51,6 +51,7 @@ dependencies = [
     "sentry-sdk>=2.7.1",
     "social-auth-app-django",
     "unicef-security>=1.5.1",
+    "pydantic>=2.10.1",
 ]
 [project.scripts]
 celery-monitor = "country_workspace.__monitor__:run"
@@ -85,6 +86,7 @@ dev-dependencies = [
     "mypy>=1.11.2",
     "pdbpp>=0.10.3",
     "pip>=24.3.1",
+    "polyfactory>=2.18.1",
     "pre-commit>=3.7.1",
     "pyquery>=2.0.1",
     "pytest-celery>=1.0.0",

@@ -100,6 +100,8 @@ CONFIG: "Dict[str, ConfigItem]" = {
         "https://django-environ.readthedocs.io/en/latest/types.html#environ-env-db-url",
     ),
     "DEBUG": (bool, False, True, False, setting("debug")),
+    "DEDUP_ENGINE_API_TOKEN": (str, "", "", False, "Dedup engine API token"),
+    "DEDUP_ENGINE_API_URL": (str, "", "", False, "Dedup engine API url"),
     # "EMAIL_BACKEND": (
     #     str,
     #     "django.core.mail.backends.smtp.EmailBackend",
