@@ -14,7 +14,7 @@ from webtest import Checkbox, Upload
 
 from country_workspace.models import AsyncJob
 from country_workspace.state import state
-from country_workspace.workspaces.admin.actions.bulk_export import TYPES, bulk_update_export_impl
+from country_workspace.workspaces.admin.cleaners.bulk_update import TYPES, create_xls_importer
 
 if TYPE_CHECKING:
     from django_webtest import DjangoTestApp
@@ -90,7 +90,8 @@ def test_validator(field, validator):
     assert validator(flex_field)()
 
 
-def test_bulk_update_export_impl(household: "CountryHousehold", force_migrated_records):
+def test_create_xls_importer(household: "CountryHousehold", force_migrated_records):
+
     selected_fields = [
         "id",
         "gender",
@@ -101,10 +102,10 @@ def test_bulk_update_export_impl(household: "CountryHousehold", force_migrated_r
         "birth_date",
         "disability",
     ]
-    ret = bulk_update_export_impl(
+    ret, __ = create_xls_importer(
         household.members.all(),
-        household.batch.program,
-        {"fields": selected_fields},
+        household.program.pk,
+        selected_fields,
     )
     workbook = openpyxl.load_workbook(io.BytesIO(ret.getvalue()))
     sheet = workbook.worksheets[0]
@@ -170,6 +171,7 @@ def data(household):
             worksheet.write(row, col, f"{c}_{col}")
     workbook.close()
     buff.seek(0)
+    # from pathlib import Path
     # with Path("AAAAAAA.xlsx").open("bw") as f:
     #     f.write(buff.getvalue())
     # buff.seek(0)
@@ -183,11 +185,11 @@ def test_bulk_update_import(app: "DjangoTestApp", force_migrated_records, settin
     with select_office(app, household.country_office, household.program):
         res = app.get(url)
         res = res.click("Import File Updates")
+        res.forms["bulk-update-form"]["description"] = "Bulk update from file"
+        res.forms["bulk-update-form"]["target"] = "ind"
         res.forms["bulk-update-form"]["file"] = Upload("file.xlsx", xls.read())
         res = res.forms["bulk-update-form"].submit("_import")
         assert res.status_code == 302
-
         job: AsyncJob = household.program.jobs.first()
-        job.queue()
-
+        assert job
         assert household.members.filter(flex_fields__given_name="given_name_2").exists()

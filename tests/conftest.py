@@ -51,8 +51,10 @@ def pytest_configure(config):
     os.environ["SECURE_HSTS_PRELOAD"] = "0"
     os.environ["EXTRA_APPS"] = "country_workspace.contrib.hope"
     os.environ["HOPE_API_URL"] = "https://dev-hope.unitst.org/api/rest/"
-    # os.environ["HOPE_API_TOKEN"] = "kugiugiuygiuygiuygiuhgiuhgiuhgiugiu"
-    # os.environ["SECRET_KEY"] = "kugiugiuygiuygiuygiuhgiuhgiuhgiugiu"
+    os.environ["HOPE_API_TOKEN"] = "kugiugiuygiuygiuygiuhgiuhgiuhgiugiu"
+    os.environ["SECRET_KEY"] = "kugiugiuygiuygiuygiuhgiuhgiuhgiugiu"
+    os.environ["FILE_STORAGE_DEFAULT"] = "django.core.files.storage.FileSystemStorage?location=./~tests/storage/"
+    os.environ["FILE_STORAGE_MEDIA"] = "django.core.files.storage.FileSystemStorage?location=./~tests/storage/"
 
     os.environ["LOGGING_LEVEL"] = "CRITICAL"
     import django
@@ -61,9 +63,7 @@ def pytest_configure(config):
     settings.ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
     settings.SIGNING_BACKEND = "testutils.signers.PlainSigner"
     settings.SECRET_KEY = "kugiugiuygiuygiuygiuhgiuhgiuhgiugiu"
-    settings.CSRF_TRUSTED_ORIGINS = [
-        "http://testserver",
-    ]
+    settings.CSRF_TRUSTED_ORIGINS = ["http://testserver"]
     settings.CELERY_TASK_ALWAYS_EAGER = True
     settings.SOCIAL_AUTH_REDIRECT_IS_HTTPS = False
     django.setup()

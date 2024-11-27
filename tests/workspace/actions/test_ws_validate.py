@@ -64,17 +64,17 @@ def test_ws_validate(
 ) -> None:
     url = reverse("workspace:workspaces_countryhousehold_changelist")
     settings.CELERY_TASK_ALWAYS_EAGER = True
-    with select_office(app, household.country_office, household.program):
-        res = app.get(url)
-        form = res.forms["changelist-form"]
-        form.set("_selected_action", True)
-        form["action"].select("validate_queryset_async")
-        res = form.submit()
-        assert res.status_code == 302
+    with freezegun.freeze_time("2020-01-01 00:00:00"):
+        with select_office(app, household.country_office, household.program):
+            res = app.get(url)
+            form = res.forms["changelist-form"]
+            form.set("_selected_action", True)
+            form["action"].select("validate_records")
+            res = form.submit()
+            assert res.status_code == 302
 
-        with freezegun.freeze_time("2020-01-01 00:00:00"):
             job: "AsyncJob" = household.program.jobs.first()
-            job.queue()
+            assert job is not None
             household.refresh_from_db()
             assert household.last_checked.date() == datetime.date(2020, 1, 1)
             assert household.errors

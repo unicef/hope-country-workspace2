@@ -5,26 +5,26 @@ from django.conf import settings
 from django.contrib import messages
 from django.contrib.admin import register
 from django.db.models import QuerySet
-from django.db.transaction import atomic
 from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from django.utils import timezone
 from django.utils.translation import gettext as _
-from django.utils.translation import ngettext
 
 from admin_extra_buttons.api import button, link
 from admin_extra_buttons.buttons import LinkButton
 from hope_flex_fields.models import DataChecker
-from hope_smart_import.readers import open_xls_multi
+from strategy_field.utils import fqn
 
 from country_workspace.state import state
 
-from ...models import AsyncJob, Batch, Household
+from ...datasources.rdi import import_from_rdi_job
+from ...models import AsyncJob, Batch
 from ...utils.flex_fields import get_checker_fields
 from ..models import CountryProgram
 from ..options import WorkspaceModelAdmin
 from ..sites import workspace
+from .cleaners.bulk_update import bulk_update_household, bulk_update_individual
 from .forms import ImportFileForm
 
 
@@ -54,11 +54,9 @@ class ProgramForm(forms.ModelForm):
 
 
 class BulkUpdateImportForm(forms.Form):
+    description = forms.CharField(widget=forms.Textarea)
+    target = forms.ChoiceField(choices=(("hh", "Household"), ("ind", "Individual")))
     file = forms.FileField()
-
-
-def clean_field_name(v: str) -> str:
-    return v.replace("_h_c", "").replace("_h_f", "").replace("_i_c", "").replace("_i_f", "").lower()
 
 
 @register(CountryProgram, site=workspace)
@@ -189,51 +187,29 @@ class CountryProgramAdmin(WorkspaceModelAdmin):
         context = self.get_common_context(request, pk, title="Import RDI file")
         program: "CountryProgram" = context["original"]
         context["selected_program"] = context["original"]
-        hh_ids = {}
         if request.method == "POST":
             form = ImportFileForm(request.POST, request.FILES)
             if form.is_valid():
-                # TODO: Move to AsyncJob
-                with atomic():
-                    batch_name = form.cleaned_data["batch_name"]
-                    batch, __ = Batch.objects.get_or_create(
-                        name=batch_name or ("Batch %s" % timezone.now()),
-                        program=program,
-                        country_office=program.country_office,
-                        imported_by=request.user,
-                    )
-                    hh_id_col = form.cleaned_data["pk_column_name"]
-                    total_hh = total_ind = 0
-                    m_field_label = form.cleaned_data["master_column_label"]
-                    h_field_label = form.cleaned_data["detail_column_label"]
-                    for sheet_index, sheet_generator in open_xls_multi(form.cleaned_data["file"], sheets=[0, 1]):
-                        for line, raw_record in enumerate(sheet_generator, 1):
-                            record = {}
-                            for k, v in raw_record.items():
-                                record[clean_field_name(k)] = v
-                            if record[hh_id_col]:
-                                try:
-                                    if sheet_index == 0:
-                                        hh: "Household" = program.households.create(
-                                            batch=batch, name=raw_record[m_field_label], flex_fields=record
-                                        )
-                                        hh_ids[record[hh_id_col]] = hh.pk
-                                        total_hh += 1
-                                    elif sheet_index == 1:
-                                        program.individuals.create(
-                                            batch=batch,
-                                            name=raw_record[h_field_label],
-                                            household_id=hh_ids[record[hh_id_col]],
-                                            flex_fields=record,
-                                        )
-                                        total_ind += 1
-                                except Exception as e:
-                                    raise Exception(
-                                        "Error processing sheet %s line %s: %s" % (1 + sheet_index, line, e)
-                                    )
-                hh_msg = ngettext("%(c)d Household", "%(c)d Households", total_hh) % {"c": total_hh}
-                ind_msg = ngettext("%(c)d Individual", "%(c)d Individuals", total_ind) % {"c": total_ind}
-                self.message_user(request, _("Imported {0} and {1}").format(hh_msg, ind_msg), messages.SUCCESS)
+                batch, __ = Batch.objects.get_or_create(
+                    name=form.cleaned_data["batch_name"] or ("Batch %s" % timezone.now()),
+                    program=program,
+                    country_office=program.country_office,
+                    imported_by=state.request.user,
+                )
+                job: AsyncJob = AsyncJob.objects.create(
+                    type=AsyncJob.JobType.TASK,
+                    action=fqn(import_from_rdi_job),
+                    file=request.FILES["file"],
+                    program=program,
+                    config={
+                        "batch": batch.pk,
+                        "household_pk_col": form.cleaned_data["pk_column_name"],
+                        "master_column_label": form.cleaned_data["master_column_label"],
+                        "detail_column_label": form.cleaned_data["detail_column_label"],
+                    },
+                )
+                job.queue()
+                self.message_user(request, _("Import scheduled"), messages.SUCCESS)
                 context["form"] = form
 
         else:
@@ -247,14 +223,22 @@ class CountryProgramAdmin(WorkspaceModelAdmin):
         program: "CountryProgram" = context["original"]
         context["selected_program"] = context["original"]
         updated = 0
+        function_map = {"hh": fqn(bulk_update_household), "ind": fqn(bulk_update_individual)}
         if request.method == "POST":
             form = BulkUpdateImportForm(request.POST, request.FILES)
-
             if form.is_valid():
-                AsyncJob.objects.create(
-                    program=program, type=AsyncJob.JobType.BULK_UPDATE_IND, batch=None, file=request.FILES["file"]
+                job = AsyncJob.objects.create(
+                    description=form.cleaned_data["description"],
+                    program=program,
+                    owner=request.user,
+                    type=AsyncJob.JobType.TASK,
+                    action=function_map[form.cleaned_data["target"]],
+                    batch=None,
+                    file=request.FILES["file"],
+                    config={},
                 )
-                self.message_user(request, _("Imported. {0} records updated").format(updated))
+                job.queue()
+                self.message_user(request, _("Import scheduled").format(updated))
                 return HttpResponseRedirect(self.get_changelist_url())
 
         else:

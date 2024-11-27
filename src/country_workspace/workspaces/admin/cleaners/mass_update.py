@@ -4,10 +4,7 @@ from django import forms
 from django.db import transaction
 from django.db.models import QuerySet
 from django.forms import MultiValueField, widgets
-from django.http import HttpRequest, HttpResponse
-from django.shortcuts import render
 from django.utils.text import slugify
-from django.utils.translation import gettext as _
 
 from hope_flex_fields.fields import FlexFormMixin
 from strategy_field.utils import fqn
@@ -18,7 +15,6 @@ if TYPE_CHECKING:
     from hope_flex_fields.models import DataChecker
 
     from country_workspace.types import Beneficiary
-    from country_workspace.workspaces.admin.hh_ind import BeneficiaryBaseAdmin
 
     MassUpdateFunc = Callable[[Any, Any], Any]
     FormOperations = dict[str, tuple[str, str]]
@@ -104,9 +100,9 @@ class MassUpdateForm(BaseActionForm):
         return ret
 
 
-def mass_update_impl(records: "QuerySet[Beneficiary]", config: "FormOperations") -> None:
+def mass_update_impl(queryset: "QuerySet[Beneficiary]", config: "FormOperations") -> None:
     with transaction.atomic():
-        for record in records:
+        for record in queryset.all():
             for field_name, attrs in config.items():
                 op, new_value = attrs
                 old_value = record.flex_fields[field_name]
@@ -115,16 +111,18 @@ def mass_update_impl(records: "QuerySet[Beneficiary]", config: "FormOperations")
             record.save()
 
 
-def mass_update(
-    model_admin: "BeneficiaryBaseAdmin", request: HttpRequest, queryset: "QuerySet[Beneficiary]"
-) -> HttpResponse:
-    ctx = model_admin.get_common_context(request, title=_("Mass update"))
-    ctx["checker"] = checker = model_admin.get_checker(request)
-    ctx["preserved_filters"] = model_admin.get_preserved_filters(request)
-    form = MassUpdateForm(request.POST, checker=checker)
-    ctx["form"] = form
-    if "_apply" in request.POST:
-        if form.is_valid():
-            mass_update_impl(queryset.all(), form.get_selected())
-            model_admin.message_user(request, "Records updated successfully")
-    return render(request, "workspace/actions/mass_update.html", ctx)
+#
+#
+# def mass_update(
+#     model_admin: "BeneficiaryBaseAdmin", request: HttpRequest, queryset: "QuerySet[Beneficiary]"
+# ) -> HttpResponse:
+#     ctx = model_admin.get_common_context(request, title=_("Mass update"))
+#     ctx["checker"] = checker = model_admin.get_checker(request)
+#     ctx["preserved_filters"] = model_admin.get_preserved_filters(request)
+#     form = MassUpdateForm(request.POST, checker=checker)
+#     ctx["form"] = form
+#     if "_apply" in request.POST:
+#         if form.is_valid():
+#             mass_update_impl(queryset.all(), form.get_selected())
+#             model_admin.message_user(request, "Records updated successfully")
+#     return render(request, "workspace/actions/mass_update.html", ctx)

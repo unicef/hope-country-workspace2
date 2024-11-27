@@ -3,23 +3,20 @@ from io import BytesIO
 from typing import TYPE_CHECKING, Any
 
 from django import forms
-from django.contrib import admin, messages
+from django.core.exceptions import ObjectDoesNotExist
+from django.core.files.storage import default_storage
 from django.db.models import QuerySet
-from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
-from django.shortcuts import render
-from django.utils.translation import gettext as _
 
 from hope_flex_fields.models import DataChecker, FlexField
 from hope_flex_fields.xlsx import get_format_for_field
+from hope_smart_import.readers import open_xls
 from xlsxwriter import Workbook
 
-from country_workspace.models import Program
-from country_workspace.state import state
-from country_workspace.workspaces.admin.actions.base import BaseActionForm
+from country_workspace.models import AsyncJob, Program
+from country_workspace.workspaces.admin.cleaners.base import BaseActionForm
 
 if TYPE_CHECKING:
     from country_workspace.types import Beneficiary
-    from country_workspace.workspaces.admin.hh_ind import BeneficiaryBaseAdmin
 
 
 class BulkUpdateForm(BaseActionForm):
@@ -125,9 +122,12 @@ def dc_get_field(dc: "DataChecker", name: str) -> "FlexField | None":
 
 
 def create_xls_importer(
-    queryset: "QuerySet[Beneficiary]", dc: "DataChecker", columns: list[str]
+    queryset: "QuerySet[Beneficiary]", program_pk: str, columns: list[str]
 ) -> [io.BytesIO, Workbook]:
     out = BytesIO()
+    program = Program.objects.get(pk=program_pk)
+    dc: DataChecker = program.get_checker_for(queryset.model)
+
     workbook = Workbook(out, {"in_memory": True, "default_date_format": "yyyy/mm/dd"})
 
     header_format = workbook.add_format(
@@ -173,41 +173,53 @@ def create_xls_importer(
     return out, workbook
 
 
-def bulk_update_export_impl(
-    records: "QuerySet[Beneficiary]", program: "Program", config: "dict[str, Any]"
-) -> io.BytesIO:
-    dc = program.get_checker_for(records.model)
-    return create_xls_importer(records, dc, config["fields"])[0]
+def bulk_update_export_template(queryset, program_pk: str, columns: list[str], filename: str) -> bytes:
+    out, __ = create_xls_importer(queryset.all(), program_pk, columns)
+    path = default_storage.save(filename, out)
+    return path
 
 
-def bulk_update_export_async(records: "QuerySet[Beneficiary]", program: "Program", config: "dict[str, Any]"):
-    from country_workspace.models import AsyncJob
+#
+# @admin.action
+# def bulk_update_export(
+#         model_admin: "BeneficiaryBaseAdmin", request: HttpRequest, queryset: "QuerySet[Beneficiary]"
+# ) -> HttpResponse:
+#     ctx = model_admin.get_common_context(request, title=_("Export data for bulk update"))
+#     ctx["checker"] = checker = model_admin.get_checker(request)
+#     ctx["preserved_filters"] = model_admin.get_preserved_filters(request)
+#     form = BulkUpdateForm(request.POST, checker=checker)
+#     ctx["form"] = form
+#     if "_export" in request.POST:
+#         if form.is_valid():
+#             config = {"fields": ["id"] + sorted(form.cleaned_data["fields"])}
+#             bulk_update_export_template(queryset.all(), model_admin.get_selected_program(request), config)
+#             model_admin.message_user(request, _("Export scheduled"), messages.SUCCESS)
+#             return HttpResponseRedirect(".")
+#
+#     return render(request, "workspace/actions/bulk_update_export.html", ctx)
 
-    opts = records.model._meta
-    job = AsyncJob.objects.create(
-        description="Export records for updates",
-        type=AsyncJob.JobType.CREATE_XLS_IMPORTER,
-        owner=state.request.user,
-        program=program,
-        config={"records": list(records.values_list("pk", flat=True)), "fields": config["fields"], "model": opts.label},
-    )
-    return job
+
+def bulk_update_individual(job: AsyncJob) -> dict[str, Any]:
+    ret = {"not_found": []}
+    for e in open_xls(io.BytesIO(job.file.read()), start_at=0):
+        try:
+            _id = e.pop("id")
+            ind = job.program.individuals.get(id=_id)
+            ind.flex_fields.update(**e)
+            ind.save()
+        except ObjectDoesNotExist:
+            ret["not_found"].append(_id)
+    return ret
 
 
-@admin.action
-def bulk_update_export(
-    model_admin: "BeneficiaryBaseAdmin", request: HttpRequest, queryset: "QuerySet[Beneficiary]"
-) -> HttpResponse:
-    ctx = model_admin.get_common_context(request, title=_("Export data for bulk update"))
-    ctx["checker"] = checker = model_admin.get_checker(request)
-    ctx["preserved_filters"] = model_admin.get_preserved_filters(request)
-    form = BulkUpdateForm(request.POST, checker=checker)
-    ctx["form"] = form
-    if "_export" in request.POST:
-        if form.is_valid():
-            config = {"fields": ["id"] + sorted(form.cleaned_data["fields"])}
-            bulk_update_export_async(queryset.all(), model_admin.get_selected_program(request), config)
-            model_admin.message_user(request, _("Export scheduled"), messages.SUCCESS)
-            return HttpResponseRedirect(".")
-
-    return render(request, "workspace/actions/bulk_update_export.html", ctx)
+def bulk_update_household(job: AsyncJob) -> dict[str, Any]:
+    ret = {"not_found": []}
+    for e in open_xls(io.BytesIO(job.file.read()), start_at=0):
+        try:
+            _id = e.pop("id")
+            ind = job.program.households.get(id=_id)
+            ind.flex_fields.update(**e)
+            ind.save()
+        except ObjectDoesNotExist:
+            ret["not_found"].append(_id)
+    return ret

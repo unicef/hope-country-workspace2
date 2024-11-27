@@ -6,8 +6,9 @@ import pytest
 from pytest_django.fixtures import SettingsWrapper
 from testutils.utils import select_office
 
+from country_workspace.models import AsyncJob
 from country_workspace.state import state
-from country_workspace.workspaces.admin.actions.mass_update import mass_update_impl
+from country_workspace.workspaces.admin.cleaners.mass_update import mass_update_impl
 
 if TYPE_CHECKING:
     from django_webtest import DjangoTestApp
@@ -85,6 +86,9 @@ def test_mass_update(app: "DjangoTestApp", household: "CountryHousehold") -> Non
         form["flex_fields__address_0"].select(text="set")
         form["flex_fields__address_1"] = "__NEW VALUE__"
         res = form.submit("_apply")
+
+        job: "AsyncJob" = household.program.jobs.first()
+        assert job is not None
 
         household.refresh_from_db()
         assert household.flex_fields["address"] == "__NEW VALUE__"
