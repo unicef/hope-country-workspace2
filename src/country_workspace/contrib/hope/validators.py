@@ -10,18 +10,22 @@ class FullHouseholdValidator(BeneficiaryGroupValidator):
         errs = []
         try:
             hh.heads().get()
+        except ObjectDoesNotExist:
+            errs.append("This Household does not have Head")
         except MultipleObjectsReturned:
             errs.append("This Household has multiple heads")
 
         try:
             hh.collectors_primary().get()
         except ObjectDoesNotExist:
-            errs.append("This Household does not have Primary Collectors")
+            errs.append("This Household does not have Primary Collector")
         except MultipleObjectsReturned:
             errs.append("This Household has multiple Primary Collectors")
 
         try:
             hh.collectors_alternate().get()
+        except ObjectDoesNotExist:
+            pass
         except MultipleObjectsReturned:
             errs.append("This Household has multiple Alternate Collectors")
 

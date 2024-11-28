@@ -62,8 +62,6 @@ def get_hh_fields(household: "CountryHousehold"):
 
 class HouseholdFactory(AutoRegisterModelFactory):
     batch = factory.SubFactory(CountryBatchFactory)
-    # country_office = factory.SubFactory(OfficeFactory)
-    # program = factory.SubFactory(ProgramFactory)
     name = factory.Faker("last_name")
     flex_fields = factory.LazyAttribute(get_hh_fields)
 
@@ -73,21 +71,18 @@ class HouseholdFactory(AutoRegisterModelFactory):
 
     @classmethod
     def _create(cls, model_class, *args, **kwargs):
-
-        # kwargs["country_office"] = kwargs["batch"].country_office
-        # kwargs["program"] = kwargs["batch"].program
         return super()._create(model_class, *args, **kwargs)
 
     @factory.post_generation
     def individuals(self, create, extracted, **kwargs):
         from .individual import IndividualFactory
 
-        self.flex_fields.setdefault("household_id", self.id)
-        for i in range(self.flex_fields["size"]):
-            IndividualFactory(
-                batch=self.batch,
-                household=self,
-            )
+        if extracted is not None:
+            pass
+        else:
+            self.flex_fields.setdefault("household_id", self.id)
+            for i in range(self.flex_fields["size"]):
+                IndividualFactory(batch=self.batch, household=self)
 
 
 class CountryHouseholdFactory(HouseholdFactory):

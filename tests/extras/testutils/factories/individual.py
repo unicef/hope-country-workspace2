@@ -34,9 +34,6 @@ def get_ind_fields(individual: "CountryIndividual"):
 
 
 class IndividualFactory(AutoRegisterModelFactory):
-    # batch = factory.SubFactory(BatchFactory)
-    # country_office = factory.SubFactory(OfficeFactory)
-    # program = factory.SubFactory(ProgramFactory)
     household = factory.SubFactory(HouseholdFactory)
     name = factory.LazyAttribute(lambda o: "%s %s" % (fake.first_name(), o.household.name))
     flex_fields = factory.LazyAttribute(get_ind_fields)
@@ -49,9 +46,6 @@ class IndividualFactory(AutoRegisterModelFactory):
     def _create(cls, model_class, *args, **kwargs):
         if "household" in kwargs:
             kwargs["batch"] = kwargs["household"].batch
-        # kwargs["batch"] = kwargs["household"].batch
-        # kwargs["country_office"] = kwargs["household"].country_office
-        # kwargs["program"] = kwargs["household"].program
         return super()._create(model_class, *args, **kwargs)
 
 

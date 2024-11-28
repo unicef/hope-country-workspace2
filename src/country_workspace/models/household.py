@@ -54,4 +54,4 @@ class Household(Validable, BaseModel):
         return self.members.filter(flex_fields__primary_collector_id=self.flex_fields["household_id"])
 
     def collectors_alternate(self):
-        return self.members.filter(flex_fields__primary_collector_id=self.flex_fields["household_id"])
+        return self.members.filter(flex_fields__alternate_collector_id=self.flex_fields["household_id"])
