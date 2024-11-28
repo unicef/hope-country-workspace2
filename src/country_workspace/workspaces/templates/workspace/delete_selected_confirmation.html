@@ -1,11 +1,11 @@
 {% extends "workspace/_base.html" %}
-{% load i18n l10n admin_urls static %}
+{% load admin_urls i18n l10n static %}
 
 {% block extrahead %}
     {{ block.super }}
     {{ media }}
     <script src="{% static 'admin/js/cancel.js' %}" async></script>
-{% endblock %}
+{% endblock extrahead %}
 
 {% block bodyclass %}{{ block.super }} app-{{ opts.app_label }} model-{{ opts.model_name }} delete-confirmation delete-selected-confirmation{% endblock %}
 
@@ -35,4 +35,4 @@
     </div>
     </form>
 {% endif %}
-{% endblock %}
+{% endblock content %}

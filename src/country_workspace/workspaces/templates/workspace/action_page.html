@@ -1,4 +1,4 @@
-{% extends "workspace/change_form.html" %}{% load i18n static extra_buttons workspace_urls workspace_list %}
+{% extends "workspace/change_form.html" %}{% load extra_buttons i18n static workspace_list workspace_urls %}
 
 {% block content %}
     <div id="content">
@@ -9,8 +9,8 @@
             {% block admin_change_form_document_ready %}
                 {% block document_ready %}
 
-                {% endblock %}
-            {% endblock %}
+                {% endblock document_ready %}
+            {% endblock admin_change_form_document_ready %}
         </div>
     </div>
-{% endblock %}
+{% endblock content %}

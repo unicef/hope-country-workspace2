@@ -1,27 +1,25 @@
 {% extends "workspace/_base.html" %}
-{% load i18n admin_urls static %}
+{% load admin_urls i18n static %}
 
 {% block extrahead %}
     {{ block.super }}
     {{ media }}
     <script src="{% static 'admin/js/cancel.js' %}" async></script>
-{% endblock %}
+{% endblock extrahead %}
 
 {% block bodyclass %}{{ block.super }} app-{{ opts.app_label }} model-{{ opts.model_name }} delete-confirmation{% endblock %}
-
-
 
 {% block content %}
 {% if perms_lacking %}
   {% block delete_forbidden %}
     <p>{% blocktranslate with escaped_object=object %}Deleting the {{ object_name }} '{{ escaped_object }}' would result in deleting related objects, but your account doesn't have permission to delete the following types of objects:{% endblocktranslate %}</p>
     <ul id="deleted-objects">{{ perms_lacking|unordered_list }}</ul>
-  {% endblock %}
+  {% endblock delete_forbidden %}
 {% elif protected %}
   {% block delete_protected %}
     <p>{% blocktranslate with escaped_object=object %}Deleting the {{ object_name }} '{{ escaped_object }}' would require deleting the following protected related objects:{% endblocktranslate %}</p>
     <ul id="deleted-objects">{{ protected|unordered_list }}</ul>
-  {% endblock %}
+  {% endblock delete_protected %}
 {% else %}
   {% block delete_confirm %}
     <p>{% blocktranslate with escaped_object=object %}Are you sure you want to delete the {{ object_name }} "{{ escaped_object }}"? All of the following related items will be deleted:{% endblocktranslate %}</p>
@@ -37,6 +35,6 @@
     <a href="#" class="button cancel-link">{% translate "No, take me back" %}</a>
     </div>
     </form>
-  {% endblock %}
+  {% endblock delete_confirm %}
 {% endif %}
 {% endblock content %}

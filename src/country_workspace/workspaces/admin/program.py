@@ -201,6 +201,7 @@ class CountryProgramAdmin(WorkspaceModelAdmin):
                     action=fqn(import_from_rdi_job),
                     file=request.FILES["file"],
                     program=program,
+                    owner=request.user,
                     config={
                         "batch": batch.pk,
                         "household_pk_col": form.cleaned_data["pk_column_name"],

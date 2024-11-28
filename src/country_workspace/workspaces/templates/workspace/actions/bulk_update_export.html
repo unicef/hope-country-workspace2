@@ -11,10 +11,10 @@
     <table>
         {{ form.as_table }}
     </table>
-    {% load i18n admin_urls workspace_urls %}
+    {% load admin_urls i18n workspace_urls %}
     <div class="submit-row float-right">
         <input type="submit" value="{% translate 'Export' %}" class="default" name="_export">
     </div>
 
 </form>
-{% endblock %}
+{% endblock content %}

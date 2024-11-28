@@ -1,8 +1,9 @@
-{% extends "workspace/action_page.html" %}{% load i18n workspace_urls workspace_modify %}
+{% extends "workspace/action_page.html" %}{% load i18n workspace_modify workspace_urls %}
 {% block page-title %}
     &rsaquo; <a href="">{{ modeladmin.title_plural }}</a>{% admin_url modeladmin %}
     &rsaquo; {{ title }}
-{% endblock %}
+{% endblock page-title %}
+
 {% block content %}
     <div id="content">
         <div id="content-main">
@@ -11,4 +12,4 @@
             </div>
         </div>
     </div>
-{% endblock %}
+{% endblock content %}

@@ -12,6 +12,7 @@ from country_workspace.models import AsyncJob
 from country_workspace.state import state
 
 from .bulk_update import BulkUpdateForm, bulk_update_export_template
+from .calculate_checksum import calculate_checksum_impl
 from .mass_update import MassUpdateForm, mass_update_impl
 from .regex import RegexUpdateForm, regex_update_impl
 from .validate import validate_queryset
@@ -35,6 +36,7 @@ def validate_records(
         config={"pks": list(queryset.values_list("pk", flat=True)), "model_name": opts.label},
     )
     job.queue()
+    model_admin.message_user(request, "Task scheduled", messages.SUCCESS)
     return job
 
 
@@ -61,12 +63,15 @@ def mass_update(
                 config={
                     "pks": list(queryset.values_list("pk", flat=True)),
                     "model_name": opts.label,
-                    "kwargs": {"config": form.get_selected()},
+                    "kwargs": {
+                        "config": form.get_selected(),
+                        "create_missing_fields": form.cleaned_data["_create_missing_fields"],
+                    },
                 },
             )
             job.queue()
             # mass_update_impl(queryset.all(), form.get_selected())
-            model_admin.message_user(request, "Task scheduled")
+            model_admin.message_user(request, "Task scheduled", messages.SUCCESS)
     return render(request, "workspace/actions/mass_update.html", ctx)
 
 
@@ -133,19 +138,14 @@ def bulk_update_export(
             opts = queryset.model._meta
             job = AsyncJob.objects.create(
                 description="Mass update record fields",
-                type=AsyncJob.JobType.ACTION,
+                type=AsyncJob.JobType.TASK,
                 owner=state.request.user,
                 action=fqn(bulk_update_export_template),
                 program=state.program,
                 config={
                     "pks": list(queryset.values_list("pk", flat=True)),
                     "model_name": opts.label,
-                    "kwargs": {
-                        "columns": columns,
-                        "filename": "bulk_update_export_template/%s/%s/%s.xlsx"
-                        % (state.program.pk, state.request.user.id, opts.label),
-                        "program_pk": state.program.pk,
-                    },
+                    "columns": columns,
                 },
             )
             job.queue()
@@ -153,3 +153,24 @@ def bulk_update_export(
             return HttpResponseRedirect(".")
 
     return render(request, "workspace/actions/bulk_update_export.html", ctx)
+
+
+@admin.action(description="Calculate record checksum")
+def calculate_checksum(
+    model_admin: "BeneficiaryBaseAdmin", request: HttpRequest, queryset: "QuerySet[Beneficiary]"
+) -> HttpResponse:
+    opts = queryset.model._meta
+    job = AsyncJob.objects.create(
+        description="Calculate record checksum",
+        type=AsyncJob.JobType.ACTION,
+        owner=state.request.user,
+        action=fqn(calculate_checksum_impl),
+        program=state.program,
+        config={
+            "pks": list(queryset.values_list("pk", flat=True)),
+            "model_name": opts.label,
+        },
+    )
+    job.queue()
+    model_admin.message_user(request, "Task scheduled", messages.SUCCESS)
+    return HttpResponseRedirect(".")

@@ -1,4 +1,4 @@
-{% load i18n admin_urls workspace_urls  %}
+{% load admin_urls i18n workspace_urls %}
 <div class="submit-row">
 {% block submit-row %}
 {% if show_save %}<input type="submit" value="{% translate 'Save' %}" class="default" name="_save">{% endif %}
@@ -13,5 +13,5 @@
     {% url opts|workspace_urlname:'delete' original.pk|admin_urlquote as delete_url %}
     <a href="{% add_preserved_filters delete_url %}" class="deletelink float-right">{% translate "Delete" %}</a>
 {% endif %}
-{% endblock %}
+{% endblock submit-row %}
 </div>

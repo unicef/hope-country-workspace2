@@ -29,7 +29,6 @@ INSTALLED_APPS = (
     "django.contrib.admin",
     # ddt
     "debug_toolbar",
-    # "country_workspace.admin_site.apps.AdminConfig",
     "flags",
     "reversion",
     "tailwind",
@@ -60,7 +59,7 @@ MIDDLEWARE = (
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "country_workspace.middleware.state.StateSetMiddleware",
     # "django.middleware.http.ConditionalGetMiddleware",
-    # "country_workspace.cache.middleware.UpdateCacheMiddleware",
+    "country_workspace.cache.middleware.UpdateCacheMiddleware",
     "django.middleware.common.CommonMiddleware",
     "csp.middleware.CSPMiddleware",
     "debug_toolbar.middleware.DebugToolbarMiddleware",
@@ -68,7 +67,7 @@ MIDDLEWARE = (
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "country_workspace.middleware.exception.ExceptionMiddleware",
-    # "country_workspace.cache.middleware.FetchFromCacheMiddleware",
+    "country_workspace.cache.middleware.FetchFromCacheMiddleware",
     "country_workspace.middleware.state.StateClearMiddleware",
     *env("EXTRA_MIDDLEWARES"),
 )

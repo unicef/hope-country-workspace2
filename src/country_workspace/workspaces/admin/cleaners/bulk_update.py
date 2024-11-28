@@ -3,6 +3,7 @@ from io import BytesIO
 from typing import TYPE_CHECKING, Any
 
 from django import forms
+from django.apps import apps
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.files.storage import default_storage
 from django.db.models import QuerySet
@@ -122,10 +123,9 @@ def dc_get_field(dc: "DataChecker", name: str) -> "FlexField | None":
 
 
 def create_xls_importer(
-    queryset: "QuerySet[Beneficiary]", program_pk: str, columns: list[str]
+    queryset: "QuerySet[Beneficiary]", program: Program, columns: list[str]
 ) -> [io.BytesIO, Workbook]:
     out = BytesIO()
-    program = Program.objects.get(pk=program_pk)
     dc: DataChecker = program.get_checker_for(queryset.model)
 
     workbook = Workbook(out, {"in_memory": True, "default_date_format": "yyyy/mm/dd"})
@@ -173,9 +173,15 @@ def create_xls_importer(
     return out, workbook
 
 
-def bulk_update_export_template(queryset, program_pk: str, columns: list[str], filename: str) -> bytes:
-    out, __ = create_xls_importer(queryset.all(), program_pk, columns)
+# def bulk_update_export_template(queryset, program_pk: str, columns: list[str], filename: str) -> bytes:
+def bulk_update_export_template(job: AsyncJob) -> bytes:
+    model = apps.get_model(job.config["model_name"])
+    queryset = model.objects.filter(pk__in=job.config["pks"])
+    filename = "bulk_update_export_template/%s/%s/%s.xlsx" % (job.program.pk, job.owner.pk, job.config["model_name"])
+    out, __ = create_xls_importer(queryset.all(), job.program, job.config["columns"])
     path = default_storage.save(filename, out)
+    job.file = path
+    job.save()
     return path
 
 

@@ -11,7 +11,7 @@
                        data-group="{{ spec.lookup_kwarg }}"
                        data-original="{{ spec.value.1|lower }}"
                     {% if spec.value.1 %} checked="checked" {% endif %}>
-                <small>{% trans "Exclude" %}</small></label></li>
+                <small>{% translate "Exclude" %}</small></label></li>
         {% endif %}
         <li><input type="text" class="filter-lookup {{ spec.id }}"
                    placeholder="{{ spec.placeholder }}"
@@ -27,14 +27,15 @@
                href="#">{% if spec.value.0 %}clear{% else %}activate{% endif %}</a>
         </li>
     </ul>
-{% endblock %}
+{% endblock content %}
+
 {% block script %}
 
     <script type="text/javascript">
         ;(function ($) {
-            {# $(document).ready(function () {#}
+            {# $(document).ready(function () { #}
                 new ValueFilterHandler("#{{ spec.html_attrs.id }}", {{ spec.js_options|safe }});
-            {# });#}
+            {# }); #}
         })(django.jQuery);
     </script>
-{% endblock %}
+{% endblock script %}

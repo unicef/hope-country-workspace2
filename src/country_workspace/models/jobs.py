@@ -1,9 +1,7 @@
 from django.apps import apps
 from django.db import models
-from django.utils import timezone
 from django.utils.module_loading import import_string
 
-from concurrency.api import concurrency_disable_increment
 from django_celery_boost.models import CeleryTaskModel
 
 
@@ -20,11 +18,6 @@ class AsyncJob(CeleryTaskModel, models.Model):
     config = models.JSONField(default=dict, blank=True)
     action = models.CharField(max_length=500, blank=True, null=True)
     description = models.CharField(max_length=255, blank=True, null=True)
-    repeatable = models.BooleanField(default=False, blank=True, help_text="Indicate if the job can be repeated as-is")
-
-    owner = models.ForeignKey("User", related_name="jobs", on_delete=models.CASCADE, null=True, blank=True)
-    timestamp = models.DateTimeField(auto_now_add=True, help_text="Creation date and time")
-    request_timestamp = models.DateTimeField("Queued At", blank=True, null=True, help_text="Queueing date and time")
 
     celery_task_name = "country_workspace.tasks.sync_job_task"
 
@@ -53,13 +46,3 @@ class AsyncJob(CeleryTaskModel, models.Model):
                 return func(queryset, **self.config.get("kwargs", {}))
             case AsyncJob.JobType.TASK:
                 return func(self)
-
-    def queue(self, use_version: bool = True) -> str | None:
-        if self.task_status not in self.ACTIVE_STATUSES:
-            res = self.task_handler.delay(self.pk, self.version if use_version else None)
-            with concurrency_disable_increment(self):
-                self.request_timestamp = timezone.now()
-                self.curr_async_result_id = res.id
-                self.save(update_fields=["curr_async_result_id", "request_timestamp"])
-            return self.curr_async_result_id
-        return None

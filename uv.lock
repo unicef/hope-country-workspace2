@@ -107,6 +107,20 @@ wheels = [
 ]
 
 [[package]]
+name = "bitcaster-sdk"
+version = "0.1.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "click" },
+    { name = "humanfriendly" },
+    { name = "requests" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/91/a4/33a31c21a017692e0526edfdc81f82285b6c8583be577445160bba20fad7/bitcaster_sdk-0.1.0.tar.gz", hash = "sha256:1212f7d761f6f8fc6808f27c46ce6564863ba0ef64d12a9e5d9bcfd63281a849", size = 7870 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/e5/3e/4f836a9df20219fd1f47b79248d986c2add29f281d73afba8c35640b27f8/bitcaster_sdk-0.1.0-py3-none-any.whl", hash = "sha256:0f21c0c172b3b4fd258bac4653ffc615cf4f5c3e5cb27449e3472c2292f4e317", size = 6792 },
+]
+
+[[package]]
 name = "black"
 version = "24.10.0"
 source = { registry = "https://pypi.org/simple" }
@@ -479,6 +493,25 @@ wheels = [
 ]
 
 [[package]]
+name = "djade"
+version = "1.3.2"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/4f/ca/9d2d7cb8911534e552b01981c30f824ce5f22cc41c3805a95027e476e9cf/djade-1.3.2.tar.gz", hash = "sha256:46eaec810cb0ff37ea56885da06f68dedac4529ea80c2b71f0a76801e3ea67e0", size = 35429 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/7b/cd/2aff9df9a709a753d22bf3ebfbff813d35052ac30e2de6328820b0cfa9aa/djade-1.3.2-py3-none-macosx_10_12_x86_64.whl", hash = "sha256:55558103c43332bd16aa2c71ce97eb5d938d53fce234cb37679b0749fdbeb005", size = 1079045 },
+    { url = "https://files.pythonhosted.org/packages/c0/35/e94b2d86e13884317cfbddbd0fa6b977c2d886c9e880a66a93c177a4b2f1/djade-1.3.2-py3-none-macosx_11_0_arm64.whl", hash = "sha256:fe6bbeaf763b4cd0099d0659aee119f4cba1eed118a041db5dd589f742c4e2a1", size = 1012282 },
+    { url = "https://files.pythonhosted.org/packages/d7/67/abdb24d6d784b6267050a1a746533bcc9e2d9bc1544ca938056092d823cd/djade-1.3.2-py3-none-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:540ad7115c56d7720d773dbd0f6da4ddb437a6e163936e649f7c94c2fe89bb4d", size = 1145120 },
+    { url = "https://files.pythonhosted.org/packages/d3/b9/7942bfc19b89af85131e909618fed9c521aeab3f78f09dba405058f382a4/djade-1.3.2-py3-none-manylinux_2_17_armv7l.manylinux2014_armv7l.whl", hash = "sha256:e8ecab5133f85f46a5d1f8b1ff4a1149c70cc8058186c5bbbf8c96003fddb140", size = 1091888 },
+    { url = "https://files.pythonhosted.org/packages/00/18/47ebe4d079203a7e2addf4a6121f19ea86a446d048b8565eea1c80060034/djade-1.3.2-py3-none-manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:1a0303e04de45a40397216fd8a9ead58f827c6958c162523a267507f14725357", size = 1201763 },
+    { url = "https://files.pythonhosted.org/packages/de/61/a6bbc23f1ade5a27d4c008dbe092c1ab811009f0f98c51498c6dbefb85a8/djade-1.3.2-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:28cc0984fe80de67b7395ed1be9eb31b438fcbe9dabcf1c2c899ad3839365257", size = 1181424 },
+    { url = "https://files.pythonhosted.org/packages/56/da/6cf27e02b35b0a85b9812ace03cbb2718991eee2840f2b5e491e9be4af7b/djade-1.3.2-py3-none-musllinux_1_1_aarch64.whl", hash = "sha256:1a26dd356ceefebea00512bb1e0a8abfc16d7cdf3d08c42569047715e3517c30", size = 1151562 },
+    { url = "https://files.pythonhosted.org/packages/84/5c/b143c8186c7434be3fbec20ad90a6c59f5126a46fcd933f3349ca887fa38/djade-1.3.2-py3-none-musllinux_1_1_x86_64.whl", hash = "sha256:68e214447967fc1dd2adebc42a833fa592f1816cdcfafcfb9054db861917f490", size = 1233533 },
+    { url = "https://files.pythonhosted.org/packages/d5/b8/03a61712f597440b00973fbc58d3e8f0268bf8f76212372171b04d990401/djade-1.3.2-py3-none-win32.whl", hash = "sha256:bcc32f3ebb3648b5cd3b9b01ec087748948e30df413eeee2d9abdc99d640c1af", size = 823115 },
+    { url = "https://files.pythonhosted.org/packages/cc/6d/1aefebf133ba33916cd771ef09d00e6f10226c5e38c48f4334f066c83ade/djade-1.3.2-py3-none-win_amd64.whl", hash = "sha256:6ccab4994e3f655a7e32dcd9e4f2c9c71bb9262bd9a0a29da1ce7ce3fc255c3c", size = 908388 },
+    { url = "https://files.pythonhosted.org/packages/a6/ad/3a83c645c5a2245984346ced7ee9496af109737f33a3006c8bb8c817b442/djade-1.3.2-py3-none-win_arm64.whl", hash = "sha256:b4afd65e306a79f62cb1891380002ee15056ae6015361bd6699f0c00b2e79b4d", size = 831419 },
+]
+
+[[package]]
 name = "django"
 version = "5.1.2"
 source = { registry = "https://pypi.org/simple" }
@@ -579,7 +612,7 @@ wheels = [
 
 [[package]]
 name = "django-celery-boost"
-version = "0.4.1"
+version = "0.5.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "celery" },
@@ -587,7 +620,7 @@ dependencies = [
     { name = "django-admin-extra-buttons" },
     { name = "django-concurrency" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/02/57/764d6bb206d5503f98234d84b9da5987f0eabc94ef2bfd20f663d84b1a3f/django_celery_boost-0.4.1.tar.gz", hash = "sha256:a46aa022b21025ee471e97f46721f094df5d736f63462b4bdc449f595ef397b1", size = 11507 }
+sdist = { url = "https://files.pythonhosted.org/packages/ef/4e/e8b0612ebe9f47e075a18513c3e050d198cd47b55b7db0ac147bcb4fd96e/django_celery_boost-0.5.0.tar.gz", hash = "sha256:7301e846c2a682061a3307e1b3260112126510efd1c1561931e2e0d9c631f213", size = 12105 }
 
 [[package]]
 name = "django-celery-results"
@@ -1087,6 +1120,7 @@ name = "hope-country-workspace"
 version = "0.1.0"
 source = { editable = "." }
 dependencies = [
+    { name = "bitcaster-sdk" },
     { name = "celery" },
     { name = "deepdiff" },
     { name = "deprecation" },
@@ -1144,6 +1178,7 @@ docs = [
 dev = [
     { name = "black" },
     { name = "bump2version" },
+    { name = "djade" },
     { name = "django-browser-reload" },
     { name = "django-webtest" },
     { name = "factory-boy" },
@@ -1173,6 +1208,7 @@ dev = [
 
 [package.metadata]
 requires-dist = [
+    { name = "bitcaster-sdk", specifier = ">=0.1.0" },
     { name = "celery", specifier = ">=5.4.0" },
     { name = "deepdiff", specifier = ">=8.0.1" },
     { name = "deprecation", specifier = ">=2.1.0" },
@@ -1182,7 +1218,7 @@ requires-dist = [
     { name = "django-adminfilters", specifier = ">=2.5.0" },
     { name = "django-cacheops", specifier = ">=7.1" },
     { name = "django-celery-beat", specifier = ">=2.6.0" },
-    { name = "django-celery-boost", specifier = ">=0.4.1" },
+    { name = "django-celery-boost", specifier = ">=0.5.0" },
     { name = "django-celery-results", specifier = ">=2.5.1" },
     { name = "django-concurrency", specifier = ">=2.6.0" },
     { name = "django-constance", specifier = ">=3.1.0" },
@@ -1224,6 +1260,7 @@ requires-dist = [
 dev = [
     { name = "black", specifier = ">=24.4.2" },
     { name = "bump2version", specifier = ">=1.0.1" },
+    { name = "djade", specifier = ">=1.3.2" },
     { name = "django-browser-reload", specifier = ">=1.17.0" },
     { name = "django-webtest", specifier = ">=1.9.11" },
     { name = "factory-boy", specifier = ">=3.3.0" },
@@ -1300,6 +1337,18 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/fc/e3/4d3586d4fa1cfa784f6f60aa24a7ce09821a0e3d59c3ff4e641077828ded/hope_smart_import-0.3.0.tar.gz", hash = "sha256:7e7244be0a1e42ac7f0a0bbcb310fa1a93b69f22664da7ee7e220a88d06458af", size = 1418607 }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/47/a9/f8aa11327aeaac7e2c365f14eac1200b0c5b790d4cf43056773efc2a04ca/hope_smart_import-0.3.0-py3-none-any.whl", hash = "sha256:da66b64fca04685b19a45dd7b0f36d797d5c99c4778fe97537fbf668f217712e", size = 5682 },
+]
+
+[[package]]
+name = "humanfriendly"
+version = "10.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "pyreadline3", marker = "python_full_version == '3.12.*' and sys_platform == 'win32'" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/cc/3f/2c29224acb2e2df4d2046e4c73ee2662023c58ff5b113c4c1adac0886c43/humanfriendly-10.0.tar.gz", hash = "sha256:6b0b831ce8f15f7300721aa49829fc4e83921a9a301cc7f606be6686a2288ddc", size = 360702 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/f0/0f/310fb31e39e2d734ccaa2c0fb981ee41f7bd5056ce9bc29b2248bd569169/humanfriendly-10.0-py2.py3-none-any.whl", hash = "sha256:1697e1a8a8f550fd43c2865cd84542fc175a61dcb779b6fee18cf6b6ccba1477", size = 86794 },
 ]
 
 [[package]]
@@ -2156,6 +2205,15 @@ name = "pyreadline"
 version = "2.1"
 source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/bc/7c/d724ef1ec3ab2125f38a1d53285745445ec4a8f19b9bb0761b4064316679/pyreadline-2.1.zip", hash = "sha256:4530592fc2e85b25b1a9f79664433da09237c1a270e4d78ea5aa3a2c7229e2d1", size = 109189 }
+
+[[package]]
+name = "pyreadline3"
+version = "3.5.4"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/0f/49/4cea918a08f02817aabae639e3d0ac046fef9f9180518a3ad394e22da148/pyreadline3-3.5.4.tar.gz", hash = "sha256:8d57d53039a1c75adba8e50dd3d992b28143480816187ea5efbd5c78e6c885b7", size = 99839 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/5a/dc/491b7661614ab97483abf2056be1deee4dc2490ecbf7bff9ab5cdbac86e1/pyreadline3-3.5.4-py3-none-any.whl", hash = "sha256:eaf8e6cc3c49bcccf145fc6067ba8643d1df34d604a1ec0eccbf7a18e6d3fae6", size = 83178 },
+]
 
 [[package]]
 name = "pyrepl"

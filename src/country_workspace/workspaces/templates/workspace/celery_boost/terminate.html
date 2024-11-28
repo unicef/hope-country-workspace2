@@ -1,11 +1,12 @@
-{% extends "workspace/admin_extra_buttons/confirm.html" %}{% load i18n  static admin_modify workspace_urls workspace_modify %}
+{% extends "workspace/admin_extra_buttons/confirm.html" %}{% load admin_modify i18n static workspace_modify workspace_urls %}
 {% block page-title %}
     {% url "workspace:workspaces_countryasyncjob_changelist" as wcl %}
     {% url "workspace:workspaces_countryasyncjob_change" original.pk as wcc %}
         &rsaquo; <a href="{% add_preserved_filters wcl %}">Background jobs</a>{% admin_url modeladmin %}
         &rsaquo; <a href="{% add_preserved_filters wcc %}">{{ original }}</a>{% admin_url original %}
         &rsaquo; Terminate
-{% endblock %}
+{% endblock page-title %}
+
 {% block action-content %}
-{{block.super }}
-{% endblock %}
+{{ block.super }}
+{% endblock action-content %}

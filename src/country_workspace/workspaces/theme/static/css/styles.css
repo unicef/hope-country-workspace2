@@ -1666,6 +1666,10 @@ select {
   float: right;
 }
 
+.float-left {
+  float: left;
+}
+
 .m-2 {
   margin: 0.5rem;
 }
@@ -1779,7 +1783,15 @@ select {
   flex-shrink: 1;
 }
 
+.shrink {
+  flex-shrink: 1;
+}
+
 .flex-grow {
+  flex-grow: 1;
+}
+
+.grow {
   flex-grow: 1;
 }
 
@@ -1898,6 +1910,16 @@ select {
   padding-bottom: 1.25rem;
 }
 
+.px-10 {
+  padding-left: 2.5rem;
+  padding-right: 2.5rem;
+}
+
+.px-2 {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
 .pl-5 {
   padding-left: 1.25rem;
 }
@@ -1982,6 +2004,21 @@ select {
 .text-white {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+
+.text-blue-500 {
+  --tw-text-opacity: 1;
+  color: rgb(59 130 246 / var(--tw-text-opacity));
+}
+
+.text-blue-900 {
+  --tw-text-opacity: 1;
+  color: rgb(30 58 138 / var(--tw-text-opacity));
+}
+
+.text-blue-700 {
+  --tw-text-opacity: 1;
+  color: rgb(29 78 216 / var(--tw-text-opacity));
 }
 
 .drop-shadow-md {

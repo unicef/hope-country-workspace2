@@ -46,7 +46,7 @@ class OperationManager:
 
 operations = OperationManager()
 operations.register(forms.Field, "set", lambda old_value, new_value: new_value)
-# operations.register(forms.Field, "set null", lambda old_value, new_value: None)
+operations.register(forms.Field, "set null", lambda old_value, new_value: None)
 operations.register(forms.CharField, "upper", lambda old_value, new_value: old_value.upper())
 operations.register(forms.CharField, "lower", lambda old_value, new_value: old_value.lower())
 operations.register(forms.BooleanField, "toggle", lambda old_value, new_value: not old_value)
@@ -85,6 +85,7 @@ class MassUpdateField(MultiValueField):
 
 
 class MassUpdateForm(BaseActionForm):
+    _create_missing_fields = forms.BooleanField(required=False)
 
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         checker: "DataChecker" = kwargs.pop("checker")
@@ -100,14 +101,19 @@ class MassUpdateForm(BaseActionForm):
         return ret
 
 
-def mass_update_impl(queryset: "QuerySet[Beneficiary]", config: "FormOperations") -> None:
+def mass_update_impl(
+    queryset: "QuerySet[Beneficiary]", config: "FormOperations", create_missing_fields: bool = False
+) -> None:
     with transaction.atomic():
         for record in queryset.all():
             for field_name, attrs in config.items():
                 op, new_value = attrs
-                old_value = record.flex_fields[field_name]
-                func = operations.get_function_by_id(op)
-                record.flex_fields[field_name] = func(old_value, new_value)
+                if field_name in record.flex_fields:
+                    old_value = record.flex_fields[field_name]
+                    func = operations.get_function_by_id(op)
+                    record.flex_fields[field_name] = func(old_value, new_value)
+                elif create_missing_fields:
+                    record.flex_fields[field_name] = func("", new_value)
             record.save()
 
 

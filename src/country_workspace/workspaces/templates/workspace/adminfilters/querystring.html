@@ -13,7 +13,7 @@
                data-lk="{{ spec.parameter_name_negated }}"
                data-original="{{ spec.value.1|lower }}"
             {% if spec.value.1 %} checked="checked" {% endif %}>
-        <small>{% trans "Exclude" %}</small></li>
+        <small>{% translate "Exclude" %}</small></li>
     <li><textarea class="filter-querystring {{ spec.parameter_name }}"
                   name="value"
                   data-lk="{{ spec.parameter_name }}"
@@ -22,10 +22,11 @@
                   style="width: 90%">{{ spec.value.0 }}</textarea>
     </li>
     <li><a class="filter-querystring adminfilters button {{ spec.parameter_name }} {% if spec.value.0 %}clear{% else %}filter{% endif %}"
-           href="#">{% if spec.value.0 %}{% trans "clear" %}{% else %}{% trans "activate"%}{% endif %}</a>
+           href="#">{% if spec.value.0 %}{% translate "clear" %}{% else %}{% translate "activate" %}{% endif %}</a>
     </li>
 </ul>
-{% endblock %}
+{% endblock content %}
+
 {% block script %}
 
 <script type="text/javascript">

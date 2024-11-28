@@ -1,5 +1,5 @@
 {% extends "workspace/_base.html" %}
-{% load i18n admin_urls workspace_urls %}
+{% load admin_urls i18n workspace_urls %}
 
 {% block breadcrumbs %}
 <div class="breadcrumbs">
@@ -9,7 +9,7 @@
 &rsaquo; <a href="{% url opts|workspace_urlname:'change' object.pk|admin_urlquote %}">{{ object|truncatewords:"18" }}</a>
 &rsaquo; {% translate 'History' %}
 </div>
-{% endblock %}
+{% endblock breadcrumbs %}
 
 {% block content %}
 <div id="content-main">
@@ -53,4 +53,4 @@
 {% endif %}
 </div>
 </div>
-{% endblock %}
+{% endblock content %}

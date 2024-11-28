@@ -11,7 +11,7 @@
                data-original="{{ spec.lookup_negated_val|lower }}"
                class="filter-jsonfield negate {{ spec.field_path }}"
                {% if spec.lookup_negated_val == "true" %}checked="checked"{% endif %}>
-        {% trans "Exclude" %}
+        {% translate "Exclude" %}
         {% endif %}
         {% if spec.options %}
         <select style="height: 20px;padding: 0"
@@ -61,16 +61,17 @@
         </span>
     </li>
     <li><a class="filter-jsonfield adminfilters button {{ spec.field_path }} {% if spec.value.0 %}clear{% else %}filter{% endif %}"
-           href="#">{% if spec.value.0 %}{% trans "clear" %}{% else %}{% trans "activate"%}{% endif %}</a>
+           href="#">{% if spec.value.0 %}{% translate "clear" %}{% else %}{% translate "activate" %}{% endif %}</a>
 </ul>
-{% endblock  %}
+{% endblock content %}
+
 {% block script %}
 <script type="text/javascript">
     ;(function ($) {
         $(document).ready(function () {
             $("#{{ spec.field_path }}").find("a.button").click(new JsonFilterHandler("{{ spec.field_path }}",
-                {negated: {{spec.negated|lower}}, can_negate:{{ spec.can_negate|lower }}, options:{{ spec.options|lower }} }).click);
+                {negated: {{ spec.negated|lower }}, can_negate:{{ spec.can_negate|lower }}, options:{{ spec.options|lower }} }).click);
         });
     })(django.jQuery);
 </script>
-{% endblock  %}
+{% endblock script %}

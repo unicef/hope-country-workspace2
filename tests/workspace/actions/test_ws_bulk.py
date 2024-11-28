@@ -104,7 +104,7 @@ def test_create_xls_importer(household: "CountryHousehold", force_migrated_recor
     ]
     ret, __ = create_xls_importer(
         household.members.all(),
-        household.program.pk,
+        household.program,
         selected_fields,
     )
     workbook = openpyxl.load_workbook(io.BytesIO(ret.getvalue()))

@@ -2,10 +2,10 @@
 
 <details {% include "adminfilters/_attrs.html" with spec=spec %}>
     {% block title %}
-        <summary>{% blocktrans with spec.get_title as filter_title %} By {{ filter_title }} {% endblocktrans %}</summary>
-    {% endblock %}
+        <summary>{% blocktranslate with filter_title=spec.get_title %} By {{ filter_title }} {% endblocktranslate %}</summary>
+    {% endblock title %}
     <div class="filter-content">
         {% block content %}{% endblock %}
-        {% block script %}{% endblock  %}
+        {% block script %}{% endblock %}
     </div>
 </details>

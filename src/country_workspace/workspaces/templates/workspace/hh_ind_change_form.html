@@ -1,13 +1,13 @@
 {% extends "workspace/change_form.html" %}
-{% load i18n  static admin_modify workspace_urls workspace_modify %}
+{% load admin_modify i18n static workspace_modify workspace_urls %}
 {% block content_title %}{% endblock %}
-{#{% block coltype %}colMX{% endblock %}#}
+{# {% block coltype %}colMX{% endblock %} #}
 
 
 {% block content %}
     {% block object-tools %}
         {{ block.super }}
-    {% endblock %}
+    {% endblock object-tools %}
     <div id="content">
         <div id="content-main">
             <form  class="min-w-full beneficiary-form" {% if has_file_field %}enctype="multipart/form-data" {% endif %}{% if form_url %}action="{{ form_url }}" {% endif %}method="post"
@@ -30,9 +30,9 @@
                     {% block field_sets %}
                         <table  class="min-w-full">
                             {% block pre_checker_form %}{% endblock %}
-                            {% include "workspace/includes/flex_field_form.html" with  form=checker_form fields=original.flex_fields %}
+                            {% include "workspace/includes/flex_field_form.html" with form=checker_form fields=original.flex_fields %}
                         </table>
-                    {% endblock %}
+                    {% endblock field_sets %}
                     {% block after_related_objects %}{% endblock %}
                     {% block submit_buttons_bottom %}{% submit_row %}{% endblock %}
                     {% block admin_change_form_document_ready %}
@@ -43,10 +43,10 @@
                                 {% endif %}
                                 async>
                         </script>
-                    {% endblock %}
+                    {% endblock admin_change_form_document_ready %}
                     {% prepopulated_fields_js %}
                 </div>
             </form>
         </div>
     </div>
-{% endblock %}
+{% endblock content %}

@@ -1,7 +1,7 @@
 {% load workspace_urls workspace_validation %}{% if has_change_permission %}
 
     {% for field in form %}
-        {% field_error field  as err %}
+        {% field_error field as err %}
         <tr class="{% if err %}error{% endif %}">
             <th><a id="{{ field.label }}" ></a>{{ field.label }}</th>
             <th  class="min-w-full">{{ field }}
@@ -20,7 +20,7 @@
             </td>
         </tr>
     {% endfor %}
-    {#    {{ form.as_table }}#}
+    {# {{ form.as_table }} #}
 {% else %}
     {% for k,v in fields.items %}
         <tr>
