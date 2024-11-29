@@ -12,7 +12,7 @@ from country_workspace.contrib.aurora.sync import (
 from country_workspace.models import Batch, Household, Office, Program, User
 
 
-def test_create_batch_success(mock_aurora_data, job, user):
+def test_create_batch_success(mock_aurora_data, job):
     batch = _create_batch(job)
     assert isinstance(batch, Batch)
     assert isinstance(batch.country_office, Office)
@@ -21,7 +21,7 @@ def test_create_batch_success(mock_aurora_data, job, user):
     assert batch.name == mock_aurora_data["form_cleaned_data"]["batch_name"]
     assert batch.program == job.program
     assert batch.country_office == job.program.country_office
-    assert batch.imported_by == user
+    assert batch.imported_by == job.owner
 
 
 def test_create_household_success(mock_aurora_data, job):

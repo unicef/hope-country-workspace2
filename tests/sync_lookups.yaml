@@ -7,7 +7,7 @@ interactions:
       Accept-Encoding:
       - gzip, deflate
       Authorization:
-      - Token 239f3c7bf254ab04a080811466dcc194a8de4a7a
+      - Token [FILTERED]
       Connection:
       - keep-alive
       User-Agent:
@@ -59,7 +59,7 @@ interactions:
       Accept-Encoding:
       - gzip, deflate
       Authorization:
-      - Token 239f3c7bf254ab04a080811466dcc194a8de4a7a
+       - Token [FILTERED]
       Connection:
       - keep-alive
       User-Agent:
@@ -117,7 +117,7 @@ interactions:
       Accept-Encoding:
       - gzip, deflate
       Authorization:
-      - Token 239f3c7bf254ab04a080811466dcc194a8de4a7a
+       - Token [FILTERED]
       Connection:
       - keep-alive
       User-Agent:
@@ -169,7 +169,7 @@ interactions:
       Accept-Encoding:
       - gzip, deflate
       Authorization:
-      - Token 239f3c7bf254ab04a080811466dcc194a8de4a7a
+       - Token [FILTERED]
       Connection:
       - keep-alive
       User-Agent:
@@ -220,7 +220,7 @@ interactions:
       Accept-Encoding:
       - gzip, deflate
       Authorization:
-      - Token 239f3c7bf254ab04a080811466dcc194a8de4a7a
+       - Token [FILTERED]
       Connection:
       - keep-alive
       User-Agent:

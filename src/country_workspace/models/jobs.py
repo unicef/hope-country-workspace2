@@ -13,7 +13,6 @@ class AsyncJob(CeleryTaskModel, models.Model):
         TASK = "TASK", "Task"
         BULK_UPDATE_HH = "BULK_UPDATE_HH"
         BULK_UPDATE_IND = "BULK_UPDATE_IND"
-        AURORA_SYNC = "AURORA_SYNC"
 
     type = models.CharField(max_length=50, choices=JobType.choices)
     program = models.ForeignKey("Program", related_name="jobs", on_delete=models.CASCADE)

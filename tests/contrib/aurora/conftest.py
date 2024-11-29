@@ -51,7 +51,7 @@ def mock_aurora_data() -> dict[str, Any]:
             "batch_name": "Batch 1",
             "household_name_column": "family_name",
         },
-        "imported_by_id": 1,
+        # "imported_by_id": 1,
     }
 
 
@@ -80,9 +80,10 @@ def user():
 @pytest.fixture
 def job(mock_aurora_data, program, batch, user):
     return AsyncJobFactory(
-        type=AsyncJob.JobType.AURORA_SYNC,
+        type=AsyncJob.JobType.TASK,
         program=program,
         batch=batch,
+        owner=user,
         config={
             **mock_aurora_data["form_cleaned_data"],
             "imported_by_id": user.pk,

@@ -6,12 +6,9 @@ from django.db.transaction import atomic
 from hope_smart_import.readers import open_xls_multi
 
 from country_workspace.models import AsyncJob, Batch, Household, Program
+from country_workspace.utils.fields import clean_field_name
 
 RDI = Union[str, io.BytesIO]
-
-
-def clean_field_name(v: str) -> str:
-    return v.replace("_h_c", "").replace("_h_f", "").replace("_i_c", "").replace("_i_f", "").lower()
 
 
 def import_from_rdi_job(job: AsyncJob) -> dict[str, int]:

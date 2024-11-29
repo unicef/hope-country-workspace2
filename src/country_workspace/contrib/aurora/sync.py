@@ -2,13 +2,12 @@ from typing import Any
 
 from django.db.transaction import atomic
 
-from country_workspace.constants import BATCH_NAME_DEFAULT
 from country_workspace.contrib.aurora.client import AuroraClient
-from country_workspace.models import AsyncJob, Batch, Household, Individual, User
+from country_workspace.models import AsyncJob, Batch, Household, Individual
 from country_workspace.utils.fields import clean_field_name
 
 
-def sync_aurora_job(job: AsyncJob) -> dict[str, Any]:
+def sync_aurora_job(job: AsyncJob) -> dict[str, int]:
     """
     Synchronizes data from the Aurora system into the database for the given job within an atomic transaction.
 
@@ -16,8 +15,7 @@ def sync_aurora_job(job: AsyncJob) -> dict[str, Any]:
         job (AsyncJob): The job instance containing configuration and context for synchronization.
 
     Returns:
-        dict[str, Any]: A dictionary with counts of households and individuals created, e.g.,
-        {"households": total_hh, "individuals": total_ind}.
+        dict[str, int]: A dictionary with counts of households and individuals created.
     """
     total_hh = total_ind = 0
     client = AuroraClient()
@@ -46,10 +44,10 @@ def _create_batch(job: AsyncJob) -> Batch:
         Batch: The newly created batch instance.
     """
     return Batch.objects.create(
-        name=job.config.get("batch_name") or BATCH_NAME_DEFAULT,
+        name=job.config.get("batch_name"),
         program=job.program,
         country_office=job.program.country_office,
-        imported_by=User.objects.get(pk=job.config.get("imported_by_id")),
+        imported_by=job.owner,
     )
 
 

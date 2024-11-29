@@ -8,7 +8,6 @@ from django.db.models import QuerySet
 from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
-from django.utils import timezone
 from django.utils.translation import gettext as _
 
 from admin_extra_buttons.api import button, link
@@ -16,11 +15,13 @@ from admin_extra_buttons.buttons import LinkButton
 from hope_flex_fields.models import DataChecker
 from strategy_field.utils import fqn
 
+from country_workspace.constants import BATCH_NAME_DEFAULT
+from country_workspace.contrib.aurora.sync import sync_aurora_job
 from country_workspace.state import state
 
+from ...contrib.aurora.forms import ImportAuroraForm
 from ...datasources.rdi import import_from_rdi_job
 from ...models import AsyncJob, Batch
-from ...contrib.aurora.forms import ImportAuroraForm
 from ...utils.flex_fields import get_checker_fields
 from ..models import CountryProgram
 from ..options import WorkspaceModelAdmin
@@ -192,7 +193,7 @@ class CountryProgramAdmin(WorkspaceModelAdmin):
             form = ImportFileForm(request.POST, request.FILES)
             if form.is_valid():
                 batch, __ = Batch.objects.get_or_create(
-                    name=form.cleaned_data["batch_name"] or ("Batch %s" % timezone.now()),
+                    name=form.cleaned_data["batch_name"] or BATCH_NAME_DEFAULT,
                     program=program,
                     country_office=program.country_office,
                     imported_by=state.request.user,
@@ -256,18 +257,23 @@ class CountryProgramAdmin(WorkspaceModelAdmin):
         if request.method == "POST":
             form = ImportAuroraForm(request.POST)
             if form.is_valid():
-                j: AsyncJob = AsyncJob.objects.create(
-                    program=program,
-                    type=AsyncJob.JobType.AURORA_SYNC,
+                job: AsyncJob = AsyncJob.objects.create(
+                    type=AsyncJob.JobType.TASK,
+                    action=fqn(sync_aurora_job),
                     batch=None,
                     file=None,
-                    config={**form.cleaned_data, "imported_by_id": request.user.id},
+                    program=program,
+                    owner=request.user,
+                    config={
+                        "batch_name": form.cleaned_data["batch_name"] or BATCH_NAME_DEFAULT,
+                        "household_name_column": form.cleaned_data["household_name_column"],
+                    },
                 )
-                j.queue()
+                job.queue()
                 self.message_user(
                     request,
                     _("The import task from Aurora has been successfully queued. Asynchronous task ID: {0}.").format(
-                        j.curr_async_result_id
+                        job.curr_async_result_id
                     ),
                     level=messages.SUCCESS,
                 )
