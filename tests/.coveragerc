@@ -6,8 +6,11 @@ omit =
     */tests/**
     */migrations/*,
     src/country_workspace/management/commands/demo.py
+    src/country_workspace/management/commands/trigger_error.py
     src/country_workspace/security/backends.py
     src/country_workspace/versioning/scripts/*
+    src/country_workspace/contrib/hope/ddt.py
+    src/country_workspace/cache/ddt.py
     */wsgi.py,
 
 

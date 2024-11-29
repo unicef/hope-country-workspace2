@@ -28,7 +28,6 @@ def confirm_action(
     if request.method == "POST":
         ret = None
         try:
-            breakpoint()
             ret = action(request)
             if success_message:
                 modeladmin.message_user(request, success_message, messages.SUCCESS)
