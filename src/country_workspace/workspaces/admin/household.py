@@ -25,8 +25,6 @@ from ..sites import workspace
 class CountryHouseholdAdmin(BeneficiaryBaseAdmin):
     list_display = ["name", "batch"]
     search_fields = ("name",)
-    # change_list_template = "workspace/household/change_list.html"
-    # change_form_template = "workspace/household/change_form.html"
     ordering = ("name",)
     title = _("Household")
     title_plural = _("Households")

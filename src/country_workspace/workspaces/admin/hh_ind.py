@@ -12,11 +12,14 @@ from django.utils.translation import gettext as _
 
 from admin_extra_buttons.decorators import button
 from adminfilters.mixin import AdminAutoCompleteSearchMixin
+from concurrency.utils import fqn
 from hope_flex_fields.models import DataChecker
 
+from ...models import AsyncJob
 from ...state import state
 from ..options import WorkspaceModelAdmin
 from .cleaners import actions
+from .cleaners.validate import validate_queryset
 
 if TYPE_CHECKING:
     from hope_flex_fields.forms import FlexForm
@@ -98,9 +101,18 @@ class BeneficiaryBaseAdmin(AdminAutoCompleteSearchMixin, SelectedProgramMixin, W
 
     @button(label=_("Validate Programme"))
     def validate_program(self, request: HttpRequest) -> "HttpResponse":
-        if prg := self.get_selected_program(request):
-            qs = self.get_queryset(request).filter(batch__program=prg)
-            self.validate_queryset(request, qs)
+        opts = self.model._meta
+        job = AsyncJob.objects.create(
+            description="Validate Program %s" % opts.proxy_for_model._meta.verbose_name_plural,
+            type=AsyncJob.JobType.ACTION,
+            owner=state.request.user,
+            action=fqn(validate_queryset),
+            program=state.program,
+            config={"pks": "__all__", "model_name": opts.label},
+        )
+        job.queue()
+        self.message_user(request, "Task scheduled", messages.SUCCESS)
+        return job
 
     @button()
     def view_raw_data(self, request: HttpRequest, pk: str) -> "HttpResponse":

@@ -1,5 +1,4 @@
 from pathlib import Path
-from urllib.parse import urlparse
 
 from . import env
 
@@ -128,7 +127,7 @@ USE_I18N = True
 USE_TZ = True
 
 CACHE_URL = env("CACHE_URL")
-REDIS_URL = urlparse(CACHE_URL).hostname
+# REDIS_URL = urlparse(CACHE_URL).hostname
 CACHES = {
     "default": {
         "BACKEND": "redis_lock.django_cache.RedisCache",

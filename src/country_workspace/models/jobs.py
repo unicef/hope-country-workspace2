@@ -50,8 +50,10 @@ class AsyncJob(CeleryTaskModel, models.Model):
                     return func(**self.config)
                 case AsyncJob.JobType.ACTION:
                     model = apps.get_model(self.config["model_name"])
-                    queryset = model.objects.filter(pk__in=self.config["pks"])
-                    return func(queryset, **self.config.get("kwargs", {}))
+                    qs = model.objects.all()
+                    if self.config["pks"] != "__all__":
+                        qs = qs.filter(pk__in=self.config["pks"])
+                    return func(qs, **self.config.get("kwargs", {}))
                 case AsyncJob.JobType.TASK:
                     return func(self)
         except Exception as e:

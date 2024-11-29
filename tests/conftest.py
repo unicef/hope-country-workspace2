@@ -78,10 +78,13 @@ def pytest_configure(config):
 
 
 @pytest.fixture(autouse=True)
-def setup(db):
+def setup(db, worker_id, settings):
     from constance import config
     from testutils.factories import GroupFactory
 
+    if worker_id != "master":
+        settings.CACHES["default"]["LOCATION"] = f"redis://localhost:6379/{worker_id}"
+        settings.CELERY_BROKER_URL = f"redis://localhost:6379/1{worker_id}"
     GroupFactory(name=config.NEW_USER_DEFAULT_GROUP)
 
 
