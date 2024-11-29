@@ -7,9 +7,9 @@ from django.http import HttpRequest
 from django.utils.translation import gettext as _
 
 from ...state import state
-from ..filters import CWLinkedAutoCompleteFilter, HouseholdFilter, IsValidFilter
 from ..models import CountryHousehold, CountryIndividual, CountryProgram
 from ..sites import workspace
+from .filters import CWLinkedAutoCompleteFilter, HouseholdFilter, IsValidFilter
 from .hh_ind import BeneficiaryBaseAdmin
 
 

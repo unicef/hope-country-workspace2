@@ -4,6 +4,7 @@ from typing import TYPE_CHECKING, Any
 
 from django.core.cache import cache
 
+import sentry_sdk
 from redis_lock import Lock
 
 from country_workspace.config.celery import app
@@ -34,13 +35,26 @@ def lock_job(job: AsyncJob) -> Lock:
 
 @app.task()
 def sync_job_task(pk: int, version: int) -> dict[str, Any]:
-    job: AsyncJob = AsyncJob.objects.select_related("program").get(pk=pk, version=version)
+    try:
+        job: AsyncJob = AsyncJob.objects.select_related("program", "program__country_office", "owner").get(
+            pk=pk, version=version
+        )
+    except AsyncJob.DoesNotExist as e:
+        sentry_sdk.capture_exception(e)
+        raise e
+
     with lock_job(job):
         try:
+            scope = sentry_sdk.get_current_scope()
+            sentry_sdk.set_tag("business_area", job.program.country_office.slug)
+            sentry_sdk.set_tag("project", job.program.name)
+            sentry_sdk.set_user = {"id": job.owner.pk, "email": job.owner.email}
             return job.execute()
-        except Exception as e:
-            logger.exception(e)
+        except Exception:
+            # error is logged in job.execute
             raise
+        finally:
+            scope.clear()
 
 
 @app.task()

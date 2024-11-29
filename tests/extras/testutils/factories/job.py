@@ -7,7 +7,7 @@ from .program import ProgramFactory
 
 
 class AsyncJobFactory(AutoRegisterModelFactory):
-    type = "BULK_UPDATE_IND"
+    type = AsyncJob.JobType.FQN
     program = factory.SubFactory(ProgramFactory)
     batch = None
     file = None

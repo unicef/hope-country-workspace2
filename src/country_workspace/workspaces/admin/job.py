@@ -4,10 +4,10 @@ from django.http import HttpRequest, HttpResponse
 from admin_extra_buttons.decorators import button
 from django_celery_boost.admin import CeleryTaskModelAdmin
 
-from ..filters import ChoiceFilter
 from ..models import CountryAsyncJob
 from ..options import WorkspaceModelAdmin
 from ..sites import workspace
+from .filters import ChoiceFilter, UserAutoCompleteFilter, WFailedFilter
 
 
 @register(CountryAsyncJob, site=workspace)
@@ -23,11 +23,9 @@ class CountryJobAdmin(CeleryTaskModelAdmin, WorkspaceModelAdmin):
         "status",
         "owner",
     )
-    list_filter = (("type", ChoiceFilter),)
+    list_filter = (("type", ChoiceFilter), WFailedFilter, ("owner", UserAutoCompleteFilter))
     search_fields = ("name",)
     fields = ("description",)
-    # exclude = ("program", "config", "batch", "curr_async_result_id", "last_async_result_id")
-    # readonly_fields = ("type",  "file", "repeatable", "owner", "datetime_queued", "action")
 
     def has_add_permission(self, request: "HttpRequest") -> bool:
         return False

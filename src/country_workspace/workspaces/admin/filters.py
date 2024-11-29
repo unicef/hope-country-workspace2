@@ -5,9 +5,13 @@ from django.http import HttpRequest
 from django.urls import reverse
 from django.utils.translation import gettext as _
 
-from adminfilters.autocomplete import LinkedAutoCompleteFilter
+from adminfilters.autocomplete import AutoCompleteFilter, LinkedAutoCompleteFilter
 from adminfilters.combo import ChoicesFieldComboFilter
+from adminfilters.mixin import SmartFieldListFilter
+from debugpy.common.util import force_str
 
+from country_workspace.admin.job import FailedFilter
+from country_workspace.models import User
 from country_workspace.state import state
 
 if TYPE_CHECKING:
@@ -148,3 +152,65 @@ class IsValidFilter(SimpleListFilter):
 
 class ChoiceFilter(ChoicesFieldComboFilter):
     template = "workspace/adminfilters/combobox.html"
+
+
+class WFailedFilter(FailedFilter):
+    template = "workspace/adminfilters/combobox.html"
+
+
+class OwnerFilter(SmartFieldListFilter):
+    template = "workspace/adminfilters/combobox.html"
+
+    def expected_parameters(self):
+        return ["owner"]
+
+    def choices(self, changelist):
+        value = self.used_parameters.get(self.field.name)
+        yield {
+            "selected": value is None,
+            "query_string": changelist.get_query_string({}, [self.field.name]),
+            "display": _("All"),
+        }
+        for pk, username in User.objects.values_list("pk", "username"):
+            selected = value is not None and force_str(pk, "utf8") in value
+            yield {
+                "selected": selected,
+                "query_string": changelist.get_query_string({self.field.name: pk}, []),
+                "display": username,
+            }
+
+
+class UserAutoCompleteFilter(AutoCompleteFilter):
+    parent_lookup_kwarg: str
+    template = "workspace/adminfilters/autocomplete.html"
+
+    def __init__(
+        self,
+        field: Any,
+        request: "HttpRequest",
+        params: dict[str, Any],
+        model: "Model",
+        model_admin: "ModelAdmin",
+        field_path: str,
+    ):
+        super().__init__(field, request, params, model, model_admin, field_path)
+
+    def get_url(self) -> str:
+        base_url = reverse("admin:country_workspace_user_autocomplete")
+        # if self.parent_lookup_kwarg in self.request.GET:
+        #     flt = self.parent_lookup_kwarg.split("__")[-2]
+        #     oid = self.request.GET[self.parent_lookup_kwarg]
+        url = f"{base_url}?program={state.program.pk}"
+        return url
+
+    def html_attrs(self):
+        classes = f"adminfilters  {self.__class__.__name__.lower()}"
+        if self.error_message:
+            classes += " error"
+        if self.lookup_val:
+            classes += " active"
+
+        return {
+            "class": classes,
+            "id": "_".join(self.expected_parameters()),
+        }

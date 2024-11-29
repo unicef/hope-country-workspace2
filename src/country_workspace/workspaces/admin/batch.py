@@ -9,10 +9,10 @@ from admin_extra_buttons.buttons import LinkButton
 from admin_extra_buttons.decorators import link
 
 from ...state import state
-from ..filters import CWLinkedAutoCompleteFilter
 from ..models import CountryBatch
 from ..options import WorkspaceModelAdmin
 from ..sites import workspace
+from .filters import CWLinkedAutoCompleteFilter
 from .hh_ind import SelectedProgramMixin
 
 if TYPE_CHECKING:
