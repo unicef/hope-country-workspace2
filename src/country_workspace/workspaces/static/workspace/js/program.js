@@ -3,4 +3,6 @@ $(function () {
         var url = $(this).parent().find("th a").attr("href");
         location.href = url;
     })
+
+
 })

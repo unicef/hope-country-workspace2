@@ -61,6 +61,8 @@ def pytest_configure(config):
     import django
     from django.conf import settings
 
+    settings.AURORA_API_TOKEN = "aurora_token"
+
     settings.ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
     settings.AURORA_API_URL = "https://uni-hope-ukr-sr-dev.unitst.org/api/"
     settings.SIGNING_BACKEND = "testutils.signers.PlainSigner"

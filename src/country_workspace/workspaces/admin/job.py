@@ -15,10 +15,11 @@ class CountryJobAdmin(CeleryTaskModelAdmin, WorkspaceModelAdmin):
     queue_template = "workspace/celery_boost/queue.html"
 
     list_display = (
+        "description",
         "datetime_queued",
-        "completed_time",
-        "type",
         "started",
+        "completed_time",
+        # "type",
         "queue_position",
         "status",
         "owner",

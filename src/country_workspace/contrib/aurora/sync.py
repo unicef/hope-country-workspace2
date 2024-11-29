@@ -20,9 +20,6 @@ def sync_aurora_job(job: AsyncJob) -> dict[str, int]:
     total_hh = total_ind = 0
     client = AuroraClient()
     with atomic():
-        job.batch = _create_batch(job)
-        job.save()
-        # TODO: Duplicate import ?
         for record in client.get("record"):
             for f_name, f_value in record["fields"].items():
                 if f_name == "household":
@@ -30,7 +27,8 @@ def sync_aurora_job(job: AsyncJob) -> dict[str, int]:
                     total_hh += 1
                 elif f_name == "individuals":
                     total_ind += len(_create_individuals(job, hh, f_value))
-        return {"households": total_hh, "individuals": total_ind}
+
+    return {"households": total_hh, "individuals": total_ind}
 
 
 def _create_batch(job: AsyncJob) -> Batch:

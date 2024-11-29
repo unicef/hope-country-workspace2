@@ -52,7 +52,7 @@ CONFIG: "Dict[str, ConfigItem]" = {
         True,
         setting("allowed-hosts"),
     ),
-    "AURORA_API_TOKEN": (str, "", "", True, "Aurora API token"),
+    "AURORA_API_TOKEN": (str, "", "", False, "Aurora API token"),
     "AURORA_API_URL": (str, "", "", False, "Aurora API url"),
     "CACHE_URL": (str, "", "redis://localhost:6379/0", True, setting("cache-url")),
     "CELERY_BROKER_URL": (

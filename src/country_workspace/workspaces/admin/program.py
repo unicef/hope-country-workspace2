@@ -5,6 +5,7 @@ from django.conf import settings
 from django.contrib import messages
 from django.contrib.admin import register
 from django.db.models import QuerySet
+from django.forms import Media
 from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
@@ -184,43 +185,7 @@ class CountryProgramAdmin(WorkspaceModelAdmin):
         context["storage_field"] = "individual_columns"
         return self._configure_columns(request, SelectIndividualColumnsForm, context)
 
-    @button(label=_("Import File"))
-    def import_rdi(self, request: HttpRequest, pk: str) -> "HttpResponse":
-        context = self.get_common_context(request, pk, title="Import RDI file")
-        program: "CountryProgram" = context["original"]
-        context["selected_program"] = context["original"]
-        if request.method == "POST":
-            form = ImportFileForm(request.POST, request.FILES)
-            if form.is_valid():
-                batch, __ = Batch.objects.get_or_create(
-                    name=form.cleaned_data["batch_name"] or BATCH_NAME_DEFAULT,
-                    program=program,
-                    country_office=program.country_office,
-                    imported_by=state.request.user,
-                )
-                job: AsyncJob = AsyncJob.objects.create(
-                    type=AsyncJob.JobType.TASK,
-                    action=fqn(import_from_rdi_job),
-                    file=request.FILES["file"],
-                    program=program,
-                    owner=request.user,
-                    config={
-                        "batch": batch.pk,
-                        "household_pk_col": form.cleaned_data["pk_column_name"],
-                        "master_column_label": form.cleaned_data["master_column_label"],
-                        "detail_column_label": form.cleaned_data["detail_column_label"],
-                    },
-                )
-                job.queue()
-                self.message_user(request, _("Import scheduled"), messages.SUCCESS)
-                context["form"] = form
-
-        else:
-            form = ImportFileForm()
-        context["form"] = form
-        return render(request, "workspace/program/import_rdi.html", context)
-
-    @button(label=_("Import File Updates"))
+    @button(label=_("Update Records"))
     def import_file_updates(self, request: HttpRequest, pk: str) -> "HttpResponse":
         context = self.get_common_context(request, pk, title="Import updates from file")
         program: "CountryProgram" = context["original"]
@@ -249,36 +214,81 @@ class CountryProgramAdmin(WorkspaceModelAdmin):
         context["form"] = form
         return render(request, "workspace/actions/bulk_update_import.html", context)
 
-    @button(label=_("Import from Aurora"))
-    def import_aurora(self, request: HttpRequest, pk: str) -> HttpResponse:
-        context = self.get_common_context(request, pk, title="Import from Aurora")
-        program: CountryProgram = context["original"]
-        context["selected_program"] = context["original"]
+    @button(label=_("Import Data"))
+    def import_data(self, request: HttpRequest, pk: str) -> "HttpResponse":
+        context = self.get_common_context(request, pk, title="Import Data")
+        context["selected_program"] = program = context["original"]
+        context["media"] = Media(js=["admin/js/vendor/jquery/jquery.js", "workspace/js/import_data.js"], css={})
+        form_rdi = ImportFileForm(prefix="rdi")
+        form_aurora = ImportAuroraForm(prefix="aurora")
+
         if request.method == "POST":
-            form = ImportAuroraForm(request.POST)
-            if form.is_valid():
-                job: AsyncJob = AsyncJob.objects.create(
-                    type=AsyncJob.JobType.TASK,
-                    action=fqn(sync_aurora_job),
-                    batch=None,
-                    file=None,
-                    program=program,
-                    owner=request.user,
-                    config={
-                        "batch_name": form.cleaned_data["batch_name"] or BATCH_NAME_DEFAULT,
-                        "household_name_column": form.cleaned_data["household_name_column"],
-                    },
-                )
-                job.queue()
-                self.message_user(
-                    request,
-                    _("The import task from Aurora has been successfully queued. Asynchronous task ID: {0}.").format(
-                        job.curr_async_result_id
-                    ),
-                    level=messages.SUCCESS,
-                )
-                return HttpResponseRedirect(self.get_changelist_url())
-        else:
-            form = ImportAuroraForm()
-        context["form"] = form
-        return render(request, "workspace/program/import_aurora.html", context)
+            match request.POST.get("_selected_tab"):
+                case "rdi":
+                    if not (form_rdi := self.import_rdi(request, program)):
+                        return HttpResponseRedirect(".")
+                case "aurora":
+                    if not (form_aurora := self.import_aurora(request, program)):
+                        return HttpResponseRedirect(".")
+                case "kobo":
+                    self.message_user(request, _("Not implemented"))
+
+        context["form_rdi"] = form_rdi
+        context["form_aurora"] = form_aurora
+
+        return render(request, "workspace/program/import.html", context)
+
+    def import_rdi(self, request: HttpRequest, program: CountryProgram) -> "ImportFileForm | None":
+        form = ImportFileForm(request.POST, request.FILES, prefix="rdi")
+        if form.is_valid():
+            batch = Batch.objects.create(
+                name=form.cleaned_data["batch_name"] or BATCH_NAME_DEFAULT,
+                program=program,
+                country_office=program.country_office,
+                imported_by=state.request.user,
+            )
+            job: AsyncJob = AsyncJob.objects.create(
+                description="RDI importing",
+                type=AsyncJob.JobType.TASK,
+                action=fqn(import_from_rdi_job),
+                file=request.FILES["rdi-file"],
+                program=program,
+                owner=request.user,
+                config={
+                    "batch": batch.pk,
+                    "household_pk_col": form.cleaned_data["pk_column_name"],
+                    "master_column_label": form.cleaned_data["master_column_label"],
+                    "detail_column_label": form.cleaned_data["detail_column_label"],
+                },
+            )
+            job.queue()
+            self.message_user(request, _("Import scheduled"), messages.SUCCESS)
+            return None
+        return form
+
+    def import_aurora(self, request: HttpRequest, program: "CountryProgram") -> "ImportAuroraForm|None":
+        form = ImportAuroraForm(request.POST, prefix="aurora")
+        if form.is_valid():
+            batch = Batch.objects.create(
+                name=form.cleaned_data["batch_name"] or BATCH_NAME_DEFAULT,
+                program=program,
+                country_office=program.country_office,
+                imported_by=state.request.user,
+            )
+            job: AsyncJob = AsyncJob.objects.create(
+                type=AsyncJob.JobType.TASK,
+                action=fqn(sync_aurora_job),
+                batch=batch,
+                file=None,
+                program=program,
+                owner=request.user,
+                config={"household_name_column": form.cleaned_data["household_name_column"]},
+            )
+            job.queue()
+            self.message_user(
+                request,
+                _("The import task from Aurora has been successfully queued. Job #{0}.").format(job.id),
+                level=messages.SUCCESS,
+            )
+            return None
+        return form

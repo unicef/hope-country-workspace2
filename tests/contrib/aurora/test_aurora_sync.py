@@ -1,6 +1,9 @@
+import json
+from pathlib import Path
 from unittest.mock import patch
 
 import pytest
+from constance.test.unittest import override_config
 
 from country_workspace.contrib.aurora.sync import (
     _create_batch,
@@ -119,32 +122,45 @@ def test_create_individuals(mock_aurora_data, job, household, fields, expected_c
                 mock_clean_field_name.assert_any_call("given_name")
 
 
-def test_sync_aurora_job_success(mock_aurora_client, mock_aurora_data, job, household, individuals):
-    with (
-        patch("country_workspace.contrib.aurora.sync.AuroraClient", return_value=mock_aurora_client),
-        patch("country_workspace.contrib.aurora.sync._create_batch", return_value=job.batch) as mock_create_batch,
-        patch(
-            "country_workspace.contrib.aurora.sync._create_household", return_value=household
-        ) as mock_create_household,
-        patch(
-            "country_workspace.contrib.aurora.sync._create_individuals", return_value=individuals
-        ) as mock_create_individuals,
-        patch.object(job, "save", wraps=job.save) as mock_save_job,
-    ):
-        mock_aurora_client.get.return_value = mock_aurora_data["results"]
+@override_config(AURORA_API_URL="https://api.aurora.io")
+def test_sync_aurora_job_success_new(mocked_responses, job):
+    mocked_responses.add(
+        mocked_responses.GET,
+        "https://api.aurora.io/record/",
+        json=json.loads((Path(__file__).parent / "aurora.json").read_text()),
+        status=200,
+    )
 
-        result = sync_aurora_job(job)
+    result = sync_aurora_job(job)
+    assert result == {"households": 2, "individuals": 3}
 
-        mock_create_batch.assert_called_once_with(job)
-        assert mock_aurora_client.get.called
-        mock_create_household.assert_called_once_with(job, mock_aurora_data["results"][0]["fields"]["household"][0])
-        mock_create_individuals.assert_called_once_with(
-            job, household, mock_aurora_data["results"][0]["fields"]["individuals"]
-        )
 
-        assert mock_save_job.call_count == 1
-
-        assert result == {
-            "households": 1,
-            "individuals": len(individuals),
-        }
+# def test_sync_aurora_job_success(mock_aurora_client, mock_aurora_data, job, household, individuals):
+#     with (
+#         patch("country_workspace.contrib.aurora.sync.AuroraClient", return_value=mock_aurora_client),
+#         patch("country_workspace.contrib.aurora.sync._create_batch", return_value=job.batch) as mock_create_batch,
+#         patch(
+#             "country_workspace.contrib.aurora.sync._create_household", return_value=household
+#         ) as mock_create_household,
+#         patch(
+#             "country_workspace.contrib.aurora.sync._create_individuals", return_value=individuals
+#         ) as mock_create_individuals,
+#         patch.object(job, "save", wraps=job.save) as mock_save_job,
+#     ):
+#         mock_aurora_client.get.return_value = mock_aurora_data["results"]
+#
+#         result = sync_aurora_job(job)
+#
+#         mock_create_batch.assert_called_once_with(job)
+#         assert mock_aurora_client.get.called
+#         mock_create_household.assert_called_once_with(job, mock_aurora_data["results"][0]["fields"]["household"][0])
+#         mock_create_individuals.assert_called_once_with(
+#             job, household, mock_aurora_data["results"][0]["fields"]["individuals"]
+#         )
+#
+#         assert mock_save_job.call_count == 1
+#
+#         assert result == {
+#             "households": 1,
+#             "individuals": len(individuals),
+#         }

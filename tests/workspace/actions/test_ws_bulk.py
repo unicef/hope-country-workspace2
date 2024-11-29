@@ -184,7 +184,7 @@ def test_bulk_update_import(app: "DjangoTestApp", force_migrated_records, settin
     settings.CELERY_TASK_ALWAYS_EAGER = True
     with select_office(app, household.country_office, household.program):
         res = app.get(url)
-        res = res.click("Import File Updates")
+        res = res.click("Update Records")
         res.forms["bulk-update-form"]["description"] = "Bulk update from file"
         res.forms["bulk-update-form"]["target"] = "ind"
         res.forms["bulk-update-form"]["file"] = Upload("file.xlsx", xls.read())
