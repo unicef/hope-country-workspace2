@@ -52,6 +52,8 @@ CONFIG: "Dict[str, ConfigItem]" = {
         True,
         setting("allowed-hosts"),
     ),
+    "AURORA_API_TOKEN": (str, "", "", True, "Aurora API token"),
+    "AURORA_API_URL": (str, "", "", False, "Aurora API url"),
     "CACHE_URL": (str, "", "redis://localhost:6379/0", True, setting("cache-url")),
     "CELERY_BROKER_URL": (
         str,
@@ -89,7 +91,7 @@ CONFIG: "Dict[str, ConfigItem]" = {
         celery_doc("#broker-transport-options"),
     ),
     "CSRF_COOKIE_SECURE": (bool, True, False, True, setting("csrf-cookie-secure")),
-    "CSRF_TRUSTED_ORIGINS": (list, "localhost", "", True, ""),
+    "CSRF_TRUSTED_ORIGINS": (list, ["http://localhost"], "", True, ""),
     "DATABASE_URL": (
         str,
         SmartEnv.NOTSET,

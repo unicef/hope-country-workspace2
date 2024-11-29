@@ -1,6 +1,10 @@
-from django.conf import settings
-
-from ..settings import NEW_USER_DEFAULT_GROUP
+from country_workspace.config.fragments.app import (
+    AURORA_API_TOKEN,
+    AURORA_API_URL,
+    HOPE_API_TOKEN,
+    HOPE_API_URL,
+    NEW_USER_DEFAULT_GROUP,
+)
 
 CONSTANCE_BACKEND = "constance.backends.database.DatabaseBackend"
 
@@ -44,22 +48,22 @@ CONSTANCE_CONFIG = {
         "Group to assign to any new user",
         "group_select",
     ),
-    "HOPE_API_URL": (settings.HOPE_API_URL, "HOPE API Server address", str),
-    "HOPE_API_TOKEN": (settings.HOPE_API_TOKEN, "HOPE API Access Token", "write_only_input"),
-    "AURORA_API_URL": ("https://register.unicef.org/api/", "Aurora API Server address", str),
-    "AURORA_API_TOKEN": ("", "Aurora API Access Token", "write_only_input"),
-    "KOBO_API_URL": ("", "Kobo API Server address", str),
+    "AURORA_API_TOKEN": (AURORA_API_TOKEN, "Aurora API Access Token", "write_only_input"),
+    "AURORA_API_URL": (AURORA_API_URL, "Aurora API Server address", str),
+    "HOPE_API_TOKEN": (HOPE_API_TOKEN, "HOPE API Access Token", "write_only_input"),
+    "HOPE_API_URL": (HOPE_API_URL, "HOPE API Server address", str),
     "KOBO_API_TOKEN": ("", "Kobo API Access Token", "write_only_input"),
+    "KOBO_API_URL": ("", "Kobo API Server address", str),
 }
 
 CONSTANCE_CONFIG_FIELDSETS = {
     "New User Options": ("NEW_USER_IS_STAFF", "NEW_USER_DEFAULT_GROUP"),
     "Remote System Tokens": (
-        "HOPE_API_URL",
-        "HOPE_API_TOKEN",
-        "AURORA_API_URL",
         "AURORA_API_TOKEN",
-        "KOBO_API_URL",
+        "AURORA_API_URL",
+        "HOPE_API_TOKEN",
+        "HOPE_API_URL",
         "KOBO_API_TOKEN",
+        "KOBO_API_URL",
     ),
 }

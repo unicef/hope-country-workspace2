@@ -11,25 +11,25 @@ repos:
       - id: isort
         stages: [pre-commit]
   - repo: https://github.com/ambv/black
-    rev: 24.4.2
+    rev: 24.10.0
     hooks:
       - id: black
         args: [--config=pyproject.toml]
         exclude: "migrations|snapshots"
         stages: [pre-commit]
   - repo: https://github.com/PyCQA/flake8
-    rev: 7.1.0
+    rev: 7.1.1
     hooks:
       - id: flake8
         args: [--config=.flake8]
         stages: [ pre-commit ]
   - repo: https://github.com/PyCQA/bandit
-    rev: '1.7.9' # Update me!
+    rev: '1.7.10' # Update me!
     hooks:
       - id: bandit
         args: ["-c", "bandit.yaml"]
   - repo: https://github.com/twisted/towncrier
-    rev: 23.11.0
+    rev: 24.8.0
     hooks:
       - id: towncrier-check
 

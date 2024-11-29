@@ -27,6 +27,7 @@ def environment() -> dict[str, str]:
         "ADMIN_EMAIL": "test@example.com",
         "ADMIN_PASSWORD": "test",
         "ALLOWED_HOSTS": "test",
+        "AURORA_API_TOKEN": "test",
         "CSRF_COOKIE_SECURE": "test",
         "CSRF_TRUSTED_ORIGINS": "http://testserver/,",
         "HOPE_API_TOKEN": "test",

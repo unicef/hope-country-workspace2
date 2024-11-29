@@ -49,6 +49,7 @@ INSTALLED_APPS = (
     "country_workspace.security",
     "country_workspace.apps.Config",
     "country_workspace.workspaces.apps.Config",
+    "country_workspace.contrib.aurora.apps.Config",
     "country_workspace.versioning",
     *env("EXTRA_APPS"),
 )
