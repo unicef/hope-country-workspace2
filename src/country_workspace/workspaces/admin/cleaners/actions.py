@@ -22,7 +22,7 @@ if TYPE_CHECKING:
     from country_workspace.workspaces.admin.hh_ind import BeneficiaryBaseAdmin
 
 
-@admin.action(description="Validate selected records")
+@admin.action(description="Validate selected records", permissions=["validate"])
 def validate_records(
     model_admin: "BeneficiaryBaseAdmin", request: HttpRequest, queryset: "QuerySet[Beneficiary]"
 ) -> None:
@@ -40,7 +40,7 @@ def validate_records(
     return job
 
 
-@admin.action(description="Mass update record fields")
+@admin.action(description="Mass update record fields", permissions=["mass_update"])
 def mass_update(
     model_admin: "BeneficiaryBaseAdmin", request: HttpRequest, queryset: "QuerySet[Beneficiary]"
 ) -> "HttpResponse":
@@ -75,7 +75,7 @@ def mass_update(
     return render(request, "workspace/actions/mass_update.html", ctx)
 
 
-@admin.action(description="Update fields using RegEx")
+@admin.action(description="Update fields using RegEx", permissions=["regex_update"])
 def regex_update(
     model_admin: "BeneficiaryBaseAdmin", request: "HttpRequest", queryset: "QuerySet[Beneficiary]"
 ) -> HttpResponse:
@@ -123,7 +123,7 @@ def regex_update(
     return render(request, "workspace/actions/regex.html", ctx)
 
 
-@admin.action(description="Create XLS template for bulk updates")
+@admin.action(description="Create XLS template for bulk updates", permissions=["export"])
 def bulk_update_export(
     model_admin: "BeneficiaryBaseAdmin", request: HttpRequest, queryset: "QuerySet[Beneficiary]"
 ) -> HttpResponse:

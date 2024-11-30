@@ -11,8 +11,7 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.utils.translation import gettext as _
 
-from admin_extra_buttons.api import button, link
-from admin_extra_buttons.buttons import LinkButton
+from admin_extra_buttons.api import button
 from hope_flex_fields.models import DataChecker
 from strategy_field.utils import fqn
 
@@ -21,8 +20,8 @@ from country_workspace.contrib.aurora.sync import sync_aurora_job
 from country_workspace.state import state
 
 from ...contrib.aurora.forms import ImportAuroraForm
-from ...datasources.rdi import import_from_rdi_job
-from ...models import AsyncJob, Batch
+from ...datasources.rdi import import_from_rdi
+from ...models import AsyncJob
 from ...utils.flex_fields import get_checker_fields
 from ..models import CountryProgram
 from ..options import WorkspaceModelAdmin
@@ -133,10 +132,6 @@ class CountryProgramAdmin(WorkspaceModelAdmin):
         url = reverse("workspace:workspaces_countryprogram_change", args=[state.program.pk])
         return HttpResponseRedirect(url)
 
-    @link(change_list=False)
-    def population(self, btn: LinkButton) -> None:
-        btn.href = reverse("workspace:workspaces_countryhousehold_changelist")
-
     def _configure_columns(
         self,
         request: HttpResponse,
@@ -169,7 +164,7 @@ class CountryProgramAdmin(WorkspaceModelAdmin):
 
         return render(request, "workspace/program/configure_columns.html", context)
 
-    @button()
+    @button(permission="workspaces.change_countryprogram")
     def household_columns(self, request: HttpResponse, pk: str) -> "HttpResponse | HttpResponseRedirect":
         context = self.get_common_context(request, pk, title="Configure default Household columns")
         program: "CountryProgram" = context["original"]
@@ -177,7 +172,7 @@ class CountryProgramAdmin(WorkspaceModelAdmin):
         context["storage_field"] = "household_columns"
         return self._configure_columns(request, SelectColumnsForm, context)
 
-    @button()
+    @button(permission="workspaces.change_countryprogram")
     def individual_columns(self, request: HttpResponse, pk: str) -> "HttpResponse | HttpResponseRedirect":
         context = self.get_common_context(request, pk, title="Configure default Individual columns")
         program: "CountryProgram" = context["original"]
@@ -185,7 +180,7 @@ class CountryProgramAdmin(WorkspaceModelAdmin):
         context["storage_field"] = "individual_columns"
         return self._configure_columns(request, SelectIndividualColumnsForm, context)
 
-    @button(label=_("Update Records"))
+    @button(label=_("Update Records"), permission="workspaces.import_program_data")
     def import_file_updates(self, request: HttpRequest, pk: str) -> "HttpResponse":
         context = self.get_common_context(request, pk, title="Import updates from file")
         program: "CountryProgram" = context["original"]
@@ -214,7 +209,7 @@ class CountryProgramAdmin(WorkspaceModelAdmin):
         context["form"] = form
         return render(request, "workspace/actions/bulk_update_import.html", context)
 
-    @button(label=_("Import Data"))
+    @button(label=_("Import Data"), permission="workspaces.import_program_data")
     def import_data(self, request: HttpRequest, pk: str) -> "HttpResponse":
         context = self.get_common_context(request, pk, title="Import Data")
         context["selected_program"] = program = context["original"]
@@ -241,21 +236,15 @@ class CountryProgramAdmin(WorkspaceModelAdmin):
     def import_rdi(self, request: HttpRequest, program: CountryProgram) -> "ImportFileForm | None":
         form = ImportFileForm(request.POST, request.FILES, prefix="rdi")
         if form.is_valid():
-            batch = Batch.objects.create(
-                name=form.cleaned_data["batch_name"] or BATCH_NAME_DEFAULT,
-                program=program,
-                country_office=program.country_office,
-                imported_by=state.request.user,
-            )
             job: AsyncJob = AsyncJob.objects.create(
                 description="RDI importing",
                 type=AsyncJob.JobType.TASK,
-                action=fqn(import_from_rdi_job),
+                action=fqn(import_from_rdi),
                 file=request.FILES["rdi-file"],
                 program=program,
                 owner=request.user,
                 config={
-                    "batch": batch.pk,
+                    "batch_name": form.cleaned_data["batch_name"] or BATCH_NAME_DEFAULT,
                     "household_pk_col": form.cleaned_data["pk_column_name"],
                     "master_column_label": form.cleaned_data["master_column_label"],
                     "detail_column_label": form.cleaned_data["detail_column_label"],
@@ -269,20 +258,17 @@ class CountryProgramAdmin(WorkspaceModelAdmin):
     def import_aurora(self, request: HttpRequest, program: "CountryProgram") -> "ImportAuroraForm|None":
         form = ImportAuroraForm(request.POST, prefix="aurora")
         if form.is_valid():
-            batch = Batch.objects.create(
-                name=form.cleaned_data["batch_name"] or BATCH_NAME_DEFAULT,
-                program=program,
-                country_office=program.country_office,
-                imported_by=state.request.user,
-            )
+
             job: AsyncJob = AsyncJob.objects.create(
                 type=AsyncJob.JobType.TASK,
                 action=fqn(sync_aurora_job),
-                batch=batch,
                 file=None,
                 program=program,
                 owner=request.user,
-                config={"household_name_column": form.cleaned_data["household_name_column"]},
+                config={
+                    "batch_name": form.cleaned_data["batch_name"] or BATCH_NAME_DEFAULT,
+                    "household_name_column": form.cleaned_data["household_name_column"],
+                },
             )
             job.queue()
             self.message_user(

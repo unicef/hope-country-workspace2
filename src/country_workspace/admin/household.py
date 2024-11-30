@@ -7,6 +7,7 @@ from adminfilters.autocomplete import LinkedAutoCompleteFilter
 
 from ..models import Household
 from .base import BaseModelAdmin
+from .filters import IsValidFilter
 
 
 @admin.register(Household)
@@ -16,6 +17,7 @@ class HouseholdAdmin(BaseModelAdmin):
         ("batch__country_office", LinkedAutoCompleteFilter.factory(parent=None)),
         ("batch__program", LinkedAutoCompleteFilter.factory(parent="batch__country_office")),
         ("batch", LinkedAutoCompleteFilter.factory(parent="batch__program")),
+        IsValidFilter,
     )
     # readonly_fields = ("country_office", "program")
     search_fields = ("name",)

@@ -98,3 +98,11 @@ def test_hh_validate_program(app: "CWTestApp", household: "CountryHousehold") ->
             res.click("Validate Programme").follow()
             household.refresh_from_db()
             assert household.last_checked
+
+
+def test_hh_update_single(app: "CWTestApp", household: "CountryHousehold") -> None:
+    with select_office(app, household.country_office, household.program):
+        with user_grant_permissions(app._user, ["workspaces.change_countryhousehold"], household.program):
+            url = reverse("workspace:workspaces_countryhousehold_change", args=[household.pk])
+            res = app.get(url)
+            assert res.status_code == 200

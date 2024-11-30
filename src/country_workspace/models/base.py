@@ -70,6 +70,12 @@ class Validable(Cachable, models.Model):
 
     class Meta:
         abstract = True
+        permissions = (
+            ("validate_beneficiary", "Can validate Beneficiary Records"),
+            ("mass_update_beneficiary", "Can Mass update Beneficiary Records"),
+            ("regex_update_beneficiary", "Can Mass update Beneficiary Records"),
+            ("export_beneficiary", "Can Export Beneficiary Records"),
+        )
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

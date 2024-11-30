@@ -66,15 +66,22 @@ class BeneficiaryBaseAdmin(AdminAutoCompleteSearchMixin, SelectedProgramMixin, W
         actions.regex_update,
         actions.bulk_update_export,
         actions.calculate_checksum,
-        # find_duplicates_action,
-        # actions.mass_update,
-        # actions.calculate_checksum,
-        # actions.regex_update,
-        # actions.bulk_update_export,
     ]
     title = None
     title_plural = None
     list_per_page = 20
+
+    def has_validate_permission(self, request: HttpRequest) -> bool:
+        return request.user.has_perm("country_workspace.validate_beneficiary")
+
+    def has_export_permission(self, request: HttpRequest) -> bool:
+        return request.user.has_perm("country_workspace.export_beneficiary")
+
+    def has_mass_update_permission(self, request: HttpRequest) -> bool:
+        return request.user.has_perm("country_workspace.mass_update_beneficiary")
+
+    def has_regex_update_permission(self, request: HttpRequest) -> bool:
+        return request.user.has_perm("country_workspace.regex_update_beneficiary")
 
     def get_queryset(self, request: HttpRequest) -> "QuerySet[Beneficiary]":
         qs = super().get_queryset(request)
@@ -95,7 +102,7 @@ class BeneficiaryBaseAdmin(AdminAutoCompleteSearchMixin, SelectedProgramMixin, W
     def validate_single(self, request: HttpRequest, pk: str) -> "HttpResponse":
         obj: "Beneficiary" = self.get_object(request, pk)
         if obj.validate_with_checker():
-            self.message_user(request, _("Validation successful!"))
+            self.message_user(request, _("Validation successful!"), messages.SUCCESS)
         else:
             self.message_user(request, _("Validation failed!"), messages.ERROR)
 
@@ -179,7 +186,7 @@ class BeneficiaryBaseAdmin(AdminAutoCompleteSearchMixin, SelectedProgramMixin, W
                 form: "FlexForm" = form_class(request.POST, prefix="flex_field", initial=initials)
                 if form.is_valid():
                     obj.flex_fields = form.cleaned_data
-                    obj.save()
+                    self.save_model(request, obj, form, True)
                     return HttpResponseRedirect(request.META["HTTP_REFERER"])
                 else:
                     self.message_user(request, "Please fixes the errors below", messages.ERROR)
@@ -205,6 +212,10 @@ class BeneficiaryBaseAdmin(AdminAutoCompleteSearchMixin, SelectedProgramMixin, W
         context.update(extra_context or {})
         response = super().change_view(request, object_id, form_url, context)
         return response
+
+    def save_model(self, request, obj, form, change):
+        super().save_model(request, obj, form, change)
+        obj.validate_with_checker()
 
     # def log_change(self, request, obj, message):
     #     from django.contrib.admin.models import CHANGE, LogEntry

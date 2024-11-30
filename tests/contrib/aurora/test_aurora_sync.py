@@ -6,35 +6,22 @@ import pytest
 from constance.test.unittest import override_config
 
 from country_workspace.contrib.aurora.sync import (
-    _create_batch,
     _create_household,
     _create_individuals,
     _update_household_name_from_individual,
     sync_aurora_job,
 )
-from country_workspace.models import Batch, Household, Office, Program, User
+from country_workspace.models import Household
 
 
-def test_create_batch_success(mock_aurora_data, job):
-    batch = _create_batch(job)
-    assert isinstance(batch, Batch)
-    assert isinstance(batch.country_office, Office)
-    assert isinstance(batch.program, Program)
-    assert isinstance(batch.imported_by, User)
-    assert batch.name == mock_aurora_data["form_cleaned_data"]["batch_name"]
-    assert batch.program == job.program
-    assert batch.country_office == job.program.country_office
-    assert batch.imported_by == job.owner
-
-
-def test_create_household_success(mock_aurora_data, job):
+def test_create_household_success(mock_aurora_data, batch):
     fields = mock_aurora_data["results"][0]["fields"]["household"][0]
-    household = _create_household(job, fields)
+    household = _create_household(batch, fields)
 
     assert isinstance(household, Household)
-    assert household.program == job.program
-    assert household.batch == job.batch
-    assert household.country_office == job.program.country_office
+    assert household.program == batch.program
+    assert household.batch == batch
+    assert household.country_office == batch.program.country_office
     assert household.flex_fields == fields
 
 
@@ -65,12 +52,12 @@ def test_create_household_success(mock_aurora_data, job):
         "Empty individual data",
     ],
 )
-def test_update_household_name_from_individual(mock_aurora_data, job, household, data, expected_name_update):
+def test_update_household_name_from_individual(mock_aurora_data, household, data, expected_name_update):
     initial_name = household.name
 
     individual_data = mock_aurora_data["results"][0]["fields"]["individuals"][0].copy()
     individual_data.update(data)
-    _update_household_name_from_individual(job, household, individual_data)
+    _update_household_name_from_individual(household, individual_data, household_name_column="family_name")
     household.refresh_from_db()
 
     if expected_name_update:
@@ -80,7 +67,7 @@ def test_update_household_name_from_individual(mock_aurora_data, job, household,
 
 
 @pytest.mark.parametrize(
-    "fields, expected_count",
+    "data, expected_count",
     [
         (
             [
@@ -96,27 +83,21 @@ def test_update_household_name_from_individual(mock_aurora_data, job, household,
     ],
     ids=["filled_fields", "empty_fields"],
 )
-def test_create_individuals(mock_aurora_data, job, household, fields, expected_count):
+def test_create_individuals(mock_aurora_data, household, data, expected_count):
     with (
-        patch("country_workspace.contrib.aurora.sync._update_household_name_from_individual") as mock_update_name,
         patch(
             "country_workspace.contrib.aurora.sync.clean_field_name", side_effect=lambda x: f"cleaned_{x}"
         ) as mock_clean_field_name,
     ):
 
-        individuals = _create_individuals(job, household, fields)
+        individuals = _create_individuals(household, data, household_name_column="family_name")
 
         assert len(individuals) == expected_count
 
-        assert mock_update_name.call_count == expected_count
         if expected_count > 0:
-
-            for individual in fields:
-                mock_update_name.assert_any_call(job, household, individual)
-
-            for individual, data in zip(individuals, fields):
+            for individual, data in zip(individuals, data):
                 assert individual.household_id == household.pk
-                assert individual.batch == job.batch
+                assert individual.batch == household.batch
                 assert individual.name == data.get("given_name", "")
                 assert individual.flex_fields == {f"cleaned_{k}": v for k, v in data.items()}
                 mock_clean_field_name.assert_any_call("given_name")

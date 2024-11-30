@@ -17,39 +17,29 @@ def sync_aurora_job(job: AsyncJob) -> dict[str, int]:
     Returns:
         dict[str, int]: A dictionary with counts of households and individuals created.
     """
+    batch_name = job.config["batch_name"]
+    batch = Batch.objects.create(
+        name=batch_name,
+        program=job.program,
+        country_office=job.program.country_office,
+        imported_by=job.owner,
+        source=Batch.BatchSource.RDI,
+    )
     total_hh = total_ind = 0
     client = AuroraClient()
     with atomic():
         for record in client.get("record"):
             for f_name, f_value in record["fields"].items():
                 if f_name == "household":
-                    hh = _create_household(job, f_value[0])
+                    hh = _create_household(batch, f_value[0])
                     total_hh += 1
                 elif f_name == "individuals":
-                    total_ind += len(_create_individuals(job, hh, f_value))
+                    total_ind += len(_create_individuals(hh, f_value, job.config.get("household_name_column", None)))
 
     return {"households": total_hh, "individuals": total_ind}
 
 
-def _create_batch(job: AsyncJob) -> Batch:
-    """
-    Creates a batch entity associated with the given job.
-
-    Args:
-        job (AsyncJob): The job instance containing the configuration for the batch creation.
-
-    Returns:
-        Batch: The newly created batch instance.
-    """
-    return Batch.objects.create(
-        name=job.config.get("batch_name"),
-        program=job.program,
-        country_office=job.program.country_office,
-        imported_by=job.owner,
-    )
-
-
-def _create_household(job: AsyncJob, fields: dict[str, Any]) -> Household:
+def _create_household(batch: Batch, fields: dict[str, Any]) -> Household:
     """
     Creates a household entity associated with the given job and batch.
 
@@ -60,15 +50,11 @@ def _create_household(job: AsyncJob, fields: dict[str, Any]) -> Household:
     Returns:
         Household: The newly created household instance.
     """
-    return job.program.households.create(
-        batch=job.batch, flex_fields={clean_field_name(k): v for k, v in fields.items()}
-    )
+    return batch.program.households.create(batch=batch, flex_fields={clean_field_name(k): v for k, v in fields.items()})
 
 
 def _create_individuals(
-    job: AsyncJob,
-    household: Household,
-    fields: list[dict[str, Any]],
+    household: Household, data: list[dict[str, Any]], household_name_column: str
 ) -> list[Individual]:
     """
     Creates individuals associated with a household and updates the household name if necessary.
@@ -82,24 +68,27 @@ def _create_individuals(
         list[Individual]: The list of newly created individual instances.
     """
     individuals = []
-    for individual in fields:
-
-        _update_household_name_from_individual(job, household, individual)
+    head_found = False
+    for individual in data:
+        if not head_found:
+            head_found = _update_household_name_from_individual(household, individual, household_name_column)
 
         fullname = next((k for k in individual if k.startswith("given_name")), None)
         individuals.append(
             Individual(
-                batch=job.batch,
+                batch=household.batch,
                 household_id=household.pk,
                 name=individual.get(fullname, ""),
                 flex_fields={clean_field_name(k): v for k, v in individual.items()},
             )
         )
 
-    return job.program.individuals.bulk_create(individuals)
+    return household.program.individuals.bulk_create(individuals)
 
 
-def _update_household_name_from_individual(job: AsyncJob, household: Household, individual: dict[str, Any]) -> None:
+def _update_household_name_from_individual(
+    household: Household, individual: dict[str, Any], household_name_column: str
+) -> bool:
     """
     Updates the household name based on an individual's relationship and name field.
 
@@ -116,6 +105,8 @@ def _update_household_name_from_individual(job: AsyncJob, household: Household, 
     """
     if any(individual.get(k) == "head" for k in individual if k.startswith("relationship")):
         for k, v in individual.items():
-            if clean_field_name(k) == job.config["household_name_column"]:
-                job.program.households.filter(pk=household.pk).update(name=v)
-                break
+            if clean_field_name(k) == household_name_column:
+                household.name = v
+                household.save()
+                # household.program.households.filter(pk=household.pk).update(name=v)
+                return True

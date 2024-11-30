@@ -9,7 +9,7 @@ from django.utils.translation import gettext as _
 from ...state import state
 from ..models import CountryHousehold, CountryIndividual, CountryProgram
 from ..sites import workspace
-from .filters import CWLinkedAutoCompleteFilter, HouseholdFilter, IsValidFilter
+from .filters import CWLinkedAutoCompleteFilter, HouseholdFilter, WIsValidFilter
 from .hh_ind import BeneficiaryBaseAdmin
 
 
@@ -24,7 +24,7 @@ class CountryIndividualAdmin(BeneficiaryBaseAdmin):
     list_filter = (
         ("batch", CWLinkedAutoCompleteFilter.factory(parent=None)),
         ("household", HouseholdFilter),
-        IsValidFilter,
+        WIsValidFilter,
     )
     exclude = [
         "household",

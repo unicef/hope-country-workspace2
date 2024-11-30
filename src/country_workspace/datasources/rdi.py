@@ -5,29 +5,30 @@ from django.db.transaction import atomic
 
 from hope_smart_import.readers import open_xls_multi
 
-from country_workspace.models import AsyncJob, Batch, Household, Program
+from country_workspace.models import AsyncJob, Batch, Household
 from country_workspace.utils.fields import clean_field_name
 
 RDI = Union[str, io.BytesIO]
 
 
-def import_from_rdi_job(job: AsyncJob) -> dict[str, int]:
-    return import_from_rdi(
-        job.file,
-        program=job.program,
-        **job.config,
-    )
-
-
-def import_from_rdi(
-    rdi: RDI, batch: str, program: Program, household_pk_col: str, master_column_label: str, detail_column_label: str
-) -> dict[str, int]:
+def import_from_rdi(job: AsyncJob) -> dict[str, int]:
     ret = {"household": 0, "individual": 0}
     hh_ids = {}
     with atomic():
+        batch_name = job.config["batch_name"]
+        household_pk_col = job.config["household_pk_col"]
+        master_column_label = job.config["master_column_label"]
+        detail_column_label = job.config["detail_column_label"]
+        rdi = job.file
         # household_pk_col = form.cleaned_data["pk_column_name"]
         # total_hh = total_ind = 0
-        batch = Batch.objects.get(id=batch)
+        batch = Batch.objects.create(
+            name=batch_name,
+            program=job.program,
+            country_office=job.program.country_office,
+            imported_by=job.owner,
+            source=Batch.BatchSource.RDI,
+        )
         for sheet_index, sheet_generator in open_xls_multi(rdi, sheets=[0, 1]):
             for line, raw_record in enumerate(sheet_generator, 1):
                 record = {}
@@ -36,13 +37,13 @@ def import_from_rdi(
                 if record[household_pk_col]:
                     try:
                         if sheet_index == 0:
-                            hh: "Household" = program.households.create(
+                            hh: "Household" = job.program.households.create(
                                 batch=batch, name=raw_record[master_column_label], flex_fields=record
                             )
                             hh_ids[record[household_pk_col]] = hh.pk
                             ret["household"] += 1
                         elif sheet_index == 1:
-                            program.individuals.create(
+                            job.program.individuals.create(
                                 batch=batch,
                                 name=raw_record[detail_column_label],
                                 household_id=hh_ids[record[household_pk_col]],

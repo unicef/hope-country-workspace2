@@ -7,6 +7,7 @@ from adminfilters.autocomplete import LinkedAutoCompleteFilter
 
 from ..models import Individual
 from .base import BaseModelAdmin
+from .filters import IsValidFilter
 
 
 @admin.register(Individual)
@@ -17,6 +18,8 @@ class IndividualAdmin(BaseModelAdmin):
     list_filter = (
         ("batch__country_office", LinkedAutoCompleteFilter.factory(parent=None)),
         ("batch__program", LinkedAutoCompleteFilter.factory(parent="batch__country_office")),
+        ("batch", LinkedAutoCompleteFilter.factory(parent="batch__program")),
+        IsValidFilter,
     )
     autocomplete_fields = ("batch",)
 

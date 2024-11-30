@@ -35,11 +35,13 @@
             <th>File</th>
             <td>{{ original.file }}</td>
         </tr>
-        {% if original.error %}
-            <tr>
-                <th>Error</th>
-                <td>{{ original.error }}</td>
-            </tr>
+        {% if perms.app_name.change_model_name_lower_cased %}
+            {% if original.task_info.error %}
+                <tr>
+                    <th>Error</th>
+                    <td>{{ original.task_info.error }}</td>
+                </tr>
+            {% endif %}
         {% endif %}
     </table>
 

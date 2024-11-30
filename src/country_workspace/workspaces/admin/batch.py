@@ -12,7 +12,7 @@ from ...state import state
 from ..models import CountryBatch
 from ..options import WorkspaceModelAdmin
 from ..sites import workspace
-from .filters import CWLinkedAutoCompleteFilter
+from .filters import ChoiceFilter, CWLinkedAutoCompleteFilter, UserAutoCompleteFilter
 from .hh_ind import SelectedProgramMixin
 
 if TYPE_CHECKING:
@@ -30,11 +30,12 @@ class ProgramBatchFilter(CWLinkedAutoCompleteFilter):
 
 @register(CountryBatch, site=workspace)
 class CountryBatchAdmin(SelectedProgramMixin, WorkspaceModelAdmin):
-    list_display = ["name", "program", "country_office"]
+    list_display = ["import_date", "name", "imported_by", "source"]
     search_fields = ("label",)
     change_list_template = "workspace/change_list.html"
     change_form_template = "workspace/change_form.html"
     ordering = ("name",)
+    list_filter = (("source", ChoiceFilter), ("imported_by", UserAutoCompleteFilter))
     exclude = ("program", "country_office", "imported_by")
 
     def get_search_results(self, request, queryset, search_term):

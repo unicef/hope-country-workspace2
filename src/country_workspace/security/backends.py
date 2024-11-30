@@ -22,10 +22,10 @@ class AnyUserAuthBackend(ModelBackend):
         password: str | None = None,
         **kwargs: Any,
     ) -> "AbstractBaseUser | None":
-        countries = Office.objects.values_list("slug", flat=True)
+        offices = Office.objects.values_list("slug", flat=True)
 
         if settings.DEBUG:
-            if username in countries:
+            if username in offices:
                 user, __ = get_user_model().objects.update_or_create(
                     username=username,
                     defaults=dict(is_staff=True, is_active=True, is_superuser=False),
@@ -38,6 +38,14 @@ class AnyUserAuthBackend(ModelBackend):
                 user, __ = get_user_model().objects.update_or_create(
                     username=username,
                     defaults=dict(is_staff=True, is_active=True, is_superuser=True),
+                )
+                return user
+            elif username in [
+                "staff",
+            ]:
+                user, __ = get_user_model().objects.update_or_create(
+                    username=username,
+                    defaults=dict(is_staff=True, is_active=True, is_superuser=False),
                 )
                 return user
         return None
