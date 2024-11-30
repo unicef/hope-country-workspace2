@@ -48,8 +48,10 @@ INSTALLED_APPS = (
     "country_workspace.security",
     "country_workspace.apps.Config",
     "country_workspace.workspaces.apps.Config",
-    "country_workspace.contrib.aurora.apps.Config",
     "country_workspace.versioning",
+    # these should be optional in the future
+    "country_workspace.contrib.hope.apps.Config",
+    "country_workspace.contrib.aurora.apps.Config",
     *env("EXTRA_APPS"),
 )
 
