@@ -10,6 +10,31 @@ Install [uv](https://docs.astral.sh/uv/)
     uv sync --all-extras
     pre-commit install --hook-type pre-commit --hook-type pre-push
 
+## PyMiniRacer on Apple Silicon
+
+1. Found your site-packages
+
+        python -m site
+        >>> /opt/homebrew/Caskroom/miniconda/base/lib/python3.8/site-packages
+
+1. Download the Dylib file
+
+        wget https://github.com/sqreen/PyMiniRacer/files/7575004/libmini_racer.dylib.zip
+
+1. Unzip The Dylib file
+       
+       unzip libmini_racer.dylib.zip
+ 
+1. MV Dylib file to your site-packages
+
+       mv libmini_racer.dylib /opt/homebrew/Caskroom/miniconda/base/lib/python3.8/site-packages/py_mini_racer/.
+
+1. Import Success.
+    
+        >>> from py_mini_racer import MiniRacer
+
+
+
 ## Tailwind CSS
 
 This project uses [django-tailwind](https://django-tailwind.readthedocs.io/en/latest/installation.html) to manage
