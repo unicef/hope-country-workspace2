@@ -31,6 +31,7 @@ INSTALLED_APPS = (
     "flags",
     "reversion",
     "tailwind",
+    "django_select2",
     "social_django",
     "admin_extra_buttons",
     "adminactions",
@@ -49,6 +50,7 @@ INSTALLED_APPS = (
     "country_workspace.apps.Config",
     "country_workspace.workspaces.apps.Config",
     "country_workspace.versioning",
+    "country_workspace.cache",
     # these should be optional in the future
     "country_workspace.contrib.hope.apps.Config",
     "country_workspace.contrib.aurora.apps.Config",

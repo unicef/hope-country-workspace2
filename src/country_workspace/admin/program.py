@@ -7,6 +7,7 @@ from django.urls import reverse
 from admin_extra_buttons.api import button, link
 from adminfilters.autocomplete import AutoCompleteFilter
 
+from ..cache.manager import cache_manager
 from ..compat.admin_extra_buttons import confirm_action
 from ..models import Program
 from .base import BaseModelAdmin
@@ -21,6 +22,11 @@ class ProgramAdmin(BaseModelAdmin):
     search_fields = ("name",)
     list_filter = (("country_office", AutoCompleteFilter), "status", "active", "sector")
     ordering = ("name",)
+
+    @button()
+    def invalidate_cache(self, request: HttpRequest, pk: str) -> None:
+        obj: [Program] = Program.objects.select_related("country_office").get(pk=pk)
+        cache_manager.incr_cache_version(program=obj)
 
     @link(change_list=False)
     def view_in_workspace(self, btn: "LinkButton") -> None:

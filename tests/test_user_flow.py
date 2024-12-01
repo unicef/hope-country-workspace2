@@ -83,7 +83,7 @@ def test_login(app, user, data: "list[Household]", settings: "SettingsWrapper"):
         res = res.forms["select-tenant"].submit().follow()
         assert app.cookies["selected_tenant"] == program.country_office.slug
 
-        res.forms["select-program"]["program"] = program.pk
+        res.forms["select-program"]["program"].force_value(program.pk)
         res = res.forms["select-program"].submit().follow()
         res = res.click("Households")
         res = res.click(hh.name)

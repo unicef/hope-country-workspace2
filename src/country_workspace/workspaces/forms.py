@@ -5,8 +5,10 @@ from django.contrib.admin.forms import AdminAuthenticationForm
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 
+from django_select2 import forms as s2forms
+
+from ..models import Program
 from ..state import state
-from . import models
 from .config import conf
 
 if TYPE_CHECKING:
@@ -37,6 +39,26 @@ class SelectTenantForm(forms.Form):
         self.fields["tenant"].queryset = conf.auth.get_allowed_tenants(self.request)
 
 
+class ProgramWidget(s2forms.ModelSelect2Widget):
+    model = Program
+    search_fields = ["name__icontains"]
+
+    def filter_queryset(self, request, term, queryset=None, **dependent_fields):
+        qs = super().filter_queryset(request, term, queryset, **dependent_fields)
+        return qs.filter(country_office=state.tenant)
+
+    @property
+    def media(self):
+        original = super().media
+        return original + forms.Media(
+            css={
+                "screen": [
+                    "adminfilters/adminfilters.css",
+                ]
+            },
+        )
+
+
 class SelectProgramForm(forms.Form):
     program = forms.ModelChoiceField(
         label=_("Program"),
@@ -44,6 +66,13 @@ class SelectProgramForm(forms.Form):
         required=True,
         blank=False,
         limit_choices_to={"active": True},
+        widget=ProgramWidget(
+            attrs={
+                "data-minimum-input-length": 0,
+                "data-placeholder": "Select a Program",
+                "data-close-on-select": "true",
+            }
+        ),
     )
     next = forms.CharField(required=False, widget=forms.HiddenInput)
 
@@ -52,9 +81,3 @@ class SelectProgramForm(forms.Form):
         super().__init__(*args, **kwargs)
         if state.tenant:
             self.fields["program"].queryset = state.tenant.programs.filter().order_by("name").all()
-
-
-class ProgramForm(forms.ModelForm):
-    class Meta:
-        model = models.CountryProgram
-        fields = ("country_office", "name")

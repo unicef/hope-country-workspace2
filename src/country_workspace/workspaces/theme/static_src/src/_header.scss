@@ -1,29 +1,84 @@
+$height: 38px;
+$height2: 34px;
+$height3: 32px;
 
 body.web {
+  li.select2-results__option.select2-results__option--highlighted{
+        @apply bg-unicef-blue;
+
+  }
+      #select2-id_program-results > li.select2-results__option.select2-results__option--highlighted {
+        @apply bg-unicef-blue;
+    }
   header {
+    @apply bg-unicef-gray;
     color: white;
+    .select2 {
+      background-color: var(--body-bg);
+    }
 
-    select {
-      @apply text-sm p-1;
+    .select2-container.select2-container--default {
+      @apply text-sm;
+      min-width: 600px;
+      height: $height;
+      border-radius: 4px;
+      border-width: 0;
 
+      .select2-results__option--highlighted[aria-selected] {
+        @apply bg-unicef-blue;
+        color: white;
+      }
+
+      .selection {
+        @apply text-sm;
+        height: $height2;
+        border-radius: 4px;
+        line-height: $height2;
+        border-width: 0;
+
+        .select2-selection.select2-selection--single {
+          height: $height2;
+          border-radius: 4px;
+          border-width: 0;
+
+          .select2-selection__rendered {
+            line-height: 38px;
+            border-color: rgb(107 114 128 / var(--tw-border-opacity));
+            border-width: 1px;
+            border-radius: 4px;
+          }
+
+          .select2-selection__arrow {
+            height: 38px;
+            line-height: 38px;
+          }
+        }
+      }
     }
-    select{
-      @apply min-w-48 py-2 text-sm;
-    }
-    svg.sidebar-button {
-      fill: white;
-      width: 1em;
-      height: 1em;
-      display: inline-block;
-      font-size: 1.5rem;
-      flex-shrink: 0;
-      user-select: none;
-      color: white;
-      border-color: white;
-    }
+
   }
 
+  select {
+    @apply min-w-48 py-2 text-sm;
+    border-radius: 4px;
+    border-width: 1px;
+    border-color: rgb(107 114 128 / var(--tw-border-opacity));
+    padding-right: 2.5rem;
+  }
+
+  svg.sidebar-button {
+    fill: white;
+    width: 1em;
+    height: 1em;
+    display: inline-block;
+    font-size: 1.5rem;
+    flex-shrink: 0;
+    user-select: none;
+    color: white;
+    border-color: white;
+  }
 }
+
 
 .title-top {
   box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 4px -1px, rgba(0, 0, 0, 0.14) 0px 4px 5px 0px, rgba(0, 0, 0, 0.12) 0px 1px 10px 0px;

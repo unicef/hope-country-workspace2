@@ -36,10 +36,9 @@ class CountryBatchAdmin(SelectedProgramMixin, WorkspaceModelAdmin):
     change_form_template = "workspace/change_form.html"
     ordering = ("name",)
     list_filter = (("source", ChoiceFilter), ("imported_by", UserAutoCompleteFilter))
-    exclude = ("program", "country_office", "imported_by")
+    readonly_fields = fields = ("name", "source")
 
     def get_search_results(self, request, queryset, search_term):
-
         queryset = self.model.objects.filter(program=state.program)
         return queryset, False
 

@@ -112,6 +112,7 @@ def select_office(app, country_office, program=None):
     res = res.forms["select-tenant"].submit()
     if program:
         res = app.get("/")
-        res.forms["select-program"]["program"] = program.pk
+        # res.forms["select-program"]["program"] = program.pk
+        res.forms["select-program"]["program"].force_value(program.pk)
         res.forms["select-program"].submit()
     yield

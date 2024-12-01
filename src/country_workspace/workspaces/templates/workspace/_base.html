@@ -1,5 +1,6 @@
 {% extends "workspace/layout.html" %}{% load feature_flags i18n workspace_urls %}
 {% block header %}
+    {{ program_form.media.css }}
     <div class="pr-10 flex-grow align-middle pt-3">
         <form id="select-tenant" method="post" action="{% url "workspace:select_tenant" %}">
             {% csrf_token %}
@@ -12,6 +13,7 @@
                 {% csrf_token %}
                 <span class="flex align-middle">{{ program_form.program }}{% admin_url active_program %}</span>
             </form>
+            {{ program_form.media.js }}
         </div>
     {% endif %}
 {% endblock header %}

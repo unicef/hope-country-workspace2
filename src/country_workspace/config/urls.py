@@ -14,6 +14,7 @@ urlpatterns = [
     path(r"accounts/", include("django.contrib.auth.urls")),
     path(r"adminactions/", include("adminactions.urls")),
     path(r"sentry_debug/", lambda _: 1 / 0),
+    path("select2/", include("django_select2.urls")),
     path(r"__debug__/", include(debug_toolbar.urls)),
 ]
 

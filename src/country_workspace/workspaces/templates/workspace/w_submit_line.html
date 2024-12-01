@@ -5,6 +5,7 @@
 {% if show_save_as_new %}<input type="submit" value="{% translate 'Save as new' %}" name="_saveasnew">{% endif %}
 {% if show_save_and_add_another %}<input type="submit" value="{% translate 'Save and add another' %}" name="_addanother">{% endif %}
 {% if show_save_and_continue %}<input type="submit" value="{% if can_change %}{% translate 'Save and continue editing' %}{% else %}{% translate 'Save and view' %}{% endif %}" name="_continue">{% endif %}
+{% if show_save_invalid %}<input type="submit" value="{% translate 'Save & ignore errors' %}" class="default" name="_save_invalid">{% endif %}
 {% if show_close %}
     {% url opts|workspace_urlname:'changelist' as changelist_url %}
     <a href="{% add_preserved_filters changelist_url %}" class="closelink">{% translate 'Close' %}</a>

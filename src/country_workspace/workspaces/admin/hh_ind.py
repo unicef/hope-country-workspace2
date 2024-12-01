@@ -184,15 +184,21 @@ class BeneficiaryBaseAdmin(AdminAutoCompleteSearchMixin, SelectedProgramMixin, W
         if request.method == "POST":
             if obj:
                 form: "FlexForm" = form_class(request.POST, prefix="flex_field", initial=initials)
-                if form.is_valid():
+                form_valid = form.is_valid()
+                if form_valid or "_save_invalid" in request.POST:
                     obj.flex_fields = form.cleaned_data
                     self.save_model(request, obj, form, True)
+                    if form_valid:
+                        self.message_user(request, _("Record saved!"), messages.SUCCESS)
+                    else:
+                        self.message_user(request, _("Record saved but not validated"), messages.WARNING)
                     return HttpResponseRedirect(request.META["HTTP_REFERER"])
                 else:
                     self.message_user(request, "Please fixes the errors below", messages.ERROR)
         else:
             form = form_class(prefix="flex_field", initial=initials)
 
+        context["show_save_invalid"] = True
         context["title"] = self.title
         context["checker_form"] = form
         context["has_change_permission"] = self.has_change_permission(request)

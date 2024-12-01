@@ -7,6 +7,7 @@ from django.utils.translation import gettext as _
 
 import dictdiffer
 import reversion
+from concurrency.fields import IntegerVersionField
 
 from country_workspace.cache.manager import cache_manager
 from country_workspace.state import state
@@ -134,6 +135,7 @@ class Validable(Cachable, models.Model):
 
 class BaseModel(models.Model):
     last_modified = models.DateTimeField(auto_now=True, editable=False)
+    version = IntegerVersionField(_("Version"), db_index=True)
 
     objects = BaseManager()
 

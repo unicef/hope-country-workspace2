@@ -845,20 +845,81 @@ fieldset.module .form-row label {
   font-style: italic;
 }
 
+body.web li.select2-results__option.select2-results__option--highlighted {
+  --tw-bg-opacity: 1;
+  background-color: rgb(0 173 239 / var(--tw-bg-opacity));
+}
+
+body.web #select2-id_program-results > li.select2-results__option.select2-results__option--highlighted {
+  --tw-bg-opacity: 1;
+  background-color: rgb(0 173 239 / var(--tw-bg-opacity));
+}
+
 body.web header {
+  --tw-bg-opacity: 1;
+  background-color: rgb(35 57 68 / var(--tw-bg-opacity));
   color: white;
 }
 
-body.web header select {
-  padding: 0.25rem;
+body.web header .select2 {
+  background-color: var(--body-bg);
+}
+
+body.web header .select2-container.select2-container--default {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  min-width: 600px;
+  height: 38px;
+  border-radius: 4px;
+  border-width: 0;
+}
+
+body.web header .select2-container.select2-container--default .select2-results__option--highlighted[aria-selected] {
+  --tw-bg-opacity: 1;
+  background-color: rgb(0 173 239 / var(--tw-bg-opacity));
+  color: white;
+}
+
+body.web header .select2-container.select2-container--default .selection {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  height: 34px;
+  border-radius: 4px;
+  line-height: 34px;
+  border-width: 0;
+}
+
+body.web header .select2-container.select2-container--default .selection .select2-selection.select2-selection--single {
+  height: 34px;
+  border-radius: 4px;
+  border-width: 0;
+}
+
+body.web header .select2-container.select2-container--default .selection .select2-selection.select2-selection--single .select2-selection__rendered {
+  line-height: 38px;
+  border-color: rgb(107 114 128 / var(--tw-border-opacity));
+  border-width: 1px;
+  border-radius: 4px;
+}
+
+body.web header .select2-container.select2-container--default .selection .select2-selection.select2-selection--single .select2-selection__arrow {
+  height: 38px;
+  line-height: 38px;
+}
+
+body.web select {
   min-width: 12rem;
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
   font-size: 0.875rem;
   line-height: 1.25rem;
+  border-radius: 4px;
+  border-width: 1px;
+  border-color: rgb(107 114 128 / var(--tw-border-opacity));
+  padding-right: 2.5rem;
 }
 
-body.web header svg.sidebar-button {
+body.web svg.sidebar-button {
   fill: white;
   width: 1em;
   height: 1em;
@@ -1781,6 +1842,10 @@ select {
 
 .mt-40 {
   margin-top: 10rem;
+}
+
+.mt-5 {
+  margin-top: 1.25rem;
 }
 
 .block {

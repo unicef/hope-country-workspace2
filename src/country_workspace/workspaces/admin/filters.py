@@ -99,11 +99,7 @@ class WFailedFilter(FailedFilter):
 
 class UserAutoCompleteFilter(AutoCompleteFilter):
     template = "workspace/adminfilters/autocomplete.html"
-
-    def get_url(self) -> str:
-        base_url = reverse("admin:country_workspace_user_autocomplete")
-        url = f"{base_url}?program={state.program.pk}"
-        return url
+    ajax_url = "admin:country_workspace_user_autocomplete"
 
     def html_attrs(self):
         classes = f"adminfilters  {self.__class__.__name__.lower()}"

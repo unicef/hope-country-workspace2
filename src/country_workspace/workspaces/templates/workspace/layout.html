@@ -9,14 +9,14 @@
     {% block stylesheet %}
         {# <link rel="stylesheet" href="{% static "power_query.css" %}" type="text/css"> #}
         <link rel="stylesheet" href="{% static "icons.css" %}" type="text/css">
-        {# <link rel="stylesheet" href="{% static "css/styles.css" %}" type="text/css"> #}
-        {% tailwind_css %}
+{# <link rel="stylesheet" href="{% static "css/styles.css" %}" type="text/css"> #}
     {% endblock stylesheet %}
     {% block scripts %}
         <script src="{% static "admin/js/vendor/jquery/jquery.js" %}"></script>
         <script src="{% static "hcr.js" %}"></script>
     {% endblock scripts %}
     {{ media }}
+    {% tailwind_css %}
     {% block extrahead %}{% endblock %}
 </head>
 <body class="web">
@@ -38,14 +38,14 @@
 <main class="flex flex-col h-screen">
     <header class="flex drop-shadow-md">
         {% block logo %}
-            <div class="w-52 bg-unicef-blue p-0 flex h-16 items-center display-open">
-                <div class="flex-grow">
+            <div class="w-52 bg-unicef-blue p-0 flex-none h-16 items-center display-open">
+                <div class="inline-flex">
                     <img src="{% static "hope_logo.png" %}" class="pl-8 h-16">
-                </div>
-                <div class="flex-shrink align-middle pr-2 cursor-pointer" id="close-sidebar">
-                    <svg focusable="false" class="sidebar-button text-white" viewBox="0 0 24 24" aria-hidden="true">
-                        <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"></path>
-                    </svg>
+                    <div class="cursor-pointer" id="close-sidebar">
+                        <svg focusable="false" class="sidebar-button text-white align-middle mt-5" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"></path>
+                        </svg>
+                    </div>
                 </div>
             </div>
         {% endblock logo %}
