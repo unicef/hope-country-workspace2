@@ -6,4 +6,6 @@ class Config(AppConfig):
     verbose_name = "Cache"
 
     def ready(self) -> None:
-        from . import handlers  # noqa
+        from .manager import cache_manager
+
+        cache_manager.init()

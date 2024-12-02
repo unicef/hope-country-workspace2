@@ -1,10 +1,4 @@
-from country_workspace.config.fragments.app import (
-    AURORA_API_TOKEN,
-    AURORA_API_URL,
-    HOPE_API_TOKEN,
-    HOPE_API_URL,
-    NEW_USER_DEFAULT_GROUP,
-)
+from .app import AURORA_API_TOKEN, AURORA_API_URL, HOPE_API_TOKEN, HOPE_API_URL, NEW_USER_DEFAULT_GROUP
 
 CONSTANCE_BACKEND = "constance.backends.database.DatabaseBackend"
 
@@ -54,10 +48,13 @@ CONSTANCE_CONFIG = {
     "HOPE_API_URL": (HOPE_API_URL, "HOPE API Server address", str),
     "KOBO_API_TOKEN": ("", "Kobo API Access Token", "write_only_input"),
     "KOBO_API_URL": ("", "Kobo API Server address", str),
+    "CACHE_TIMEOUT": (86400, "Cache Redis TTL", int),
+    "CACHE_BY_VERSION": (False, "Invalidate Cache on CW version change", bool),
 }
 
 CONSTANCE_CONFIG_FIELDSETS = {
     "New User Options": ("NEW_USER_IS_STAFF", "NEW_USER_DEFAULT_GROUP"),
+    "Cache": ("CACHE_TIMEOUT", "CACHE_BY_VERSION"),
     "Remote System Tokens": (
         "AURORA_API_TOKEN",
         "AURORA_API_URL",

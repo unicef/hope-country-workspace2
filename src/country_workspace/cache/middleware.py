@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.http import HttpResponse
 from django.utils.cache import patch_response_headers
 from django.utils.deprecation import MiddlewareMixin
 
@@ -10,8 +11,6 @@ class UpdateCacheMiddleware(MiddlewareMixin):
         super().__init__(get_response)
         self.cache_timeout = settings.CACHE_MIDDLEWARE_SECONDS
         self.page_timeout = 10
-        self.key_prefix = settings.CACHE_MIDDLEWARE_KEY_PREFIX
-        self.cache_alias = settings.CACHE_MIDDLEWARE_ALIAS
         self.manager = cache_manager
 
     def _should_update_cache(self, request, response):
@@ -49,20 +48,18 @@ class UpdateCacheMiddleware(MiddlewareMixin):
         #         return response
         patch_response_headers(response, timeout)
         if response.status_code == 200:
-            # cache_key = learn_cache_key(request, response, timeout, self.key_prefix, cache=self.cache)
             cache_key = self.manager.build_key_from_request(request)
+            response.headers["Etag"] = cache_key
             if hasattr(response, "render") and callable(response.render):
-                response.add_post_render_callback(lambda r: self.manager.set(cache_key, r))
+                response.add_post_render_callback(lambda r: self.manager.store(cache_key, r))
             else:
-                self.manager.set(cache_key, response)
+                self.manager.store(cache_key, response)
         return response
 
 
 class FetchFromCacheMiddleware(MiddlewareMixin):
     def __init__(self, get_response):
         super().__init__(get_response)
-        self.key_prefix = settings.CACHE_MIDDLEWARE_KEY_PREFIX
-        self.cache_alias = settings.CACHE_MIDDLEWARE_ALIAS
         self.manager = cache_manager
 
     def process_request(self, request):
@@ -76,7 +73,9 @@ class FetchFromCacheMiddleware(MiddlewareMixin):
         if cache_key is None:
             request._cache_update_cache = True
             return None  # No cache information available, need to rebuild.
-        response = self.manager.get(cache_key)
+        if request.headers.get("etag") == cache_key:
+            return HttpResponse(status=304, headers={"Etag": cache_key})
+        response = self.manager.retrieve(cache_key)
         # if it wasn't found and we are looking for a HEAD, try looking just for that
         # if response is None and request.method == "HEAD":
         #     cache_key = get_cache_key(request, self.key_prefix, "HEAD", cache=self.cache)
@@ -90,39 +89,3 @@ class FetchFromCacheMiddleware(MiddlewareMixin):
         request._cache_update_cache = False
 
         return response
-
-
-#
-# class CacheMiddleware(UpdateCacheMiddleware, FetchFromCacheMiddleware):
-#     """
-#     Cache middleware that provides basic behavior for many simple sites.
-#
-#     Also used as the hook point for the cache decorator, which is generated
-#     using the decorator-from-middleware utility.
-#     """
-#
-#     def __init__(self, get_response, cache_timeout=None, page_timeout=None, **kwargs):
-#         super().__init__(get_response)
-#         # We need to differentiate between "provided, but using default value",
-#         # and "not provided". If the value is provided using a default, then
-#         # we fall back to system defaults. If it is not provided at all,
-#         # we need to use middleware defaults.
-#
-#         try:
-#             key_prefix = kwargs["key_prefix"]
-#             if key_prefix is None:
-#                 key_prefix = ""
-#             self.key_prefix = key_prefix
-#         except KeyError:
-#             pass
-#         try:
-#             cache_alias = kwargs["cache_alias"]
-#             if cache_alias is None:
-#                 cache_alias = DEFAULT_CACHE_ALIAS
-#             self.cache_alias = cache_alias
-#         except KeyError:
-#             pass
-#
-#         if cache_timeout is not None:
-#             self.cache_timeout = cache_timeout
-#         self.page_timeout = page_timeout

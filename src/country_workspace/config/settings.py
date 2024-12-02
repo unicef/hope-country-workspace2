@@ -58,11 +58,11 @@ INSTALLED_APPS = (
 )
 
 MIDDLEWARE = (
+    "country_workspace.middleware.state.StateClearMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "country_workspace.middleware.state.StateSetMiddleware",
-    # "django.middleware.http.ConditionalGetMiddleware",
     "country_workspace.cache.middleware.UpdateCacheMiddleware",
     "django.middleware.common.CommonMiddleware",
     "csp.middleware.CSPMiddleware",
@@ -72,7 +72,6 @@ MIDDLEWARE = (
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "country_workspace.middleware.exception.ExceptionMiddleware",
     "country_workspace.cache.middleware.FetchFromCacheMiddleware",
-    "country_workspace.middleware.state.StateClearMiddleware",
     *env("EXTRA_MIDDLEWARES"),
 )
 

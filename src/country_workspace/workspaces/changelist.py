@@ -46,9 +46,9 @@ class WorkspaceChangeList(DjangoChangeList):
             self.has_active_filters,
         ) = self.get_filters(request)
         key = cache_manager.build_key_from_request(request, "qs")
-        if not (qs := cache_manager.get(key)):
+        if not (qs := cache_manager.retrieve(key)):
             qs = super().get_queryset(request, exclude_parameters)
-            cache_manager.set(key, qs)
+            cache_manager.store(key, qs)
         self.clear_all_filters_qs = self.get_query_string(
             new_params=remaining_lookup_params,
             remove=self.get_filters_params(),

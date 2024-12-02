@@ -28,13 +28,13 @@ class DynamicChoiceField(ChildFieldMixin, forms.ChoiceField):
             return []
         key = slugify(f"{parent_value}-{self.level}")
         ret = []
-        if not (data := cache_manager.get(key)):
+        if not (data := cache_manager.retrieve(key)):
             client = HopeClient()
             try:
                 data = list(
                     client.get("areas", params={"area_type_area_level": self.level, "country_iso_code3": parent_value})
                 )
-                cache_manager.set(key, data, timeout=300)
+                cache_manager.store(key, data, timeout=300)
             except RemoteError as e:
                 logger.exception(e)
                 return ret
@@ -52,11 +52,11 @@ class CountryChoice(forms.ChoiceField):
     def get_choices(self) -> list[tuple[str, str]]:
         ret = []
         key = "lookups/country"
-        if not (data := cache_manager.get(key)):
+        if not (data := cache_manager.retrieve(key)):
             client = HopeClient()
             try:
                 data = list(client.get("lookups/country"))
-                cache_manager.set(key, data, timeout=300)
+                cache_manager.store(key, data, timeout=300)
             except RemoteError as e:
                 logger.exception(e)
                 return ret

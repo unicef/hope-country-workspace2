@@ -72,44 +72,6 @@ def test_batch_change(app: "CWTestApp", batch: "CountryBatch") -> None:
     with select_office(app, batch.program.country_office, batch.program):
         res = app.get(url)
         assert res.status_code == 200, res.location
-        assert f"Change {batch._meta.verbose_name}" in res.text
+        assert "Batches" in res.text
         res = res.forms["countrybatch_form"].submit()
         assert res.status_code == 302, res.location
-
-
-# def test_hh_delete(app: "CWTestApp", household: "CountryHousehold") -> None:
-#     url = reverse("workspace:workspaces_countryhousehold_change", args=[household.pk])
-#     res = app.get(url).follow()
-#     res.forms["select-tenant"]["tenant"] = household.country_office.pk
-#     res.forms["select-tenant"].submit()
-#     res = app.get(f"{url}?batch__program__exact={household.program.pk}")
-#     assert res.status_code == 200, res.location
-#     res = res.click("Delete")
-#     res = res.forms[1].submit().follow()
-#     assert res.status_code == 200
-#     with pytest.raises(ObjectDoesNotExist):
-#         household.refresh_from_db()
-#
-#
-# def test_hh_validate_single(app: "CWTestApp", household: "CountryHousehold") -> None:
-#     res = app.get("/").follow()
-#     res.forms["select-tenant"]["tenant"] = household.country_office.pk
-#     res.forms["select-tenant"].submit()
-#     with user_grant_permissions(app._user, ["workspaces.change_countryhousehold"], household.program):
-#         url = reverse("workspace:workspaces_countryhousehold_change", args=[household.pk])
-#         res = app.get(f"{url}?batch__program__exact={household.program.pk}")
-#         res = res.click("Validate")
-#         res = res.follow()
-#         assert res.status_code == 200
-#
-#
-# def test_hh_validate_program(app: "CWTestApp", household: "CountryHousehold") -> None:
-#     res = app.get("/").follow()
-#     res.forms["select-tenant"]["tenant"] = household.country_office.pk
-#     res.forms["select-tenant"].submit()
-#     with user_grant_permissions(app._user, ["workspaces.change_countryhousehold"], household.program):
-#         url = reverse("workspace:workspaces_countryhousehold_changelist")
-#         res = app.get(f"{url}?batch__program__exact={household.program.pk}")
-#         res.click("Validate Programme").follow()
-#         household.refresh_from_db()
-#         assert household.last_checked

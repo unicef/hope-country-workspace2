@@ -4,7 +4,6 @@ from django.db.models import Model
 
 import pytest
 from django_webtest.pytest_plugin import MixinWithInstanceVariables
-from testutils.factories import get_factory_for_model
 from testutils.perms import user_grant_permissions
 
 from country_workspace.cache.manager import CacheManager
@@ -61,7 +60,7 @@ def test_cache_manager_init():
 
 def test_cache_manager_build_key_from_request(app, manager, program, rf):
     request = rf.get("/")
-    assert manager.build_key_from_request(request) == "view:-:-:-::"
+    assert manager.build_key_from_request(request) == "view:-:ts:v:t:p::"
 
     with user_grant_permissions(
         app._user, "workspaces.view_countryhousehold", country_office_or_program=program.country_office
@@ -84,13 +83,3 @@ def test_invalidate(manager, program):
     manager.incr_cache_version(program=program)
     v = manager.get_cache_version(program=program)
     assert v == 3
-
-
-def test_handlers(manager, model):
-    fc = get_factory_for_model(model)
-    obj = fc()
-    program = getattr(obj, "program", obj)
-    v1 = manager.get_cache_version(program=program)
-    obj.save()
-    v2 = manager.get_cache_version(program=program)
-    assert v2 > v1
