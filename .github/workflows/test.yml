@@ -140,6 +140,7 @@ jobs:
               -e DATABASE_URL=${DATABASE_URL} \
               -e CELERY_BROKER_URL=${CELERY_BROKER_URL} \
               -e CACHE_URL=${CACHE_URL} \
+              -e SECRET_KEY=super-secret-key-just-for-testing \
               -e HOPE_API_URL="https://dev-hope.unitst.org/api/rest/" \
               -v "./output/:/app/output" \
               -v "./src/:/app/src" \
