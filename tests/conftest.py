@@ -50,9 +50,9 @@ def pytest_configure(config):
     os.environ["CELERY_TASK_STORE_EAGER_RESULT"] = "1"
     os.environ["SECURE_HSTS_PRELOAD"] = "0"
     os.environ["AURORA_API_URL"] = "https://aurora.io/api/"
+    os.environ["AURORA_API_TOKEN"] = "aurora_token"
     os.environ["HOPE_API_URL"] = "https://dev-hope.unitst.org/api/rest/"
-    # os.environ["HOPE_API_TOKEN"] = "kugiugiuygiuygiuygiuhgiuhgiuhgiugiu"
-    # os.environ["AURORA_API_URL"] = "https://aurora.io/api/"
+    os.environ["HOPE_API_TOKEN"] = "kugiugiuygiuygiuygiuhgiuhgiuhgiugiu"
 
     os.environ["SECRET_KEY"] = "kugiugiuygiuygiuygiuhgiuhgiuhgiugiu"
     os.environ["FILE_STORAGE_DEFAULT"] = "django.core.files.storage.FileSystemStorage?location=./~tests/storage/"
@@ -63,7 +63,7 @@ def pytest_configure(config):
     from django.conf import settings
 
     settings.AURORA_API_URL = os.environ["AURORA_API_URL"]
-    # settings.AURORA_API_TOKEN =  os.environ["HOPE_API_TOKEN"]
+    settings.AURORA_API_TOKEN = os.environ["AURORA_API_TOKEN"]
     settings.HOPE_API_URL = "https://dev-hope.unitst.org/api/rest/"
     settings.HOPE_API_TOKEN = os.environ["HOPE_API_TOKEN"]
 
