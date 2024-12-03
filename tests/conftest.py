@@ -4,8 +4,7 @@ from pathlib import Path
 
 import pytest
 import responses
-import vcr
-from vcr.record_mode import RecordMode
+from responses import _recorder
 
 here = Path(__file__).parent
 sys.path.insert(0, str(here / "../src"))
@@ -50,9 +49,10 @@ def pytest_configure(config):
     os.environ["CELERY_TASK_ALWAYS_EAGER"] = "1"
     os.environ["CELERY_TASK_STORE_EAGER_RESULT"] = "1"
     os.environ["SECURE_HSTS_PRELOAD"] = "0"
-    os.environ["HOPE_API_URL"] = "https://dev-hope.unitst.org/api/rest/"
-    os.environ["HOPE_API_TOKEN"] = "kugiugiuygiuygiuygiuhgiuhgiuhgiugiu"
     os.environ["AURORA_API_URL"] = "https://aurora.io/api/"
+    os.environ["HOPE_API_URL"] = "https://dev-hope.unitst.org/api/rest/"
+    # os.environ["HOPE_API_TOKEN"] = "kugiugiuygiuygiuygiuhgiuhgiuhgiugiu"
+    # os.environ["AURORA_API_URL"] = "https://aurora.io/api/"
 
     os.environ["SECRET_KEY"] = "kugiugiuygiuygiuygiuhgiuhgiuhgiugiu"
     os.environ["FILE_STORAGE_DEFAULT"] = "django.core.files.storage.FileSystemStorage?location=./~tests/storage/"
@@ -62,10 +62,10 @@ def pytest_configure(config):
     import django
     from django.conf import settings
 
-    settings.AURORA_API_URL = "https://aurora.io/api/"
-    settings.AURORA_API_TOKEN = "aurora_token"
+    settings.AURORA_API_URL = os.environ["AURORA_API_URL"]
+    # settings.AURORA_API_TOKEN =  os.environ["HOPE_API_TOKEN"]
     settings.HOPE_API_URL = "https://dev-hope.unitst.org/api/rest/"
-    settings.HOPE_API_TOKEN = "kugiugiuygiuygiuygiuhgiuhgiuhgiugiu"
+    settings.HOPE_API_TOKEN = os.environ["HOPE_API_TOKEN"]
 
     settings.ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
     settings.SIGNING_BACKEND = "testutils.signers.PlainSigner"
@@ -90,7 +90,7 @@ def setup(db, worker_id, settings):
         settings.CELERY_BROKER_URL = f"redis://localhost:6379/1{worker_id}"
         from country_workspace.cache.manager import cache_manager
 
-        cache_manager.prefix = f"cache-{worker_id}"
+        cache_manager.prefix = f"cache{worker_id}"
     GroupFactory(name=config.NEW_USER_DEFAULT_GROUP)
 
 
@@ -152,8 +152,7 @@ def force_migrated_records(request, active_marks):
     from country_workspace.versioning.management.manager import Manager
 
     Manager().force_apply()
-    with vcr.VCR(record_mode=RecordMode.ONCE).use_cassette(Path(__file__).parent / "sync_all.yaml"):
-        SyncLog.objects.refresh()
+    _recorder.record(file_path=Path(__file__).parent / "r_sync_refresh.yaml")(lambda: SyncLog.objects.refresh())()
 
 
 @pytest.fixture()

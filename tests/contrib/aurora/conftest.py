@@ -23,7 +23,7 @@ def mock_vcr() -> vcr.VCR:
     return vcr.VCR(
         filter_headers=["authorization"],
         cassette_library_dir=str(Path(__file__).parent.parent.parent / "extras/cassettes"),
-        record_mode=vcr.record_mode.RecordMode.ONCE,
+        record_mode=vcr.record_mode.RecordMode.NONE,
         match_on=("path",),
     )
 

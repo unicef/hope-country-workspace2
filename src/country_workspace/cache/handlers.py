@@ -1,3 +1,4 @@
+from django.db.models import Model
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
@@ -7,7 +8,7 @@ from .manager import cache_manager
 
 
 @receiver(post_save)
-def update_cache(sender, instance, **kwargs):
+def update_cache(sender: "type[Model]", instance: Model, **kwargs):
     program = None
     if isinstance(instance, (Household, Individual, CountryHousehold, CountryIndividual)):
         program = instance.program

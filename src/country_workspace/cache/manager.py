@@ -77,10 +77,15 @@ class CacheManager:
 
     def get_cache_version(self, *, office: "Optional[Office]" = None, program: "Optional[Program]" = None):
         key = self._get_version_key(office, program)
-        return self.cache.get(key) or 1
+        version = self.cache.get(key)
+        if not version:
+            version = 1
+            self.cache.set(key, version, timeout=self.cache_timeout)
+        return version
 
     def incr_cache_version(self, *, office: "Optional[Office]" = None, program: "Optional[Program]" = None):
-
+        if office and program:
+            raise ValueError("Cannot use both office and program")
         key = self._get_version_key(office, program)
         try:
             return self.cache.incr(key)

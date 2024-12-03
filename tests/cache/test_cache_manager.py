@@ -49,7 +49,7 @@ def program():
 
 @pytest.fixture
 def manager(worker_id):
-    m = CacheManager(f"cache-{worker_id}")
+    m = CacheManager(f"cache{worker_id}")
     m.init()
     return m
 
@@ -60,14 +60,14 @@ def test_cache_manager_init():
 
 def test_cache_manager_build_key_from_request(app, manager, program, rf, worker_id):
     request = rf.get("/")
-    assert manager.build_key_from_request(request) == f"cache-{worker_id}:entry:view:-:ts:v:t:p::"
+    assert manager.build_key_from_request(request) == f"cache{worker_id}:entry:view:-:ts:v:t:p::"
 
     with user_grant_permissions(
         app._user, "workspaces.view_countryhousehold", country_office_or_program=program.country_office
     ):
         with state.set(tenant=program.country_office, program=program):
             key = manager.build_key_from_request(request)
-            assert key.startswith(f"cache-{worker_id}:")
+            assert key.startswith(f"cache{worker_id}:")
             assert program.country_office.slug in key
 
 

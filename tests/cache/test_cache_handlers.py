@@ -1,3 +1,5 @@
+from unittest import mock
+
 from django.db.models import Model
 
 import pytest
@@ -26,7 +28,7 @@ def pytest_generate_tests(metafunc: "Metafunc") -> None:  # noqa
 
 @pytest.fixture
 def manager(worker_id):
-    m = CacheManager(f"cache-{worker_id}")
+    m = CacheManager(f"cache{worker_id}")
     m.init()
     return m
 
@@ -34,8 +36,9 @@ def manager(worker_id):
 def test_handlers(manager, model):
     fc = get_factory_for_model(model)
     obj = fc()
-    program = getattr(obj, "program", obj)
-    v1 = manager.get_cache_version(program=program)
-    obj.save()
-    v2 = manager.get_cache_version(program=program)
-    assert v2 > v1
+    with mock.patch("country_workspace.cache.handlers.cache_manager", manager):
+        program = getattr(obj, "program", obj)
+        v1 = manager.get_cache_version(program=program)
+        obj.save()
+        v2 = manager.get_cache_version(program=program)
+        assert v2 > v1
