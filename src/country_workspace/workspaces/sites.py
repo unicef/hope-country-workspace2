@@ -83,8 +83,9 @@ class TenantAutocompleteJsonView(SmartAutocompleteJsonView):
             for proxy in remote_model.__subclasses__():
                 if proxy in self.admin_site._registry:
                     model_admin = self.admin_site._registry[proxy]
-                else:
-                    raise PermissionDenied from e
+                    break
+            else:
+                raise PermissionDenied from e
 
         # Validate suitability of objects.
         if not model_admin:
@@ -95,6 +96,7 @@ class TenantAutocompleteJsonView(SmartAutocompleteJsonView):
 
         to_field_name = getattr(source_field.remote_field, "field_name", remote_model._meta.pk.attname)
         to_field_name = remote_model._meta.get_field(to_field_name).attname
+
         if not model_admin.to_field_allowed(request, to_field_name):
             raise PermissionDenied
 
@@ -168,9 +170,6 @@ class TenantAdminSite(admin.AdminSite):
                 model_dict["view_only"] = not perms.get("change")
                 try:
                     model_dict["admin_url"] = self._registry[model].get_changelist_index_url(request)
-                    # model_dict["admin_url"] = reverse(
-                    #     "%s:%s_%s_changelist" % info, current_app=self.name
-                    # )
                 except NoReverseMatch:
                     pass
             if perms.get("add"):
@@ -210,8 +209,8 @@ class TenantAdminSite(admin.AdminSite):
         #     ret["active_tenant"] = None
         return ret  # type: ignore
 
-    def is_smart_enabled(self, request: "HttpRequest") -> bool:
-        return False
+    # def is_smart_enabled(self, request: "HttpRequest") -> bool:
+    #     return False
 
     #     return super().is_smart_enabled(request)
 

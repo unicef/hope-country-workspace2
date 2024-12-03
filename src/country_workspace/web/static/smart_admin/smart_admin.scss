@@ -1,0 +1,27 @@
+.panel{
+  display: none;
+  &.active{
+    display: block;
+  }
+}
+
+.console-buttons{
+  .button{
+    //background-color: #79aec8;
+    &.hover{
+      //background-color: #114e6c;
+    }
+    &.selected{
+      background-color: #114e6c;
+    }
+  }
+
+}
+
+.sysinfo-results{
+  caption{
+    a{
+      color: white;
+    }
+  }
+}

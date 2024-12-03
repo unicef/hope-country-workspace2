@@ -89,7 +89,7 @@ class TenantBackend(BaseBackend):
             allowed_tenants = Office.objects.filter(active=True)
         elif request.user.is_authenticated:
             allowed_tenants = (
-                Office.objects.filter(userrole__user=request.user)
+                Office.objects.filter(userrole__user=request.user, active=True)
                 .filter(Q(userrole__expires=None) | Q(userrole__expires__gt=today()))
                 .distinct()
             )

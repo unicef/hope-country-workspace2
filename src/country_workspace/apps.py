@@ -1,7 +1,12 @@
 from django.apps import AppConfig
+from django.contrib.admin.apps import AdminConfig
 
 
-class Config(AppConfig):
+class HCWAdminConfig(AdminConfig):
+    default_site = "country_workspace.admin_site.HCWAdminSite"
+
+
+class HCWConfig(AppConfig):
     name = __name__.rpartition(".")[0]
     verbose_name = "Country Workspace"
 

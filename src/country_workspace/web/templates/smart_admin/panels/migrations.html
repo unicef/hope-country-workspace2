@@ -1,0 +1,40 @@
+{% extends "smart_admin/console.html" %}{% load i18n static %}
+{% block breadcrumbs %}
+    <div class="breadcrumbs">
+        <a href="{% url 'admin:index' %}">{% translate 'Home' %}</a> &rsaquo;
+        <a href="{% url 'admin:console' %}">{% translate 'Console' %}</a>
+        &rsaquo; Migrations
+    </div>
+{% endblock breadcrumbs %}
+
+{% block left %}
+    <div id="changelist" class="project-versions">
+        <div>
+            <pre id="list" class="panel migrations active"><h3>LIST</h3>{{ list }}</pre>
+            <pre id="plan" class="panel migrations "><h3>PLAN</h3>{{ plan }}</pre>
+        </div>
+        <div id="changelist-filter" class="console-buttons"></div>
+    </div>
+{% endblock left %}
+
+{% block buttons %}
+    <ul>
+        <li><a class="button migrations toggler selected" data-toggler="#list" href="#">LIST</a></li>
+        <li><a class="button migrations toggler" data-toggler="#plan" href="#">PLAN</a></li>
+    </ul>
+    {{ block.super }}
+{% endblock buttons %}
+
+{% block footer %}
+    {{ block.super }}
+    <script>
+            $("a.toggler").on("click", function () {
+                $("pre.migrations.panel").toggleClass("active");
+                {# $( this ).not('.selected').addClass('selected'); #}
+                {# $( this ).siblings('.selected').removeClass("selected"); #}
+                $(".button.migrations.toggler").toggleClass("selected");
+                {# $( $( this ).data('toggler')).addClass('active'); #}
+            });
+    </script>
+
+{% endblock footer %}

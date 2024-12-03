@@ -1,0 +1,20 @@
+{% extends "smart_admin/console.html" %}{% load i18n static %}
+{% block left %}
+    <div class="console">
+        <div>
+            <form method="post">
+                {% csrf_token %}
+                {{ form }}
+                <div class="submit-row">
+                    <input type="submit" value="Get keys">
+                    <input type="submit" style="float: right;background-color: #951515" name="_delete" value="Delete">
+                </div>
+            </form>
+        </div>
+        <div class="changelist-form-container">
+            {% for e in cache_data %}
+                <div>{{ e }}</div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock left %}

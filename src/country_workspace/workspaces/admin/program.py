@@ -180,7 +180,7 @@ class CountryProgramAdmin(WorkspaceModelAdmin):
         context["storage_field"] = "individual_columns"
         return self._configure_columns(request, SelectIndividualColumnsForm, context)
 
-    @button(label=_("Update Records"), permission="workspaces.import_program_data")
+    @button(label=_("Update Records"), permission="country_workspace.import_program_data")
     def import_file_updates(self, request: HttpRequest, pk: str) -> "HttpResponse":
         context = self.get_common_context(request, pk, title="Import updates from file")
         program: "CountryProgram" = context["original"]
@@ -209,7 +209,7 @@ class CountryProgramAdmin(WorkspaceModelAdmin):
         context["form"] = form
         return render(request, "workspace/actions/bulk_update_import.html", context)
 
-    @button(label=_("Import Data"), permission="workspaces.import_program_data")
+    @button(label=_("Import Data"), permission="country_workspace.import_program_data")
     def import_data(self, request: HttpRequest, pk: str) -> "HttpResponse":
         context = self.get_common_context(request, pk, title="Import Data")
         context["selected_program"] = program = context["original"]
@@ -221,10 +221,10 @@ class CountryProgramAdmin(WorkspaceModelAdmin):
             match request.POST.get("_selected_tab"):
                 case "rdi":
                     if not (form_rdi := self.import_rdi(request, program)):
-                        return HttpResponseRedirect(".")
+                        return HttpResponseRedirect(reverse("workspace:workspaces_countryasyncjob_changelist"))
                 case "aurora":
                     if not (form_aurora := self.import_aurora(request, program)):
-                        return HttpResponseRedirect(".")
+                        return HttpResponseRedirect(reverse("workspace:workspaces_countryasyncjob_changelist"))
                 case "kobo":
                     self.message_user(request, _("Not implemented"))
 

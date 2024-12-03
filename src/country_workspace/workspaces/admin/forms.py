@@ -25,8 +25,15 @@ class ImportFileForm(forms.Form):
         help_text="Which column contains the unique identifier of the record." "It is mandatory from Master/detail",
     )
 
-    master_column_label = forms.CharField(required=False, initial="household_id")
-    detail_column_label = forms.CharField(required=False, initial="full_name_i_c")
+    master_column_label = forms.CharField(
+        required=False, initial="household_id", help_text="Which column contains the 'link' to the household record."
+    )
+
+    detail_column_label = forms.CharField(
+        required=False,
+        initial="full_name_i_c",
+        help_text="Which column should be used as label for the household. It can use interpolation",
+    )
 
     first_line = forms.IntegerField(required=True, initial=0, help_text="First line to process")
     fail_if_alien = forms.BooleanField(required=False)

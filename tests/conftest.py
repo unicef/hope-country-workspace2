@@ -88,6 +88,9 @@ def setup(db, worker_id, settings):
     if worker_id != "master":
         settings.CACHES["default"]["LOCATION"] = f"redis://localhost:6379/{worker_id}"
         settings.CELERY_BROKER_URL = f"redis://localhost:6379/1{worker_id}"
+        from country_workspace.cache.manager import cache_manager
+
+        cache_manager.prefix = f"cache-{worker_id}"
     GroupFactory(name=config.NEW_USER_DEFAULT_GROUP)
 
 
@@ -149,7 +152,7 @@ def force_migrated_records(request, active_marks):
     from country_workspace.versioning.management.manager import Manager
 
     Manager().force_apply()
-    with vcr.VCR(record_mode=RecordMode.ONCE).use_cassette(Path(__file__).parent / "sync_lookups.yaml"):
+    with vcr.VCR(record_mode=RecordMode.ONCE).use_cassette(Path(__file__).parent / "sync_all.yaml"):
         SyncLog.objects.refresh()
 
 

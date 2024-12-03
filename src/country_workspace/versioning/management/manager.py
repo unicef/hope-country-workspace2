@@ -67,7 +67,7 @@ class Manager:
         for func in funcs:
             try:
                 func()
-            except Exception as e:
+            except Exception as e:  # pragma: no cover
                 raise ScriptException(f"Error executing {entry.stem}.{func.__name__}") from e
         return funcs
 

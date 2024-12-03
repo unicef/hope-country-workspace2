@@ -3,7 +3,6 @@ from typing import TYPE_CHECKING
 from django.urls import reverse
 
 import pytest
-from responses import RequestsMock
 from testutils.utils import select_office
 
 from country_workspace.state import state
@@ -48,7 +47,7 @@ def individual(program):
 
 
 @pytest.fixture()
-def app(django_app_factory: "MixinWithInstanceVariables", mocked_responses: "RequestsMock") -> "DjangoTestApp":
+def app(django_app_factory: "MixinWithInstanceVariables") -> "DjangoTestApp":
     from testutils.factories import SuperUserFactory
 
     django_app = django_app_factory(csrf_checks=False)
@@ -77,3 +76,17 @@ def test_ind_change(app: "DjangoTestApp", individual: "CountryIndividual") -> No
         assert res.status_code == 200, res.location
         res = res.forms["countryindividual_form"].submit()
         assert res.status_code == 302, res.location
+
+
+def test_ind_validate(app: "DjangoTestApp", force_migrated_records, individual: "CountryIndividual") -> None:
+    individual.flex_fields = {}
+    individual.save()
+    url = reverse("workspace:workspaces_countryindividual_changelist")
+    with select_office(app, individual.country_office, individual.program):
+        res = app.get(url)
+        res = res.click(individual.name)
+        assert res.status_code == 200
+        res = res.click("Validate").follow()
+        assert res.status_code == 200
+        individual.refresh_from_db()
+        assert individual.errors

@@ -43,9 +43,15 @@ def import_from_rdi(job: AsyncJob) -> dict[str, int]:
                             hh_ids[record[household_pk_col]] = hh.pk
                             ret["household"] += 1
                         elif sheet_index == 1:
+                            try:
+                                name = record[detail_column_label]
+                            except KeyError:
+                                raise Exception(
+                                    "Error in configuration. '%s' is not a valid column name" % detail_column_label
+                                )
                             job.program.individuals.create(
                                 batch=batch,
-                                name=raw_record[detail_column_label],
+                                name=name,
                                 household_id=hh_ids[record[household_pk_col]],
                                 flex_fields=record,
                             )

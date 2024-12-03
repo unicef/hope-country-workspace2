@@ -1,3 +1,4 @@
+import logging
 import urllib.parse
 from typing import Any, Optional
 
@@ -16,9 +17,10 @@ from django.contrib.admin.templatetags.admin_urls import (
 )
 from django.db.models import Model
 from django.db.models.options import Options
-from django.urls import reverse
+from django.urls import NoReverseMatch, reverse
 from django.utils.safestring import mark_safe
 
+logger = logging.getLogger(__name__)
 register = template.Library()
 
 
@@ -27,28 +29,32 @@ def admin_url(context, obj, **extra):
     url = ""
     filters = ""
     if obj:
-        if isinstance(obj, Model):
-            if obj._meta.proxy_for_model:
-                opts = obj._meta.proxy_for_model._meta
-            else:
-                opts = obj._meta
-            url = reverse("admin:%s_%s_change" % (opts.app_label, opts.model_name), args=(obj.pk,))
-        elif isinstance(obj, ModelAdmin):
-            opts = obj.opts.proxy_for_model._meta
-            url = reverse("admin:%s_%s_changelist" % (opts.app_label, opts.model_name))
-        elif isinstance(obj, str):
-            model = apps.get_model(obj)
-            opts = model._meta
-            url = reverse("admin:%s_%s_changelist" % (opts.app_label, opts.model_name))
+        try:
+            if isinstance(obj, Model):
+                if obj._meta.proxy_for_model:
+                    opts = obj._meta.proxy_for_model._meta
+                else:
+                    opts = obj._meta
+                url = reverse("admin:%s_%s_change" % (opts.app_label, opts.model_name), args=(obj.pk,))
+            elif isinstance(obj, ModelAdmin):
+                opts = obj.opts.proxy_for_model._meta
+                url = reverse("admin:%s_%s_changelist" % (opts.app_label, opts.model_name))
+            elif isinstance(obj, str):
+                model = apps.get_model(obj)
+                opts = model._meta
+                url = reverse("admin:%s_%s_changelist" % (opts.app_label, opts.model_name))
 
-        if extra:
-            filters = urllib.parse.urlencode(extra)
+            if extra:
+                filters = urllib.parse.urlencode(extra)
 
-        return mark_safe(  # nosec
-            '<a class="admin-change-link" target="_admin" href="{url}?{filters}">'
-            '<span class="icon icon-shield1"></span>'
-            "</a>".format(url=url, filters=filters)
-        )
+            return mark_safe(  # nosec
+                '<a class="admin-change-link" target="_admin" href="{url}?{filters}">'
+                '<span class="icon icon-shield1"></span>'
+                "</a>".format(url=url, filters=filters)
+            )
+        except NoReverseMatch as e:
+            logger.exception(e)
+
     return ""
 
 

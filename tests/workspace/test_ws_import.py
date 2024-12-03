@@ -11,6 +11,7 @@ from django_webtest.pytest_plugin import MixinWithInstanceVariables
 from webtest import Upload
 
 from country_workspace.state import state
+from country_workspace.workspaces.models import CountryHousehold
 
 
 @pytest.fixture()
@@ -47,6 +48,7 @@ def app(django_app_factory: "MixinWithInstanceVariables") -> "DjangoTestApp":
 
 
 def test_import_data_rdi(force_migrated_records, app, program):
+    # NOTE: This test is linked to the content of `data/rdi_one.xlsx`
     res = app.get("/").follow()
     res.forms["select-tenant"]["tenant"] = program.country_office.pk
     res.forms["select-tenant"].submit()
@@ -57,13 +59,16 @@ def test_import_data_rdi(force_migrated_records, app, program):
     res = app.get(url)
     res.forms["import-file"]["_selected_tab"] = "rdi"
     res.forms["import-file"]["rdi-file"] = Upload("rdi_one.xlsx", data)
+    res.forms["import-file"]["rdi-detail_column_label"] = "full_name"
     res = res.forms["import-file"].submit()
     assert res.status_code == 302
     assert program.households.count() == 1
     assert program.individuals.count() == 5
 
-    hh = program.households.first()
+    hh: "CountryHousehold" = program.households.first()
     assert hh.members.count() == 5
+    assert (head := hh.heads().first())
+    assert head.name == "Edward Jeffrey Rogers"
 
 
 @override_config(AURORA_API_URL="https://api.aurora.io")
