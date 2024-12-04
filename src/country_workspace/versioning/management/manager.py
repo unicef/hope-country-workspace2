@@ -75,12 +75,6 @@ class Manager:
         for entry in self.existing:
             if entry.name not in self.applied:
                 self._process_file(entry)
-                # funcs = get_funcs(entry, direction="forward")
-                # for func in funcs:
-                #     try:
-                #         func()
-                #     except Exception as e:
-                #         raise ScriptException(f"Error executing {entry.stem}.{func.__name__}") from e
 
     def forward(
         self, to_num=None, fake: bool = False, out=sys.stdout

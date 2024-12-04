@@ -67,7 +67,6 @@ class HouseholdFactory(AutoRegisterModelFactory):
 
     class Meta:
         model = Household
-        django_get_or_create = ("name",)
 
     @classmethod
     def _create(cls, model_class, *args, **kwargs):

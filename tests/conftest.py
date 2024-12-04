@@ -4,7 +4,6 @@ from pathlib import Path
 
 import pytest
 import responses
-from responses import _recorder
 
 here = Path(__file__).parent
 sys.path.insert(0, str(here / "../src"))
@@ -49,9 +48,9 @@ def pytest_configure(config):
     os.environ["CELERY_TASK_ALWAYS_EAGER"] = "1"
     os.environ["CELERY_TASK_STORE_EAGER_RESULT"] = "1"
     os.environ["SECURE_HSTS_PRELOAD"] = "0"
-    os.environ["AURORA_API_URL"] = "https://aurora.io/api/"
+    # os.environ["AURORA_API_URL"] = "https://aurora.io/api/"
     os.environ["AURORA_API_TOKEN"] = "aurora_token"
-    os.environ["HOPE_API_URL"] = "https://dev-hope.unitst.org/api/rest/"
+    # os.environ["HOPE_API_URL"] = "https://dev-hope.unitst.org/api/rest/"
     os.environ["HOPE_API_TOKEN"] = "kugiugiuygiuygiuygiuhgiuhgiuhgiugiu"
 
     os.environ["SECRET_KEY"] = "kugiugiuygiuygiuygiuhgiuhgiuhgiugiu"
@@ -62,10 +61,10 @@ def pytest_configure(config):
     import django
     from django.conf import settings
 
-    settings.AURORA_API_URL = os.environ["AURORA_API_URL"]
-    settings.AURORA_API_TOKEN = os.environ["AURORA_API_TOKEN"]
-    settings.HOPE_API_URL = "https://dev-hope.unitst.org/api/rest/"
-    settings.HOPE_API_TOKEN = os.environ["HOPE_API_TOKEN"]
+    # settings.AURORA_API_URL = os.environ["AURORA_API_URL"]
+    # settings.AURORA_API_TOKEN = os.environ["AURORA_API_TOKEN"]
+    # settings.HOPE_API_URL = "https://dev-hope.unitst.org/api/rest/"
+    # settings.HOPE_API_TOKEN = os.environ["HOPE_API_TOKEN"]
 
     settings.ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
     settings.SIGNING_BACKEND = "testutils.signers.PlainSigner"
@@ -86,8 +85,6 @@ def setup(db, worker_id, settings):
     from testutils.factories import GroupFactory
 
     if worker_id != "master":
-        settings.CACHES["default"]["LOCATION"] = f"redis://localhost:6379/{worker_id}"
-        settings.CELERY_BROKER_URL = f"redis://localhost:6379/1{worker_id}"
         from country_workspace.cache.manager import cache_manager
 
         cache_manager.prefix = f"cache{worker_id}"
@@ -148,11 +145,9 @@ def active_marks(request):
 
 @pytest.fixture()
 def force_migrated_records(request, active_marks):
-    from country_workspace.models import SyncLog
     from country_workspace.versioning.management.manager import Manager
 
     Manager().force_apply()
-    _recorder.record(file_path=Path(__file__).parent / "r_sync_refresh.yaml")(lambda: SyncLog.objects.refresh())()
 
 
 @pytest.fixture()
@@ -171,3 +166,11 @@ def individual_checker(request, active_marks):
     from country_workspace.contrib.hope.constants import INDIVIDUAL_CHECKER_NAME
 
     return DataCheckerFactory(name=INDIVIDUAL_CHECKER_NAME)
+
+
+@pytest.fixture(scope="module")
+def vcr_config():
+    return {
+        "filter_headers": ["authorization"],
+        "cassette_library_dir": str(Path(__file__).parent / "extras/cassettes"),
+    }

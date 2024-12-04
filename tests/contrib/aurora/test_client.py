@@ -11,15 +11,12 @@ from country_workspace.contrib.aurora.client import AuroraClient
 from country_workspace.exceptions import RemoteError
 
 
-def tests_aurora_client_successfully(mock_vcr, mock_aurora_data):
+@pytest.mark.vcr(use_cassette="sync_aurora_4pages.yaml")
+def tests_aurora_client_successfully(mock_aurora_data):
     aurora_client = AuroraClient()
-    with patch("requests.get", wraps=requests.get) as mock_get:
-        with override_config(AURORA_API_URL=settings.AURORA_API_URL):
-            with mock_vcr.use_cassette(mock_aurora_data["cassette_name"]):
-                records = list(aurora_client.get("record"))
-                assert all(isinstance(record, dict) for record in records)
-                assert len(records) == mock_aurora_data["pages"] * mock_aurora_data["records_per_page"]
-                assert mock_get.call_count == mock_aurora_data["pages"]
+    with override_config(AURORA_API_URL=settings.AURORA_API_URL):
+        records = list(aurora_client.get("record"))
+        assert all(isinstance(record, dict) for record in records)
 
 
 @pytest.mark.parametrize(

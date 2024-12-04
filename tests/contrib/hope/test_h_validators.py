@@ -73,18 +73,3 @@ def test_head(household: "Household"):
         "This Household has multiple Primary Collectors",
         "This Household has multiple Alternate Collectors",
     ]
-
-
-#
-# def test_primary(household: "Household"):
-#     from testutils.factories import IndividualFactory
-#
-#     v = FullHouseholdValidator(household.program)
-#     assert v.validate(household) == ["This Household does not have Primary Collector"]
-#
-#     household.members.add(
-#         IndividualFactory(
-#             household=household, flex_fields={"primary_collector_id": household.flex_fields["household_id"]}
-#         )
-#     )
-#     assert v.validate(household) == []

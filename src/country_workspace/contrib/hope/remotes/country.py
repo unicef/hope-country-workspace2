@@ -1,10 +1,11 @@
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Optional
 
 from django import forms
 
 from hope_flex_fields.attributes.abstract import AbstractAttributeHandler, AttributeHandlerConfig
 
 if TYPE_CHECKING:
+    from hope_flex_fields.models import FlexField
     from hope_flex_fields.types import Json
 
 
@@ -23,7 +24,7 @@ class CountryAttributeHandler(AbstractAttributeHandler):
     def set(self, value: "Json"):
         pass
 
-    def get(self) -> "Json":
+    def get(self, instance: "Optional[FlexField]" = None) -> "Json":
         from country_workspace.contrib.hope.client import HopeClient
 
         client = HopeClient()

@@ -1203,6 +1203,7 @@ dev = [
     { name = "pytest-echo" },
     { name = "pytest-factoryboy" },
     { name = "pytest-mock" },
+    { name = "pytest-recording" },
     { name = "pytest-selenium" },
     { name = "pytest-xdist" },
     { name = "responses" },
@@ -1287,6 +1288,7 @@ dev = [
     { name = "pytest-echo", specifier = ">=1.7.3" },
     { name = "pytest-factoryboy", specifier = ">=2.7.0" },
     { name = "pytest-mock", specifier = ">=3.14.0" },
+    { name = "pytest-recording", specifier = ">=0.13.2" },
     { name = "pytest-selenium", specifier = ">=4.1.0" },
     { name = "pytest-xdist", specifier = ">=3.6.1" },
     { name = "responses", specifier = ">=0.25.3" },
@@ -2414,6 +2416,19 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/c6/90/a955c3ab35ccd41ad4de556596fa86685bf4fc5ffcc62d22d856cfd4e29a/pytest-mock-3.14.0.tar.gz", hash = "sha256:2719255a1efeceadbc056d6bf3df3d1c5015530fb40cf347c0f9afac88410bd0", size = 32814 }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/f2/3b/b26f90f74e2986a82df6e7ac7e319b8ea7ccece1caec9f8ab6104dc70603/pytest_mock-3.14.0-py3-none-any.whl", hash = "sha256:0b72c38033392a5f4621342fe11e9219ac11ec9d375f8e2a0c164539e0d70f6f", size = 9863 },
+]
+
+[[package]]
+name = "pytest-recording"
+version = "0.13.2"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "pytest" },
+    { name = "vcrpy" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/fe/2a/ea6b8036ae01979eae02d8ad5a7da14dec90d9176b613e49fb8d134c78fc/pytest_recording-0.13.2.tar.gz", hash = "sha256:000c3babbb466681457fd65b723427c1779a0c6c17d9e381c3142a701e124877", size = 25270 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/72/52/8e67a969e9fad3fa5ec4eab9f2a7348ff04692065c7deda21d76e9112703/pytest_recording-0.13.2-py3-none-any.whl", hash = "sha256:3820fe5743d1ac46e807989e11d073cb776a60bdc544cf43ebca454051b22d13", size = 12783 },
 ]
 
 [[package]]

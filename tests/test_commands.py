@@ -9,7 +9,7 @@ from django.core.management import call_command
 
 import pytest
 from pytest import MonkeyPatch
-from responses import RequestsMock, _recorder
+from responses import RequestsMock
 
 if TYPE_CHECKING:
     from pytest_django.fixtures import SettingsWrapper
@@ -124,12 +124,9 @@ def test_upgrade_admin(mocked_responses: RequestsMock, environment: dict[str, st
 
 
 @pytest.mark.django_db(transaction=True)
-def test_sync(
-    environment: dict[str, str],
-) -> None:
+@pytest.mark.vcr()
+def test_sync(environment: dict[str, str]) -> None:
     out = StringIO()
     # with my_vcr.use_cassette(Path(__file__).parent / "sync_command.yaml"):
     with mock.patch.dict(os.environ, environment, clear=True):
-        _recorder.record(file_path=Path(__file__).parent / "r_sync_command.yaml")(
-            lambda: call_command("sync", stdout=out)
-        )()
+        call_command("sync", stdout=out)
