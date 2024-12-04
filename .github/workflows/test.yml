@@ -143,7 +143,7 @@ jobs:
               -e SECRET_KEY=super-secret-key-just-for-testing \
               -e HOPE_API_URL="https://dev-hope.unitst.org/api/rest/" \
               -e HOPE_API_TOKEN=${{ secrets.HOPE_API_TOKEN }} \
-              -e AURORA_API_URL="https://dev-hope.unitst.org/api/rest/" \
+              -e AURORA_API_URL="https://uni-hope-ukr-sr-dev.unitst.org/api/" \
               -e AURORA_API_TOKEN=${{ secrets.AURORA_API_TOKEN }} \
               -v "./output/:/app/output" \
               -v "./src/:/app/src" \
