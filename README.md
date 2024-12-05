@@ -1,4 +1,3 @@
-
 [<img src="./docs/src/img/hope_workspace.png" style="margin-left: auto;margin-right: auto;width:300px;display:block"/>](./docs/src/img/hope_workspace.png)
 
 ---
@@ -9,9 +8,8 @@
 [![Documentation](https://github.com/unicef/hope-country-workspace/actions/workflows/docs.yml/badge.svg)](https://unicef.github.io/hope-country-workspace/)
 [![Docker Pulls](https://img.shields.io/docker/pulls/unicef/hope-country-workspace)](https://hub.docker.com/repository/docker/unicef/hope-country-workspace/tags)
 
-
-
-Hope Workspace fa parte dell'ecosistema [UNICEF HOPE](https://github.com/unicef/hope) e gestisce la fase di importazione e pulizia dei dati del processo di gestione dei beneficiari
+Hope Workspace is part of the  [UNICEF HOPE](https://github.com/unicef/hope) ecosystem and manages the data import and cleansing phase of the beneficiary
+management process.
 
 ### Implemented Features
 
@@ -21,13 +19,10 @@ Hope Workspace fa parte dell'ecosistema [UNICEF HOPE](https://github.com/unicef/
 - Push data to HOPE
 - Export/Amend/Import process
 
-
-
 ### Under analysis future feature (not currently planned)
 
 - Generic XLS/CSV Import
 - Deduplication
 - Beneficiary contacting process
-
 
 Do you have an idea?  [Open a ticket](https://github.com/unicef/hope-country-workspace/issues/new).
