@@ -1,5 +1,7 @@
 import pytest
 
+pytestmark = pytest.mark.xdist_group("selenium")
+
 
 @pytest.fixture()
 def office(db, worker_id):

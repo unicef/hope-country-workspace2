@@ -27,6 +27,8 @@ def get_selected_tenant() -> "Office | None":
 
 
 def get_selected_program() -> "Program | None":
+    if not state.tenant:
+        return None
     if state.program_cookie and state.program is None:
         filters = {"id": state.program_cookie}
         state.program = state.tenant.programs.filter(**filters).first()

@@ -43,6 +43,10 @@ class ProgramWidget(s2forms.ModelSelect2Widget):
     model = Program
     search_fields = ["name__icontains"]
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.field_id = self.uuid
+
     def filter_queryset(self, request, term, queryset=None, **dependent_fields):
         qs = super().filter_queryset(request, term, queryset, **dependent_fields)
         return qs.filter(country_office=state.tenant)

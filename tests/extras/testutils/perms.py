@@ -136,13 +136,24 @@ class user_grant_permissions(ContextDecorator):  # noqa
         "_tenant_cache",
     ]
 
-    def __init__(self, user, permissions=None, country_office_or_program=None, group_name=None):
+    def __init__(
+        self,
+        user,
+        permissions=None,
+        country_office_or_program=None,
+        group_name=None,
+        set_superuser=None,
+        set_staff=None,
+    ):
         self.user = user
         if not isinstance(permissions, (list, tuple)):
             permissions = [permissions]
         self.permissions = permissions
         self.group_name = group_name
         self.group = None
+        self.superuser = set_superuser
+        self.staff = set_staff
+        self.pre = {}
 
         if isinstance(country_office_or_program, Office):
             self.country_office = country_office_or_program
@@ -157,7 +168,26 @@ class user_grant_permissions(ContextDecorator):  # noqa
         for cache in self.caches:
             if hasattr(self.user, cache):
                 delattr(self.user, cache)
-
+        match self.staff:
+            case None:
+                pass
+            case True:
+                self.pre["is_staff"] = self.user.is_staff
+                self.user.is_staff = self.staff
+            case False:
+                self.pre["is_staff"] = self.user.is_staff
+                self.user.is_staff = self.staff
+        match self.superuser:
+            case None:
+                pass
+            case True:
+                self.pre["is_superuser"] = self.user.is_superuser
+                self.user.is_superuser = self.superuser
+            case False:
+                self.pre["is_superuser"] = self.user.is_superuser
+                self.user.is_superuser = self.superuser
+        self.user.save()
+        self.user._password = "password"
         self.group = get_group(name=self.group_name, permissions=self.permissions or [])
         # self.user.groups.add(self.group)
         if self.country_office:
@@ -170,6 +200,9 @@ class user_grant_permissions(ContextDecorator):  # noqa
         if self.group:
             self.user.groups.remove(self.group)
             self.group.delete()
+        for k, v in self.pre.items():
+            setattr(self.user, k, v)
+            self.user.save()
 
         if e_typ:
             raise e_val.with_traceback(trcbak)

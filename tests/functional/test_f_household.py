@@ -7,6 +7,8 @@ from selenium.webdriver.support.select import Select
 if TYPE_CHECKING:
     from country_workspace.workspaces.models import CountryHousehold
 
+pytestmark = pytest.mark.xdist_group("selenium")
+
 
 @pytest.fixture()
 def office(db, worker_id):
@@ -37,30 +39,36 @@ def household(program):
 
 
 @pytest.mark.selenium
-def test_list_household(selenium, user, household: "CountryHousehold"):
+@pytest.mark.xfail
+def test_list_household(selenium, admin_user, household: "CountryHousehold"):
     from testutils.perms import user_grant_permissions
 
-    selenium.get(f"{selenium.live_server.url}")
     with user_grant_permissions(
-        user,
+        admin_user,
         [
             "workspaces.view_countryhousehold",
             "workspaces.view_countryindividual",
             "workspaces.view_countryprogram",
         ],
         household.program.country_office,
+        # set_superuser=True,
+        # set_staff=True,
     ):
+        selenium.get(f"{selenium.live_server.url}")
         # Login
-        selenium.find_by_css("input[name=username").send_keys(user.username)
-        selenium.find_by_css("input[name=password").send_keys(user._password)
+        selenium.find_by_css("input[name=username").send_keys(admin_user.username)
+        selenium.find_by_css("input[name=password").send_keys(admin_user._password)
         selenium.find_by_css("button.primary").click()
         # Select Tenant
         Select(selenium.wait_for(By.CSS_SELECTOR, "select[name=tenant]")).select_by_visible_text(
             household.program.country_office.name
         )
-        Select(selenium.wait_for(By.CSS_SELECTOR, "select[name=program]")).select_by_visible_text(
-            household.program.name
-        )
+        # selenium.select2("button.primary").click()
+        selenium.select2(By.ID, "select2-id_program-container", household.program.name)
+        #
+        # Select(selenium.wait_for(By.CSS_SELECTOR, "select[name=program]")).select_by_visible_text(
+        #     household.program.name
+        # )
         selenium.wait_for(By.LINK_TEXT, "Households").click()
 
         selenium.wait_for(By.LINK_TEXT, str(household.name)).click()

@@ -1,9 +1,10 @@
 import contextlib
+import time
 from collections import namedtuple
 
 import pytest
+from selenium.webdriver import Keys
 from selenium.webdriver.common.by import By
-from testutils.utils import wait_for, wait_for_url
 
 Proxy = namedtuple("Proxy", "host,port")
 
@@ -36,7 +37,21 @@ def set_input_value(driver, *args):
 
 
 def find_by_css(selenium, *args):
+    from testutils.utils import wait_for
+
     return wait_for(selenium, By.CSS_SELECTOR, *args)
+
+
+def select2(driver, by, selector, value):
+    el = driver.find_element(by, selector)
+    el.click()
+    time.sleep(1)
+    driver.switch_to.active_element.send_keys(value)
+    driver.find_element(By.XPATH, f"//div[contains(text(),'{value}')]").click()
+    time.sleep(1)
+    driver.switch_to.active_element.send_keys(Keys.TAB)
+    time.sleep(1)
+    driver.switch_to.active_element.send_keys(Keys.TAB)
 
 
 @pytest.fixture
@@ -68,6 +83,8 @@ SELENIUM_DEFAULT_SCRIPT_TIMEOUT = 1
 
 @pytest.fixture
 def selenium(monkeypatch, live_server, settings, driver):
+    from testutils.utils import wait_for, wait_for_url
+
     settings.FLAGS = {"LOCAL_LOGIN": [("boolean", True)]}
 
     driver.with_timeouts = timeouts.__get__(driver)
@@ -76,6 +93,7 @@ def selenium(monkeypatch, live_server, settings, driver):
     driver.wait_for = wait_for.__get__(driver)
     driver.wait_for_url = wait_for_url.__get__(driver)
     driver.find_by_css = find_by_css.__get__(driver)
+    driver.select2 = select2.__get__(driver)
 
     # driver.maximize_window()
     # driver.fullscreen_window()
