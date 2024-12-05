@@ -37,7 +37,6 @@ body:
         - 'DataCheckers/Validators'
         - 'Import data (Aurora/Kobo/RDI)'
         - 'Send to HOPE'
-        - 'Data Cleaner'
         - 'Background jobs'
         - 'Security/Permission'
         # end product areas

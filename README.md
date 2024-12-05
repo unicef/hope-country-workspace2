@@ -25,4 +25,4 @@ management process.
 - Deduplication
 - Beneficiary contacting process
 
-Do you have an idea?  [Open a ticket](https://github.com/unicef/hope-country-workspace/issues/new).
+Do you have an idea?  [Open a ticket](https://github.com/unicef/hope-country-workspace/issues/new?assignees=&labels=&projects=&template=feature.yml).
