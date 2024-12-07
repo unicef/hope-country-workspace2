@@ -79,12 +79,14 @@ COPY uv.lock README.md MANIFEST.in pyproject.toml /app/
 COPY src /app/src/
 
 RUN --mount=type=cache,target=/root/.uv-cache \
-    uv sync --cache-dir=/root/.uv-cache \
+    find ../src -name 'node_modules' -prune \
+        -o -name *.py -o -name *.html -o -name *.js -o -name *.css \
+        -type f \
+        -exec ls -l "{}" \;  | sha1sum | awk '{print $1}' > CODE_CHECKSUM \
+    && uv sync --cache-dir=/root/.uv-cache \
         --python=/usr/local/bin/python \
         --python-preference=system \
         --frozen
-
-
 
 # ------- production only deps-------
 FROM builder AS production
@@ -102,7 +104,7 @@ RUN --mount=type=cache,target=/root/.uv-cache \
     uv sync --cache-dir=/root/.uv-cache \
         --python=/usr/local/bin/python \
         --python-preference=system \
-        --no-dev --no-editable --frozen --extra distribution
+        --no-dev --frozen --extra distribution
 
 
 
