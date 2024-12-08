@@ -49,6 +49,7 @@ jobs:
           base: ${{ github.ref }}
           token: ${{ github.token }}
           filters: .github/file-filters.yml
+
   test:
     needs: [ changes ]
     if: needs.changes.outputs.run_tests == 'true'
@@ -167,11 +168,11 @@ jobs:
     needs: [ test ]
     runs-on: ubuntu-latest
     services:
-      redis:
+      redis1:
         image: redis:7.4.0
         ports:
           - 26379:6379
-      db:
+      db1:
         image: postgres:14
         env:
           POSTGRES_DATABASE: country_workspace
@@ -191,7 +192,6 @@ jobs:
       CELERY_BROKER_URL: redis://localhost:26379/1
       CACHE_URL: redis://localhost:26379/2
       DOCKER_BUILDKIT: 1
-      IMAGE: ${{needs.test.outputs.image}}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4

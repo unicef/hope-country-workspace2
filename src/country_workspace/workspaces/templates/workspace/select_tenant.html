@@ -9,12 +9,18 @@
             {% if has_access %}
                 <form id="select-tenant" method="post" action="{% url 'workspace:select_tenant' %}">
                     {% csrf_token %}{{ tenant_form }}
-                <div class="submit-row">
-                    <input type="submit" value="Enter">
-                </div>
+                    <div class="submit-row">
+                        <input type="submit" value="Enter">
+                    </div>
                 </form>
             {% else %}
                 <div>You do not have any Office enabled.</div>
+                <form method="post" action="{% url "admin:logout" %}">
+                    {% csrf_token %}
+                    <span class="w-full px-4">
+                        <button class="button m-auto" type="submit">logout</button>
+                    </span>
+                </form>
             {% endif %}
         </div>
     </div>

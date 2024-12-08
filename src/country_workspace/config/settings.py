@@ -137,8 +137,17 @@ CACHES = {
         "BACKEND": "redis_lock.django_cache.RedisCache",
         "LOCATION": CACHE_URL,
         "OPTIONS": {"CLIENT_CLASS": "django_redis.client.DefaultClient"},
-    }
+    },
+    "select2": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": CACHE_URL,
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        },
+    },
 }
+SELECT2_CACHE_BACKEND = "select2"
+
 X_FRAME_OPTIONS = "SAMEORIGIN"
 
 ROOT_URLCONF = "country_workspace.config.urls"
