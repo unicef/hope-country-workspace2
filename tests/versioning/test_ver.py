@@ -1,10 +1,14 @@
 from pathlib import Path
 from typing import TYPE_CHECKING
 
+import pytest
+
 from country_workspace import VERSION
 
 if TYPE_CHECKING:
     from country_workspace.versioning.management.manager import Manager
+
+pytestmark = pytest.mark.xdist_group("versioning")
 
 
 def test_manager_1(manager: "Manager", scripts: list[Path]) -> None:

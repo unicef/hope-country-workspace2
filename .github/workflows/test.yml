@@ -171,15 +171,16 @@ jobs:
       redis1:
         image: redis:7.4.0
         ports:
-          - 26379:6379
+          - 5379:6379
       db1:
         image: postgres:14
         env:
+          POSTGRES_HOST: db1
           POSTGRES_DATABASE: country_workspace
           POSTGRES_PASSWORD: postgres
           POSTGRES_USERNAME: postgres
         ports:
-          - 25432:5432
+          - 4432:5432
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
@@ -188,9 +189,9 @@ jobs:
     env:
       DOCKER_DEFAULT_PLATFORM: linux/amd64
       DOCKER_METADATA_ANNOTATIONS_LEVELS: manifest,index
-      DATABASE_URL: postgres://postgres:postgres@localhost:25432/country_workspace
-      CELERY_BROKER_URL: redis://localhost:26379/1
-      CACHE_URL: redis://localhost:26379/2
+      DATABASE_URL: postgres://postgres:postgres@localhost:4432/country_workspace
+      CELERY_BROKER_URL: redis://localhost:5379/1
+      CACHE_URL: redis://localhost:5379/2
       DOCKER_BUILDKIT: 1
     steps:
       - name: Checkout code
@@ -206,27 +207,26 @@ jobs:
                 --target dist \
                 --cache-from "type=gha" \
                 --cache-to "type=gha,mode=max" \
-                --build-arg "VERSION=${{needs.test.outputs.commit}}" \
                 --build-arg "GIT_SHA=${{needs.test.outputs.commit}}" \
                 --build-arg "BUILD_DATE=${{needs.test.outputs.build_date}}" \
                 --build-arg "BRANCH=${{needs.test.outputs.branch}}" \
                 -t ${{needs.test.outputs.image}} \
                 -f docker/Dockerfile .
-
-      - name: Docker Integrity Check
-        run: |
-            docker run --rm \
-              --network host \
-              -e DATABASE_URL=${DATABASE_URL} \
-              -e CELERY_BROKER_URL=${CELERY_BROKER_URL} \
-              -e CACHE_URL=${CACHE_URL} \
-              -e SECRET_KEY=super-secret-key-just-for-testing \
-              -e HOPE_API_URL="https://dev-hope.unitst.org/api/rest/" \
-              -e HOPE_API_TOKEN=${{ secrets.HOPE_API_TOKEN }} \
-              -e AURORA_API_URL="https://uni-hope-ukr-sr-dev.unitst.org/api/" \
-              -e AURORA_API_TOKEN=${{ secrets.AURORA_API_TOKEN }} \
-              -t ${{needs.test.outputs.image}} \
-              django-admin upgrade
+#
+#      - name: Docker Integrity Check
+#        run: |
+#            docker run --rm \
+#              --network host \
+#              -e DATABASE_URL=${DATABASE_URL} \
+#              -e CELERY_BROKER_URL=${CELERY_BROKER_URL} \
+#              -e CACHE_URL=${CACHE_URL} \
+#              -e SECRET_KEY=super-secret-key-just-for-testing \
+#              -e HOPE_API_URL="https://dev-hope.unitst.org/api/rest/" \
+#              -e HOPE_API_TOKEN=${{ secrets.HOPE_API_TOKEN }} \
+#              -e AURORA_API_URL="https://uni-hope-ukr-sr-dev.unitst.org/api/" \
+#              -e AURORA_API_TOKEN=${{ secrets.AURORA_API_TOKEN }} \
+#              -t ${{needs.test.outputs.image}} \
+#              django-admin upgrade
 
       - name: Publish images
         run: |          

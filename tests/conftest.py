@@ -98,7 +98,7 @@ def mocked_responses():
 
 
 @pytest.fixture()
-def user(db):
+def user(db, worker_id, settings):
     from testutils.factories import UserFactory
 
     return UserFactory()

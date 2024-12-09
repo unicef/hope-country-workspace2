@@ -62,7 +62,7 @@ RUN pip install uv uwsgi
 # ------- tests -------
 FROM builder AS tests
 ARG BUILD_DATE
-ARG VERSION
+ARG GIT_SHA
 
 LABEL distro="tests"
 LABEL org.opencontainers.image.created="$BUILD_DATE"
@@ -111,7 +111,6 @@ RUN --mount=type=cache,target=/root/.uv-cache \
 # ------- dist -------
 FROM base_os AS dist
 ARG BUILD_DATE
-ARG VERSION
 ARG GIT_SHA
 ARG BRANCH
 
@@ -120,7 +119,6 @@ ENV PATH=/app/.venv/bin:/usr/local/bin/:/usr/bin:/bin \
     GIT_SHA=$GIT_SHA \
     VERSION=$VERSION \
     BRANCH=$BRANCH \
-    DJANGO_SETTINGS_MODULE=country_workspace.config.settings \
     PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 \
     STATIC_URL="/static/" \
@@ -150,7 +148,7 @@ RUN --mount=type=cache,target=/root/.uv-cache \
     --mount=type=bind,source=MANIFEST.in,target=/app/MANIFEST.in \
     --mount=type=bind,source=README.md,target=/app/README.md \
     --mount=type=bind,source=./src/country_workspace,target=/app/src/country_workspace \
-    uv --cache-dir=/root/.uv-cache pip install --no-deps .
+    uv --cache-dir=/root/.uv-cache  pip install --link-mode=copy --no-deps .
 
 
 EXPOSE 8000

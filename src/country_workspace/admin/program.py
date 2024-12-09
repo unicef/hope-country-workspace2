@@ -22,6 +22,7 @@ class ProgramAdmin(BaseModelAdmin):
     search_fields = ("name",)
     list_filter = (("country_office", AutoCompleteFilter), "status", "active", "sector")
     ordering = ("name",)
+    autocomplete_fields = ("country_office",)
 
     @button()
     def invalidate_cache(self, request: HttpRequest, pk: str) -> None:

@@ -21,7 +21,10 @@ class IndividualAdmin(BaseModelAdmin):
         ("batch", LinkedAutoCompleteFilter.factory(parent="batch__program")),
         IsValidFilter,
     )
-    autocomplete_fields = ("batch",)
+    autocomplete_fields = (
+        "batch",
+        "household",
+    )
 
     @link(change_list=True, change_form=False)
     def view_in_workspace(self, btn: "LinkButton") -> None:

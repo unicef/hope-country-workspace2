@@ -131,6 +131,7 @@ USE_I18N = True
 USE_TZ = True
 
 CACHE_URL = env("CACHE_URL")
+SELECT2_CACHE = env("SELECT2_CACHE")
 # REDIS_URL = urlparse(CACHE_URL).hostname
 CACHES = {
     "default": {
@@ -140,7 +141,7 @@ CACHES = {
     },
     "select2": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": CACHE_URL,
+        "LOCATION": SELECT2_CACHE or CACHE_URL,
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
         },

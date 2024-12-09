@@ -14,7 +14,7 @@ from .filters import FailedFilter
 @admin.register(AsyncJob)
 class AsyncJobAdmin(CeleryTaskModelAdmin, BaseModelAdmin):
     list_display = ("program", "type", "verbose_status", "owner")
-    autocomplete_fields = ("program", "owner")
+    autocomplete_fields = ("program", "owner", "batch", "content_type")
     list_filter = (
         ("program__country_office", LinkedAutoCompleteFilter.factory(parent=None)),
         ("program", LinkedAutoCompleteFilter.factory(parent="program__country_office")),

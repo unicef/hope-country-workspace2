@@ -60,9 +60,16 @@ def get_hh_fields(household: "CountryHousehold"):
     }
 
 
+def get_name(instance, num):
+    name = fake.last_name()
+    return f"{name} #{num}"
+
+
 class HouseholdFactory(AutoRegisterModelFactory):
     batch = factory.SubFactory(CountryBatchFactory)
-    name = factory.Faker("last_name")
+    # name = factory.Faker("last_name")
+    name = factory.LazyAttributeSequence(get_name)
+
     flex_fields = factory.LazyAttribute(get_hh_fields)
 
     class Meta:

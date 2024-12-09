@@ -19,7 +19,7 @@ def setting(anchor: str) -> str:
 
 
 def celery_doc(anchor: str) -> str:
-    return f"@see https://docs.celeryq.dev/en/stable/" f"userguide/configuration.html#{anchor}"
+    return f"@see https://docs.celeryq.dev/en/stable/userguide/configuration.html#{anchor}"
 
 
 class Group(Enum):
@@ -55,6 +55,13 @@ CONFIG: "Dict[str, ConfigItem]" = {
     "AURORA_API_TOKEN": (str, "", "", False, "Aurora API token"),
     "AURORA_API_URL": (str, "", "", False, "Aurora API url"),
     "CACHE_URL": (str, "", "redis://localhost:6379/0", True, setting("cache-url")),
+    "SELECT2_CACHE": (
+        str,
+        "",
+        "redis://localhost:6379/9",
+        False,
+        "https://django-select2.readthedocs.io/en/latest/django_select2.html#module-django_select2.conf",
+    ),
     "CELERY_BROKER_URL": (
         str,
         "",

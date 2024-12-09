@@ -2,6 +2,8 @@
 
 {% block title %}{{ title }} | {{ site_title|default:_('Django site admin') }}{% endblock %}
 
+{% block extrastyle %}{{ block.super }}{{ media }}{% endblock %}
+
 {% block userlinks %}{{ block.super }}
 {# {% if sysinfo %} / <a href="{{ sysinfo }}">System Info</a> {% endif %} #}
 {% if profile_link %} / <a href="{{ profile_link }}">Profile</a> {% endif %}

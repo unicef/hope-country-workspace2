@@ -44,3 +44,10 @@ def test_individual_changelist(app, individual: "CountryIndividual"):
     assert res.status_code == 200
     res = res.click(individual.name)
     assert res.status_code == 200
+
+
+@pytest.mark.parametrize("valid", ["v", "i", "u"])
+def test_individual_filter_by_valid(app, individual: "CountryIndividual", valid):
+    base_url = reverse("admin:country_workspace_individual_changelist")
+    res = app.get(f"{base_url}?valid={valid}")
+    assert res.status_code == 200

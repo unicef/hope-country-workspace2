@@ -23,7 +23,6 @@ logger = logging.getLogger(__name__)
 class CacheManager:
     def __init__(self, prefix="cache"):
         self.prefix = prefix
-        self.active = True
         self.cw_version = "-"
         self.cache_timeout = 86400
         self.cache_by_version = False
@@ -59,6 +58,8 @@ class CacheManager:
 
     def store(self, key: str, value: Any, timeout: int = 0, **kwargs):
         cache_set.send(self.__class__, key=key)
+        if not self.active:
+            timeout = 1
         self.cache.set(key, value, timeout=timeout or self.cache_timeout, **kwargs)
 
     def _get_version_key(self, office: "Optional[Office]" = None, program: "Optional[Program]" = None):
@@ -92,12 +93,23 @@ class CacheManager:
         except ValueError:
             return self.cache.set(key, 2)
 
+    @property
+    def active(self) -> bool:
+        return not bool(self.cache.get(f"{self.prefix}:cache_disabled"))
+
+    @active.setter
+    def active(self, value: bool):
+        if not value:
+            self.cache.set(f"{self.prefix}:cache_disabled", True)
+        else:
+            self.cache.delete(f"{self.prefix}:cache_disabled")
+
     def build_key(self, prefix, *parts):
         tenant = "t"
         version = "v"
         program = "p"
         ts = "ts"
-        if self.cache.get("cache_disabled"):
+        if not self.active:
             ts = str(timezone.now().toordinal())
 
         if state.tenant and state.program:
