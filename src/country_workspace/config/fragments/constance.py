@@ -1,4 +1,12 @@
-from .app import AURORA_API_TOKEN, AURORA_API_URL, HOPE_API_TOKEN, HOPE_API_URL, NEW_USER_DEFAULT_GROUP
+from country_workspace.config.fragments.app import (
+    AURORA_API_TOKEN,
+    AURORA_API_URL,
+    DEDUP_ENGINE_API_TOKEN,
+    DEDUP_ENGINE_API_URL,
+    HOPE_API_TOKEN,
+    HOPE_API_URL,
+    NEW_USER_DEFAULT_GROUP,
+)
 
 CONSTANCE_BACKEND = "constance.backends.database.DatabaseBackend"
 
@@ -46,6 +54,9 @@ CONSTANCE_CONFIG = {
     "AURORA_API_URL": (AURORA_API_URL, "Aurora API Server address", str),
     "HOPE_API_TOKEN": (HOPE_API_TOKEN, "HOPE API Access Token", "write_only_input"),
     "HOPE_API_URL": (HOPE_API_URL, "HOPE API Server address", str),
+    "DEDUP_ENGINE_API_TOKEN": (DEDUP_ENGINE_API_TOKEN, "Dedup engine API Access Token", "write_only_input"),
+    "DEDUP_ENGINE_API_URL": (DEDUP_ENGINE_API_URL, "Dedup engine API Server address", str),
+    "KOBO_API_URL": ("", "Kobo API Server address", str),
     "KOBO_API_TOKEN": ("", "Kobo API Access Token", "write_only_input"),
     "KOBO_API_URL": ("", "Kobo API Server address", str),
     "CACHE_TIMEOUT": (86400, "Cache Redis TTL", int),
@@ -58,6 +69,8 @@ CONSTANCE_CONFIG_FIELDSETS = {
     "Remote System Tokens": (
         "AURORA_API_TOKEN",
         "AURORA_API_URL",
+        "DEDUP_ENGINE_API_TOKEN",
+        "DEDUP_ENGINE_API_URL",
         "HOPE_API_TOKEN",
         "HOPE_API_URL",
         "KOBO_API_TOKEN",

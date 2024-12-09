@@ -50,6 +50,7 @@ INSTALLED_APPS = (
     "country_workspace.security",
     "country_workspace.apps.HCWConfig",
     "country_workspace.workspaces.apps.Config",
+    "country_workspace.contrib.dedup_engine.apps.Config",
     "country_workspace.versioning",
     "country_workspace.cache",
     # these should be optional in the future
