@@ -68,12 +68,14 @@ LABEL distro="tests"
 LABEL org.opencontainers.image.created="$BUILD_DATE"
 LABEL org.opencontainers.image.version="$VERSION"
 
-ENV PATH=/app/.venv/bin:/usr/local/bin/:/usr/bin:/bin \
+ENV PATH=/venv/bin:/usr/local/bin/:/usr/bin:/bin \
     DJANGO_SETTINGS_MODULE=country_workspace.config.settings \
     PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 \
-    PYTHONPATH=""\
+    UV_PROJECT_ENVIRONMENT=/venv \
+    VIRTUAL_ENV=/venv \
     UWSGI_PROCESSES=4
+
 WORKDIR /app
 COPY uv.lock README.md MANIFEST.in pyproject.toml /app/
 COPY src /app/src/
@@ -94,8 +96,10 @@ ENV PATH=/app/.venv/bin:/usr/local/bin/:/usr/bin:/bin \
     DJANGO_SETTINGS_MODULE=country_workspace.config.settings \
     PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 \
-    PYTHONPATH=""\
+    UV_PROJECT_ENVIRONMENT=/venv \
+    VIRTUAL_ENV=/venv \
     UWSGI_PROCESSES=4
+
 WORKDIR /app
 COPY uv.lock README.md MANIFEST.in pyproject.toml /app/
 COPY src /app/src/
@@ -114,7 +118,7 @@ ARG BUILD_DATE
 ARG GIT_SHA
 ARG BRANCH
 
-ENV PATH=/app/.venv/bin:/usr/local/bin/:/usr/bin:/bin \
+ENV PATH=/venv/bin:/usr/local/bin/:/usr/bin:/bin \
     BUILD_DATE=$BUILD_DATE \
     GIT_SHA=$GIT_SHA \
     VERSION=$VERSION \
@@ -124,6 +128,8 @@ ENV PATH=/app/.venv/bin:/usr/local/bin/:/usr/bin:/bin \
     STATIC_URL="/static/" \
     PYTHONPATH=""\
     PGSSLCERT="/tmp/postgresql.crt" \
+    UV_PROJECT_ENVIRONMENT=/venv \
+    VIRTUAL_ENV=/venv \
     UWSGI_PROCESSES=4
 
 RUN <<EOF cat> /RELEASE
@@ -135,20 +141,14 @@ EOF
 WORKDIR /app
 COPY docker/conf /conf/
 COPY docker/bin/* /usr/local/bin/
-COPY LICENSE.md README.md /
-COPY src /app/src/
-RUN rm -fr /app/src/
 
+COPY . /app/
 
-COPY --chown=hope:unicef --from=production /app/.venv /app/.venv
+COPY --chown=hope:unicef --from=production /venv /venv
 COPY --from=builder /usr/local/bin/uwsgi /usr/local/bin/uv /usr/local/bin/
 RUN --mount=type=cache,target=/root/.uv-cache \
-    --mount=type=bind,source=uv.lock,target=/app/uv.lock \
-    --mount=type=bind,source=pyproject.toml,target=/app/pyproject.toml \
-    --mount=type=bind,source=MANIFEST.in,target=/app/MANIFEST.in \
-    --mount=type=bind,source=README.md,target=/app/README.md \
-    --mount=type=bind,source=./src/country_workspace,target=/app/src/country_workspace \
-    uv --cache-dir=/root/.uv-cache  pip install --link-mode=copy --no-deps .
+    uv --cache-dir=/root/.uv-cache  pip install --link-mode=copy --no-deps . \
+    && rm -fr /app
 
 
 EXPOSE 8000

@@ -16,6 +16,7 @@ case "$1" in
 	    fi
       set -- tini -- "$@"
 	    set -- uwsgi --http :8000 \
+	          -H /venv \
 	          --module country_workspace.config.wsgi \
 	          --mimefile=/conf/mime.types \
 	          --uid hope \
@@ -29,16 +30,16 @@ case "$1" in
       ;;
     worker)
       set -- tini -- "$@"
-      set -- gosu user:app celery -A country_workspace.config.celery worker -E --loglevel=ERROR --concurrency=4
+      set -- gosu hope:unicef celery -A country_workspace.config.celery worker --statedb worker-E --loglevel=ERROR --concurrency=4
       ;;
     beat)
       set -- tini -- "$@"
-      set -- gosu user:app celery -A country_workspace.config.celery beat --loglevel=ERROR --scheduler django_celery_beat.schedulers:DatabaseScheduler
+      set -- gosu hope:unicef celery -A country_workspace.config.celery beat --loglevel=ERROR --scheduler django_celery_beat.schedulers:DatabaseScheduler
       ;;
     flower)
       export DATABASE_URL="sqlite://:memory:"
       set -- tini -- "$@"
-      set -- gosu user:app celery -A country_workspace.config.celery flower
+      set -- gosu hope:unicef celery -A country_workspace.config.celery flower
       ;;
 esac
 
