@@ -1,4 +1,4 @@
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
 from django import forms
 from django.conf import settings
@@ -12,7 +12,6 @@ from django.urls import reverse
 from django.utils.translation import gettext as _
 
 from admin_extra_buttons.api import button
-from hope_flex_fields.models import DataChecker
 from strategy_field.utils import fqn
 
 from country_workspace.constants import BATCH_NAME_DEFAULT
@@ -28,6 +27,9 @@ from ..options import WorkspaceModelAdmin
 from ..sites import workspace
 from .cleaners.bulk_update import bulk_update_household, bulk_update_individual
 from .forms import ImportFileForm
+
+if TYPE_CHECKING:
+    from hope_flex_fields.models import DataChecker
 
 
 class SelectColumnsForm(forms.Form):

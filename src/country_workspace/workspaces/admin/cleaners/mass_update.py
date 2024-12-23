@@ -2,7 +2,6 @@ from typing import TYPE_CHECKING, Any, Callable
 
 from django import forms
 from django.db import transaction
-from django.db.models import QuerySet
 from django.forms import MultiValueField, widgets
 from django.utils.text import slugify
 
@@ -12,6 +11,8 @@ from strategy_field.utils import fqn
 from .base import BaseActionForm
 
 if TYPE_CHECKING:
+    from django.db.models import QuerySet
+
     from hope_flex_fields.models import DataChecker
 
     from country_workspace.types import Beneficiary

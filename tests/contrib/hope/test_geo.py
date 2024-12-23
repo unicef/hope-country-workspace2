@@ -1,7 +1,12 @@
-from hope_flex_fields.models import Fieldset
+from typing import TYPE_CHECKING
+
 from testutils.factories import FieldDefinitionFactory, FieldsetFactory, FlexFieldFactory
 
 from country_workspace.contrib.hope.geo import Admin1Choice, CountryChoice
+
+if TYPE_CHECKING:
+    from hope_flex_fields.models import Fieldset
+
 
 COUNTRIES = {
     "count": 1,

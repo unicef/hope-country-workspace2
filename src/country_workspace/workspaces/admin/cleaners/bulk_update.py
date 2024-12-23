@@ -6,7 +6,6 @@ from django import forms
 from django.apps import apps
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.files.storage import default_storage
-from django.db.models import QuerySet
 
 from hope_flex_fields.models import DataChecker, FlexField
 from hope_flex_fields.xlsx import get_format_for_field
@@ -17,6 +16,8 @@ from country_workspace.models import AsyncJob, Program
 from country_workspace.workspaces.admin.cleaners.base import BaseActionForm
 
 if TYPE_CHECKING:
+    from django.db.models import QuerySet
+
     from country_workspace.types import Beneficiary
 
 

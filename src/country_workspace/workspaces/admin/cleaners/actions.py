@@ -1,7 +1,6 @@
 from typing import TYPE_CHECKING
 
 from django.contrib import admin, messages
-from django.db.models import QuerySet
 from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.utils.translation import gettext as _
@@ -18,6 +17,8 @@ from .regex import RegexUpdateForm, regex_update_impl
 from .validate import validate_queryset
 
 if TYPE_CHECKING:
+    from django.db.models import QuerySet
+
     from country_workspace.types import Beneficiary
     from country_workspace.workspaces.admin.hh_ind import BeneficiaryBaseAdmin
 

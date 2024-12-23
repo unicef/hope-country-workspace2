@@ -3,14 +3,15 @@ from typing import TYPE_CHECKING
 from django.urls import reverse
 
 import pytest
-from django_webtest import DjangoTestApp
-from django_webtest.pytest_plugin import MixinWithInstanceVariables
-from pytest_django.fixtures import SettingsWrapper
-from responses import RequestsMock
 
 from country_workspace.state import state
 
 if TYPE_CHECKING:
+    from django_webtest import DjangoTestApp
+    from django_webtest.pytest_plugin import MixinWithInstanceVariables
+    from pytest_django.fixtures import SettingsWrapper
+    from responses import RequestsMock
+
     from country_workspace.models import Household
 
 

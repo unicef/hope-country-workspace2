@@ -3,7 +3,6 @@ from typing import TYPE_CHECKING
 from django.urls import reverse
 
 import pytest
-from responses import RequestsMock
 from testutils.perms import user_grant_permissions
 from testutils.utils import select_office
 
@@ -11,6 +10,7 @@ from country_workspace.state import state
 
 if TYPE_CHECKING:
     from django_webtest.pytest_plugin import MixinWithInstanceVariables
+    from responses import RequestsMock
     from testutils.types import CWTestApp
 
     from country_workspace.workspaces.models import CountryHousehold, CountryProgram

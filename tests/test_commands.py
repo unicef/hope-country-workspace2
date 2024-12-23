@@ -124,8 +124,8 @@ def test_upgrade_admin(mocked_responses: RequestsMock, environment: dict[str, st
 
 @pytest.mark.django_db(transaction=True)
 @pytest.mark.vcr
+@pytest.mark.xdist_group("remote")
 def test_sync(environment: dict[str, str]) -> None:
     out = StringIO()
-    # with my_vcr.use_cassette(Path(__file__).parent / "sync_command.yaml"):
     with mock.patch.dict(os.environ, environment, clear=True):
         call_command("sync", stdout=out)

@@ -3,13 +3,14 @@ from typing import TYPE_CHECKING
 
 from django.conf import settings
 from django.core.signing import get_cookie_signer
-from django.http import HttpRequest, HttpResponse
 
-from ..models import Office, Program, User
 from ..state import State, state
 from .config import conf
 
 if TYPE_CHECKING:
+    from django.http import HttpRequest, HttpResponse
+
+    from ..models import Office, Program, User
 
     class AuthHttpRequest(HttpRequest):
         user: "User|None" = None

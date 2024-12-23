@@ -1,7 +1,6 @@
 from typing import TYPE_CHECKING
 
 from django.db import models
-from django.db.models import QuerySet
 from django.utils.translation import gettext as _
 
 from hope_flex_fields.models import DataChecker
@@ -13,6 +12,8 @@ from .base import BaseModel, Validable
 from .office import Office
 
 if TYPE_CHECKING:
+    from django.db.models import QuerySet
+
     from .household import Household
     from .individual import Individual
 

@@ -36,7 +36,7 @@ class UpdateCacheMiddleware(MiddlewareMixin):
         timeout = self.page_timeout
         patch_response_headers(response, timeout)
         if response.status_code == 200:
-            cache_key = self.manager.build_key_from_request(request)
+            cache_key = self.manager.build_key_from_request(request, "view", getattr(request.user, "pk", ""))
             response.headers["Etag"] = cache_key
             if hasattr(response, "render") and callable(response.render):
                 response.add_post_render_callback(lambda r: self.manager.store(cache_key, r))
@@ -56,7 +56,7 @@ class FetchFromCacheMiddleware(MiddlewareMixin):
             return None  # Don't bother checking the cache.
 
         # try and get the cached GET response
-        cache_key = self.manager.build_key_from_request(request)
+        cache_key = self.manager.build_key_from_request(request, "view", getattr(request.user, "pk", ""))
         if cache_key is None:
             request._cache_update_cache = True
             return None  # No cache information available, need to rebuild.

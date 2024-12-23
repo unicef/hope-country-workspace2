@@ -1,7 +1,10 @@
+from typing import TYPE_CHECKING
+
 import pytest
 
-from country_workspace.models import Household
-from country_workspace.workspaces.models import CountryHousehold
+if TYPE_CHECKING:
+    from country_workspace.models import Household
+    from country_workspace.workspaces.models import CountryHousehold
 
 
 @pytest.fixture

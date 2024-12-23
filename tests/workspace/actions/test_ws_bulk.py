@@ -7,19 +7,19 @@ from django.urls import reverse
 import openpyxl
 import pytest
 import xlsxwriter
-from pytest_django.fixtures import SettingsWrapper
 from testutils.factories import FlexFieldFactory
 from testutils.utils import select_office
 from webtest import Checkbox, Upload
 
-from country_workspace.models import AsyncJob
 from country_workspace.state import state
 from country_workspace.workspaces.admin.cleaners.bulk_update import TYPES, create_xls_importer
 
 if TYPE_CHECKING:
     from django_webtest import DjangoTestApp
     from django_webtest.pytest_plugin import MixinWithInstanceVariables
+    from pytest_django.fixtures import SettingsWrapper
 
+    from country_workspace.models import AsyncJob
     from country_workspace.workspaces.models import CountryHousehold
 
 pytestmark = [pytest.mark.admin, pytest.mark.smoke, pytest.mark.django_db]

@@ -1,7 +1,6 @@
 # mypy: disable-error-code="union-attr"
 from typing import TYPE_CHECKING
 
-from django.http import HttpRequest
 from django.test.client import RequestFactory
 from django.urls import reverse
 
@@ -11,6 +10,7 @@ from django_webtest.pytest_plugin import MixinWithInstanceVariables
 
 if TYPE_CHECKING:
     from django.contrib.auth.models import Group
+    from django.http import HttpRequest
 
 
 @pytest.fixture

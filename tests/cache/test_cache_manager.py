@@ -1,17 +1,18 @@
 from typing import TYPE_CHECKING
 
-from django.db.models import Model
-
 import pytest
-from django_webtest.pytest_plugin import MixinWithInstanceVariables
 from testutils.perms import user_grant_permissions
 
 from country_workspace.cache.manager import CacheManager
-from country_workspace.models import User
 from country_workspace.state import state
 
 if TYPE_CHECKING:
+    from django.db.models import Model
+
+    from django_webtest.pytest_plugin import MixinWithInstanceVariables
     from testutils.types import CWTestApp
+
+    from country_workspace.models import User
 
 
 def pytest_generate_tests(metafunc: "Metafunc") -> None:  # noqa

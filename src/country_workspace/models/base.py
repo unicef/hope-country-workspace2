@@ -1,7 +1,6 @@
 from typing import TYPE_CHECKING, Any
 
 from django.db import models
-from django.db.models import QuerySet
 from django.urls import reverse
 from django.utils import timezone
 from django.utils.translation import gettext as _
@@ -15,6 +14,8 @@ from country_workspace.state import state
 from country_workspace.utils.flex_fields import get_obj_checksum
 
 if TYPE_CHECKING:
+    from django.db.models import QuerySet
+
     from hope_flex_fields.models import DataChecker
 
     from country_workspace.models import Office, Program

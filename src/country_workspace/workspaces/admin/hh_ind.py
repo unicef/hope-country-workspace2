@@ -14,7 +14,6 @@ from django.utils.translation import gettext as _
 from admin_extra_buttons.decorators import button
 from adminfilters.mixin import AdminAutoCompleteSearchMixin
 from concurrency.utils import fqn
-from hope_flex_fields.models import DataChecker
 
 from ...models import AsyncJob
 from ...state import state
@@ -24,6 +23,7 @@ from .cleaners.validate import validate_queryset
 
 if TYPE_CHECKING:
     from hope_flex_fields.forms import FlexForm
+    from hope_flex_fields.models import DataChecker
 
     from ...models.base import Validable
     from ...types import Beneficiary

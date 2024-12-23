@@ -2,7 +2,6 @@ from typing import TYPE_CHECKING, Generator
 from unittest import mock
 
 import pytest
-from pytest_django.fixtures import SettingsWrapper
 
 from country_workspace.state import state
 from country_workspace.utils.http import absolute_reverse, absolute_uri, get_client_ip, get_server_host, get_server_url
@@ -10,6 +9,8 @@ from country_workspace.utils.http import absolute_reverse, absolute_uri, get_cli
 if TYPE_CHECKING:
     from django.http import HttpRequest
     from django.test.client import RequestFactory
+
+    from pytest_django.fixtures import SettingsWrapper
 
 
 @pytest.fixture(autouse=True)

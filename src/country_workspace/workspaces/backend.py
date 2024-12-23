@@ -1,13 +1,17 @@
+from typing import TYPE_CHECKING
+
 from django.contrib.auth.backends import BaseBackend
 from django.contrib.auth.models import AnonymousUser, Permission
 from django.db.models import Model, Q, QuerySet
-from django.http import HttpRequest
 
 from dateutil.utils import today
 
 from ..models import Office, User
 from ..state import state
 from .utils import get_selected_tenant
+
+if TYPE_CHECKING:
+    from django.http import HttpRequest
 
 
 class TenantBackend(BaseBackend):

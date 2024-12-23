@@ -1,14 +1,14 @@
 import logging
 from typing import TYPE_CHECKING
 
-from django.http import HttpRequest, HttpResponse
-
 import sentry_sdk
 
 from country_workspace.workspaces.utils import RequestHandler
 
 if TYPE_CHECKING:
     from collections.abc import Callable
+
+    from django.http import HttpRequest, HttpResponse
 
 
 logger = logging.getLogger(__name__)

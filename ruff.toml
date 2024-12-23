@@ -19,7 +19,6 @@ select = [
     "E4", "E7", "E9",
     "ERA", # eradicate
     "F", # pyflakes
-#    "FBT", # flake8-boolean-trap
     "FLY", # flynt
     "FURB", # refurb
     "I", # isort
@@ -32,12 +31,12 @@ select = [
     "PT", # flake8-pytest-style
     "Q", # flake8-quotes
     "R", # PyLint Refactor
-#    "RET", # flake8-return
+    "RET", # flake8-return
     "S", # bandit,
     "SIM", # flake8-simplify
     "T10", # flake8-debugger
     "T20", # flake8-print
-#    "TC", # flake8-type-checking
+    "TC", # flake8-type-checking
     "UP", # pyupgrade
     "W", # pycodestyle warnings
     "YTT", # flake8 2020

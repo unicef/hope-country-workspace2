@@ -3,12 +3,12 @@ from typing import TYPE_CHECKING
 from django.urls import reverse
 
 import pytest
-from django_webtest.pytest_plugin import MixinWithInstanceVariables
-from responses import RequestsMock
 
 if TYPE_CHECKING:
     from django_webtest import DjangoTestApp
+    from django_webtest.pytest_plugin import MixinWithInstanceVariables
     from pytest_django.fixtures import SettingsWrapper
+    from responses import RequestsMock
 
 pytestmark = [pytest.mark.django_db]
 

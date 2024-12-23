@@ -1,11 +1,15 @@
+from typing import TYPE_CHECKING
+
 from django.db import models
 from django.utils.functional import cached_property
 
 import reversion
-from hope_flex_fields.models import DataChecker
 
 from .base import BaseModel, Validable
 from .household import Household
+
+if TYPE_CHECKING:
+    from hope_flex_fields.models import DataChecker
 
 
 @reversion.register()

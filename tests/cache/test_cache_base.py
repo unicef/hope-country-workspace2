@@ -1,20 +1,22 @@
 from typing import TYPE_CHECKING
 
-from django.db.models import Model
 from django.urls import reverse
 
 import pytest
-from django_webtest import DjangoTestApp
-from django_webtest.pytest_plugin import MixinWithInstanceVariables
 from testutils.perms import user_grant_permissions
 from testutils.utils import select_office
 
 from country_workspace.cache.manager import CacheManager
-from country_workspace.models import User
-from country_workspace.workspaces.models import CountryIndividual
 
 if TYPE_CHECKING:
+    from django.db.models import Model
+
+    from django_webtest import DjangoTestApp
+    from django_webtest.pytest_plugin import MixinWithInstanceVariables
     from testutils.types import CWTestApp
+
+    from country_workspace.models import User
+    from country_workspace.workspaces.models import CountryIndividual
 
 
 def pytest_generate_tests(metafunc: "Metafunc") -> None:  # noqa

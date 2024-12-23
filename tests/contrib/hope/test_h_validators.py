@@ -1,5 +1,6 @@
 from typing import TYPE_CHECKING
 
+import factory
 import pytest
 from faker import Faker
 
@@ -32,7 +33,10 @@ def household(program, worker_id) -> "Household":
         return f"{name} @{worker_id} #{step}"
 
     return HouseholdFactory(
-        name=name, batch__program=program, individuals=[], batch__country_office=program.country_office
+        name=factory.LazyAttributeSequence(name),
+        batch__program=program,
+        individuals=[],
+        batch__country_office=program.country_office,
     )
 
 

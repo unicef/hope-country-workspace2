@@ -1,17 +1,21 @@
 import json
 import re
 from pathlib import Path
+from typing import TYPE_CHECKING
 
 from django.urls import reverse
 
 import pytest
 from constance.test.unittest import override_config
-from django_webtest import DjangoTestApp
-from django_webtest.pytest_plugin import MixinWithInstanceVariables
 from webtest import Upload
 
 from country_workspace.state import state
-from country_workspace.workspaces.models import CountryHousehold
+
+if TYPE_CHECKING:
+    from django_webtest import DjangoTestApp
+    from django_webtest.pytest_plugin import MixinWithInstanceVariables
+
+    from country_workspace.workspaces.models import CountryHousehold
 
 
 @pytest.fixture

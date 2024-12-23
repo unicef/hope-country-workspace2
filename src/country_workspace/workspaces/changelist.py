@@ -6,11 +6,11 @@ from django.db.models import Model, QuerySet
 from django.http import HttpRequest
 from django.urls import reverse
 
-from hope_flex_fields.models import DataChecker
-
 from ..cache.manager import cache_manager
 
 if TYPE_CHECKING:
+    from hope_flex_fields.models import DataChecker
+
     from .templatetags.workspace_list import ResultList
 
 

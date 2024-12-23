@@ -1,10 +1,14 @@
 import contextlib
 import time
 from collections import namedtuple
+from typing import TYPE_CHECKING
 
 import pytest
 from selenium.webdriver import Keys
 from selenium.webdriver.common.by import By
+
+if TYPE_CHECKING:
+    from selenium.webdriver.common.timeouts import Timeouts
 
 Proxy = namedtuple("Proxy", "host,port")
 
@@ -16,8 +20,6 @@ def pytest_configure(config):
 
 @contextlib.contextmanager
 def timeouts(driver, wait=None, page=None, script=None):
-    from selenium.webdriver.common.timeouts import Timeouts
-
     _current: Timeouts = driver.timeouts
     if wait:
         driver.implicitly_wait(wait)

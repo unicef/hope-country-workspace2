@@ -4,22 +4,23 @@ from unittest.mock import Mock
 from django.contrib.admin.sites import site
 from django.contrib.admin.templatetags.admin_urls import admin_urlname
 from django.db.models import Model
-from django.db.models.options import Options
 from django.urls import reverse
 from django.utils.safestring import mark_safe
 
 import pytest
 from admin_extra_buttons.handlers import ButtonHandler, ChoiceHandler
-from admin_extra_buttons.mixins import ExtraButtonsMixin
 from django_regex.utils import RegexList as _RegexList
 from pytest_django.fixtures import SettingsWrapper
-from responses import RequestsMock
 
 if TYPE_CHECKING:
     from django.contrib.admin import ModelAdmin
+    from django.db.models.options import Options
 
+    from admin_extra_buttons.mixins import ExtraButtonsMixin
     from django_webtest import DjangoTestApp, DjangoWebtestResponse
     from django_webtest.pytest_plugin import MixinWithInstanceVariables
+    from responses import RequestsMock
+    from testutils.factories.user import AutoRegisterModelFactory
 
 pytestmark = [pytest.mark.admin, pytest.mark.smoke, pytest.mark.django_db]
 
@@ -121,7 +122,6 @@ def pytest_generate_tests(metafunc: "Metafunc") -> None:  # noqa
 @pytest.fixture
 def record(db: Any, request: "pytest.FixtureRequest") -> Model:
     from testutils.factories import get_factory_for_model
-    from testutils.factories.user import AutoRegisterModelFactory
 
     model_admin = request.getfixturevalue("model_admin")
     instance: Model = model_admin.model.objects.first()

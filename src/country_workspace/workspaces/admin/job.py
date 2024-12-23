@@ -1,5 +1,6 @@
+from typing import TYPE_CHECKING
+
 from django.contrib.admin import register
-from django.http import HttpRequest, HttpResponse
 
 from admin_extra_buttons.decorators import button
 from django_celery_boost.admin import CeleryTaskModelAdmin
@@ -8,6 +9,9 @@ from ..models import CountryAsyncJob
 from ..options import WorkspaceModelAdmin
 from ..sites import workspace
 from .filters import ChoiceFilter, UserAutoCompleteFilter, WFailedFilter
+
+if TYPE_CHECKING:
+    from django.http import HttpRequest, HttpResponse
 
 
 @register(CountryAsyncJob, site=workspace)

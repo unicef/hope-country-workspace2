@@ -1,7 +1,6 @@
-from typing import Sequence
+from typing import TYPE_CHECKING, Sequence
 
 from django.contrib import admin
-from django.http import HttpRequest
 
 from adminfilters.autocomplete import AutoCompleteFilter, LinkedAutoCompleteFilter
 from django_celery_boost.admin import CeleryTaskModelAdmin
@@ -9,6 +8,9 @@ from django_celery_boost.admin import CeleryTaskModelAdmin
 from ..models import AsyncJob
 from .base import BaseModelAdmin
 from .filters import FailedFilter
+
+if TYPE_CHECKING:
+    from django.http import HttpRequest
 
 
 @admin.register(AsyncJob)

@@ -4,15 +4,16 @@ from django.urls import reverse
 
 import pytest
 from pytest_django.fixtures import SettingsWrapper
-from responses import RequestsMock
 from testutils.utils import select_office
 
 from country_workspace.state import state
-from country_workspace.workspaces.models import CountryHousehold, CountryProgram
 
 if TYPE_CHECKING:
     from django_webtest import DjangoTestApp
     from django_webtest.pytest_plugin import MixinWithInstanceVariables
+    from responses import RequestsMock
+
+    from country_workspace.workspaces.models import CountryHousehold, CountryProgram
 
 
 pytestmark = [pytest.mark.admin, pytest.mark.smoke, pytest.mark.django_db]

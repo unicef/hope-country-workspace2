@@ -6,7 +6,6 @@ import pytest
 from pytest_django.fixtures import SettingsWrapper
 from testutils.utils import select_office
 
-from country_workspace.models import AsyncJob
 from country_workspace.state import state
 from country_workspace.workspaces.admin.cleaners.mass_update import mass_update_impl
 
@@ -14,6 +13,7 @@ if TYPE_CHECKING:
     from django_webtest import DjangoTestApp
     from django_webtest.pytest_plugin import MixinWithInstanceVariables
 
+    from country_workspace.models import AsyncJob
     from country_workspace.workspaces.models import CountryHousehold
 
 pytestmark = [pytest.mark.admin, pytest.mark.smoke, pytest.mark.django_db]

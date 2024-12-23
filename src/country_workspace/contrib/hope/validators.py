@@ -1,7 +1,11 @@
+from typing import TYPE_CHECKING
+
 from django.core.exceptions import MultipleObjectsReturned, ObjectDoesNotExist
 
-from country_workspace.models import Household
 from country_workspace.validators.base import BeneficiaryGroupValidator
+
+if TYPE_CHECKING:
+    from country_workspace.models import Household
 
 
 class FullHouseholdValidator(BeneficiaryGroupValidator):

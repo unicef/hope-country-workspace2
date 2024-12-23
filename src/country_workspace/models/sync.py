@@ -1,11 +1,15 @@
+from typing import TYPE_CHECKING
+
 from django.conf import settings
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
-from django.db.models import Model
 from django.utils import timezone
 
 from country_workspace.models.base import BaseManager, BaseModel
+
+if TYPE_CHECKING:
+    from django.db.models import Model
 
 
 class SyncManager(BaseManager):

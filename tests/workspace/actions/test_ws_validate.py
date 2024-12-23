@@ -5,14 +5,15 @@ from django.urls import reverse
 
 import freezegun
 import pytest
-from django_webtest import DjangoTestApp
-from django_webtest.pytest_plugin import MixinWithInstanceVariables
-from pytest_django.fixtures import SettingsWrapper
 from testutils.utils import select_office
 
 from country_workspace.state import state
 
 if TYPE_CHECKING:
+    from django_webtest import DjangoTestApp
+    from django_webtest.pytest_plugin import MixinWithInstanceVariables
+    from pytest_django.fixtures import SettingsWrapper
+
     from country_workspace.models import AsyncJob
     from country_workspace.workspaces.models import CountryHousehold
 

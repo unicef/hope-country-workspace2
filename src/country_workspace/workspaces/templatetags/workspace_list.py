@@ -1,7 +1,6 @@
 import datetime
 from typing import TYPE_CHECKING, Any
 
-from django.contrib.admin import ModelAdmin
 from django.contrib.admin.templatetags.admin_list import ResultList as DjangoResultList
 from django.contrib.admin.templatetags.admin_list import (
     _coerce_field_name,
@@ -29,6 +28,8 @@ from .workspace_urls import add_preserved_filters
 
 if TYPE_CHECKING:
     from typing import Generator
+
+    from django.contrib.admin import ModelAdmin
 
     from country_workspace.workspaces.models import CountryIndividual
 

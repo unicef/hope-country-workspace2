@@ -4,14 +4,13 @@ from django.urls import reverse
 
 import factory
 import pytest
-from django_webtest.pytest_plugin import MixinWithInstanceVariables
 from testutils.perms import user_grant_permissions
 
-from country_workspace.models import User
-
 if TYPE_CHECKING:
-    from testutils.types import CWTestApp
+    from django_webtest import DjangoTestApp
+    from django_webtest.pytest_plugin import MixinWithInstanceVariables
 
+    from country_workspace.models import User
     from country_workspace.workspaces.models import CountryProgram
 
 
@@ -23,7 +22,7 @@ def program():
 
 
 @pytest.fixture
-def app(django_app_factory: "MixinWithInstanceVariables") -> "CWTestApp":
+def app(django_app_factory: "MixinWithInstanceVariables") -> "DjangoTestApp":
     return django_app_factory(csrf_checks=False)
 
 
@@ -34,13 +33,12 @@ def user(db, worker_id):
     def username(instance: "User", step: int) -> str:
         return f"au{step:<03}_{worker_id}@example.com"
 
-    return UserFactory(username=factory.LazyAttributeSequence(username))
+    return UserFactory(username=factory.LazyAttributeSequence(username), is_superuser=False)
 
 
 def test_user_autocomplete(app, user: "User", program: "CountryProgram"):
     base_url = reverse("admin:country_workspace_user_autocomplete")
     res = app.get(base_url, expect_errors=True)
-    app.set_user(None)
     assert res.status_code == 403
 
     app.set_user(user)
