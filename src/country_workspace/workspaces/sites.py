@@ -14,7 +14,6 @@ from django.urls import NoReverseMatch, URLPattern, URLResolver, reverse
 from django.utils.text import capfirst
 from django.utils.translation import gettext_lazy
 from django.views import View
-from django.views.decorators.cache import never_cache
 
 from smart_admin.autocomplete import SmartAutocompleteJsonView
 
@@ -196,7 +195,6 @@ class TenantAdminSite(admin.AdminSite):
         ret["namespace"] = self.namespace
         return ret  # type: ignore
 
-    @never_cache
     def autocomplete_view(self, request: "HttpRequest") -> HttpResponse:
         return TenantAutocompleteJsonView.as_view(admin_site=self)(request)
 
