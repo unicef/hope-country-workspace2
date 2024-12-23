@@ -206,8 +206,6 @@ CONFIG: "Dict[str, ConfigItem]" = {
     "SOCIAL_AUTH_REDIRECT_IS_HTTPS": (bool, True, False, False, ""),
     "STATIC_ROOT": (str, "/var/static", "/tmp/static", True, setting("static-root")),  # nosec
     "STATIC_URL": (str, "/static/", "/static/", False, setting("static-url")),  # nosec
-    "TAILWIND_DEV_MODE": (bool, False, False, False, "Enable tailwind development mode"),
-    "TAILWIND_DEV_MODE": (bool, False, False, False, "Enable tailwind development mode"),
     "TIME_ZONE": (str, "UTC", "UTC", False, setting("std-setting-TIME_ZONE")),
     "AZURE_CLIENT_SECRET": (str, "", "", False, "Azure client secret for SSO"),
     "AZURE_TENANT_ID": (str, "", "", False, "Azure tenant ID for SSO"),
