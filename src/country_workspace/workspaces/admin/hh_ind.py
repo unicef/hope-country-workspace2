@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Any, Optional
+from typing import TYPE_CHECKING, Any
 
 from django.contrib import messages
 from django.contrib.admin.utils import unquote
@@ -30,13 +30,12 @@ if TYPE_CHECKING:
 
 
 class SelectedProgramMixin(WorkspaceModelAdmin):
-
     def get_selected_program(
-        self, request: HttpRequest, obj: "Optional[Validable]" = None
+        self, request: HttpRequest, obj: "Validable | None" = None
     ) -> "tuple[str|None, CountryProgram | None]":
         return state.program
 
-    def get_checker(self, request: HttpRequest, obj: "Optional[Beneficiary]" = None) -> "DataChecker":
+    def get_checker(self, request: HttpRequest, obj: "Beneficiary | None" = None) -> "DataChecker":
         if p := state.program:
             checker = p.get_checker_for(self.model)
         else:
@@ -48,15 +47,6 @@ class SelectedProgramMixin(WorkspaceModelAdmin):
 
     def delete_model(self, request: HttpRequest, obj: "Beneficiary") -> None:
         super().delete_model(request, obj)
-
-
-# def etag_func(request: HttpRequest, *args, **kwargs):
-#
-#     return cache_manager.build_key_from_request(request)
-#
-#
-# def last_modified_func(request: HttpRequest, *args, **kwargs):
-#     return now() + timedelta(days=-10)
 
 
 class BeneficiaryBaseAdmin(AdminAutoCompleteSearchMixin, SelectedProgramMixin, WorkspaceModelAdmin):
@@ -90,7 +80,7 @@ class BeneficiaryBaseAdmin(AdminAutoCompleteSearchMixin, SelectedProgramMixin, W
         else:
             return qs
 
-    def get_common_context(self, request: HttpRequest, pk: Optional[str] = None, **kwargs: Any) -> dict[str, Any]:
+    def get_common_context(self, request: HttpRequest, pk: str | None = None, **kwargs: Any) -> dict[str, Any]:
         ret = super().get_common_context(request, pk, **kwargs)
         ret["datachecker"] = self.get_checker(request, ret.get("original"))
         ret["modeladmin"] = self
@@ -153,11 +143,10 @@ class BeneficiaryBaseAdmin(AdminAutoCompleteSearchMixin, SelectedProgramMixin, W
     def has_delete_permission(self, request: HttpRequest, obj: Model = None):
         return False
 
-    def _changeform_view(
+    def _changeform_view(  # noqa: PLR0912
         self, request: HttpRequest, object_id: str, form_url: str, extra_context: dict[str, Any]
     ) -> HttpResponse:
         context = self.get_common_context(request, object_id, **extra_context)
-        # add = object_id is None
         obj = self.get_object(request, unquote(object_id))
         dc: "DataChecker" = self.get_checker(request, obj)
         try:
@@ -173,9 +162,8 @@ class BeneficiaryBaseAdmin(AdminAutoCompleteSearchMixin, SelectedProgramMixin, W
         if request.method == "POST":
             if not self.has_change_permission(request, obj):
                 raise PermissionDenied
-        else:
-            if not self.has_view_or_change_permission(request, obj):
-                raise PermissionDenied
+        elif not self.has_view_or_change_permission(request, obj):
+            raise PermissionDenied
 
         if obj.flex_fields:
             initials = {k.replace("flex_fields__", ""): v for k, v in obj.flex_fields.items()}
@@ -205,14 +193,14 @@ class BeneficiaryBaseAdmin(AdminAutoCompleteSearchMixin, SelectedProgramMixin, W
 
         return TemplateResponse(request, self.change_form_template, context)
 
-    def changelist_view(self, request: HttpRequest, extra_context: Optional[dict[str, Any]] = None) -> HttpResponse:
+    def changelist_view(self, request: HttpRequest, extra_context: dict[str, Any] | None = None) -> HttpResponse:
         context = self.get_common_context(request, title="----")
         context.update(extra_context or {})
         response = super().changelist_view(request, context)
         return response
 
     def change_view(
-        self, request: HttpRequest, object_id: str, form_url: str = "", extra_context: Optional[dict[str, Any]] = None
+        self, request: HttpRequest, object_id: str, form_url: str = "", extra_context: dict[str, Any] | None = None
     ) -> HttpResponse:
         context = self.get_common_context(request, object_id, title="")
         context.update(extra_context or {})
@@ -222,28 +210,3 @@ class BeneficiaryBaseAdmin(AdminAutoCompleteSearchMixin, SelectedProgramMixin, W
     def save_model(self, request, obj, form, change):
         super().save_model(request, obj, form, change)
         obj.validate_with_checker()
-
-    # def log_change(self, request, obj, message):
-    #     from django.contrib.admin.models import CHANGE, LogEntry
-    #
-    #     return LogEntry.objects.log_actions(
-    #         user_id=request.user.pk,
-    #         queryset=[obj],
-    #         action_flag=CHANGE,
-    #         change_message=message,
-    #         single_object=True,
-    #     )
-
-    # def history_view(self, request, object_id, extra_context=None):
-    #     self.object_history_template = self._get_object_history_template()
-    #     extra_context = self.get_common_context(request, object_id)
-    #     key = self.object.get_object_key("history")
-    #     if not (data := cache_manager.get(key)):
-    #         data = []
-    #         self.object.history.get("entries", [])
-    #         for d, entry in self.object.history.items():
-    #             data.append({"date": d,
-    #                         "diff": list(dictdiffer.diff(entry, self.object.flex_fields))})
-    #             cache_manager.set(key, data)
-    #     extra_context["history"] = data
-    #     return super().history_view(request, object_id, extra_context)

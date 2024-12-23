@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Union
+from typing import TYPE_CHECKING
 
 from django.db import models
 from django.db.models import QuerySet
@@ -104,13 +104,13 @@ class Program(BaseModel):
 
         return Individual.objects.filter(batch__program=self)
 
-    def get_checker_for(self, m: Union[type[Validable], Validable]) -> DataChecker:
+    def get_checker_for(self, m: type[Validable] | Validable) -> DataChecker:
         from country_workspace.models import Household, Individual
         from country_workspace.workspaces.models import CountryHousehold, CountryIndividual
 
-        if isinstance(m, (Household, CountryHousehold)) or m in (Household, CountryHousehold):
+        if isinstance(m, (Household | CountryHousehold)) or m in (Household, CountryHousehold):
             return self.household_checker
-        elif isinstance(m, (Individual, CountryIndividual)) or m in (Individual, CountryIndividual):
+        elif isinstance(m, (Individual | CountryIndividual)) or m in (Individual, CountryIndividual):
             return self.individual_checker
         else:
             raise ValueError(m)

@@ -26,8 +26,6 @@ class WorkspaceAutoCompleteFilter(AutoCompleteFilter):
 
 
 class WorkspaceModelAdmin(ExtraButtonsMixin, AdminFiltersMixin, SmartFilterMixin, admin.ModelAdmin):
-    # change_list_template = "workspace/change_list.html"
-    # change_form_template = "workspace/change_form.html"
     object_history_template = "workspace/object_history.html"
     delete_selected_confirmation_template = "workspace/delete_selected_confirmation.html"
     delete_confirmation_template = "workspace/delete_confirmation.html"
@@ -40,17 +38,13 @@ class WorkspaceModelAdmin(ExtraButtonsMixin, AdminFiltersMixin, SmartFilterMixin
 
     def _get_change_form_template(self):
         return [
-            # "workspace/%s/%s/change_form.html" % (self.opts.app_label, self.opts.model_name),
             "workspace/%s/change_form.html" % self.opts.proxy_for_model._meta.model_name,
-            # "workspace/%s/change_form.html" % self.opts.app_label,
             "workspace/change_form.html",
         ]
 
     def _get_changelist_template(self):
         return [
-            # "workspace/%s/%s/change_form.html" % (self.opts.app_label, self.opts.model_name),
             "workspace/%s/change_list.html" % self.opts.proxy_for_model._meta.model_name,
-            # "workspace/%s/change_form.html" % self.opts.app_label,
             "workspace/change_list.html",
         ]
 
@@ -82,9 +76,7 @@ class WorkspaceModelAdmin(ExtraButtonsMixin, AdminFiltersMixin, SmartFilterMixin
         )
 
     def get_preserved_filters(self, request: HttpRequest) -> dict[str, str]:
-        """
-        Return the preserved filters querystring.
-        """
+        """Return the preserved filters querystring."""
         match = request.resolver_match
         if self.preserve_filters and match:
             current_url = "%s:%s" % (match.app_name, match.url_name)

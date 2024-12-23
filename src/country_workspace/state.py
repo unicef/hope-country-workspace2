@@ -1,14 +1,14 @@
 import contextlib
 from copy import copy
 from threading import local
-from typing import TYPE_CHECKING, Dict
+from typing import TYPE_CHECKING
 
 from django.core.signing import get_cookie_signer
 from django.http import HttpRequest, HttpResponse
 
 if TYPE_CHECKING:
     from collections.abc import Iterator
-    from typing import Any, List
+    from typing import Any
 
     from .models import Office, Program
 
@@ -21,15 +21,15 @@ class State(local):
     program_cookie: "str|None" = None
     tenant: "Office|None" = None
     program: "Program|None" = None
-    cookies: "dict[str, List[Any]]" = {}
-    filters: "List[Any]" = []
+    cookies: "dict[str, list[Any]]" = {}
+    filters: "list[Any]" = []
     inspecting: bool = False
 
     def __repr__(self) -> str:
         return f"<State {id(self)}: {self.tenant_cookie}>"
 
     @contextlib.contextmanager
-    def configure(self, **kwargs: "Dict[str,Any]") -> "Iterator[None]":
+    def configure(self, **kwargs: "dict[str,Any]") -> "Iterator[None]":
         pre = copy(self.__dict__)
         self.reset()
         with self.set(**kwargs):
@@ -38,7 +38,7 @@ class State(local):
             setattr(self, k, v)
 
     @contextlib.contextmanager
-    def set(self, **kwargs: "Dict[str,Any]") -> "Iterator[None]":
+    def set(self, **kwargs: "dict[str,Any]") -> "Iterator[None]":
         pre = {}
         for k, v in kwargs.items():
             if hasattr(self, k):
@@ -65,7 +65,7 @@ class State(local):
         signer = get_cookie_signer()
         self.add_cookies("selected_program", signer.sign(program.id))
 
-    def add_cookies(
+    def add_cookies(  # noqa: PLR0913
         self,
         key: str,
         value: str,

@@ -5,10 +5,7 @@ from django.template.library import InclusionNode, parse_bits
 
 
 class WorkspaceInclusionAdminNode(InclusionNode):
-    """
-    Template tag that allows its template to be overridden per model, per app,
-    or globally.
-    """
+    """Template tag that allows its template to be overridden per model, per app, or globally."""
 
     def __init__(self, parser, token, func, template_name: str, takes_context: bool = True) -> None:
         self.template_name = template_name

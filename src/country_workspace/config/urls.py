@@ -23,8 +23,3 @@ if "django_browser_reload" in settings.INSTALLED_APPS:
     urlpatterns += [path(r"__reload__/", include("django_browser_reload.urls"))]
 
 urlpatterns += [path(r"", workspace.urls)]
-
-#
-# admin.site.site_header = "Workspace Admin"
-# admin.site.site_title = "Workspace Admin Portal"
-# admin.site.index_title = "Welcome to HOPE Workspace"

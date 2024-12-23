@@ -39,7 +39,7 @@ class DynamicChoiceField(ChildFieldMixin, forms.ChoiceField):
                 logger.exception(e)
                 return ret
 
-        for i, record in enumerate(data):
+        for record in data:
             if only_codes:
                 ret.append(record["p_code"])
             else:
@@ -48,7 +48,6 @@ class DynamicChoiceField(ChildFieldMixin, forms.ChoiceField):
 
 
 class CountryChoice(forms.ChoiceField):
-
     def get_choices(self) -> list[tuple[str, str]]:
         ret = []
         key = "lookups/country"
@@ -60,9 +59,7 @@ class CountryChoice(forms.ChoiceField):
             except RemoteError as e:
                 logger.exception(e)
                 return ret
-        for i, record in enumerate(data):
-            ret.append((record["iso_code3"], record["name"]))
-
+        ret = [(record["iso_code3"], record["name"]) for record in data]
         return ret
 
     def __init__(self, **kwargs):

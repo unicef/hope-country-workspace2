@@ -2,7 +2,6 @@ from pathlib import Path
 
 from . import env
 
-# BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
 SETTINGS_DIR = Path(__file__).parent
 PACKAGE_DIR = SETTINGS_DIR.parent
 DEVELOPMENT_DIR = PACKAGE_DIR.parent.parent
@@ -86,13 +85,10 @@ AUTHENTICATION_BACKENDS = (
 # path
 MEDIA_ROOT = env("MEDIA_ROOT")
 MEDIA_URL = env("MEDIA_URL")
-#
 STATIC_ROOT = env("STATIC_ROOT")
 STATIC_URL = env("STATIC_URL")
 # #
-# # STATICFILES_DIRS = []
 STATICFILES_FINDERS = [
-    # "django.contrib.staticfiles.finders.FileSystemFinder",
     "django.contrib.staticfiles.finders.AppDirectoriesFinder",
 ]
 
@@ -132,7 +128,6 @@ USE_TZ = True
 
 CACHE_URL = env("CACHE_URL")
 SELECT2_CACHE = env("SELECT2_CACHE")
-# REDIS_URL = urlparse(CACHE_URL).hostname
 CACHES = {
     "default": {
         "BACKEND": "redis_lock.django_cache.RedisCache",

@@ -1,15 +1,15 @@
 from enum import Enum
-from typing import TYPE_CHECKING, Any, Dict, Optional, TypeAlias, Union
+from typing import TYPE_CHECKING, Any
 
 from smart_env import SmartEnv
 
 if TYPE_CHECKING:
-    ConfigItem: TypeAlias = Union[
-        tuple[type, Any, Any, bool, str],
-        tuple[type, Optional[Any], Optional[Any], bool],
-        tuple[type, Any, Any],
-        tuple[type, Any],
-    ]
+    ConfigItem: type = (
+        tuple[type, Any, Any, bool, str]
+        | tuple[type, Any | None, Any | None, bool]
+        | tuple[type, Any, Any]
+        | tuple[type, Any]
+    )
 
 DJANGO_HELP_BASE = "https://docs.djangoproject.com/en/5.0/ref/settings"
 
@@ -26,7 +26,7 @@ class Group(Enum):
     DJANGO = 1
 
 
-CONFIG: "Dict[str, ConfigItem]" = {
+CONFIG: "dict[str, ConfigItem]" = {
     "SUPERUSERS": (
         list,
         [],
@@ -107,12 +107,6 @@ CONFIG: "Dict[str, ConfigItem]" = {
         "https://django-environ.readthedocs.io/en/latest/types.html#environ-env-db-url",
     ),
     "DEBUG": (bool, False, True, False, setting("debug")),
-    # "EMAIL_BACKEND": (
-    #     str,
-    #     "django.core.mail.backends.smtp.EmailBackend",
-    #     setting("email-backend"),
-    #     True,
-    # ),
     "EMAIL_HOST": (str, "", "", False, setting("email-host")),
     "EMAIL_HOST_USER": (str, "", "", False, setting("email-host-user")),
     "EMAIL_HOST_PASSWORD": (str, "", "", False, setting("email-host-password")),
@@ -168,9 +162,8 @@ CONFIG: "Dict[str, ConfigItem]" = {
         "Hope API token",
     ),
     "HOPE_API_TOKEN": (str, "", "", False, "Hope API token"),
-    "MEDIA_ROOT": (str, "/var/media/", "/tmp/media", True, setting("media-root")),  # nosec
-    "MEDIA_URL": (str, "/media/", "/media", False, setting("media-root")),  # nosec
-    # "ROOT_TOKEN": (str, "", ""),
+    "MEDIA_ROOT": (str, "/var/media/", "/tmp/media", True, setting("media-root")),  # noqa: S108
+    "MEDIA_URL": (str, "/media/", "/media", False, setting("media-root")),  # noqa: S108
     "SECRET_KEY": (
         str,
         "",
@@ -180,40 +173,18 @@ CONFIG: "Dict[str, ConfigItem]" = {
     ),
     "ROOT_TOKEN_HEADER": (str, "x-root-token", "x-root-token"),
     "ROOT_TOKEN": (str, "", ""),
-    # "SECURE_HSTS_PRELOAD": (bool, True, setting("secure-hsts-preload"), False),
-    # "SECURE_HSTS_SECONDS": (int, 60, setting("secure-hsts-seconds")),
-    # "SECURE_SSL_REDIRECT": (bool, True, setting("secure-ssl-redirect"), False),
     "SENTRY_DSN": (str, "", "", False, "Sentry DSN"),
     "SENTRY_URL": (str, "", "", False, "Sentry server url"),
     "SENTRY_ENVIRONMENT": (str, ""),
-    # "SESSION_COOKIE_DOMAIN": (
-    #     str,
-    #     "",
-    #     setting("std-setting-SESSION_COOKIE_DOMAIN"),
-    #     "localhost",
-    # ),
-    # "SESSION_COOKIE_HTTPONLY": (bool, True, setting("session-cookie-httponly"), False),
-    # "SESSION_COOKIE_NAME": (str, "dedupe_session", setting("session-cookie-name")),
-    # "SESSION_COOKIE_PATH": (str, "/", setting("session-cookie-path")),
-    # "SESSION_COOKIE_SECURE": (bool, True, setting("session-cookie-secure"), False),
-    # "SIGNING_BACKEND": (
-    #     str,
-    #     "django.core.signing.TimestampSigner",
-    #     setting("signing-backend"),
-    # ),
     "SOCIAL_AUTH_LOGIN_URL": (str, "/login/", "", False, ""),
     "SOCIAL_AUTH_RAISE_EXCEPTIONS": (bool, False, True, False),
     "SOCIAL_AUTH_REDIRECT_IS_HTTPS": (bool, True, False, False, ""),
-    "STATIC_ROOT": (str, "/var/static", "/tmp/static", True, setting("static-root")),  # nosec
-    "STATIC_URL": (str, "/static/", "/static/", False, setting("static-url")),  # nosec
-    "TAILWIND_DEV_MODE": (bool, False, False, False, "Enable tailwind development mode"),
-    "TAILWIND_DEV_MODE": (bool, False, False, False, "Enable tailwind development mode"),
+    "STATIC_ROOT": (str, "/var/static", "/tmp/static", True, setting("static-root")),  # noqa: S108
+    "STATIC_URL": (str, "/static/", "/static/", False, setting("static-url")),  # noqa: S108
     "TIME_ZONE": (str, "UTC", "UTC", False, setting("std-setting-TIME_ZONE")),
     "AZURE_CLIENT_SECRET": (str, "", "", False, "Azure client secret for SSO"),
     "AZURE_TENANT_ID": (str, "", "", False, "Azure tenant ID for SSO"),
     "AZURE_CLIENT_KEY": (str, "", "", False, "Azure client key for SSO"),
-    # "AZURE_CONNECTION_STRING": (str, ""),
-    # "CV2DNN_PATH": (str, ""),
 }
 
 env = SmartEnv(**CONFIG)

@@ -1,6 +1,7 @@
 from collections.abc import Callable
+from contextlib import suppress
 from functools import update_wrapper, wraps
-from typing import TYPE_CHECKING, Any, Optional
+from typing import TYPE_CHECKING, Any
 
 from django.apps import apps
 from django.contrib import admin
@@ -26,10 +27,6 @@ if TYPE_CHECKING:
 
 
 class TenantAutocompleteJsonView(SmartAutocompleteJsonView):
-    #
-    # def has_perm(self, request: "HttpRequest", obj: "Model|None" = None) -> bool:
-    #     return self.model_admin.has_view_permission(request, obj=obj)
-
     def filter_queryset(self, queryset: QuerySet) -> QuerySet:
         params = {
             k: v for k, v in self.request.GET.items() if k not in ["app_label", "model_name", "field_name", "term"]
@@ -47,9 +44,7 @@ class TenantAutocompleteJsonView(SmartAutocompleteJsonView):
         return self.filter_queryset(qs)
 
     def process_request(self, request: "HttpRequest") -> tuple[str, "ModelAdmin", "Field", str]:  # noqa C901
-        """
-        Overridden to handle Proxy Models
-        """
+        """Override to handle Proxy Models."""
         term = request.GET.get("term", "")
         try:
             app_label = request.GET["app_label"]
@@ -132,11 +127,8 @@ class TenantAdminSite(admin.AdminSite):
 
     namespace = "workspace"
 
-    def _build_app_dict(self, request: HttpRequest, label: Optional[str] = None) -> dict[str, Any]:
-        """
-        Build the app dictionary. The optional `label` parameter filters models
-        of a specific app.
-        """
+    def _build_app_dict(self, request: HttpRequest, label: str | None = None) -> dict[str, Any]:
+        """Build the app dictionary. The optional `label` parameter filters models of a specific app."""
         app_dict = {}
 
         if label:
@@ -168,15 +160,12 @@ class TenantAdminSite(admin.AdminSite):
             }
             if perms.get("change") or perms.get("view"):
                 model_dict["view_only"] = not perms.get("change")
-                try:
+                with suppress(NoReverseMatch):
                     model_dict["admin_url"] = self._registry[model].get_changelist_index_url(request)
-                except NoReverseMatch:
-                    pass
+
             if perms.get("add"):
-                try:
+                with suppress(NoReverseMatch):
                     model_dict["add_url"] = reverse("%s:%s_%s_add" % info, current_app=self.name)
-                except NoReverseMatch:
-                    pass
 
             if app_label in app_dict:
                 app_dict[app_label]["models"].append(model_dict)
@@ -204,15 +193,7 @@ class TenantAdminSite(admin.AdminSite):
         ret["active_tenant"] = selected_tenant
         ret["active_program"] = selected_program
         ret["namespace"] = self.namespace
-        # ret["selected_program"] = "???"
-        # else:
-        #     ret["active_tenant"] = None
         return ret  # type: ignore
-
-    # def is_smart_enabled(self, request: "HttpRequest") -> bool:
-    #     return False
-
-    #     return super().is_smart_enabled(request)
 
     def autocomplete_view(self, request: "HttpRequest") -> HttpResponse:
         return TenantAutocompleteJsonView.as_view(admin_site=self)(request)
@@ -250,9 +231,8 @@ class TenantAdminSite(admin.AdminSite):
         self, request: "HttpRequest", extra_context: "dict[str, Any] | None" = None
     ) -> "HttpResponse|HttpResponseRedirect":
         response = super().login(request, extra_context)
-        if request.method == "POST":
-            if request.user.is_authenticated:
-                return redirect(f"{self.namespace}:select_tenant")
+        if request.method == "POST" and request.user.is_authenticated:
+            return redirect(f"{self.namespace}:select_tenant")
 
         return response
 
@@ -263,8 +243,6 @@ class TenantAdminSite(admin.AdminSite):
         extra_context: "dict[str,Any]|None" = None,
         **kwargs: "Any",
     ) -> "HttpResponse":
-        # if not is_tenant_valid():
-        #     return redirect(f"{self.namespace}:select_tenant")
         return super().index(request, extra_context, **kwargs)
 
     # @method_decorator(never_cache)
@@ -285,18 +263,12 @@ class TenantAdminSite(admin.AdminSite):
 
     # @method_decorator(never_cache)
     def select_program(self, request: "HttpRequest") -> "HttpResponse":
-        # context = self.each_context(request)
         if request.method == "POST":
             form = SelectProgramForm(request.POST, request=request)
             if form.is_valid():
                 co = form.cleaned_data["program"]
                 state.set_selected_program(co)
                 return HttpResponseRedirect(reverse("workspace:index"))
-
-        # form = SelectProgramForm(request=request)
-        #
-        # context["form"] = form
-        # return TemplateResponse(request, "workspace/select_program.html", context)
 
 
 workspace = TenantAdminSite(name="workspace")

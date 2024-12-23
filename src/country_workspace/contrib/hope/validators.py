@@ -5,7 +5,6 @@ from country_workspace.validators.base import BeneficiaryGroupValidator
 
 
 class FullHouseholdValidator(BeneficiaryGroupValidator):
-
     def validate(self, hh: "Household") -> list:
         errs = []
         try:

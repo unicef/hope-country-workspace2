@@ -5,7 +5,7 @@ from django.template.response import TemplateResponse
 from django.urls import reverse
 
 
-def confirm_action(
+def confirm_action(  # noqa: PLR0913
     modeladmin,
     request,
     action,

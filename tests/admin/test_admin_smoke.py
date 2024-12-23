@@ -93,11 +93,10 @@ def pytest_generate_tests(metafunc: "Metafunc") -> None:  # noqa
             if hasattr(admin, "extra_button_handlers"):
                 name = model._meta.object_name
                 assert admin.urls  # we need to force this call
-                # admin.get_urls()  # we need to force this call
                 buttons = admin.extra_button_handlers.values()
                 full_name = f"{model._meta.app_label}.{name}"
                 admin_name = f"{model._meta.app_label}.{admin.__class__.__name__}"
-                if not (full_name in excluded_models):
+                if full_name not in excluded_models:
                     for btn in buttons:
                         tid = f"{admin_name}:{btn.name}"
                         if tid not in excluded_buttons:
@@ -106,7 +105,7 @@ def pytest_generate_tests(metafunc: "Metafunc") -> None:  # noqa
         metafunc.parametrize("model_admin,button_handler", m1, ids=ids)
     elif "app_label" in metafunc.fixturenames:
         m: dict[str, int] = {}
-        for model, admin in site._registry.items():
+        for model in site._registry:
             m[model._meta.app_label] = 1
         metafunc.parametrize("app_label", m.keys(), ids=m.keys())
     elif "model_admin" in metafunc.fixturenames:
@@ -115,7 +114,7 @@ def pytest_generate_tests(metafunc: "Metafunc") -> None:  # noqa
         for model, admin in site._registry.items():
             name = model._meta.object_name
             full_name = f"{model._meta.app_label}.{name}"
-            if not (full_name in excluded_models):
+            if full_name not in excluded_models:
                 m2.append(admin)
                 ids.append(f"{admin.__class__.__name__}:{full_name}")
         metafunc.parametrize("model_admin", m2, ids=ids)

@@ -10,13 +10,11 @@ from .manager import cache_manager
 @receiver(post_save)
 def update_cache(sender: "type[Model]", instance: Model, **kwargs):
     program = None
-    if isinstance(instance, (Household, Individual, CountryHousehold, CountryIndividual)):
+    if isinstance(instance, (Household | Individual | CountryHousehold | CountryIndividual)):
         program = instance.program
-    elif isinstance(instance, (Program, CountryProgram)):
+    elif isinstance(instance, (Program | CountryProgram)):
         program = instance
-    elif isinstance(instance, (AsyncJob, CountryAsyncJob)):
-        program = instance.program
-    elif isinstance(instance, (Batch, CountryBatch)):
+    elif isinstance(instance, (AsyncJob | CountryAsyncJob | Batch | CountryBatch)):
         program = instance.program
     if program:
         cache_manager.incr_cache_version(program=program)

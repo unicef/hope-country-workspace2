@@ -57,9 +57,6 @@ class ProgramAdmin(BaseModelAdmin):
             success_message="Successfully executed",
         )
 
-        # base = reverse("admin:country_workspace_individual_changelist")
-        # btn.href = f"{base}?household__exact={obj.pk}"
-
     @button()
     def sync(self, request: HttpRequest) -> None:
         from country_workspace.contrib.hope.sync.office import sync_programs

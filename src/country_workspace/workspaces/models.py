@@ -54,6 +54,3 @@ class CountryAsyncJob(AsyncJob):
         proxy = True
         verbose_name = "Background Job"
         verbose_name_plural = "Background Jobs"
-
-    # class Meta:
-    #     app_label = "workspaces"

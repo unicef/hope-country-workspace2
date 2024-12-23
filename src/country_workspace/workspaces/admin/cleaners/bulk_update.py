@@ -29,6 +29,7 @@ class BulkUpdateForm(BaseActionForm):
         self.fields["fields"].choices = [(name, name) for name, fld in checker.get_form()().fields.items()]
 
 
+"""
 # class Criteria:
 #     pass
 #
@@ -67,6 +68,7 @@ class BulkUpdateForm(BaseActionForm):
 #
 #     def __str__(self):
 #         return {"validate": "list", "source": self.values}
+"""
 
 
 class XlsValidateRule:
@@ -183,26 +185,6 @@ def bulk_update_export_template(job: AsyncJob) -> bytes:
     job.file = path
     job.save()
     return path
-
-
-#
-# @admin.action
-# def bulk_update_export(
-#         model_admin: "BeneficiaryBaseAdmin", request: HttpRequest, queryset: "QuerySet[Beneficiary]"
-# ) -> HttpResponse:
-#     ctx = model_admin.get_common_context(request, title=_("Export data for bulk update"))
-#     ctx["checker"] = checker = model_admin.get_checker(request)
-#     ctx["preserved_filters"] = model_admin.get_preserved_filters(request)
-#     form = BulkUpdateForm(request.POST, checker=checker)
-#     ctx["form"] = form
-#     if "_export" in request.POST:
-#         if form.is_valid():
-#             config = {"fields": ["id"] + sorted(form.cleaned_data["fields"])}
-#             bulk_update_export_template(queryset.all(), model_admin.get_selected_program(request), config)
-#             model_admin.message_user(request, _("Export scheduled"), messages.SUCCESS)
-#             return HttpResponseRedirect(".")
-#
-#     return render(request, "workspace/actions/bulk_update_export.html", ctx)
 
 
 def bulk_update_individual(job: AsyncJob) -> dict[str, Any]:

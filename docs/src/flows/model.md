@@ -6,13 +6,13 @@ erDiagram
     Spreadsheet {
         string title
     }
-    
+
     Error {
         string sheet
         int row
         string column
     }
-    
+
     Program ||--o{ Spreadsheet: has
     Program ||--o{ Individual: has
     Program ||--o{ Household: has

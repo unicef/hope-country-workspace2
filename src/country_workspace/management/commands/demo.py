@@ -35,7 +35,7 @@ class Command(BaseCommand):
         )
         Site.objects.clear_cache()
 
-        for flag in settings.FLAGS.keys():
+        for flag in settings.FLAGS:
             FlagState.objects.get_or_create(name=flag, condition="hostname", value="127.0.0.1,localhost")
 
         Office.objects.get_or_create(
@@ -49,7 +49,7 @@ class Command(BaseCommand):
         user, __ = User.objects.get_or_create(username="user")
 
         test_utils_dir = Path(__file__).parent.parent.parent.parent.parent / "tests/extras"
-        assert test_utils_dir.exists(), str(test_utils_dir.absolute()) + " does not exist"  # nosec B101
+        assert test_utils_dir.exists(), str(test_utils_dir.absolute()) + " does not exist"  # noqa: S101
         sys.path.append(str(test_utils_dir.absolute()))
 
         import vcr

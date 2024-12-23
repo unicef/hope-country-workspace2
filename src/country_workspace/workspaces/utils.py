@@ -56,22 +56,20 @@ def is_tenant_valid() -> bool:
 
 
 def get_tenant_cookie_from_request(request: "HttpRequest") -> str | None:
-    if request and request.user.is_authenticated:
-        if request.user.roles.exists() or request.user.is_superuser:
-            signer = get_cookie_signer()
-            cookie_value = request.COOKIES.get(conf.TENANT_COOKIE_NAME)
-            if cookie_value:
-                return signer.unsign(cookie_value)
+    if request and request.user.is_authenticated and (request.user.roles.exists() or request.user.is_superuser):
+        signer = get_cookie_signer()
+        cookie_value = request.COOKIES.get(conf.TENANT_COOKIE_NAME)
+        if cookie_value:
+            return signer.unsign(cookie_value)
     return None
 
 
 def get_program_cookie_from_request(request: "HttpRequest") -> str | None:
-    if request and request.user.is_authenticated:
-        if request.user.roles.exists() or request.user.is_superuser:
-            signer = get_cookie_signer()
-            cookie_value = request.COOKIES.get(conf.PROGRAM_COOKIE_NAME)
-            if cookie_value:
-                return signer.unsign(cookie_value)
+    if request and request.user.is_authenticated and (request.user.roles.exists() or request.user.is_superuser):
+        signer = get_cookie_signer()
+        cookie_value = request.COOKIES.get(conf.PROGRAM_COOKIE_NAME)
+        if cookie_value:
+            return signer.unsign(cookie_value)
     return None
 
 

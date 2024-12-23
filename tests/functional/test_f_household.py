@@ -51,8 +51,6 @@ def test_list_household(selenium, admin_user, household: "CountryHousehold"):
             "workspaces.view_countryprogram",
         ],
         household.program.country_office,
-        # set_superuser=True,
-        # set_staff=True,
     ):
         selenium.get(f"{selenium.live_server.url}")
         # Login
@@ -63,12 +61,7 @@ def test_list_household(selenium, admin_user, household: "CountryHousehold"):
         Select(selenium.wait_for(By.CSS_SELECTOR, "select[name=tenant]")).select_by_visible_text(
             household.program.country_office.name
         )
-        # selenium.select2("button.primary").click()
         selenium.select2(By.ID, "select2-id_program-container", household.program.name)
-        #
-        # Select(selenium.wait_for(By.CSS_SELECTOR, "select[name=program]")).select_by_visible_text(
-        #     household.program.name
-        # )
         selenium.wait_for(By.LINK_TEXT, "Households").click()
 
         selenium.wait_for(By.LINK_TEXT, str(household.name)).click()

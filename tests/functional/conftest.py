@@ -11,7 +11,7 @@ Proxy = namedtuple("Proxy", "host,port")
 
 def pytest_configure(config):
     if not config.option.driver:
-        setattr(config.option, "driver", "chrome")
+        config.option.driver = "chrome"
 
 
 @contextlib.contextmanager
@@ -94,8 +94,5 @@ def selenium(monkeypatch, live_server, settings, driver):
     driver.wait_for_url = wait_for_url.__get__(driver)
     driver.find_by_css = find_by_css.__get__(driver)
     driver.select2 = select2.__get__(driver)
-
-    # driver.maximize_window()
-    # driver.fullscreen_window()
 
     yield driver

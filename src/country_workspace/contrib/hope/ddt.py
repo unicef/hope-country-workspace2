@@ -34,7 +34,6 @@ class WSHopePanel(Panel):
         hope_request_end.connect(functools.partial(self.log, action="end"))
 
     def log(self, **kwargs):
-
         if kwargs["action"] == "start":
             self.timing[kwargs["signature"]] = time.perf_counter()
             self.calls.append(ApiCall(self, kwargs))
@@ -50,7 +49,7 @@ class WSHopePanel(Panel):
 
     @property
     def nav_subtitle(self):
-        return "{} calls".format(len(self.calls))
+        return f"{len(self.calls)} calls"
 
     def generate_stats(self, request, response):
         self.record_stats({"calls": self.calls})

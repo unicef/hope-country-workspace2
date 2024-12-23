@@ -51,7 +51,6 @@ def mock_aurora_data() -> dict[str, Any]:
             "batch_name": "Batch 1",
             "household_name_column": "family_name",
         },
-        # "imported_by_id": 1,
     }
 
 

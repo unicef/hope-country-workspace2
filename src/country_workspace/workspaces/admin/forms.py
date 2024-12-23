@@ -7,7 +7,7 @@ from django.utils.translation import gettext as _
 
 
 @deconstructible
-class ValidatableFileValidator(object):
+class ValidatableFileValidator:
     error_messages = {"invalid_file": _("Unsupported file format '%s'")}
 
     def __call__(self, f: Path) -> None:

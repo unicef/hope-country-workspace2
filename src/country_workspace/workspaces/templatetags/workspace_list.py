@@ -87,9 +87,7 @@ def flex_field_lookup_field(field_name: str, result, model_admin: "ModelAdmin") 
 
 
 def result_headers(cl: "WorkspaceChangeList") -> "Generator[dict[str, str]]":  # noqa
-    """
-    Overrides standard Django behaviour to silent error if wrong columns have been configured
-    """
+    """Override standard Django behaviour to silent error if wrong columns have been configured."""
     ordering_field_columns = cl.get_ordering_field_columns()
     for i, field_name in enumerate(cl.list_display):
         try:
@@ -101,17 +99,17 @@ def result_headers(cl: "WorkspaceChangeList") -> "Generator[dict[str, str]]":  #
             continue
         is_field_sortable = cl.sortable_by is None or field_name in cl.sortable_by
         if attr:
-            field_name = _coerce_field_name(field_name, i)
+            field_name = _coerce_field_name(field_name, i)  # noqa: PLW2901
             # Potentially not sortable
 
             # if the field is the action checkbox: no sorting and special class
             if field_name == "action_checkbox":
                 aria_label = _("Select all objects on this page for an action")
                 yield {
-                    "text": mark_safe(  # nosec B308 B703
+                    "text": mark_safe(  # noqa: S308
                         f'<input type="checkbox" id="action-toggle" ' f'aria-label="{aria_label}">'
                     ),
-                    "class_attrib": mark_safe(' class="action-checkbox-column"'),  # nosec B308 B703
+                    "class_attrib": mark_safe(' class="action-checkbox-column"'),  # noqa: S308
                     "sortable": False,
                 }
                 continue
@@ -133,7 +131,7 @@ def result_headers(cl: "WorkspaceChangeList") -> "Generator[dict[str, str]]":  #
             continue
 
         # OK, it is sortable if we got this far
-        th_classes = ["sortable", "column-{}".format(field_name)]
+        th_classes = ["sortable", f"column-{field_name}"]
         order_type = ""
         new_order_type = "asc"
         sort_priority = 0
@@ -184,9 +182,7 @@ def result_headers(cl: "WorkspaceChangeList") -> "Generator[dict[str, str]]":  #
 
 
 def items_for_result(cl, result, form):  # noqa
-    """
-    Generate the actual list of data.
-    """
+    """Generate the actual list of data."""
 
     def link_in_col(is_first, field_name, cl):
         if cl.list_display_links is None:
@@ -217,7 +213,7 @@ def items_for_result(cl, result, form):  # noqa
                 if isinstance(attr, property) and hasattr(attr, "fget"):
                     boolean = getattr(attr.fget, "boolean", False)
                 result_repr = display_for_value(value, empty_value_display, boolean)
-                if isinstance(value, (datetime.date, datetime.time)):
+                if isinstance(value, (datetime.date | datetime.time)):
                     row_classes.append("nowrap")
             else:
                 if isinstance(f.remote_field, models.ManyToOneRel):
@@ -228,9 +224,9 @@ def items_for_result(cl, result, form):  # noqa
                         result_repr = field_val
                 else:
                     result_repr = display_for_field(value, f, empty_value_display)
-                if isinstance(f, (models.DateField, models.TimeField, models.ForeignKey)):
+                if isinstance(f, (models.DateField | models.TimeField | models.ForeignKey)):
                     row_classes.append("nowrap")
-        row_class = mark_safe(' class="%s"' % " ".join(row_classes))  # nosec
+        row_class = mark_safe(' class="%s"' % " ".join(row_classes))  # noqa: S308
         # If list_display_links not defined, add the link tag to the first field
         if link_in_col(first, field_name, cl):
             table_tag = "th" if first else "td"
@@ -269,7 +265,7 @@ def items_for_result(cl, result, form):  # noqa
                 and not (field_name == cl.model._meta.pk.name and form[cl.model._meta.pk.name].is_hidden)
             ):
                 bf = form[field_name]
-                result_repr = mark_safe(str(bf.errors) + str(bf))  # nosec
+                result_repr = mark_safe(str(bf.errors) + str(bf))  # noqa: S308
             yield format_html("<td{}>{}</td>", row_class, result_repr)
     if form and not form[cl.model._meta.pk.name].is_hidden:
         yield format_html("<td>{}</td>", form[cl.model._meta.pk.name])
@@ -277,7 +273,7 @@ def items_for_result(cl, result, form):  # noqa
 
 def results(cl):
     if cl.formset:
-        for res, form in zip(cl.result_list, cl.formset.forms):
+        for res, form in zip(cl.result_list, cl.formset.forms, strict=False):
             yield ResultList(form, items_for_result(cl, res, form))
     else:
         for res in cl.result_list:
@@ -285,9 +281,7 @@ def results(cl):
 
 
 def result_list(cl):
-    """
-    Overridden to call our result_headers() instead of the Django's one
-    """
+    """Override to call our result_headers() instead of the Django's one."""
     headers = list(result_headers(cl))
     num_sorted_fields = 0
     for h in headers:
@@ -304,9 +298,7 @@ def result_list(cl):
 
 @register.tag(name="result_list")
 def result_list_tag(parser, token):
-    """
-    Overrides standard Django behaviour to use WorkspaceInclusionAdminNode
-    """
+    """Override standard Django behaviour to use WorkspaceInclusionAdminNode."""
     return WorkspaceInclusionAdminNode(
         parser,
         token,

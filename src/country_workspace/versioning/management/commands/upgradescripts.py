@@ -53,13 +53,13 @@ class Command(BaseCommand):
             for entry in m.existing:
                 stem = Path(entry).stem
                 x = "x" if m.is_processed(entry) else " "
-                self.stdout.write("[{x}] {name}".format(x=x, name=stem))
+                self.stdout.write(f"[{x}] {stem}")
         elif command == "create":
             new_ver = m.max_version + 1
             ts = now().strftime("%Y_%m_%d_%H%M%S")
             today = now().strftime("%Y %m %d %H:%M:%S")
 
-            dest_file = m.folder / "{:>04}_{}.py".format(new_ver, label or ts)
+            dest_file = m.folder / f"{new_ver:>04}_{label or ts}.py"
             with dest_file.open("w") as f:
                 f.write(VERSION_TEMPLATE % {"timestamp": ts, "version": country_workspace.VERSION, "today": today})
             if options["verbosity"] > 0:

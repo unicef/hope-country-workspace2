@@ -13,7 +13,6 @@ from .filters import IsValidFilter
 @admin.register(Individual)
 class IndividualAdmin(BaseModelAdmin):
     list_display = ("name", "batch")
-    # readonly_fields = ("country_office",)
     search_fields = ("name",)
     list_filter = (
         ("batch__country_office", LinkedAutoCompleteFilter.factory(parent=None)),

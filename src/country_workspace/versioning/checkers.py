@@ -5,7 +5,7 @@ from hope_flex_fields.models import DataChecker, FieldDefinition, Fieldset
 from country_workspace.contrib.hope.constants import HOUSEHOLD_CHECKER_NAME, INDIVIDUAL_CHECKER_NAME
 
 
-def create_hope_checkers() -> None:
+def create_hope_checkers() -> None:  # noqa: PLR0915
     _char = FieldDefinition.objects.get(field_type=forms.CharField)
     _date = FieldDefinition.objects.get(field_type=forms.DateField)
     _bool = FieldDefinition.objects.get(field_type=forms.BooleanField)
@@ -59,9 +59,6 @@ def create_hope_checkers() -> None:
         "male_age_group_60_disabled_count",
     ]:
         hh_fs.fields.get_or_create(name=segment, definition=_int, attrs={"required": False})
-
-    # hh_fs.fields.get_or_create(definition=_bf, name="hh_latrine_h_f", attrs={"label": "Latrine"})
-    # hh_fs.fields.get_or_create(definition=_bf, name="hh_electricity_h_f")
 
     ind_fs, __ = Fieldset.objects.get_or_create(name=INDIVIDUAL_CHECKER_NAME)
     ind_fs.fields.get_or_create(name="address", attrs={"label": "Address", "required": True}, definition=_char)

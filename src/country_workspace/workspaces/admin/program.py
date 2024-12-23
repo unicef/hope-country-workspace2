@@ -1,4 +1,4 @@
-from typing import Any, Optional
+from typing import Any
 
 from django import forms
 from django.conf import settings
@@ -52,7 +52,21 @@ class SelectIndividualColumnsForm(SelectColumnsForm):
 class ProgramForm(forms.ModelForm):
     class Meta:
         model = CountryProgram
-        exclude = ("country_office",)
+        fields = (
+            "name",
+            "code",
+            "status",
+            "sector",
+            "active",
+            "beneficiary_validator",
+            "household_checker",
+            "individual_checker",
+            "household_search",
+            "individual_search",
+            "household_columns",
+            "individual_columns",
+            "extra_fields",
+        )
 
 
 class BulkUpdateImportForm(forms.Form):
@@ -104,7 +118,6 @@ class CountryProgramAdmin(WorkspaceModelAdmin):
                 ),
             },
         ),
-        # (_("Important dates"), {"fields": ("last_login", "date_joined")}),
     )
 
     @property
@@ -118,14 +131,13 @@ class CountryProgramAdmin(WorkspaceModelAdmin):
             css={},
         )
 
-    # change_form_template = "workspace/program/change_form.html"
     def get_queryset(self, request: HttpResponse) -> QuerySet[CountryProgram]:
         return CountryProgram.objects.filter(country_office=state.tenant)
 
     def has_add_permission(self, request: HttpResponse) -> bool:
         return False
 
-    def has_delete_permission(self, request: HttpResponse, obj: Optional[CountryProgram] = None) -> bool:
+    def has_delete_permission(self, request: HttpResponse, obj: CountryProgram | None = None) -> bool:
         return False
 
     def changelist_view(self, request, extra_context=None):
@@ -138,12 +150,10 @@ class CountryProgramAdmin(WorkspaceModelAdmin):
         form_class: "type[SelectColumnsForm|SelectIndividualColumnsForm]",
         context: dict[str, Any],
     ) -> "HttpResponse":
-
         program: "CountryProgram" = context["original"]
         checker: DataChecker = context["checker"]
 
-        # initials = [s.replace("flex_fields__", "") for s in getattr(program, context["storage_field"]).split("\n")]
-        initials = [s for s in getattr(program, context["storage_field"]).split("\n")]
+        initials = getattr(program, context["storage_field"]).split("\n")
 
         if request.method == "POST":
             form = form_class(
@@ -152,9 +162,7 @@ class CountryProgramAdmin(WorkspaceModelAdmin):
                 initial={"columns": initials},
             )
             if form.is_valid():
-                columns = []
-                for s in form.cleaned_data["columns"]:
-                    columns.append(s)
+                columns = form.cleaned_data["columns"]
                 setattr(program, context["storage_field"], "\n".join(columns))
                 program.save()
                 return HttpResponseRedirect(reverse("workspace:workspaces_countryprogram_change", args=[program.pk]))
@@ -258,7 +266,6 @@ class CountryProgramAdmin(WorkspaceModelAdmin):
     def import_aurora(self, request: HttpRequest, program: "CountryProgram") -> "ImportAuroraForm|None":
         form = ImportAuroraForm(request.POST, prefix="aurora")
         if form.is_valid():
-
             job: AsyncJob = AsyncJob.objects.create(
                 type=AsyncJob.JobType.TASK,
                 action=fqn(sync_aurora_job),

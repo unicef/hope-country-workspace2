@@ -1,5 +1,3 @@
-from typing import Optional
-
 from django.core.cache import cache
 
 from hope_flex_fields.models import DataChecker
@@ -14,7 +12,7 @@ def sync_offices() -> dict[str, int]:
     client = HopeClient()
     totals = {"add": 0, "upd": 0}
     with cache.lock("sync-offices"):
-        for i, record in enumerate(client.get("business_areas")):
+        for record in client.get("business_areas"):
             if record["active"]:
                 __, created = Office.objects.get_or_create(
                     hope_id=record["id"],
@@ -34,7 +32,7 @@ def sync_offices() -> dict[str, int]:
         return totals
 
 
-def sync_programs(limit_to_office: "Optional[Office]" = None) -> dict[str, int]:
+def sync_programs(limit_to_office: "Office | None" = None) -> dict[str, int]:
     client = HopeClient()
     hh_chk = DataChecker.objects.filter(name=constants.HOUSEHOLD_CHECKER_NAME).first()
     ind_chk = DataChecker.objects.filter(name=constants.INDIVIDUAL_CHECKER_NAME).first()
@@ -42,7 +40,7 @@ def sync_programs(limit_to_office: "Optional[Office]" = None) -> dict[str, int]:
     if limit_to_office:
         office = limit_to_office
     with cache.lock("sync-programs"):
-        for i, record in enumerate(client.get("programs")):
+        for record in client.get("programs"):
             try:
                 if limit_to_office and record["business_area_code"] != office.code:
                     continue

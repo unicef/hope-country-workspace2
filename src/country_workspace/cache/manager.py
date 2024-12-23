@@ -1,5 +1,5 @@
 import logging
-from typing import TYPE_CHECKING, Any, Optional
+from typing import TYPE_CHECKING, Any
 
 from django.core.cache import caches
 from django.core.cache.backends.redis import RedisCacheClient
@@ -62,9 +62,8 @@ class CacheManager:
             timeout = 1
         self.cache.set(key, value, timeout=timeout or self.cache_timeout, **kwargs)
 
-    def _get_version_key(self, office: "Optional[Office]" = None, program: "Optional[Program]" = None):
+    def _get_version_key(self, office: "Office | None" = None, program: "Program | None" = None):
         if program:
-            program = program
             office = program.country_office
         elif office:
             program = None
@@ -72,11 +71,11 @@ class CacheManager:
         parts = [self.prefix, "key", office.slug if office else "-", str(program.pk) if program else "-"]
         return ":".join(parts)
 
-    def reset_cache_version(self, *, office: "Optional[Office]" = None, program: "Optional[Program]" = None):
+    def reset_cache_version(self, *, office: "Office | None" = None, program: "Program | None" = None):
         key = self._get_version_key(office, program)
         self.cache.delete(key)
 
-    def get_cache_version(self, *, office: "Optional[Office]" = None, program: "Optional[Program]" = None):
+    def get_cache_version(self, *, office: "Office | None" = None, program: "Program | None" = None):
         key = self._get_version_key(office, program)
         version = self.cache.get(key)
         if not version:
@@ -84,7 +83,7 @@ class CacheManager:
             self.cache.set(key, version, timeout=self.cache_timeout)
         return version
 
-    def incr_cache_version(self, *, office: "Optional[Office]" = None, program: "Optional[Program]" = None):
+    def incr_cache_version(self, *, office: "Office | None" = None, program: "Program | None" = None):
         if office and program:
             raise ValueError("Cannot use both office and program")
         key = self._get_version_key(office, program)
@@ -127,18 +126,6 @@ class CacheManager:
         return self.build_key(
             prefix, slugify(request.path), slugify(str(sorted(request.GET.items()))), *[str(e) for e in args]
         )
-
-    #
-    # def store(self, request, value):
-    #     key = self._build_key_from_request(request)
-    #     cache_store.send(CacheManager, key=key, request=request, value=value)
-    #     self.set(key, value)
-    #
-    # def retrieve(self, request, prefix=""):
-    #     key = self.build_key_from_request(request)
-    #     if data := cache.get(key):
-    #         return pickle.loads(data)
-    #     return None
 
 
 cache_manager = CacheManager()

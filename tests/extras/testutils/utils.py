@@ -29,15 +29,6 @@ def get_all_attributes(driver, element):
     )
 
 
-def is_clickable(driver, element):
-    """Tries to click the element"""
-    try:
-        element.click()
-        return True
-    except Exception:
-        return False
-
-
 def mykey(group, request):
     return request.META["REMOTE_ADDR"][::-1]
 
@@ -84,8 +75,6 @@ def force_login(user, driver, base_url):
     from django.contrib.auth import BACKEND_SESSION_KEY, HASH_SESSION_KEY, SESSION_KEY
 
     SessionStore = import_module(settings.SESSION_ENGINE).SessionStore
-    # selenium_login_start_page = getattr(settings, 'SELENIUM_LOGIN_START_PAGE', '/')
-    # driver.get('{}{}'.format(base_url, selenium_login_start_page))
     with driver.with_timeouts(page=5):
         driver.get(base_url)
 
@@ -112,7 +101,6 @@ def select_office(app, country_office, program=None):
     res = res.forms["select-tenant"].submit()
     if program:
         res = app.get("/")
-        # res.forms["select-program"]["program"] = program.pk
         res.forms["select-program"]["program"].force_value(program.pk)
         res.forms["select-program"].submit()
     yield

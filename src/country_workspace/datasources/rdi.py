@@ -1,5 +1,4 @@
 import io
-from typing import Union
 
 from django.db.transaction import atomic
 
@@ -8,7 +7,7 @@ from hope_smart_import.readers import open_xls_multi
 from country_workspace.models import AsyncJob, Batch, Household
 from country_workspace.utils.fields import clean_field_name
 
-RDI = Union[str, io.BytesIO]
+RDI = str | io.BytesIO
 
 
 def import_from_rdi(job: AsyncJob) -> dict[str, int]:
@@ -20,8 +19,6 @@ def import_from_rdi(job: AsyncJob) -> dict[str, int]:
         master_column_label = job.config["master_column_label"]
         detail_column_label = job.config["detail_column_label"]
         rdi = job.file
-        # household_pk_col = form.cleaned_data["pk_column_name"]
-        # total_hh = total_ind = 0
         batch = Batch.objects.create(
             name=batch_name,
             program=job.program,
@@ -56,6 +53,6 @@ def import_from_rdi(job: AsyncJob) -> dict[str, int]:
                                 flex_fields=record,
                             )
                             ret["individual"] += 1
-                    except Exception as e:
+                    except Exception as e:  # noqa: BLE001
                         raise Exception("Error processing sheet %s line %s: %s" % (1 + sheet_index, line, e))
         return ret

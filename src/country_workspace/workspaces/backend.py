@@ -1,5 +1,3 @@
-from typing import Optional
-
 from django.contrib.auth.backends import BaseBackend
 from django.contrib.auth.models import AnonymousUser, Permission
 from django.db.models import Model, Q, QuerySet
@@ -35,20 +33,17 @@ class TenantBackend(BaseBackend):
             program = None
             country_office = obj
             filters = {"group__userrole__country_office": country_office}
-        elif isinstance(obj, (CountryBatch, Batch)):
+        elif isinstance(obj, (CountryBatch | Batch)):
             program = obj.program
             country_office = obj.country_office
             filters = {"group__userrole__country_office": country_office, "group__userrole__program": program}
-        elif isinstance(obj, (CountryProgram, Program)):
+        elif isinstance(obj, (CountryProgram | Program)):
             program = obj
             country_office = obj.country_office
             filters = {
                 "group__userrole__country_office": country_office,
             }
-        elif isinstance(obj, (CountryHousehold, Household)):
-            program = obj.program
-            country_office = obj.country_office
-        elif isinstance(obj, (CountryIndividual, Individual)):
+        elif isinstance(obj, (CountryHousehold | Household | CountryIndividual | Individual)):
             program = obj.program
             country_office = obj.country_office
         else:
@@ -69,7 +64,7 @@ class TenantBackend(BaseBackend):
     def get_available_modules(self, user: "User") -> "set[str]":
         return {perm[: perm.index(".")] for perm in self.get_all_permissions(user, state.tenant)}
 
-    def has_perm(self, user_obj: "User|AnonymousUser", perm: str, obj: Optional[Model] = None) -> bool:
+    def has_perm(self, user_obj: "User|AnonymousUser", perm: str, obj: Model | None = None) -> bool:
         if user_obj.is_superuser:
             return True
         return super().has_perm(user_obj, perm, obj)
@@ -82,9 +77,9 @@ class TenantBackend(BaseBackend):
             return False
         return app_label in self.get_available_modules(user)
 
-    def get_allowed_tenants(self, request: "HttpRequest|None" = None) -> "Optional[QuerySet[Model]]":
+    def get_allowed_tenants(self, request: "HttpRequest|None" = None) -> "QuerySet[Model] | None":
         request = request or state.request
-        allowed_tenants: "Optional[QuerySet[Model]]"
+        allowed_tenants: "QuerySet[Model] | None"
         if request.user.is_superuser:
             allowed_tenants = Office.objects.filter(active=True)
         elif request.user.is_authenticated:

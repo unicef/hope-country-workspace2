@@ -189,7 +189,6 @@ class user_grant_permissions(ContextDecorator):  # noqa
         self.user.save()
         self.user._password = "password"
         self.group = get_group(name=self.group_name, permissions=self.permissions or [])
-        # self.user.groups.add(self.group)
         if self.country_office:
             UserRole.objects.get_or_create(
                 country_office=self.country_office, program=self.program, user=self.user, group=self.group

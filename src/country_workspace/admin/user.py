@@ -24,8 +24,6 @@ class UserAdmin(ExtraButtonsMixin, BaseUserAdmin):
             qs = qs.filter(
                 Q(roles__program__id=program) | Q(is_superuser=True) | Q(roles__country_office__programs__pk=program)
             )
-        results = []
-        for user in qs.all():
-            results.append({"id": user.id, "text": user.username})
+        results = [{"id": user.id, "text": user.username} for user in qs.all()]
         res = {"results": results, "pagination": {"more": False}}
         return JsonResponse(res)

@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Any, Optional
+from typing import TYPE_CHECKING, Any
 
 from django.conf import settings
 from django.contrib.auth import get_user_model
@@ -13,11 +13,11 @@ if TYPE_CHECKING:
 
 
 class AnyUserAuthBackend(ModelBackend):
-    """DEBUG Only smart auth backend  auto-create users"""
+    """DEBUG Only smart auth backend  auto-create users."""
 
     def authenticate(
         self,
-        request: "Optional[HttpRequest]",
+        request: "HttpRequest | None",
         username: str | None = None,
         password: str | None = None,
         **kwargs: Any,
@@ -28,7 +28,7 @@ class AnyUserAuthBackend(ModelBackend):
             if username in offices:
                 user, __ = get_user_model().objects.update_or_create(
                     username=username,
-                    defaults=dict(is_staff=True, is_active=True, is_superuser=False),
+                    defaults={"is_staff": True, "is_active": True, "is_superuser": False},
                 )
                 office = Office.objects.get(slug=username)
                 g = Group.objects.get(name=settings.ANALYST_GROUP_NAME)
@@ -37,7 +37,7 @@ class AnyUserAuthBackend(ModelBackend):
             elif username in ["admin", "superuser", "administrator", "sax"]:
                 user, __ = get_user_model().objects.update_or_create(
                     username=username,
-                    defaults=dict(is_staff=True, is_active=True, is_superuser=True),
+                    defaults={"is_staff": True, "is_active": True, "is_superuser": True},
                 )
                 return user
             elif username in [
@@ -45,7 +45,7 @@ class AnyUserAuthBackend(ModelBackend):
             ]:
                 user, __ = get_user_model().objects.update_or_create(
                     username=username,
-                    defaults=dict(is_staff=True, is_active=True, is_superuser=False),
+                    defaults={"is_staff": True, "is_active": True, "is_superuser": False},
                 )
                 return user
         return None
