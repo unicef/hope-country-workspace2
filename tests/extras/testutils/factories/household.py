@@ -67,7 +67,6 @@ def get_name(instance, num):
 
 class HouseholdFactory(AutoRegisterModelFactory):
     batch = factory.SubFactory(CountryBatchFactory)
-    # name = factory.Faker("last_name")
     name = factory.LazyAttributeSequence(get_name)
 
     flex_fields = factory.LazyAttribute(get_hh_fields)
@@ -87,7 +86,7 @@ class HouseholdFactory(AutoRegisterModelFactory):
             pass
         else:
             self.flex_fields.setdefault("household_id", self.id)
-            for i in range(self.flex_fields["size"]):
+            for __ in range(self.flex_fields["size"]):
                 IndividualFactory(batch=self.batch, household=self)
 
 

@@ -125,8 +125,6 @@ def test_hh_office_security(app: "CWTestApp", household: "CountryHousehold", hou
         app.get("/")
         with select_office(app, household.country_office):
             app.get(base_url)
-        # with select_office(app, household.country_office, household2.program):
-        #     app.get(base_url, status=403)
 
 
 def test_hh_program_security(app: "CWTestApp", household: "CountryHousehold", household2: "CountryHousehold") -> None:
@@ -134,5 +132,3 @@ def test_hh_program_security(app: "CWTestApp", household: "CountryHousehold", ho
     with user_grant_permissions(app._user, ["workspaces.view_countryhousehold"], household.program):
         with select_office(app, household.country_office):
             app.get(base_url)
-        # with select_office(app, household.country_office, household2.program):
-        #     app.get(base_url, status=403)

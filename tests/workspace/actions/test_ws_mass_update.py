@@ -73,9 +73,6 @@ def test_mass_update_impl(household):
 def test_mass_update(app: "DjangoTestApp", household: "CountryHousehold") -> None:
     url = reverse("workspace:workspaces_countryhousehold_changelist")
     with select_office(app, household.country_office, household.program):
-        # res = app.get(url)
-        # res.forms["select-tenant"]["tenant"] = household.country_office.pk
-        # res.forms["select-tenant"].submit()
         res = app.get(url)
         form = res.forms["changelist-form"]
         form["action"] = "mass_update"

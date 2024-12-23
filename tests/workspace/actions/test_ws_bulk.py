@@ -91,7 +91,6 @@ def test_validator(field, validator):
 
 
 def test_create_xls_importer(household: "CountryHousehold", force_migrated_records):
-
     selected_fields = [
         "id",
         "gender",
@@ -111,8 +110,6 @@ def test_create_xls_importer(household: "CountryHousehold", force_migrated_recor
     sheet = workbook.worksheets[0]
     headers = [cell.value for cell in next(sheet.iter_rows(min_row=1, max_row=1))]
     assert headers == selected_fields
-    # with Path("AAAAAAA.xlsx").open("bw") as f:
-    #     f.write(ret.getvalue())
 
 
 def test_bulk_update_export(
@@ -148,12 +145,6 @@ def test_bulk_update_export(
         job: AsyncJob = household.program.jobs.first()
         job.queue()
 
-        # assert res.content_type == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-        # workbook = openpyxl.load_workbook(io.BytesIO(res.content))
-        # sheet = workbook.worksheets[0]
-        # headers = [cell.value for cell in next(sheet.iter_rows(min_row=1, max_row=1))]
-        # assert headers == ["id"] + selected_fields
-
 
 @pytest.fixture()
 def data(household):
@@ -171,10 +162,6 @@ def data(household):
             worksheet.write(row, col, f"{c}_{col}")
     workbook.close()
     buff.seek(0)
-    # from pathlib import Path
-    # with Path("AAAAAAA.xlsx").open("bw") as f:
-    #     f.write(buff.getvalue())
-    # buff.seek(0)
     return buff, household
 
 

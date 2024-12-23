@@ -15,7 +15,6 @@ class BatchFactory(AutoRegisterModelFactory):
     import_date = factory.LazyFunction(timezone.now)
     name = factory.Sequence(lambda n: f"Batch {n}")
 
-    # country_office = factory.SubFactory("testutils.factories.OfficeFactory")
     program = factory.SubFactory(ProgramFactory)
 
     class Meta:

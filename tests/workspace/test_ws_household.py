@@ -61,7 +61,6 @@ def test_hh_changelist(app: "CWTestApp", household: "CountryHousehold") -> None:
     url = reverse("workspace:workspaces_countryhousehold_changelist")
     program: "CountryProgram" = household.program
     with select_office(app, program.country_office, program):
-
         res = app.get(url)
         assert res.status_code == 200, res.location
         assert f"Add {household._meta.verbose_name}" not in res.text

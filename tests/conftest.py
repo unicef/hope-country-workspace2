@@ -30,7 +30,7 @@ def pytest_addoption(parser):
 
 
 def pytest_configure(config):
-    if not config.option.enable_selenium and ("selenium" not in getattr(config.option, "markexpr")):
+    if not config.option.enable_selenium and ("selenium" not in getattr(config.option, "markexpr", None)):
         if config.option.markexpr:
             config.option.markexpr += " and not selenium"
         else:
@@ -48,9 +48,7 @@ def pytest_configure(config):
     os.environ["CELERY_TASK_ALWAYS_EAGER"] = "1"
     os.environ["CELERY_TASK_STORE_EAGER_RESULT"] = "1"
     os.environ["SECURE_HSTS_PRELOAD"] = "0"
-    # os.environ["AURORA_API_URL"] = "https://aurora.io/api/"
     os.environ["AURORA_API_TOKEN"] = "aurora_token"
-    # os.environ["HOPE_API_URL"] = "https://dev-hope.unitst.org/api/rest/"
     os.environ["HOPE_API_TOKEN"] = "kugiugiuygiuygiuygiuhgiuhgiuhgiugiu"
 
     os.environ["SECRET_KEY"] = "kugiugiuygiuygiuygiuhgiuhgiuhgiugiu"
@@ -60,11 +58,6 @@ def pytest_configure(config):
     os.environ["LOGGING_LEVEL"] = "CRITICAL"
     import django
     from django.conf import settings
-
-    # settings.AURORA_API_URL = os.environ["AURORA_API_URL"]
-    # settings.AURORA_API_TOKEN = os.environ["AURORA_API_TOKEN"]
-    # settings.HOPE_API_URL = "https://dev-hope.unitst.org/api/rest/"
-    # settings.HOPE_API_TOKEN = os.environ["HOPE_API_TOKEN"]
 
     settings.ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
     settings.SIGNING_BACKEND = "testutils.signers.PlainSigner"
@@ -140,7 +133,7 @@ def active_marks(request):
     compiledMarkExpr = Expression.compile(markExpr)
 
     # Return a sequence of markers that match
-    return [mark for mark in marks if compiledMarkExpr.evaluate(lambda candidate: candidate == mark)]
+    return [mark for mark in marks if compiledMarkExpr.evaluate(lambda candidate: candidate == mark)]  # noqa B023
 
 
 @pytest.fixture()

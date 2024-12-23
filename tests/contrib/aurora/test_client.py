@@ -22,7 +22,7 @@ def tests_aurora_client_successfully(mock_aurora_data):
 @pytest.mark.parametrize(
     "response",
     [
-        {"status_code": 404, "json": lambda: {}},
+        {"status_code": 404, "json": dict},
         requests.RequestException(),
         JSONDecodeError("Expecting value", "line 1 column 1 (char 0)", 0),
     ],
