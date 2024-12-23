@@ -45,8 +45,7 @@ jobs:
           base: ${{ github.ref }}
           token: ${{ github.token }}
           filters: .github/file-filters.yml
-
-  flake8:
+  ruff:
     needs: changes
     runs-on: ubuntu-latest
     if: github.event.pull_request.draft == false && needs.changes.outputs.lint
@@ -56,36 +55,10 @@ jobs:
         with:
           python-version: '3.12'
       - name: Install requirements
-        run: pip install flake8 pycodestyle
+        run: pip install ruff
       - name: Check syntax
         # Stop the build if there are Python syntax errors or undefined names
-        run: flake8 src/ --count --statistics --max-line-length=127
+        run: ruff check src/
 
       - name: Warnings
-        run: flake8 src --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics --extend-exclude=""
-  isort:
-    needs: changes
-    runs-on: ubuntu-latest
-    if: github.event.pull_request.draft == false && needs.changes.outputs.lint
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-      - name: Install requirements
-        run: pip install isort
-      - name: iSort
-        run: isort src/ --check-only
-  black:
-    needs: changes
-    runs-on: ubuntu-latest
-    if: github.event.pull_request.draft == false && needs.changes.outputs.lint
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-      - name: Install requirements
-        run: pip install black
-      - name: Black
-        run: black src/ --check
+        run: ruff format --check
