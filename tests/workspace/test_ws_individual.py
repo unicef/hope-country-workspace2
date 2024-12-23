@@ -16,16 +16,16 @@ if TYPE_CHECKING:
 pytestmark = [pytest.mark.admin, pytest.mark.smoke, pytest.mark.django_db]
 
 
-@pytest.fixture()
+@pytest.fixture
 def office():
     from testutils.factories import OfficeFactory
 
     co = OfficeFactory()
     state.tenant = co
-    yield co
+    return co
 
 
-@pytest.fixture()
+@pytest.fixture
 def program(office, household_checker, individual_checker):
     from testutils.factories import CountryProgramFactory
 
@@ -37,7 +37,7 @@ def program(office, household_checker, individual_checker):
     )
 
 
-@pytest.fixture()
+@pytest.fixture
 def individual(program):
     from testutils.factories import CountryIndividualFactory
 
@@ -46,7 +46,7 @@ def individual(program):
     )
 
 
-@pytest.fixture()
+@pytest.fixture
 def app(django_app_factory: "MixinWithInstanceVariables") -> "DjangoTestApp":
     from testutils.factories import SuperUserFactory
 
@@ -54,7 +54,7 @@ def app(django_app_factory: "MixinWithInstanceVariables") -> "DjangoTestApp":
     admin_user = SuperUserFactory(username="superuser")
     django_app.set_user(admin_user)
     django_app._user = admin_user
-    yield django_app
+    return django_app
 
 
 def test_ind_changelist(app: "DjangoTestApp", individual: "CountryIndividual") -> None:

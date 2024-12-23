@@ -6,7 +6,7 @@ if TYPE_CHECKING:
     from country_workspace.workspaces.models import CountryHousehold
 
 
-@pytest.fixture()
+@pytest.fixture
 def household() -> "CountryHousehold":
     from testutils.factories import CountryHouseholdFactory
 

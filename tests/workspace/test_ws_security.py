@@ -17,16 +17,16 @@ if TYPE_CHECKING:
 pytestmark = [pytest.mark.security, pytest.mark.django_db]
 
 
-@pytest.fixture()
+@pytest.fixture
 def office():
     from testutils.factories import OfficeFactory
 
     co = OfficeFactory()
     state.tenant = co
-    yield co
+    return co
 
 
-@pytest.fixture()
+@pytest.fixture
 def program(office, household_checker, individual_checker):
     from testutils.factories import CountryProgramFactory
 
@@ -38,14 +38,14 @@ def program(office, household_checker, individual_checker):
     )
 
 
-@pytest.fixture()
+@pytest.fixture
 def household(program):
     from testutils.factories import CountryHouseholdFactory
 
     return CountryHouseholdFactory(batch__program=program, batch__country_office=program.country_office)
 
 
-@pytest.fixture()
+@pytest.fixture
 def household2() -> "CountryHousehold":
     from testutils.factories import BatchFactory, CountryHouseholdFactory
 
@@ -53,12 +53,12 @@ def household2() -> "CountryHousehold":
     return CountryHouseholdFactory(batch=b)
 
 
-@pytest.fixture()
+@pytest.fixture
 def app(django_app_factory: "MixinWithInstanceVariables", user: "User") -> "CWTestApp":
     django_app = django_app_factory(csrf_checks=False)
     django_app.set_user(user)
     django_app._user = user
-    yield django_app
+    return django_app
 
 
 def pytest_generate_tests(metafunc: "Metafunc") -> None:  # noqa

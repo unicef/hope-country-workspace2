@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.contrib.admin.utils import unquote
 from django.core.exceptions import PermissionDenied
 from django.db.models import Model, QuerySet
+from django.forms import Form
 from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.template.response import TemplateResponse
@@ -31,7 +32,9 @@ if TYPE_CHECKING:
 
 class SelectedProgramMixin(WorkspaceModelAdmin):
     def get_selected_program(
-        self, request: HttpRequest, obj: "Validable | None" = None
+        self,
+        request: HttpRequest,
+        obj: "Validable | None" = None,
     ) -> "tuple[str|None, CountryProgram | None]":
         return state.program
 
@@ -77,8 +80,7 @@ class BeneficiaryBaseAdmin(AdminAutoCompleteSearchMixin, SelectedProgramMixin, W
         qs = super().get_queryset(request)
         if prg := self.get_selected_program(request):
             return qs.filter(batch__program=prg)
-        else:
-            return qs
+        return qs
 
     def get_common_context(self, request: HttpRequest, pk: str | None = None, **kwargs: Any) -> dict[str, Any]:
         ret = super().get_common_context(request, pk, **kwargs)
@@ -140,11 +142,15 @@ class BeneficiaryBaseAdmin(AdminAutoCompleteSearchMixin, SelectedProgramMixin, W
     def has_add_permission(self, request: HttpRequest) -> bool:
         return False
 
-    def has_delete_permission(self, request: HttpRequest, obj: Model = None):
+    def has_delete_permission(self, request: HttpRequest, obj: Model | None = None) -> bool:
         return False
 
     def _changeform_view(  # noqa: PLR0912
-        self, request: HttpRequest, object_id: str, form_url: str, extra_context: dict[str, Any]
+        self,
+        request: HttpRequest,
+        object_id: str,
+        form_url: str,
+        extra_context: dict[str, Any],
     ) -> HttpResponse:
         context = self.get_common_context(request, object_id, **extra_context)
         obj = self.get_object(request, unquote(object_id))
@@ -153,10 +159,12 @@ class BeneficiaryBaseAdmin(AdminAutoCompleteSearchMixin, SelectedProgramMixin, W
             form_class = dc.get_form()
         except AttributeError:
             self.message_user(
-                request, _("Required datachecker not found. Please check your Program configuration."), messages.ERROR
+                request,
+                _("Required datachecker not found. Please check your Program configuration."),
+                messages.ERROR,
             )
             return HttpResponseRedirect(
-                reverse("workspace:workspaces_%s_view_raw_data" % self.model._meta.model_name, args=[object_id])
+                reverse("workspace:workspaces_%s_view_raw_data" % self.model._meta.model_name, args=[object_id]),
             )
 
         if request.method == "POST":
@@ -181,8 +189,7 @@ class BeneficiaryBaseAdmin(AdminAutoCompleteSearchMixin, SelectedProgramMixin, W
                     else:
                         self.message_user(request, _("Record saved but not validated"), messages.WARNING)
                     return HttpResponseRedirect(request.META["HTTP_REFERER"])
-                else:
-                    self.message_user(request, "Please fixes the errors below", messages.ERROR)
+                self.message_user(request, "Please fixes the errors below", messages.ERROR)
         else:
             form = form_class(prefix="flex_field", initial=initials)
 
@@ -196,17 +203,19 @@ class BeneficiaryBaseAdmin(AdminAutoCompleteSearchMixin, SelectedProgramMixin, W
     def changelist_view(self, request: HttpRequest, extra_context: dict[str, Any] | None = None) -> HttpResponse:
         context = self.get_common_context(request, title="----")
         context.update(extra_context or {})
-        response = super().changelist_view(request, context)
-        return response
+        return super().changelist_view(request, context)
 
     def change_view(
-        self, request: HttpRequest, object_id: str, form_url: str = "", extra_context: dict[str, Any] | None = None
+        self,
+        request: HttpRequest,
+        object_id: str,
+        form_url: str = "",
+        extra_context: dict[str, Any] | None = None,
     ) -> HttpResponse:
         context = self.get_common_context(request, object_id, title="")
         context.update(extra_context or {})
-        response = super().change_view(request, object_id, form_url, context)
-        return response
+        return super().change_view(request, object_id, form_url, context)
 
-    def save_model(self, request, obj, form, change):
+    def save_model(self, request: HttpRequest, obj: "Validable", form: Form, change: bool) -> None:
         super().save_model(request, obj, form, change)
         obj.validate_with_checker()

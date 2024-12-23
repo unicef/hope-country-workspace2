@@ -32,15 +32,15 @@ def pytest_generate_tests(metafunc: "Metafunc") -> None:  # noqa
         metafunc.parametrize("model", m2, ids=ids)
 
 
-@pytest.fixture()
+@pytest.fixture
 def app(django_app_factory: "MixinWithInstanceVariables", user: "User") -> "CWTestApp":
     django_app = django_app_factory(csrf_checks=False)
     django_app.set_user(user)
     django_app._user = user
-    yield django_app
+    return django_app
 
 
-@pytest.fixture()
+@pytest.fixture
 def program():
     from testutils.factories import CountryProgramFactory
 

@@ -1,5 +1,7 @@
+from typing import Callable
+
 from django.conf import settings
-from django.http import HttpResponse
+from django.http import HttpRequest, HttpResponse
 from django.utils.cache import patch_response_headers
 from django.utils.deprecation import MiddlewareMixin
 
@@ -7,16 +9,16 @@ from country_workspace.cache.manager import cache_manager
 
 
 class UpdateCacheMiddleware(MiddlewareMixin):
-    def __init__(self, get_response):
+    def __init__(self, get_response: Callable) -> None:
         super().__init__(get_response)
         self.cache_timeout = settings.CACHE_MIDDLEWARE_SECONDS
         self.page_timeout = 10
         self.manager = cache_manager
 
-    def _should_update_cache(self, request, response):
+    def _should_update_cache(self, request: HttpRequest, response: HttpResponse) -> HttpResponse:
         return hasattr(request, "_cache_update_cache") and request._cache_update_cache
 
-    def process_response(self, request, response):
+    def process_response(self, request: HttpRequest, response: HttpResponse) -> HttpResponse:
         """Set the cache, if needed."""
         if not self._should_update_cache(request, response):
             # We don't need to update the cache, just return.
@@ -44,11 +46,11 @@ class UpdateCacheMiddleware(MiddlewareMixin):
 
 
 class FetchFromCacheMiddleware(MiddlewareMixin):
-    def __init__(self, get_response):
+    def __init__(self, get_response: Callable) -> None:
         super().__init__(get_response)
         self.manager = cache_manager
 
-    def process_request(self, request):
+    def process_request(self, request: HttpRequest) -> HttpResponse:
         if request.method not in ("GET", "HEAD"):
             request._cache_update_cache = False
             return None  # Don't bother checking the cache.

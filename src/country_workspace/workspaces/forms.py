@@ -3,6 +3,8 @@ from typing import TYPE_CHECKING
 from django import forms
 from django.contrib.admin.forms import AdminAuthenticationForm
 from django.core.exceptions import ValidationError
+from django.db.models import QuerySet
+from django.http import HttpRequest
 from django.utils.translation import gettext_lazy as _
 
 from django_select2 import forms as s2forms
@@ -43,18 +45,20 @@ class ProgramWidget(s2forms.ModelSelect2Widget):
     model = Program
     search_fields = ["name__icontains"]
 
-    def filter_queryset(self, request, term, queryset=None, **dependent_fields):
+    def filter_queryset(
+        self, request: HttpRequest, term: str, queryset: QuerySet[Program] | None = None, **dependent_fields: dict
+    ) -> QuerySet[Program]:
         qs = super().filter_queryset(request, term, queryset, **dependent_fields)
         return qs.filter(country_office=state.tenant)
 
     @property
-    def media(self):
+    def media(self) -> forms.Media:
         original = super().media
         return original + forms.Media(
             css={
                 "screen": [
                     "adminfilters/adminfilters.css",
-                ]
+                ],
             },
         )
 
@@ -71,7 +75,7 @@ class SelectProgramForm(forms.Form):
                 "data-minimum-input-length": 0,
                 "data-placeholder": "Select a Program",
                 "data-close-on-select": "true",
-            }
+            },
         ),
     )
     next = forms.CharField(required=False, widget=forms.HiddenInput)

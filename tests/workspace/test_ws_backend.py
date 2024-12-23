@@ -18,7 +18,7 @@ _DATA = namedtuple("_DATA", "afg,ukr")
 pytestmark = [pytest.mark.security, pytest.mark.django_db]
 
 
-@pytest.fixture()
+@pytest.fixture
 def data() -> _DATA:
     from testutils.factories import OfficeFactory
 
@@ -34,7 +34,7 @@ def pytest_generate_tests(metafunc):
         metafunc.parametrize("hope_model", models)
 
 
-@pytest.fixture()
+@pytest.fixture
 def backend():
     return TenantBackend()
 

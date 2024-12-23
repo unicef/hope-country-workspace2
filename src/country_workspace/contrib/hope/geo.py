@@ -23,7 +23,7 @@ class DynamicChoiceField(ChildFieldMixin, forms.ChoiceField):
         if parent_value and value not in choices:
             raise ValidationError("Not valid child for selected parent")
 
-    def get_choices_for_parent_value(self, parent_value: Any, only_codes=False) -> list[tuple[str, str]]:
+    def get_choices_for_parent_value(self, parent_value: Any, only_codes: bool | None = False) -> list[tuple[str, str]]:
         if not parent_value:
             return []
         key = slugify(f"{parent_value}-{self.level}")
@@ -32,7 +32,7 @@ class DynamicChoiceField(ChildFieldMixin, forms.ChoiceField):
             client = HopeClient()
             try:
                 data = list(
-                    client.get("areas", params={"area_type_area_level": self.level, "country_iso_code3": parent_value})
+                    client.get("areas", params={"area_type_area_level": self.level, "country_iso_code3": parent_value}),
                 )
                 cache_manager.store(key, data, timeout=300)
             except RemoteError as e:
@@ -59,10 +59,9 @@ class CountryChoice(forms.ChoiceField):
             except RemoteError as e:
                 logger.exception(e)
                 return ret
-        ret = [(record["iso_code3"], record["name"]) for record in data]
-        return ret
+        return [(record["iso_code3"], record["name"]) for record in data]
 
-    def __init__(self, **kwargs):
+    def __init__(self, **kwargs: Any) -> None:
         super().__init__(**kwargs)
         self.choices = self.get_choices()
 

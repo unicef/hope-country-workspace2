@@ -8,7 +8,7 @@ if TYPE_CHECKING:
     from country_workspace.models import Household
 
 
-@pytest.fixture()
+@pytest.fixture
 def program(household_checker, individual_checker):
     from testutils.factories import CountryProgramFactory
 
@@ -20,12 +20,11 @@ def program(household_checker, individual_checker):
     )
 
 
-@pytest.fixture()
+@pytest.fixture
 def household(program) -> "Household":
     from testutils.factories import HouseholdFactory
 
-    hh = HouseholdFactory(batch__program=program, individuals=[], batch__country_office=program.country_office)
-    return hh
+    return HouseholdFactory(batch__program=program, individuals=[], batch__country_office=program.country_office)
 
 
 def test_head(household: "Household"):

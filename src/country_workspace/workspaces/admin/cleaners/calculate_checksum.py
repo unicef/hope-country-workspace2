@@ -6,6 +6,6 @@ if TYPE_CHECKING:
     from country_workspace.models.base import Validable
 
 
-def calculate_checksum_impl(queryset: "QuerySet[Validable]"):
+def calculate_checksum_impl(queryset: "QuerySet[Validable]") -> None:
     for record in queryset.all():
         record.save()

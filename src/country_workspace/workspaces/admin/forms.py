@@ -26,7 +26,9 @@ class ImportFileForm(forms.Form):
     )
 
     master_column_label = forms.CharField(
-        required=False, initial="household_id", help_text="Which column contains the 'link' to the household record."
+        required=False,
+        initial="household_id",
+        help_text="Which column contains the 'link' to the household record.",
     )
 
     detail_column_label = forms.CharField(

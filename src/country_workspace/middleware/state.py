@@ -29,8 +29,7 @@ class StateSetMiddleware:
         scope.set_tag("user", request.user)
         scope.set_tag("business_area", state.tenant)
         scope.set_tag("program", state.program)
-        response = self.get_response(request)
-        return response
+        return self.get_response(request)
 
 
 class StateClearMiddleware:

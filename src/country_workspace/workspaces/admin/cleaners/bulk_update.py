@@ -122,10 +122,13 @@ def dc_get_field(dc: "DataChecker", name: str) -> "FlexField | None":
         for field in fs.fieldset.fields.filter():
             if field.name == name:
                 return field
+    return None
 
 
 def create_xls_importer(
-    queryset: "QuerySet[Beneficiary]", program: Program, columns: list[str]
+    queryset: "QuerySet[Beneficiary]",
+    program: Program,
+    columns: list[str],
 ) -> [io.BytesIO, Workbook]:
     out = BytesIO()
     dc: DataChecker = program.get_checker_for(queryset.model)
@@ -141,7 +144,7 @@ def create_xls_importer(
             "align": "center",
             "valign": "vcenter",
             "indent": 1,
-        }
+        },
     )
 
     header_format.set_bg_color("#DDDDDD")

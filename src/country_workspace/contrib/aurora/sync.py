@@ -54,7 +54,9 @@ def _create_household(batch: Batch, fields: dict[str, Any]) -> Household:
 
 
 def _create_individuals(
-    household: Household, data: list[dict[str, Any]], household_name_column: str
+    household: Household,
+    data: list[dict[str, Any]],
+    household_name_column: str,
 ) -> list[Individual]:
     """Create individuals associated with a household and updates the household name if necessary.
 
@@ -80,14 +82,16 @@ def _create_individuals(
                 household_id=household.pk,
                 name=individual.get(fullname, ""),
                 flex_fields={clean_field_name(k): v for k, v in individual.items()},
-            )
+            ),
         )
 
     return household.program.individuals.bulk_create(individuals)
 
 
 def _update_household_name_from_individual(
-    household: Household, individual: dict[str, Any], household_name_column: str
+    household: Household,
+    individual: dict[str, Any],
+    household_name_column: str,
 ) -> bool:
     """Update the household name based on an individual's relationship and name field.
 
@@ -109,3 +113,4 @@ def _update_household_name_from_individual(
                 household.name = v
                 household.save()
                 return True
+    return False

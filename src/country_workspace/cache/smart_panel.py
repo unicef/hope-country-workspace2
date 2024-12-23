@@ -1,21 +1,22 @@
 from django import forms
-from django.http import HttpResponseRedirect
+from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.utils.translation import gettext_lazy as _
 
 from country_workspace.cache.manager import cache_manager
+from country_workspace.workspaces.sites import TenantAdminSite
 
 
 class CacheManagerForm(forms.Form):
     pattern = forms.CharField(required=False, initial="*")
 
 
-def panel_cache(self, request):
+def panel_cache(self: TenantAdminSite, request: HttpRequest) -> HttpResponse:
     context = self.each_context(request)
     client = cache_manager.get_redis_client()
     limit_to = "*"
 
-    def _get_keys():
+    def _get_keys() -> list[str]:
         return list(client.scan_iter(f"*:cache:entry:{limit_to}"))
 
     if request.method == "POST":
@@ -25,10 +26,10 @@ def panel_cache(self, request):
             if "_disable" in request.POST:
                 cache_manager.active = False
                 return HttpResponseRedirect(".")
-            elif "_enable" in request.POST:
+            if "_enable" in request.POST:
                 cache_manager.active = True
                 return HttpResponseRedirect(".")
-            elif "_delete" in request.POST:
+            if "_delete" in request.POST:
                 to_delete = list(_get_keys())
                 if to_delete:
                     client.delete(*to_delete)

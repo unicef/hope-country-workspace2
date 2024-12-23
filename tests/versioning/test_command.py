@@ -12,7 +12,7 @@ def test_command_list(version1, test_scripts_folder):
     with mock.patch("country_workspace.versioning.management.manager.Manager.default_folder", test_scripts_folder):
         call_command("upgradescripts", ["list"], stdout=out)
         ret = str(out.getvalue())
-        assert ret == "[x] 0001_test\n[ ] 0002_test\n[ ] 0003_test\n"
+        assert ret == "[x] 0001_t\n[ ] 0002_t\n[ ] 0003_t\n"
 
 
 @pytest.mark.parametrize("verbosity", [0, 1])
@@ -21,7 +21,7 @@ def test_command_apply_all(version1, test_scripts_folder, verbosity):
     with mock.patch("country_workspace.versioning.management.manager.Manager.default_folder", test_scripts_folder):
         call_command("upgradescripts", ["-v", verbosity, "apply"], stdout=out)
         ret = str(out.getvalue())
-        assert ret == "Upgrading...\n   Applying 0002_test\n   Applying 0003_test\n"
+        assert ret == "Upgrading...\n   Applying 0002_t\n   Applying 0003_t\n"
 
 
 def test_command_apply(version1, test_scripts_folder):
@@ -29,7 +29,7 @@ def test_command_apply(version1, test_scripts_folder):
     with mock.patch("country_workspace.versioning.management.manager.Manager.default_folder", test_scripts_folder):
         call_command("upgradescripts", ["apply", "2"], stdout=out)
         ret = str(out.getvalue())
-        assert ret == "Upgrading...\n   Applying 0002_test\n"
+        assert ret == "Upgrading...\n   Applying 0002_t\n"
 
 
 def test_command_apply_fake(version1, test_scripts_folder):
@@ -37,7 +37,7 @@ def test_command_apply_fake(version1, test_scripts_folder):
     with mock.patch("country_workspace.versioning.management.manager.Manager.default_folder", test_scripts_folder):
         call_command("upgradescripts", ["apply", "2", "--fake"], stdout=out)
         ret = str(out.getvalue())
-        assert ret == "Upgrading...\n   Applying 0002_test (fake)\n"
+        assert ret == "Upgrading...\n   Applying 0002_t (fake)\n"
 
 
 def test_command_backward(version1, version2, test_scripts_folder):
@@ -45,7 +45,7 @@ def test_command_backward(version1, version2, test_scripts_folder):
     with mock.patch("country_workspace.versioning.management.manager.Manager.default_folder", test_scripts_folder):
         call_command("upgradescripts", ["apply", "1"], stdout=out)
         ret = str(out.getvalue())
-        assert ret == "Downgrading...\n   Discharging 0002_test\n"
+        assert ret == "Downgrading...\n   Discharging 0002_t\n"
 
 
 def test_command_zero(version1, test_scripts_folder):
@@ -53,7 +53,7 @@ def test_command_zero(version1, test_scripts_folder):
     with mock.patch("country_workspace.versioning.management.manager.Manager.default_folder", test_scripts_folder):
         call_command("upgradescripts", ["apply", "zero"], stdout=out)
         ret = str(out.getvalue())
-        assert ret == "Downgrading...\n   Discharging 0001_test\n"
+        assert ret == "Downgrading...\n   Discharging 0001_t\n"
 
 
 def test_command_create(version1, test_scripts_folder):

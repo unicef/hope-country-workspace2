@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.http import HttpRequest
 from django.urls import reverse
 
 from admin_extra_buttons.buttons import LinkButton
@@ -23,7 +24,7 @@ class BatchAdmin(BaseModelAdmin):
     readonly_fields = ("country_office", "program", "imported_by")
     search_fields = ("name",)
 
-    def has_add_permission(self, request):
+    def has_add_permission(self, request: HttpRequest) -> bool:
         return False
 
     @link(change_list=False)

@@ -1,7 +1,9 @@
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 from django.contrib.admin.utils import quote
 from django.contrib.admin.views.main import ChangeList as DjangoChangeList
+from django.db.models import Model, QuerySet
+from django.http import HttpRequest
 from django.urls import reverse
 
 from hope_flex_fields.models import DataChecker
@@ -37,7 +39,7 @@ class WorkspaceChangeList(DjangoChangeList):
             current_app=self.model_admin.admin_site.name,
         )
 
-    def get_queryset(self, request, exclude_parameters=None):
+    def get_queryset(self, request: HttpRequest, exclude_parameters: dict[str, Any] | None = None) -> QuerySet[Model]:
         (
             self.filter_specs,
             self.has_filters,

@@ -40,7 +40,9 @@ class RegexUpdateForm(BaseActionForm):
 
 
 def regex_update_impl(
-    records: "QuerySet[Beneficiary]", config: dict[str, Any], save: bool = True
+    records: "QuerySet[Beneficiary]",
+    config: dict[str, Any],
+    save: bool = True,
 ) -> list[tuple[str, str, str]]:
     if isinstance(config["regex"], str):
         config["regex"] = re.compile(config["regex"])

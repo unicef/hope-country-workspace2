@@ -6,7 +6,7 @@ from django.conf import settings
 from django.contrib import admin
 from django.contrib.admin import ShowFacets
 from django.db.models import Model
-from django.http import HttpRequest, HttpResponseRedirect
+from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 
 from admin_extra_buttons.mixins import ExtraButtonsMixin
@@ -36,36 +36,30 @@ class WorkspaceModelAdmin(ExtraButtonsMixin, AdminFiltersMixin, SmartFilterMixin
     show_facets = ShowFacets.NEVER
     show_full_result_count = False
 
-    def _get_change_form_template(self):
+    def _get_change_form_template(self) -> list[str]:
         return [
             "workspace/%s/change_form.html" % self.opts.proxy_for_model._meta.model_name,
             "workspace/change_form.html",
         ]
 
-    def _get_changelist_template(self):
+    def _get_changelist_template(self) -> list[str]:
         return [
             "workspace/%s/change_list.html" % self.opts.proxy_for_model._meta.model_name,
             "workspace/change_list.html",
         ]
 
-    def _get_object_history_template(self):
+    def _get_object_history_template(self) -> list[str]:
         return [
             "workspace/%s/object_history.html" % self.opts.proxy_for_model._meta.model_name,
             "workspace/object_history.html",
         ]
 
-    def get_common_context(self, request, pk=None, **kwargs):
+    def get_common_context(self, request: HttpRequest, pk: str | None = None, **kwargs: Any) -> dict:
         kwargs["modeladmin"] = self
         return super().get_common_context(request, pk, **kwargs)
 
-    def formfield_for_choice_field(self, db_field, request, **kwargs):
-        return super().formfield_for_choice_field(db_field, request, **kwargs)
-
-    def formfield_for_dbfield(self, db_field, request, **kwargs):
-        return super().formfield_for_dbfield(db_field, request, **kwargs)
-
     @property
-    def media(self):
+    def media(self) -> forms.Media:
         extra = "" if settings.DEBUG else ".min"
         base = super().media
         return base + forms.Media(
@@ -106,14 +100,14 @@ class WorkspaceModelAdmin(ExtraButtonsMixin, AdminFiltersMixin, SmartFilterMixin
             base_url,
         )
 
-    def get_default_url_filters(self, request: "HttpRequest"):
+    def get_default_url_filters(self, request: "HttpRequest") -> dict[str, str]:
         return self.default_url_filters
 
-    def get_changelist_index_url(self, request: "HttpRequest"):
+    def get_changelist_index_url(self, request: "HttpRequest") -> str:
         bsse = self.get_changelist_url()
         return f"{bsse}?{urlencode(self.get_default_url_filters(request))}"
 
-    def get_changelist_url(self):
+    def get_changelist_url(self) -> str:
         opts = self.model._meta
         return reverse(
             "%s:%s_%s_changelist" % (self.admin_site.namespace, opts.app_label, opts.model_name),
@@ -122,20 +116,25 @@ class WorkspaceModelAdmin(ExtraButtonsMixin, AdminFiltersMixin, SmartFilterMixin
 
     def get_change_url(self, request: "HttpRequest", obj: Model) -> str:
         opts = self.model._meta
-        obj_url = reverse(
+        return reverse(
             "%s:%s_%s_change" % (self.admin_site.namespace, opts.app_label, opts.model_name),
             args=[obj.pk],
             current_app=self.admin_site.name,
         )
-        return obj_url
 
-    def get_changelist(self, request: "HttpRequest", **kwargs) -> "type[WorkspaceChangeList]":
+    def get_changelist(self, request: "HttpRequest", **kwargs: Any) -> "type[WorkspaceChangeList]":
         from .changelist import WorkspaceChangeList
 
         return WorkspaceChangeList
 
     # @csrf_protect_m
-    def changeform_view(self, request: "HttpRequest", object_id=None, form_url="", extra_context=None):
+    def changeform_view(
+        self,
+        request: "HttpRequest",
+        object_id: str | None = None,
+        form_url: str = "",
+        extra_context: dict[str, Any] | None = None,
+    ) -> HttpResponse:
         extra_context = extra_context or {}
         extra_context["show_save_and_add_another"] = False
         extra_context["show_save_and_continue"] = True
@@ -143,21 +142,25 @@ class WorkspaceModelAdmin(ExtraButtonsMixin, AdminFiltersMixin, SmartFilterMixin
         extra_context["preserved_filters"] = self.get_preserved_filters(request)
         return super().changeform_view(request, object_id, form_url, extra_context=extra_context)
 
-    def changelist_view(self, request, extra_context=None):
+    def changelist_view(self, request: HttpRequest, extra_context: dict[str, Any] | None = None) -> HttpResponse:
         self.change_list_template = self._get_changelist_template()
         extra_context = extra_context or {}
         extra_context["preserved_filters"] = self.get_preserved_filters(request)
         return super().changelist_view(request, extra_context=extra_context)
 
-    def change_view(self, request, object_id, form_url="", extra_context=None):
+    def change_view(
+        self, request: HttpRequest, object_id: str, form_url: str = "", extra_context: dict[str, Any] | None = None
+    ) -> HttpResponse:
         self.change_form_template = self._get_change_form_template()
         return super().change_view(request, object_id, form_url=form_url, extra_context=extra_context)
 
-    def _response_post_save(self, request: "HttpRequest", obj):
+    def _response_post_save(self, request: "HttpRequest", obj: Model) -> HttpResponseRedirect:
         return HttpResponseRedirect(self.add_preserved_filters(request, self.get_changelist_url()))
 
-    def response_add(self, request: "HttpRequest", obj, post_url_continue=None):
+    def response_add(
+        self, request: "HttpRequest", obj: Model, post_url_continue: str | None = None
+    ) -> HttpResponseRedirect:
         return HttpResponseRedirect(self.get_change_url(request, obj))
 
-    def response_delete(self, request: "HttpRequest", obj_display, obj_id: Any) -> HttpResponseRedirect:
+    def response_delete(self, request: "HttpRequest", obj_display: str, obj_id: Any) -> HttpResponseRedirect:
         return HttpResponseRedirect(self.get_changelist_url())

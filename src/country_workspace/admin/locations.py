@@ -1,8 +1,9 @@
 import logging
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING
 
 from django.contrib import admin
 from django.contrib.admin import ModelAdmin, RelatedFieldListFilter
+from django.db.models import Field
 from django.forms import FileField, FileInput, Form
 
 from adminfilters.autocomplete import AutoCompleteFilter
@@ -44,7 +45,7 @@ class AreaTypeAdmin(AdminFiltersMixin, admin.ModelAdmin):
 
 
 class AreaTypeFilter(RelatedFieldListFilter):
-    def field_choices(self, field: Any, request: "HttpRequest", model_admin: ModelAdmin) -> list[tuple[str, str]]:
+    def field_choices(self, field: Field, request: "HttpRequest", model_admin: ModelAdmin) -> list[tuple[str, str]]:
         if "area_type__country__exact" not in request.GET:
             return []
         return AreaType.objects.filter(country=request.GET["area_type__country__exact"]).values_list("id", "name")

@@ -8,7 +8,7 @@ class NoopValidator(BeneficiaryGroupValidator):
 
 
 class BeneficiaryValidatorRegistry(Registry):
-    def get_name(self, entry):
+    def get_name(self, entry: type) -> str:
         return entry.__name__
 
 

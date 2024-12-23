@@ -22,11 +22,11 @@ def sanitize_url(url: str) -> str:
 
 
 class HopeClient:
-    def __init__(self, token: str | None = None):
+    def __init__(self, token: str | None = None) -> None:
         self.token = token or config.HOPE_API_TOKEN
 
     def get_url(self, path: str) -> str:
-        url = sanitize_url("/".join([config.HOPE_API_URL, path]))
+        url = sanitize_url(f"{config.HOPE_API_URL}/{path}")
         if not url.endswith("/"):
             url = url + "/"
         return url

@@ -11,11 +11,9 @@ if TYPE_CHECKING:
     from django.http import HttpRequest
     from django.test.client import RequestFactory
 
-    from pytest import MonkeyPatch
-
 
 @pytest.fixture(autouse=True)
-def r(monkeypatch: "MonkeyPatch", rf: "RequestFactory") -> Generator[None, None, None]:
+def r(monkeypatch: "pytest.MonkeyPatch", rf: "RequestFactory") -> Generator[None, None, None]:
     req: "HttpRequest" = rf.get("/", HTTP_HOST="127.0.0.1")
     m = mock.patch("country_workspace.state.state.request", req)
     m.start()

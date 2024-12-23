@@ -1,5 +1,5 @@
 import datetime
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 from django.contrib.admin import ModelAdmin
 from django.contrib.admin.templatetags.admin_list import ResultList as DjangoResultList
@@ -12,12 +12,13 @@ from django.contrib.admin.templatetags.admin_list import (
     search_form,
 )
 from django.contrib.admin.utils import display_for_field, display_for_value, label_for_field, lookup_field
-from django.contrib.admin.views.main import ORDER_VAR
+from django.contrib.admin.views.main import ORDER_VAR, ChangeList
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 from django.db.models import Field, Model
 from django.db.models.constants import LOOKUP_SEP
 from django.template import Library
+from django.template.base import Node, Parser, Token
 from django.urls import NoReverseMatch
 from django.utils.html import format_html
 from django.utils.safestring import mark_safe
@@ -29,7 +30,7 @@ from .workspace_urls import add_preserved_filters
 if TYPE_CHECKING:
     from typing import Generator
 
-    from ..changelist import WorkspaceChangeList
+    from country_workspace.workspaces.models import CountryIndividual
 
 __all__ = [
     "admin_actions",
@@ -50,12 +51,12 @@ admin_list_filter = register.simple_tag(admin_list_filter)
 
 
 @register.tag(name="admin_actions")
-def admin_actions_tag(parser, token):
+def admin_actions_tag(parser: Parser, token: Token) -> Node:
     return WorkspaceInclusionAdminNode(parser, token, func=admin_actions, template_name="actions.html")
 
 
 @register.tag(name="search_form")
-def search_form_tag(parser, token):
+def search_form_tag(parser: Parser, token: Token) -> Node:
     return WorkspaceInclusionAdminNode(
         parser,
         token,
@@ -66,7 +67,7 @@ def search_form_tag(parser, token):
 
 
 @register.tag(name="pagination")
-def pagination_tag(parser, token):
+def pagination_tag(parser: Parser, token: Token) -> Node:
     return WorkspaceInclusionAdminNode(
         parser,
         token,
@@ -80,13 +81,15 @@ def flex_field_label_for_field(column_name: str, model: "Model", model_admin: "M
     return column_name.replace("flex_fields__", ""), ""
 
 
-def flex_field_lookup_field(field_name: str, result, model_admin: "ModelAdmin") -> tuple[Field, str, str]:
+def flex_field_lookup_field(
+    field_name: str, result: "CountryIndividual", model_admin: "ModelAdmin"
+) -> tuple[Field, str, str]:
     dict_key = field_name.replace("flex_fields__", "")
     f, attr, value = lookup_field(lambda o: o.flex_fields.get(dict_key), result, model_admin)
     return f, attr, value
 
 
-def result_headers(cl: "WorkspaceChangeList") -> "Generator[dict[str, str]]":  # noqa
+def result_headers(cl: "WorkspaceChangeList | ChangeList") -> "Generator[dict[str, str]]":  # noqa
     """Override standard Django behaviour to silent error if wrong columns have been configured."""
     ordering_field_columns = cl.get_ordering_field_columns()
     for i, field_name in enumerate(cl.list_display):
@@ -107,7 +110,7 @@ def result_headers(cl: "WorkspaceChangeList") -> "Generator[dict[str, str]]":  #
                 aria_label = _("Select all objects on this page for an action")
                 yield {
                     "text": mark_safe(  # noqa: S308
-                        f'<input type="checkbox" id="action-toggle" ' f'aria-label="{aria_label}">'
+                        f'<input type="checkbox" id="action-toggle" ' f'aria-label="{aria_label}">',
                     ),
                     "class_attrib": mark_safe(' class="action-checkbox-column"'),  # noqa: S308
                     "sortable": False,
@@ -148,7 +151,7 @@ def result_headers(cl: "WorkspaceChangeList") -> "Generator[dict[str, str]]":  #
         o_list_remove = []  # URL for removing this field from sort
         o_list_toggle = []  # URL for toggling order type for this field
 
-        def make_qs_param(t, n):
+        def make_qs_param(t: str, n: str) -> str:
             return ("-" if t == "desc" else "") + str(n)
 
         for j, ot in ordering_field_columns.items():
@@ -184,7 +187,7 @@ def result_headers(cl: "WorkspaceChangeList") -> "Generator[dict[str, str]]":  #
 def items_for_result(cl, result, form):  # noqa
     """Generate the actual list of data."""
 
-    def link_in_col(is_first, field_name, cl):
+    def link_in_col(is_first: bool, field_name: str, cl: ChangeList) -> bool:
         if cl.list_display_links is None:
             return False
         if is_first and not cl.list_display_links:
@@ -271,7 +274,7 @@ def items_for_result(cl, result, form):  # noqa
         yield format_html("<td>{}</td>", form[cl.model._meta.pk.name])
 
 
-def results(cl):
+def results(cl: ChangeList) -> ResultList:
     if cl.formset:
         for res, form in zip(cl.result_list, cl.formset.forms, strict=False):
             yield ResultList(form, items_for_result(cl, res, form))
@@ -280,7 +283,7 @@ def results(cl):
             yield ResultList(None, items_for_result(cl, res, None))
 
 
-def result_list(cl):
+def result_list(cl: ChangeList) -> dict[str, Any]:
     """Override to call our result_headers() instead of the Django's one."""
     headers = list(result_headers(cl))
     num_sorted_fields = 0
@@ -297,7 +300,7 @@ def result_list(cl):
 
 
 @register.tag(name="result_list")
-def result_list_tag(parser, token):
+def result_list_tag(parser: Parser, token: Token) -> WorkspaceInclusionAdminNode:
     """Override standard Django behaviour to use WorkspaceInclusionAdminNode."""
     return WorkspaceInclusionAdminNode(
         parser,
@@ -309,7 +312,7 @@ def result_list_tag(parser, token):
 
 
 @register.tag(name="change_list_object_tools")
-def change_list_object_tools_tag(parser, token):
+def change_list_object_tools_tag(parser: Parser, token: Token) -> WorkspaceInclusionAdminNode:
     """Display the row of change list object tools."""
     return WorkspaceInclusionAdminNode(
         parser,

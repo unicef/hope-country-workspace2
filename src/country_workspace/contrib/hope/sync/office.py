@@ -44,8 +44,7 @@ def sync_programs(limit_to_office: "Office | None" = None) -> dict[str, int]:
             try:
                 if limit_to_office and record["business_area_code"] != office.code:
                     continue
-                else:
-                    office = Office.objects.get(code=record["business_area_code"])
+                office = Office.objects.get(code=record["business_area_code"])
                 if record["status"] not in [Program.ACTIVE, Program.DRAFT]:
                     continue
                 p, created = Program.objects.get_or_create(

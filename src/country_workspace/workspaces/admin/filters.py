@@ -29,7 +29,7 @@ class CWLinkedAutoCompleteFilter(LinkedAutoCompleteFilter):
         model: "Model",
         model_admin: "ModelAdmin",
         field_path: str,
-    ):
+    ) -> None:
         self.dependants = []
         if self.parent and not self.parent_lookup_kwarg:
             self.parent_lookup_kwarg = f"{self.parent}__exact"
@@ -54,7 +54,7 @@ class CWLinkedAutoCompleteFilter(LinkedAutoCompleteFilter):
             return f"{url}?{flt}={oid}"
         return url
 
-    def html_attrs(self):
+    def html_attrs(self) -> dict[str, Any]:
         classes = f"adminfilters  {self.__class__.__name__.lower()}"
         if self.error_message:
             classes += " error"
@@ -71,8 +71,7 @@ class HouseholdFilter(CWLinkedAutoCompleteFilter):
     fk_name = "name"
 
     def get_url(self) -> str:
-        url = reverse("%s:autocomplete" % self.admin_site.namespace)
-        return url
+        return reverse("%s:autocomplete" % self.admin_site.namespace)
 
     def queryset(self, request: HttpRequest, queryset: "QuerySet[Beneficiary]") -> "QuerySet[Beneficiary]":
         qs = super().queryset(request, queryset)
@@ -99,7 +98,7 @@ class UserAutoCompleteFilter(AutoCompleteFilter):
     template = "workspace/adminfilters/autocomplete.html"
     ajax_url = "admin:country_workspace_user_autocomplete"
 
-    def html_attrs(self):
+    def html_attrs(self) -> dict[str, Any]:
         classes = f"adminfilters  {self.__class__.__name__.lower()}"
         if self.error_message:
             classes += " error"

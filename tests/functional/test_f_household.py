@@ -10,15 +10,14 @@ if TYPE_CHECKING:
 pytestmark = pytest.mark.xdist_group("selenium")
 
 
-@pytest.fixture()
+@pytest.fixture
 def office(db, worker_id):
     from testutils.factories import OfficeFactory
 
-    co = OfficeFactory()
-    yield co
+    return OfficeFactory()
 
 
-@pytest.fixture()
+@pytest.fixture
 def program(office, worker_id):
     from testutils.factories import CountryProgramFactory
 
@@ -31,7 +30,7 @@ def program(office, worker_id):
     )
 
 
-@pytest.fixture()
+@pytest.fixture
 def household(program):
     from testutils.factories import CountryHouseholdFactory
 

@@ -5,7 +5,7 @@ if TYPE_CHECKING:
 
 
 class BeneficiaryGroupValidator:
-    def __init__(self, program: "Program"):
+    def __init__(self, program: "Program") -> None:
         self.program = program
 
     def validate(self, hh: "Household") -> list:

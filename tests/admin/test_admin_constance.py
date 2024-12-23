@@ -13,14 +13,14 @@ if TYPE_CHECKING:
     from django.contrib.auth.models import Group
 
 
-@pytest.fixture()
+@pytest.fixture
 def group() -> "Group":
     from testutils.factories import GroupFactory
 
     return GroupFactory()
 
 
-@pytest.fixture()
+@pytest.fixture
 def app(django_app_factory: MixinWithInstanceVariables, rf: RequestFactory) -> DjangoTestApp:
     from testutils.factories import SuperUserFactory
 

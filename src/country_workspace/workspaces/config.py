@@ -24,7 +24,7 @@ class AppSettings:
         "AUTH": "country_workspace.workspaces.backend.TenantBackend",
     }
 
-    def __init__(self, prefix: str):
+    def __init__(self, prefix: str) -> None:
         self.prefix = prefix
         from django.conf import settings
 

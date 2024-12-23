@@ -37,7 +37,8 @@ def lock_job(job: AsyncJob) -> Lock:
 def sync_job_task(pk: int, version: int) -> dict[str, Any]:
     try:
         job: AsyncJob = AsyncJob.objects.select_related("program", "program__country_office", "owner").get(
-            pk=pk, version=version
+            pk=pk,
+            version=version,
         )
     except AsyncJob.DoesNotExist as e:
         sentry_sdk.capture_exception(e)
@@ -58,5 +59,5 @@ def sync_job_task(pk: int, version: int) -> dict[str, Any]:
 
 
 @app.task()
-def removed_expired_jobs(**kwargs):
+def removed_expired_jobs(**kwargs: Any) -> None:
     AsyncJob.objects.filter(**kwargs).delete()

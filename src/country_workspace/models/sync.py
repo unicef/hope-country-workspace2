@@ -23,7 +23,9 @@ class SyncManager(BaseManager):
         for m in settings.IND_LOOKUPS:
             fd = FieldDefinition.objects.get(name=f"HOPE IND {m}")
             SyncLog.objects.get_or_create(
-                content_type=ct, object_id=fd.pk, data={"remote_url": "lookups/%s" % m.lower()}
+                content_type=ct,
+                object_id=fd.pk,
+                data={"remote_url": "lookups/%s" % m.lower()},
             )
 
     def register_sync(self, model: "type[Model]") -> None:

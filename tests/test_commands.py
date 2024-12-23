@@ -8,7 +8,6 @@ from unittest import mock
 from django.core.management import call_command
 
 import pytest
-from pytest import MonkeyPatch
 from responses import RequestsMock
 
 if TYPE_CHECKING:
@@ -19,7 +18,7 @@ if TYPE_CHECKING:
 pytestmark = pytest.mark.django_db
 
 
-@pytest.fixture()
+@pytest.fixture
 def environment() -> dict[str, str]:
     return {
         "ADMIN_EMAIL": "test@example.com",
@@ -48,7 +47,7 @@ def environment() -> dict[str, str]:
 def test_upgrade_init(
     verbosity: int,
     migrate: bool,
-    monkeypatch: MonkeyPatch,
+    monkeypatch: pytest.MonkeyPatch,
     environment: dict[str, str],
     static: bool,
     static_root: str,
@@ -83,7 +82,7 @@ def test_upgrade_init(
 
 @pytest.mark.parametrize("verbosity", [1, 0], ids=["verbose", ""])
 @pytest.mark.parametrize("migrate", [1, 0], ids=["migrate", ""])
-def test_upgrade(verbosity: int, migrate: int, monkeypatch: MonkeyPatch, environment: dict[str, str]) -> None:
+def test_upgrade(verbosity: int, migrate: int, monkeypatch: pytest.MonkeyPatch, environment: dict[str, str]) -> None:
     from testutils.factories import SuperUserFactory
 
     out = StringIO()
@@ -124,7 +123,7 @@ def test_upgrade_admin(mocked_responses: RequestsMock, environment: dict[str, st
 
 
 @pytest.mark.django_db(transaction=True)
-@pytest.mark.vcr()
+@pytest.mark.vcr
 def test_sync(environment: dict[str, str]) -> None:
     out = StringIO()
     # with my_vcr.use_cassette(Path(__file__).parent / "sync_command.yaml"):

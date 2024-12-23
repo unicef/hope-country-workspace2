@@ -4,7 +4,7 @@ register = Library()
 
 
 @register.filter
-def is_safe_celery_info(entry):
+def is_safe_celery_info(entry: str) -> bool:
     return entry not in [
         "traceback",
         "children",

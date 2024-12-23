@@ -59,7 +59,7 @@ class MassUpdateWidget(widgets.MultiWidget):
     def __init__(self, field: FlexFormMixin, attrs: dict[str, Any] | None = None) -> None:
         _widgets = (
             widgets.Select(
-                choices=[("", "-")] + operations.get_choices_for_target(field.flex_field.definition.field_type)
+                choices=[("", "-")] + operations.get_choices_for_target(field.flex_field.definition.field_type),
             ),
             field.widget,
         )
@@ -102,7 +102,9 @@ class MassUpdateForm(BaseActionForm):
 
 
 def mass_update_impl(
-    queryset: "QuerySet[Beneficiary]", config: "FormOperations", create_missing_fields: bool = False
+    queryset: "QuerySet[Beneficiary]",
+    config: "FormOperations",
+    create_missing_fields: bool = False,
 ) -> None:
     with transaction.atomic():
         for record in queryset.all():

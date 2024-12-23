@@ -12,7 +12,7 @@ def manager(worker_id):
     m = CacheManager(f"cache{worker_id}")
     m.init()
     m.active = True
-    yield m
+    return m
 
 
 def test_cache_panel(rf):

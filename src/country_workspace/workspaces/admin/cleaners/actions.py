@@ -24,7 +24,9 @@ if TYPE_CHECKING:
 
 @admin.action(description="Validate selected records", permissions=["validate"])
 def validate_records(
-    model_admin: "BeneficiaryBaseAdmin", request: HttpRequest, queryset: "QuerySet[Beneficiary]"
+    model_admin: "BeneficiaryBaseAdmin",
+    request: HttpRequest,
+    queryset: "QuerySet[Beneficiary]",
 ) -> None:
     opts = queryset.model._meta
     job = AsyncJob.objects.create(
@@ -42,7 +44,9 @@ def validate_records(
 
 @admin.action(description="Mass update record fields", permissions=["mass_update"])
 def mass_update(
-    model_admin: "BeneficiaryBaseAdmin", request: HttpRequest, queryset: "QuerySet[Beneficiary]"
+    model_admin: "BeneficiaryBaseAdmin",
+    request: HttpRequest,
+    queryset: "QuerySet[Beneficiary]",
 ) -> "HttpResponse":
     ctx = model_admin.get_common_context(request, title=_("Mass update"))
     ctx["checker"] = checker = model_admin.get_checker(request)
@@ -75,7 +79,9 @@ def mass_update(
 
 @admin.action(description="Update fields using RegEx", permissions=["regex_update"])
 def regex_update(
-    model_admin: "BeneficiaryBaseAdmin", request: "HttpRequest", queryset: "QuerySet[Beneficiary]"
+    model_admin: "BeneficiaryBaseAdmin",
+    request: "HttpRequest",
+    queryset: "QuerySet[Beneficiary]",
 ) -> HttpResponse:
     ctx = model_admin.get_common_context(request, title=_("Regex update"))
     ctx["checker"] = checker = model_admin.get_checker(request)
@@ -122,7 +128,9 @@ def regex_update(
 
 @admin.action(description="Create XLS template for bulk updates", permissions=["export"])
 def bulk_update_export(
-    model_admin: "BeneficiaryBaseAdmin", request: HttpRequest, queryset: "QuerySet[Beneficiary]"
+    model_admin: "BeneficiaryBaseAdmin",
+    request: HttpRequest,
+    queryset: "QuerySet[Beneficiary]",
 ) -> HttpResponse:
     ctx = model_admin.get_common_context(request, title=_("Export data for bulk update"))
     ctx["checker"] = checker = model_admin.get_checker(request)
@@ -153,7 +161,9 @@ def bulk_update_export(
 
 @admin.action(description="Calculate record checksum")
 def calculate_checksum(
-    model_admin: "BeneficiaryBaseAdmin", request: HttpRequest, queryset: "QuerySet[Beneficiary]"
+    model_admin: "BeneficiaryBaseAdmin",
+    request: HttpRequest,
+    queryset: "QuerySet[Beneficiary]",
 ) -> HttpResponse:
     opts = queryset.model._meta
     job = AsyncJob.objects.create(

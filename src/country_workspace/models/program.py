@@ -49,7 +49,8 @@ class Program(BaseModel):
     status = models.CharField(max_length=10, choices=STATUS_CHOICE, db_index=True)
     sector = models.CharField(max_length=50, choices=SECTOR_CHOICE, db_index=True)
     active = models.BooleanField(
-        default=False, help_text=_("Whether the program is active. Only active program are visible in the UI")
+        default=False,
+        help_text=_("Whether the program is active. Only active program are visible in the UI"),
     )
 
     # Local Fields
@@ -110,7 +111,6 @@ class Program(BaseModel):
 
         if isinstance(m, (Household | CountryHousehold)) or m in (Household, CountryHousehold):
             return self.household_checker
-        elif isinstance(m, (Individual | CountryIndividual)) or m in (Individual, CountryIndividual):
+        if isinstance(m, (Individual | CountryIndividual)) or m in (Individual, CountryIndividual):
             return self.individual_checker
-        else:
-            raise ValueError(m)
+        raise ValueError(m)

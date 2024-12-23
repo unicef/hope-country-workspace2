@@ -9,7 +9,7 @@ from .base import AutoRegisterModelFactory
 
 class UserFactory(AutoRegisterModelFactory):
     _password = "password"
-    username = factory.Sequence(lambda n: "m%03d@example.com" % n)
+    username = factory.LazyAttributeSequence(lambda i, n: "m%03d@example.com" % n)
     password = factory.django.Password(_password)
     email = factory.Sequence(lambda n: "m%03d@example.com" % n)
 

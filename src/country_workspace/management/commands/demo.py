@@ -24,7 +24,7 @@ class Command(BaseCommand):
 
         from country_workspace.models import Office, User
 
-        print("Populating demo data")
+        self.stdout.write("Populating demo data")
 
         Site.objects.update_or_create(
             pk=settings.SITE_ID,
@@ -61,11 +61,11 @@ class Command(BaseCommand):
 
         SyncLog.objects.create_lookups()
         if settings.HOPE_API_TOKEN:
-            print("Syncing online")
+            self.stdout.write("Syncing online")
             with vcr.use_cassette(test_utils_dir.parent / "sync_all.yaml", record_mode=RecordMode.ALL):
                 sync_all()
         else:
-            print("Syncing using cassette")
+            self.stdout.write("Syncing using cassette")
             with vcr.use_cassette(
                 test_utils_dir.parent / "sync_all.yaml",
                 record_mode=RecordMode.NONE,

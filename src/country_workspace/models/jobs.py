@@ -1,3 +1,5 @@
+from typing import Any, Callable
+
 from django.apps import apps
 from django.db import models
 from django.utils.module_loading import import_string
@@ -25,7 +27,7 @@ class AsyncJob(CeleryTaskModel, models.Model):
     class Meta:
         permissions = (("debug_job", "Can debug background jobs"),)
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.description or f"Background Job #{self.pk}"
 
     @property
@@ -36,8 +38,9 @@ class AsyncJob(CeleryTaskModel, models.Model):
     def started(self) -> str:
         return self.task_info["started_at"]
 
-    def execute(self):
+    def execute(self) -> Any:
         sid = None
+        func: Callable[..., Any]
         try:
             func = import_string(self.action)
             match self.type:

@@ -9,7 +9,7 @@ from country_workspace.models import User
 from country_workspace.social.pipeline import save_to_group, set_superusers
 
 
-@pytest.fixture()
+@pytest.fixture
 def group(db: Any) -> None:
     from testutils.factories import GroupFactory
 

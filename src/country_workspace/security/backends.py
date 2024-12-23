@@ -34,13 +34,13 @@ class AnyUserAuthBackend(ModelBackend):
                 g = Group.objects.get(name=settings.ANALYST_GROUP_NAME)
                 UserRole.objects.get_or_create(user=user, country_office=office, group=g)
                 return user
-            elif username in ["admin", "superuser", "administrator", "sax"]:
+            if username in ["admin", "superuser", "administrator", "sax"]:
                 user, __ = get_user_model().objects.update_or_create(
                     username=username,
                     defaults={"is_staff": True, "is_active": True, "is_superuser": True},
                 )
                 return user
-            elif username in [
+            if username in [
                 "staff",
             ]:
                 user, __ = get_user_model().objects.update_or_create(

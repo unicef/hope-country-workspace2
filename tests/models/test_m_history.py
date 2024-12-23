@@ -4,7 +4,7 @@ from country_workspace.models import Household
 from country_workspace.workspaces.models import CountryHousehold
 
 
-@pytest.fixture()
+@pytest.fixture
 def household() -> "CountryHousehold":
     from testutils.factories.household import CountryHouseholdFactory, get_hh_fields
 

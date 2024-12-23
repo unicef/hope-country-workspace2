@@ -10,7 +10,7 @@ from testutils.factories import FieldDefinitionFactory
 from country_workspace.contrib.hope.remotes.country import CountryAttributeHandler
 
 
-@pytest.mark.vcr()
+@pytest.mark.vcr
 @pytest.mark.xdist_group("remote")
 def test_r_country_fetcher():
     f = CountryAttributeHandler(
@@ -25,7 +25,7 @@ def test_r_country_fetcher():
     assert f.get()
 
 
-@pytest.mark.vcr()
+@pytest.mark.vcr
 @pytest.mark.xdist_group("remote")
 def test_r_country():
     fd: FieldDefinition = FieldDefinitionFactory(

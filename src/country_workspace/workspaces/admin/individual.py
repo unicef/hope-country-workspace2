@@ -36,7 +36,7 @@ class CountryIndividualAdmin(BeneficiaryBaseAdmin):
     title = _("Individual")
     title_plural = _("Individuals")
 
-    def __init__(self, model: Model, admin_site: "AdminSite"):
+    def __init__(self, model: Model, admin_site: "AdminSite") -> None:
         self._selected_household = None
         super().__init__(model, admin_site)
 
@@ -59,7 +59,9 @@ class CountryIndividualAdmin(BeneficiaryBaseAdmin):
         ]
 
     def get_selected_household(
-        self, request: HttpRequest, obj: "CountryIndividual | None" = None
+        self,
+        request: HttpRequest,
+        obj: "CountryIndividual | None" = None,
     ) -> CountryHousehold | None:
         from country_workspace.workspaces.models import CountryHousehold
 

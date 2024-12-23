@@ -26,7 +26,7 @@ def test_create_household_success(mock_aurora_data, batch):
 
 
 @pytest.mark.parametrize(
-    "data, expected_name_update",
+    ("data", "expected_name_update"),
     [
         (
             {"relationship_to_head": "head", "family_name": "Head Of Household Name"},
@@ -67,7 +67,7 @@ def test_update_household_name_from_individual(mock_aurora_data, household, data
 
 
 @pytest.mark.parametrize(
-    "data, expected_count",
+    ("data", "expected_count"),
     [
         (
             [
@@ -98,7 +98,7 @@ def test_create_individuals(mock_aurora_data, household, data, expected_count):
                 assert individual.household_id == household.pk
                 assert individual.batch == household.batch
                 assert individual.name == d.get("given_name", "")
-                assert individual.flex_fields == {f"cleaned_{k}": v for k, v in data.items()}
+                assert individual.flex_fields == {f"cleaned_{k}": v for k, v in d.items()}
                 mock_clean_field_name.assert_any_call("given_name")
 
 

@@ -13,18 +13,18 @@ if TYPE_CHECKING:
     from country_workspace.workspaces.models import AsyncJob
 
 
-@pytest.fixture()
+@pytest.fixture
 def job():
     from testutils.factories import AsyncJobFactory
 
     return AsyncJobFactory()
 
 
-@pytest.fixture()
+@pytest.fixture
 def app(django_app_factory: "MixinWithInstanceVariables", admin_user: "User") -> "CWTestApp":
     django_app = django_app_factory(csrf_checks=False)
     django_app.set_user(admin_user)
-    yield django_app
+    return django_app
 
 
 def test_job_filtering(app, job: "AsyncJob"):

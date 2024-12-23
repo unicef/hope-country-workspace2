@@ -1,12 +1,40 @@
-def force_login(driver, user, tenant=None):
+from django.urls import reverse
+
+
+def check_link_by_class(selenium, cls, view_name):
+    link = selenium.find_element_by_class_name(cls)
+    url = reverse(f"{view_name}")
+    return f' href="{url}"' in link.get_attribute("innerHTML")
+
+
+def wait_for(driver, *args):
+    from selenium.webdriver.support import expected_conditions as ec
+    from selenium.webdriver.support.ui import WebDriverWait
+
+    wait = WebDriverWait(driver, 10)
+    wait.until(ec.visibility_of_element_located((*args,)))
+    return driver.find_element(*args)
+
+
+def wait_for_url(driver, url):
+    from selenium.webdriver.support import expected_conditions as ec
+    from selenium.webdriver.support.ui import WebDriverWait
+
+    if "://" not in url:
+        url = f"{driver.live_server.url}{url}"
+    wait = WebDriverWait(driver, 10)
+    wait.until(ec.url_contains(url))
+
+
+def force_login(user, driver, base_url):
     from importlib import import_module
 
     from django.conf import settings
     from django.contrib.auth import BACKEND_SESSION_KEY, HASH_SESSION_KEY, SESSION_KEY
 
-    SessionStore = import_module(settings.SESSION_ENGINE).SessionStore
-    with driver.with_timeouts(page=10):
-        driver.get(driver.live_server.url)
+    SessionStore = import_module(settings.SESSION_ENGINE).SessionStore  # noqa: N806
+    with driver.with_timeouts(page=5):
+        driver.get(base_url)
 
     session = SessionStore()
     session[SESSION_KEY] = user._meta.pk.value_to_string(user)
@@ -22,19 +50,3 @@ def force_login(driver, user, tenant=None):
         }
     )
     driver.refresh()
-    if tenant:
-        from django.core.signing import get_cookie_signer
-
-        from country_workspace.workspaces.config import conf
-        from country_workspace.workspaces.utils import set_selected_tenant
-
-        signer = get_cookie_signer()
-        driver.add_cookie(
-            {
-                "name": conf.TENANT_COOKIE_NAME,
-                "value": signer.sign(tenant.slug),
-                "secure": False,
-                "path": "/",
-            }
-        )
-        set_selected_tenant(tenant)

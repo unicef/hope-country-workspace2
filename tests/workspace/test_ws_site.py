@@ -14,17 +14,16 @@ if TYPE_CHECKING:
     from testutils.types import CWTestApp
 
 
-@pytest.fixture()
+@pytest.fixture
 def batch():
     from testutils.factories import CountryBatchFactory
 
     return CountryBatchFactory()
 
 
-@pytest.fixture()
+@pytest.fixture
 def app(django_app_factory: "MixinWithInstanceVariables") -> "CWTestApp":
-    django_app = django_app_factory(csrf_checks=False)
-    yield django_app
+    return django_app_factory(csrf_checks=False)
 
 
 def test_autocomplete_view(app, user: "User", batch: "CountryBatch"):

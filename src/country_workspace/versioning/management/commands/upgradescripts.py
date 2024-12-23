@@ -1,4 +1,6 @@
+from argparse import ArgumentParser
 from pathlib import Path
+from typing import Any
 
 from django.core.management.base import BaseCommand, CommandError, no_translations
 from django.utils.timezone import now
@@ -29,7 +31,7 @@ class Scripts:
 class Command(BaseCommand):
     help = "Creates new version for apps."
 
-    def add_arguments(self, parser):
+    def add_arguments(self, parser: ArgumentParser) -> None:
         subparsers = parser.add_subparsers(dest="command")
         subparsers.add_parser("list", help="Show applied/available scripts")
 
@@ -43,11 +45,21 @@ class Command(BaseCommand):
             help='Scripts will be applied to the one after that selected. Use the name "zero" to unapply all scripts.',
         )
         parser_apply.add_argument(
-            "--fake", action="store_true", help="Mark script as run without actually running them."
+            "--fake",
+            action="store_true",
+            help="Mark script as run without actually running them.",
         )
 
     @no_translations
-    def handle(self, command, label=None, num=None, fake=None, zero=False, **options):
+    def handle(
+        self,
+        command: Any,
+        label: str | None = None,
+        num: str | None = None,
+        fake: str | None = None,
+        zero: bool | None = False,
+        **options: Any,
+    ) -> None:
         m = Manager()
         if command == "list":
             for entry in m.existing:

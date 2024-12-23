@@ -13,7 +13,7 @@ if TYPE_CHECKING:
 pytestmark = [pytest.mark.django_db]
 
 
-@pytest.fixture()
+@pytest.fixture
 def app(
     django_app_factory: "MixinWithInstanceVariables",
     mocked_responses: "RequestsMock",
@@ -24,8 +24,7 @@ def app(
     settings.SUPERUSERS = ["superuser"]
     UserFactory(username="superuser", is_staff=False, is_superuser=False)
     UserFactory(username="user", is_staff=False, is_superuser=False)
-    django_app = django_app_factory(csrf_checks=False)
-    yield django_app
+    return django_app_factory(csrf_checks=False)
 
 
 def test_login_enable_superuser(app: "DjangoTestApp", settings: "SettingsWrapper") -> None:

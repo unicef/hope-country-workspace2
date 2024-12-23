@@ -71,7 +71,7 @@ class Area(MPTTModel):
                 fields=["p_code"],
                 name="unique_area_p_code_not_blank",
                 condition=~Q(p_code=""),
-            )
+            ),
         ]
 
     class MPTTMeta:

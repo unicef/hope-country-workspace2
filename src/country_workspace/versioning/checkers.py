@@ -63,7 +63,9 @@ def create_hope_checkers() -> None:  # noqa: PLR0915
     ind_fs, __ = Fieldset.objects.get_or_create(name=INDIVIDUAL_CHECKER_NAME)
     ind_fs.fields.get_or_create(name="address", attrs={"label": "Address", "required": True}, definition=_char)
     ind_fs.fields.get_or_create(
-        name="alternate_collector_id", attrs={"label": "Alternative Collector for"}, definition=_char
+        name="alternate_collector_id",
+        attrs={"label": "Alternative Collector for"},
+        definition=_char,
     )
     ind_fs.fields.get_or_create(name="birth_date", definition=_date)
     ind_fs.fields.get_or_create(name="disability", attrs={"label": "Disability"}, definition=_i_disability)
