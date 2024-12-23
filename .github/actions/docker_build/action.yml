@@ -84,7 +84,7 @@ runs:
       run: |
         build_date=$(date +"%Y-%m-%d %H:%M")
         echo "BUILD_DATE=$build_date" >> $GITHUB_ENV
-        
+
         if [[ "${{inputs.target}}" == "dist" ]]; then
           echo "TAG_PREFIX=" >> $GITHUB_ENV
         else
@@ -114,7 +114,7 @@ runs:
     - name: "Check Image"
       id: image_status
       shell: bash
-      run: | 
+      run: |
         set +e
         echo "::notice::ℹ Checking checksum for ${{ steps.image_name.outputs.name }}"
         image_checksum=$(regctl image inspect \
@@ -134,7 +134,7 @@ runs:
           echo "::warning::🤬 Checksum: found '${image_checksum}' expected '${code_checksum}'"
           echo "updated=false" >> $GITHUB_OUTPUT
         fi
-        if [[ "${{inputs.rebuild}}" == "true" ]]; then 
+        if [[ "${{inputs.rebuild}}" == "true" ]]; then
             echo "::warning::⚠ Forced build due input parameter"
         fi
     - name: Set up Docker BuildX
@@ -188,7 +188,7 @@ runs:
       if: (steps.image_status.outputs.updated != 'true' || inputs.rebuild == 'true') && inputs.dryrun != 'true'
       shell: bash
       run: |
-        echo "${{ toJSON(steps.build_push.outputs) }}"        
+        echo "${{ toJSON(steps.build_push.outputs) }}"
         regctl image inspect -p linux/amd64 ${{ steps.image_name.outputs.name }}
         echo "::notice:: Image ${{ steps.meta.outputs.tags }} successfully built and pushed"
         echo "created=true" >> $GITHUB_OUTPUT

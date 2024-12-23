@@ -1,6 +1,6 @@
 import logging
 import urllib.parse
-from typing import Any, Optional
+from typing import Any
 
 from django import template
 from django.apps import apps
@@ -47,10 +47,10 @@ def admin_url(context, obj, **extra):
             if extra:
                 filters = urllib.parse.urlencode(extra)
 
-            return mark_safe(  # nosec
-                '<a class="admin-change-link" target="_admin" href="{url}?{filters}">'
+            return mark_safe(  # noqa
+                f'<a class="admin-change-link" target="_admin" href="{url}?{filters}">'
                 '<span class="icon icon-shield1"></span>'
-                "</a>".format(url=url, filters=filters)
+                "</a>"
             )
         except NoReverseMatch as e:
             logger.exception(e)
@@ -69,9 +69,7 @@ def admin_urlname(value: Options, arg: str) -> str:
 
 
 @register.simple_tag(takes_context=True)
-def add_preserved_filters(
-    context: dict[str, Any], url: str, popup: bool = False, to_field: Optional[str] = None
-) -> str:
+def add_preserved_filters(context: dict[str, Any], url: str, popup: bool = False, to_field: str | None = None) -> str:
     opts = context.get("opts")
     preserved_filters = context.get("preserved_filters")
     preserved_qsl = context.get("preserved_qsl")

@@ -13,5 +13,4 @@ class Command(BaseCommand):
     requires_system_checks = []
 
     def handle(self, *args: Any, **options: Any) -> None:
-
         sync_all()

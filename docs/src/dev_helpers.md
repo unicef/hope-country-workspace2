@@ -6,4 +6,4 @@
         show_bases: false
         show_bases: false
         show_root_heading: true
-        show_source: true  
+        show_source: true

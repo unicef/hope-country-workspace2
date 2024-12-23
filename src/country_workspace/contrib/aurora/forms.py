@@ -2,7 +2,6 @@ from django import forms
 
 
 class ImportAuroraForm(forms.Form):
-
     batch_name = forms.CharField(required=False, help_text="Label for this batch")
 
     check_before = forms.BooleanField(required=False, help_text="Prevent import if errors")

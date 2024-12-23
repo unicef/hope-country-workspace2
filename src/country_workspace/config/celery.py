@@ -31,7 +31,7 @@ class LockedTask(Task):
         super().on_failure(exc, task_id, args, kwargs, einfo)
 
     def __call__(self, *args, **kwargs):
-        h = hashlib.new("md5")  # nosec
+        h = hashlib.new("md5")  # noqa: S324
         h.update(json.dumps(kwargs, sort_keys=True).encode("utf-8"))
         self.lock_key = f"lock:{self.name}:{'-'.join(map(str, args)).encode('utf-8')}:{h.hexdigest()}"
         if self.acquire_lock():

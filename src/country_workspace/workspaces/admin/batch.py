@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Optional
+from typing import TYPE_CHECKING
 
 from django.contrib.admin import register
 from django.db.models import QuerySet
@@ -20,7 +20,6 @@ if TYPE_CHECKING:
 
 
 class ProgramBatchFilter(CWLinkedAutoCompleteFilter):
-
     def queryset(self, request: HttpRequest, queryset: QuerySet) -> QuerySet:
         if self.lookup_val:
             p = state.tenant.programs.get(pk=self.lookup_val)
@@ -50,7 +49,7 @@ class CountryBatchAdmin(SelectedProgramMixin, WorkspaceModelAdmin):
             .filter(country_office=state.tenant, program=state.program)
         )
 
-    def has_add_permission(self, request: HttpRequest, obj: Optional[CountryBatch] = None) -> bool:
+    def has_add_permission(self, request: HttpRequest, obj: CountryBatch | None = None) -> bool:
         return False
 
     @link(change_list=False)

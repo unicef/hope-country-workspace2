@@ -25,16 +25,15 @@ def get_funcs(filename: Path, direction: str = "forward"):
     spec.loader.exec_module(module)
     funcs = []
     for op in module.Scripts.operations:
-        if isinstance(op, (list, tuple)):
+        if isinstance(op, (list | tuple)):
             if direction == "forward":
                 funcs.append(op[0])
             else:
                 funcs.append(op[1])
+        elif direction == "forward":
+            funcs.append(op)
         else:
-            if direction == "forward":
-                funcs.append(op)
-            else:
-                funcs.append(lambda: True)
+            funcs.append(lambda: True)
 
     return funcs
 

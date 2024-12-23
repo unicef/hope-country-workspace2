@@ -16,7 +16,7 @@ logger = logging.getLogger(__name__)
 
 
 def validate_bool(value: Any) -> None:
-    if not str(value).lower() in [
+    if str(value).lower() not in [
         "true",
         "1",
         "yes",
@@ -39,7 +39,7 @@ def superuser(value: str, request: "HttpRequest|None", **kwargs: "Any") -> bool:
 
 @conditions.register("debug", validator=validate_bool)
 def debug(value: str, **kwargs: "Any") -> bool:
-    return settings.DEBUG == parse_bool(value)
+    return settings.DEBUG is parse_bool(value)
 
 
 @conditions.register("hostname")

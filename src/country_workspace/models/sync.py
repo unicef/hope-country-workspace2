@@ -18,12 +18,10 @@ class SyncManager(BaseManager):
 
         ct = ContentType.objects.get_for_model(FieldDefinition)
         for m in settings.HH_LOOKUPS:
-            fd = FieldDefinition.objects.get(name="HOPE HH {m}".format(m=m))
-            SyncLog.objects.get_or_create(
-                content_type=ct, object_id=fd.pk, data={"remote_url": "lookups/%s" % m.lower()}
-            )
+            fd = FieldDefinition.objects.get(name=f"HOPE HH {m}")
+            SyncLog.objects.get_or_create(content_type=ct, object_id=fd.pk, data={"remote_url": f"lookups/{m.lower()}"})
         for m in settings.IND_LOOKUPS:
-            fd = FieldDefinition.objects.get(name="HOPE IND {m}".format(m=m))
+            fd = FieldDefinition.objects.get(name=f"HOPE IND {m}")
             SyncLog.objects.get_or_create(
                 content_type=ct, object_id=fd.pk, data={"remote_url": "lookups/%s" % m.lower()}
             )

@@ -3,7 +3,7 @@
 ## Spreadsheet import
 
 
-```mermaid 
+```mermaid
 graph TD
 
     A[Upload file] --> B{All records are valid?}

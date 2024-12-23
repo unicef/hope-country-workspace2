@@ -1,4 +1,4 @@
-from typing import Any, Optional
+from typing import Any
 from urllib.parse import parse_qs
 
 from django.contrib.admin import AdminSite, register
@@ -32,8 +32,6 @@ class CountryIndividualAdmin(BeneficiaryBaseAdmin):
         # "program",
         "user_fields",
     ]
-    # change_list_template = "workspace/individual/change_list.html"
-    # change_form_template = "workspace/individual/change_form.html"
     ordering = ("name",)
     title = _("Individual")
     title_plural = _("Individuals")
@@ -61,7 +59,7 @@ class CountryIndividualAdmin(BeneficiaryBaseAdmin):
         ]
 
     def get_selected_household(
-        self, request: HttpRequest, obj: "Optional[CountryIndividual]" = None
+        self, request: HttpRequest, obj: "CountryIndividual | None" = None
     ) -> CountryHousehold | None:
         from country_workspace.workspaces.models import CountryHousehold
 
@@ -75,7 +73,6 @@ class CountryIndividualAdmin(BeneficiaryBaseAdmin):
             self._selected_household = obj.household
         return self._selected_household
 
-    def get_common_context(self, request: HttpRequest, pk: Optional[str] = None, **kwargs: Any) -> dict[str, Any]:
+    def get_common_context(self, request: HttpRequest, pk: str | None = None, **kwargs: Any) -> dict[str, Any]:
         kwargs["selected_household"] = self.get_selected_household(request)
-        # kwargs["title"] = self.get_selected_household(request)
         return super().get_common_context(request, pk, **kwargs)

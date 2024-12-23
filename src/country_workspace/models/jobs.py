@@ -22,25 +22,19 @@ class AsyncJob(CeleryTaskModel, models.Model):
     sentry_id = models.CharField(max_length=255, blank=True, null=True)
     celery_task_name = "country_workspace.tasks.sync_job_task"
 
-    def __str__(self):
-        return self.description or f"Background Job #{self.pk}"
-
     class Meta:
         permissions = (("debug_job", "Can debug background jobs"),)
 
+    def __str__(self):
+        return self.description or f"Background Job #{self.pk}"
+
     @property
     def queue_position(self) -> int:
-        try:
-            return super().queue_position
-        except Exception:
-            return 0
+        return super().queue_position
 
     @property
     def started(self) -> str:
-        try:
-            return self.task_info["started_at"]
-        except Exception:
-            return "="
+        return self.task_info["started_at"]
 
     def execute(self):
         sid = None

@@ -22,15 +22,15 @@ Install [uv](https://docs.astral.sh/uv/)
         wget https://github.com/sqreen/PyMiniRacer/files/7575004/libmini_racer.dylib.zip
 
 1. Unzip The Dylib file
-       
+
        unzip libmini_racer.dylib.zip
- 
+
 1. MV Dylib file to your site-packages
 
        mv libmini_racer.dylib /opt/homebrew/Caskroom/miniconda/base/lib/python3.8/site-packages/py_mini_racer/.
 
 1. Import Success.
-    
+
         >>> from py_mini_racer import MiniRacer
 
 
@@ -42,11 +42,11 @@ CSS. CSS sources are located in the `country_workspace/workspaces/theme/static_s
 If you need to edit the CSS follow the below steps:
 
 1. Install node dependencies
-    
+
         ./manage.py tailwind install
 
 1. Configure the enviroment
-        
+
         export EXTRA_APPS="country_workspace.contrib.hope,django_browser_reload"
         export EXTRA_MIDDLEWARES="django_browser_reload.middleware.BrowserReloadMiddleware,"
 

@@ -1,3 +1,4 @@
+from contextlib import suppress
 from functools import cached_property
 from typing import TYPE_CHECKING
 
@@ -14,7 +15,6 @@ class AppSettings:
     TENANT_COOKIE_NAME: str
     PROGRAM_COOKIE_NAME: str
     TENANT_MODEL: str
-    # STRATEGY: "BaseTenantStrategy"
     AUTH: "TenantBackend"
     defaults = {
         "NAMESPACE": "tenant_admin",
@@ -46,25 +46,13 @@ class AppSettings:
         from .backend import TenantBackend
 
         return TenantBackend()
-        # return import_string(self.AUTH)()  # type: ignore[no-any-return]
-
-    #
-    # @cached_property
-    # def tenant_model(self) -> "Union[Model, type]":
-    #     from django.apps import apps
-    #
-    #     if not self.TENANT_MODEL:
-    #         raise ValueError(f"Please set settings.{self.prefix}_TENANT_MODEL")
-    #     return apps.get_model(self.TENANT_MODEL)  # type ignore [return-value,attr-defined]
 
     def _on_setting_changed(self, sender: "Model", setting: str, value: "Any", **kwargs: "Any") -> None:
         if setting.startswith(self.prefix):
             self._set_attr(setting, value)
-        for attr in ["tenant_model", "auth", "strategy"]:
-            try:
+        with suppress(AttributeError):
+            for attr in ["tenant_model", "auth", "strategy"]:
                 delattr(self, attr)
-            except AttributeError:
-                pass
 
 
 conf = AppSettings("TENANT")

@@ -229,7 +229,7 @@ jobs:
 #              django-admin upgrade
 
       - name: Publish images
-        run: |          
+        run: |
             docker push ${{needs.test.outputs.image}}
             docker inspect ${{needs.test.outputs.image}} | jq -r '.[0].Config.Labels'
             echo "::notice::✅ Image ${{needs.test.outputs.image}} built and pushed"

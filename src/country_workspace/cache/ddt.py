@@ -54,7 +54,7 @@ class WSCachePanel(Panel):
 
     @property
     def nav_subtitle(self):
-        return "~{} gets / ~{} sets".format(len(self.gets), len(self.sets))
+        return f"~{len(self.gets)} gets / ~{len(self.sets)} sets"
 
     def generate_stats(self, request, response):
         self.record_stats(

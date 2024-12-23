@@ -39,7 +39,6 @@ class FailedFilter(SimpleListFilter):
 class IsValidFilter(SimpleListFilter):
     title = "Valid"
     parameter_name = "valid"
-    # template = "workspace/adminfilters/combobox.html"
 
     def lookups(self, request, model_admin):
         return (

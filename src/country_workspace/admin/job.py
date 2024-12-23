@@ -1,4 +1,4 @@
-from typing import Optional, Sequence
+from typing import Sequence
 
 from django.contrib import admin
 from django.http import HttpRequest
@@ -23,7 +23,7 @@ class AsyncJobAdmin(CeleryTaskModelAdmin, BaseModelAdmin):
         FailedFilter,
     )
 
-    def get_readonly_fields(self, request: "HttpRequest", obj: "Optional[AsyncJob]" = None) -> Sequence[str]:
+    def get_readonly_fields(self, request: "HttpRequest", obj: "AsyncJob | None" = None) -> Sequence[str]:
         if obj:
             return ("program", "batch", "owner", "local_status", "type", "action", "sentry_id")
         return super().get_readonly_fields(request, obj)

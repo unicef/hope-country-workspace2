@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Any, Callable, Optional
+from typing import TYPE_CHECKING, Any, Callable
 
 from django import forms
 from django.db import transaction
@@ -24,15 +24,15 @@ if TYPE_CHECKING:
 
 class OperationManager:
     def __init__(self) -> None:
-        self._dict: Operations = dict()
+        self._dict: Operations = {}
         self._cache: dict[forms.Form, list[tuple[str, str]]] = {}
 
     def register(self, target: Any, name: str, func: "MassUpdateFunc") -> None:
         unique = slugify(f"{fqn(target)}_{name}_{func.__name__}")
         self._dict[unique] = (target, name, func)
 
-    def get_function_by_id(self, id: str) -> "MassUpdateFunc":
-        return self._dict.get(id)[2]
+    def get_function_by_id(self, id_: str) -> "MassUpdateFunc":
+        return self._dict.get(id_)[2]
 
     def get_choices_for_target(self, target: type[forms.Field]) -> list[tuple[str, str]]:
         ret: list[tuple[str, str]] = []
@@ -56,7 +56,7 @@ class MassUpdateWidget(widgets.MultiWidget):
     template_name = "workspace/actions/massupdatewidget.html"
     is_required = False
 
-    def __init__(self, field: FlexFormMixin, attrs: Optional[dict[str, Any]] = None) -> None:
+    def __init__(self, field: FlexFormMixin, attrs: dict[str, Any] | None = None) -> None:
         _widgets = (
             widgets.Select(
                 choices=[("", "-")] + operations.get_choices_for_target(field.flex_field.definition.field_type)
@@ -115,20 +115,3 @@ def mass_update_impl(
                 elif create_missing_fields:
                     record.flex_fields[field_name] = func("", new_value)
             record.save()
-
-
-#
-#
-# def mass_update(
-#     model_admin: "BeneficiaryBaseAdmin", request: HttpRequest, queryset: "QuerySet[Beneficiary]"
-# ) -> HttpResponse:
-#     ctx = model_admin.get_common_context(request, title=_("Mass update"))
-#     ctx["checker"] = checker = model_admin.get_checker(request)
-#     ctx["preserved_filters"] = model_admin.get_preserved_filters(request)
-#     form = MassUpdateForm(request.POST, checker=checker)
-#     ctx["form"] = form
-#     if "_apply" in request.POST:
-#         if form.is_valid():
-#             mass_update_impl(queryset.all(), form.get_selected())
-#             model_admin.message_user(request, "Records updated successfully")
-#     return render(request, "workspace/actions/mass_update.html", ctx)

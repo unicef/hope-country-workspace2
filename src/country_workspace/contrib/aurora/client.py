@@ -23,6 +23,7 @@ class AuroraClient:
         Args:
             token (str | None): An optional API token for authentication. If not provided,
                 the token is retrieved from the Constance configuration (config.AURORA_API_TOKEN).
+
         """
         self.token = token or config.AURORA_API_TOKEN
 
@@ -35,6 +36,7 @@ class AuroraClient:
 
         Returns:
             str: The full URL, ensuring it ends with a trailing slash.
+
         """
         url = urljoin(config.AURORA_API_URL, path)
         if not url.endswith("/"):
@@ -55,6 +57,7 @@ class AuroraClient:
             RemoteError: If the API response has a non-200 status code,
                          if there's an issue with the network request,
                          or if the response contains invalid JSON.
+
         """
         url = self._get_url(path)
         while url:
@@ -70,7 +73,5 @@ class AuroraClient:
             except JSONDecodeError:
                 raise RemoteError(f"Wrong JSON response fetching {url}")
 
-            for record in data["results"]:
-                yield record
-
+            yield from data["results"]
             url = data.get("next")

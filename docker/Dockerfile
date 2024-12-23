@@ -92,7 +92,7 @@ RUN --mount=type=cache,target=/root/.uv-cache \
 
 # ------- production only deps-------
 FROM builder AS production
-ENV PATH=/app/.venv/bin:/usr/local/bin/:/usr/bin:/bin \
+ENV PATH=/venv/bin:/usr/local/bin/:/usr/bin:/bin \
     DJANGO_SETTINGS_MODULE=country_workspace.config.settings \
     PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 \
@@ -147,7 +147,7 @@ COPY . /app/
 COPY --chown=hope:unicef --from=production /venv /venv
 COPY --from=builder /usr/local/bin/uwsgi /usr/local/bin/uv /usr/local/bin/
 RUN --mount=type=cache,target=/root/.uv-cache \
-    uv --cache-dir=/root/.uv-cache  pip install --link-mode=copy --no-deps . \
+    uv --cache-dir=/root/.uv-cache  pip install --no-deps . \
     && rm -fr /app
 
 

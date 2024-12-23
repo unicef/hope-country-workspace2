@@ -14,6 +14,6 @@ class Command(BaseCommand):
 
     def handle(self, *args: Any, **options: Any) -> None:  # noqa
         try:
-            1 / 0
-        except Exception as e:  # pragma: no cover
+            1 / 0  # noqa: B018
+        except ValueError as e:  # pragma: no cover
             sentry_sdk.capture_exception(e)

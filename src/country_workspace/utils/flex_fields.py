@@ -15,7 +15,7 @@ def get_checker_fields(checker: DataChecker) -> tuple[str, str]:
 
 
 def get_obj_checksum(obj: "Validable") -> str:
-    h = hashlib.new("md5")  # nosec
+    h = hashlib.new("md5")  # noqa: S324
     data = json.dumps(obj.flex_fields, sort_keys=True).encode("utf-8")
     h.update(data)
     if obj.flex_files:

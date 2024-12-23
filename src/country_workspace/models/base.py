@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Any, Optional
+from typing import TYPE_CHECKING, Any
 
 from django.db import models
 from django.urls import reverse
@@ -18,7 +18,6 @@ if TYPE_CHECKING:
 
 
 class BaseQuerySet(models.QuerySet["models.Model"]):
-
     def get(self, *args: Any, **kwargs: Any) -> "models.Model":
         try:
             return super().get(*args, **kwargs)
@@ -42,7 +41,6 @@ class ValidableManager(models.Manager["Validable"]):
 
 
 class Cachable:
-
     def country_office(self):
         raise NotImplementedError
 
@@ -78,10 +76,6 @@ class Validable(Cachable, models.Model):
             ("export_beneficiary", "Can Export Beneficiary Records"),
         )
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self._checksum = self.checksum
-
     def __str__(self) -> str:
         return self.name or "%s %s" % (self._meta.verbose_name, self.id)
 
@@ -96,6 +90,10 @@ class Validable(Cachable, models.Model):
             )
             if state.request:
                 reversion.set_user(state.request.user)
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._checksum = self.checksum
 
     def checker(self) -> "DataChecker":
         raise NotImplementedError
@@ -118,7 +116,7 @@ class Validable(Cachable, models.Model):
         current_status = self.flex_fields
         return list(dictdiffer.diff(stored_status, current_status))
 
-    def diff(self, first: Optional[int] = None, second: Optional[int] = None) -> "Any":
+    def diff(self, first: int | None = None, second: int | None = None) -> "Any":
         from reversion.models import Version
 
         qs = Version.objects.get_for_object(self).order_by("pk")

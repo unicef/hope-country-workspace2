@@ -24,7 +24,7 @@ class RegexFormField(forms.CharField):
         try:
             re.compile(value)
             return value
-        except Exception:
+        except (ValueError, TypeError):
             raise forms.ValidationError("Invalid regex")
 
 

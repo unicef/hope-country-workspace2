@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Optional
+from typing import TYPE_CHECKING
 
 from django import forms
 
@@ -24,13 +24,11 @@ class CountryAttributeHandler(AbstractAttributeHandler):
     def set(self, value: "Json"):
         pass
 
-    def get(self, instance: "Optional[FlexField]" = None) -> "Json":
+    def get(self, instance: "FlexField | None" = None) -> "Json":
         from country_workspace.contrib.hope.client import HopeClient
 
         client = HopeClient()
         results = client.get(self.config["remote_url"])
-        data = []
         self.owner.strategy_config = {}
-        for row in results:
-            data.append((row["id"], row["name"]))
+        data = [(row["id"], row["name"]) for row in results]
         return {"choices": data}

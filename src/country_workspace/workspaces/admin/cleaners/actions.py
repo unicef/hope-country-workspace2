@@ -50,28 +50,26 @@ def mass_update(
     form = MassUpdateForm(request.POST, checker=checker)
     ctx["form"] = form
 
-    if "_apply" in request.POST:
-        if form.is_valid():
-            opts = queryset.model._meta
+    if "_apply" in request.POST and form.is_valid():
+        opts = queryset.model._meta
 
-            job = AsyncJob.objects.create(
-                description="Mass update record fields",
-                type=AsyncJob.JobType.ACTION,
-                owner=state.request.user,
-                action=fqn(mass_update_impl),
-                program=state.program,
-                config={
-                    "pks": list(queryset.values_list("pk", flat=True)),
-                    "model_name": opts.label,
-                    "kwargs": {
-                        "config": form.get_selected(),
-                        "create_missing_fields": form.cleaned_data["_create_missing_fields"],
-                    },
+        job = AsyncJob.objects.create(
+            description="Mass update record fields",
+            type=AsyncJob.JobType.ACTION,
+            owner=state.request.user,
+            action=fqn(mass_update_impl),
+            program=state.program,
+            config={
+                "pks": list(queryset.values_list("pk", flat=True)),
+                "model_name": opts.label,
+                "kwargs": {
+                    "config": form.get_selected(),
+                    "create_missing_fields": form.cleaned_data["_create_missing_fields"],
                 },
-            )
-            job.queue()
-            # mass_update_impl(queryset.all(), form.get_selected())
-            model_admin.message_user(request, "Task scheduled", messages.SUCCESS)
+            },
+        )
+        job.queue()
+        model_admin.message_user(request, "Task scheduled", messages.SUCCESS)
     return render(request, "workspace/actions/mass_update.html", ctx)
 
 
@@ -92,7 +90,6 @@ def regex_update(
     elif "_apply" in request.POST:
         form = RegexUpdateForm(request.POST, checker=checker)
         if form.is_valid():
-            # regex_update_impl(queryset.all(), form.cleaned_data)
             opts = queryset.model._meta
 
             job = AsyncJob.objects.create(
@@ -132,25 +129,24 @@ def bulk_update_export(
     ctx["preserved_filters"] = model_admin.get_preserved_filters(request)
     form = BulkUpdateForm(request.POST, checker=checker)
     ctx["form"] = form
-    if "_export" in request.POST:
-        if form.is_valid():
-            columns = {"fields": ["id"] + sorted(form.cleaned_data["fields"])}
-            opts = queryset.model._meta
-            job = AsyncJob.objects.create(
-                description="Mass update record fields",
-                type=AsyncJob.JobType.TASK,
-                owner=state.request.user,
-                action=fqn(bulk_update_export_template),
-                program=state.program,
-                config={
-                    "pks": list(queryset.values_list("pk", flat=True)),
-                    "model_name": opts.label,
-                    "columns": columns,
-                },
-            )
-            job.queue()
-            model_admin.message_user(request, "Task scheduled", messages.SUCCESS)
-            return HttpResponseRedirect(".")
+    if "_export" in request.POST and form.is_valid():
+        columns = {"fields": ["id"] + sorted(form.cleaned_data["fields"])}
+        opts = queryset.model._meta
+        job = AsyncJob.objects.create(
+            description="Mass update record fields",
+            type=AsyncJob.JobType.TASK,
+            owner=state.request.user,
+            action=fqn(bulk_update_export_template),
+            program=state.program,
+            config={
+                "pks": list(queryset.values_list("pk", flat=True)),
+                "model_name": opts.label,
+                "columns": columns,
+            },
+        )
+        job.queue()
+        model_admin.message_user(request, "Task scheduled", messages.SUCCESS)
+        return HttpResponseRedirect(".")
 
     return render(request, "workspace/actions/bulk_update_export.html", ctx)
 
