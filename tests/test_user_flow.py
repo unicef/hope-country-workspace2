@@ -3,26 +3,26 @@ from typing import TYPE_CHECKING
 from django.urls import reverse
 
 import pytest
-from django_webtest import DjangoTestApp
-from django_webtest.pytest_plugin import MixinWithInstanceVariables
-from pytest_django.fixtures import SettingsWrapper
-from responses import RequestsMock
 
 from country_workspace.state import state
 
 if TYPE_CHECKING:
+    from django_webtest import DjangoTestApp
+    from django_webtest.pytest_plugin import MixinWithInstanceVariables
+    from pytest_django.fixtures import SettingsWrapper
+    from responses import RequestsMock
+
     from country_workspace.models import Household
 
 
-@pytest.fixture()
+@pytest.fixture
 def office():
     from testutils.factories import OfficeFactory
 
-    co = OfficeFactory()
-    yield co
+    return OfficeFactory()
 
 
-@pytest.fixture()
+@pytest.fixture
 def program(office, household_checker, individual_checker):
     from testutils.factories import CountryProgramFactory
 
@@ -34,25 +34,25 @@ def program(office, household_checker, individual_checker):
     )
 
 
-@pytest.fixture()
+@pytest.fixture
 def user():
     from testutils.factories import UserFactory
 
     return UserFactory(is_staff=True)
 
 
-@pytest.fixture()
+@pytest.fixture
 def data(program):
     from testutils.factories import HouseholdFactory
 
     return HouseholdFactory.create_batch(10, batch__program=program, batch__country_office=program.country_office)
 
 
-@pytest.fixture()
+@pytest.fixture
 def app(django_app_factory: "MixinWithInstanceVariables", mocked_responses: "RequestsMock") -> "DjangoTestApp":
     django_app = django_app_factory(csrf_checks=False)
     state.reset()
-    yield django_app
+    return django_app
 
 
 def test_login(app, user, data: "list[Household]", settings: "SettingsWrapper"):

@@ -1,9 +1,14 @@
 import os
 import sys
 from pathlib import Path
+from typing import TYPE_CHECKING
 
+import factory
 import pytest
 import responses
+
+if TYPE_CHECKING:
+    from country_workspace.models import User
 
 here = Path(__file__).parent
 sys.path.insert(0, str(here / "../src"))
@@ -84,20 +89,23 @@ def setup(db, worker_id, settings):
     GroupFactory(name=config.NEW_USER_DEFAULT_GROUP)
 
 
-@pytest.fixture()
+@pytest.fixture
 def mocked_responses():
     with responses.RequestsMock(assert_all_requests_are_fired=False) as rsps:
         yield rsps
 
 
-@pytest.fixture()
-def user(db, worker_id, settings):
+@pytest.fixture
+def user(db, worker_id):
     from testutils.factories import UserFactory
 
-    return UserFactory()
+    def username(instance: "User", step: int) -> str:
+        return f"u{step:<03}_{worker_id}@example.com"
+
+    return UserFactory(username=factory.LazyAttributeSequence(username))
 
 
-@pytest.fixture()
+@pytest.fixture
 def afghanistan(db):
     from testutils.factories import OfficeFactory
 
@@ -115,8 +123,8 @@ def reporters(db, afghanistan, user):
     return Group.objects.get(name=settings.ANALYST_GROUP_NAME)
 
 
-@pytest.fixture(scope="function")
-def active_marks(request):
+@pytest.fixture
+def active_marks(request: pytest.FixtureRequest):
     # Collect all the marks for this node (test)
     current_node = request.node
     marks = []
@@ -125,25 +133,25 @@ def active_marks(request):
         current_node = current_node.parent
 
     # Get the mark expression - what was passed to -m
-    markExpr = request.config.option.markexpr
+    mark_expr = request.config.option.markexpr
 
     # Compile the mark expression
     from _pytest.mark.expression import Expression
 
-    compiledMarkExpr = Expression.compile(markExpr)
+    compiled_mark_expr = Expression.compile(mark_expr)
 
     # Return a sequence of markers that match
-    return [mark for mark in marks if compiledMarkExpr.evaluate(lambda candidate: candidate == mark)]  # noqa B023
+    return [mark for mark in marks if compiled_mark_expr.evaluate(lambda candidate: candidate == mark)]  # noqa B023
 
 
-@pytest.fixture()
+@pytest.fixture
 def force_migrated_records(request, active_marks):
     from country_workspace.versioning.management.manager import Manager
 
     Manager().force_apply()
 
 
-@pytest.fixture()
+@pytest.fixture
 def household_checker(request, active_marks):
     from testutils.factories import DataCheckerFactory
 
@@ -152,7 +160,7 @@ def household_checker(request, active_marks):
     return DataCheckerFactory(name=HOUSEHOLD_CHECKER_NAME)
 
 
-@pytest.fixture()
+@pytest.fixture
 def individual_checker(request, active_marks):
     from testutils.factories import DataCheckerFactory
 

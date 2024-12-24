@@ -1,13 +1,17 @@
+from typing import TYPE_CHECKING
+
 from django.contrib.auth.backends import BaseBackend
 from django.contrib.auth.models import AnonymousUser, Permission
 from django.db.models import Model, Q, QuerySet
-from django.http import HttpRequest
 
 from dateutil.utils import today
 
 from ..models import Office, User
 from ..state import state
 from .utils import get_selected_tenant
+
+if TYPE_CHECKING:
+    from django.http import HttpRequest
 
 
 class TenantBackend(BaseBackend):
@@ -55,7 +59,7 @@ class TenantBackend(BaseBackend):
             qs = Permission.objects.filter(content_type__app_label="workspaces")
             if not user.is_superuser:
                 qs = qs.filter(group__userrole__user=user).filter(
-                    Q(group__userrole__country_office=country_office, group__userrole__program=None) | Q(**filters)
+                    Q(group__userrole__country_office=country_office, group__userrole__program=None) | Q(**filters),
                 )
             perms = qs.values_list("content_type__app_label", "codename").order_by()
             user._tenant_cache[perm_cache_name] = {f"{ct}.{name}" for ct, name in perms}

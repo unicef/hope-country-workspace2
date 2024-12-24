@@ -8,7 +8,7 @@ from country_workspace.state import state
 
 
 def current_state(request: HttpRequest) -> dict[str, Any]:
-    ret = {
+    return {
         "state": state,
         "app": {
             "version": VERSION,
@@ -17,4 +17,3 @@ def current_state(request: HttpRequest) -> dict[str, Any]:
             "branch": os.environ.get("BRANCH", "-"),
         },
     }
-    return ret

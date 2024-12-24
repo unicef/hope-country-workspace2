@@ -2,7 +2,6 @@ from typing import TYPE_CHECKING, Generator
 from unittest import mock
 
 import pytest
-from pytest_django.fixtures import SettingsWrapper
 
 from country_workspace.state import state
 from country_workspace.utils.http import absolute_reverse, absolute_uri, get_client_ip, get_server_host, get_server_url
@@ -11,11 +10,11 @@ if TYPE_CHECKING:
     from django.http import HttpRequest
     from django.test.client import RequestFactory
 
-    from pytest import MonkeyPatch
+    from pytest_django.fixtures import SettingsWrapper
 
 
 @pytest.fixture(autouse=True)
-def r(monkeypatch: "MonkeyPatch", rf: "RequestFactory") -> Generator[None, None, None]:
+def r(monkeypatch: "pytest.MonkeyPatch", rf: "RequestFactory") -> Generator[None, None, None]:
     req: "HttpRequest" = rf.get("/", HTTP_HOST="127.0.0.1")
     m = mock.patch("country_workspace.state.state.request", req)
     m.start()

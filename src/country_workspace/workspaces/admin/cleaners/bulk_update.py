@@ -6,7 +6,6 @@ from django import forms
 from django.apps import apps
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.files.storage import default_storage
-from django.db.models import QuerySet
 
 from hope_flex_fields.models import DataChecker, FlexField
 from hope_flex_fields.xlsx import get_format_for_field
@@ -17,6 +16,8 @@ from country_workspace.models import AsyncJob, Program
 from country_workspace.workspaces.admin.cleaners.base import BaseActionForm
 
 if TYPE_CHECKING:
+    from django.db.models import QuerySet
+
     from country_workspace.types import Beneficiary
 
 
@@ -122,10 +123,13 @@ def dc_get_field(dc: "DataChecker", name: str) -> "FlexField | None":
         for field in fs.fieldset.fields.filter():
             if field.name == name:
                 return field
+    return None
 
 
 def create_xls_importer(
-    queryset: "QuerySet[Beneficiary]", program: Program, columns: list[str]
+    queryset: "QuerySet[Beneficiary]",
+    program: Program,
+    columns: list[str],
 ) -> [io.BytesIO, Workbook]:
     out = BytesIO()
     dc: DataChecker = program.get_checker_for(queryset.model)
@@ -141,7 +145,7 @@ def create_xls_importer(
             "align": "center",
             "valign": "vcenter",
             "indent": 1,
-        }
+        },
     )
 
     header_format.set_bg_color("#DDDDDD")

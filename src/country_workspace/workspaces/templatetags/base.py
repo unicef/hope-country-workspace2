@@ -1,13 +1,16 @@
 from inspect import getfullargspec
-from typing import Any
+from typing import Any, Callable
 
+from django.template.base import Parser, Token
 from django.template.library import InclusionNode, parse_bits
 
 
 class WorkspaceInclusionAdminNode(InclusionNode):
     """Template tag that allows its template to be overridden per model, per app, or globally."""
 
-    def __init__(self, parser, token, func, template_name: str, takes_context: bool = True) -> None:
+    def __init__(
+        self, parser: Parser, token: Token, func: Callable, template_name: str, takes_context: bool = True
+    ) -> None:
         self.template_name = template_name
         params, varargs, varkw, defaults, kwonly, kwonly_defaults, _ = getfullargspec(func)
         bits = token.split_contents()
@@ -36,6 +39,6 @@ class WorkspaceInclusionAdminNode(InclusionNode):
                 "workspace/%s/%s/%s" % (app_label, object_name, self.template_name),
                 "workspace/%s/%s" % (app_label, self.template_name),
                 "workspace/%s" % self.template_name,
-            ]
+            ],
         )
         return super().render(context)

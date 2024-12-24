@@ -1,14 +1,18 @@
 from typing import TYPE_CHECKING
 
+import factory
 import pytest
+from faker import Faker
 
 from country_workspace.contrib.hope.validators import FullHouseholdValidator
 
 if TYPE_CHECKING:
     from country_workspace.models import Household
 
+fake = Faker()
 
-@pytest.fixture()
+
+@pytest.fixture
 def program(household_checker, individual_checker):
     from testutils.factories import CountryProgramFactory
 
@@ -20,12 +24,20 @@ def program(household_checker, individual_checker):
     )
 
 
-@pytest.fixture()
-def household(program) -> "Household":
+@pytest.fixture
+def household(program, worker_id) -> "Household":
     from testutils.factories import HouseholdFactory
 
-    hh = HouseholdFactory(batch__program=program, individuals=[], batch__country_office=program.country_office)
-    return hh
+    def name(instance: "Household", step: int) -> str:
+        name = fake.last_name()
+        return f"{name} @{worker_id} #{step}"
+
+    return HouseholdFactory(
+        name=factory.LazyAttributeSequence(name),
+        batch__program=program,
+        individuals=[],
+        batch__country_office=program.country_office,
+    )
 
 
 def test_head(household: "Household"):

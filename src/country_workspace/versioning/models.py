@@ -7,7 +7,7 @@ class Script(models.Model):
     version = models.CharField(max_length=255)
     applied = models.DateTimeField(default=now)
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.name
 
     def num(self) -> str:

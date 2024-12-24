@@ -4,11 +4,12 @@ from threading import local
 from typing import TYPE_CHECKING
 
 from django.core.signing import get_cookie_signer
-from django.http import HttpRequest, HttpResponse
 
 if TYPE_CHECKING:
     from collections.abc import Iterator
     from typing import Any
+
+    from django.http import HttpRequest, HttpResponse
 
     from .models import Office, Program
 

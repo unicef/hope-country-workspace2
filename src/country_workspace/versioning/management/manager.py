@@ -2,22 +2,22 @@ import importlib.util
 import re
 import sys
 from pathlib import Path
-from typing import Callable
+from typing import IO, Callable
 
 from country_workspace import VERSION
-from country_workspace.versioning.exceptions import ScriptException
+from country_workspace.versioning.exceptions import ScriptError
 from country_workspace.versioning.models import Script
 
 regex = re.compile(r"(\d+).*")
 
 
-def get_version(filename):
+def get_version(filename: str) -> int | None:
     if m := regex.match(filename):
         return int(m.group(1))
     return None
 
 
-def get_funcs(filename: Path, direction: str = "forward"):
+def get_funcs(filename: Path, direction: str = "forward") -> list[Callable]:
     if not filename.exists():  # pragma: no cover
         raise FileNotFoundError(filename)
     spec = importlib.util.spec_from_file_location(filename.stem, filename.absolute())
@@ -41,7 +41,7 @@ def get_funcs(filename: Path, direction: str = "forward"):
 class Manager:
     default_folder = Path(__file__).parent.parent / "scripts"
 
-    def __init__(self, folder: Path = ""):
+    def __init__(self, folder: str | Path | None = None) -> None:
         self.folder = folder or self.default_folder
         self.existing = []
         self.applied = list(Script.objects.order_by("name").values_list("name", flat=True))
@@ -55,28 +55,31 @@ class Manager:
                 self.existing.append(filename)
                 self.max_version = max(self.max_version, v)
 
-    def is_processed(self, entry):
+    def is_processed(self, entry: str) -> bool:
         return Path(entry).name in self.applied
 
-    def zero(self, out=sys.stdout):
+    def zero(self, out: IO = sys.stdout) -> None:
         self.backward(0, out=out)
 
-    def _process_file(self, entry: Path):
+    def _process_file(self, entry: Path) -> list[Callable]:
         funcs = get_funcs(entry, direction="forward")
         for func in funcs:
             try:
                 func()
             except Exception as e:  # pragma: no cover
-                raise ScriptException(f"Error executing {entry.stem}.{func.__name__}") from e
+                raise ScriptError(f"Error executing {entry.stem}.{func.__name__}") from e
         return funcs
 
-    def force_apply(self):
+    def force_apply(self) -> None:
         for entry in self.existing:
             if entry.name not in self.applied:
                 self._process_file(entry)
 
     def forward(
-        self, to_num=None, fake: bool = False, out=sys.stdout
+        self,
+        to_num: int | None = None,
+        fake: bool = False,
+        out: IO = sys.stdout,
     ) -> list[tuple[Path, list[Callable[[None], None]]]]:
         out.write("Upgrading...\n")
         if not to_num:
@@ -96,7 +99,7 @@ class Manager:
         self.applied = list(Script.objects.order_by("name").values_list("name", flat=True))
         return processed
 
-    def backward(self, to_num, out=sys.stdout) -> list[tuple[Path, list[Callable[[None], None]]]]:
+    def backward(self, to_num: int, out: IO = sys.stdout) -> list[tuple[Path, list[Callable[[None], None]]]]:
         out.write("Downgrading...\n")
         processed = []
         for entry in reversed(self.applied):

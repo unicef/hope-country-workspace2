@@ -3,28 +3,27 @@ from typing import TYPE_CHECKING
 from django.urls import reverse
 
 import pytest
-from django_webtest.pytest_plugin import MixinWithInstanceVariables
 from testutils.perms import user_grant_permissions
 from testutils.utils import select_office
 
-from country_workspace.models import User
-from country_workspace.workspaces.models import CountryBatch
-
 if TYPE_CHECKING:
+    from django_webtest.pytest_plugin import MixinWithInstanceVariables
     from testutils.types import CWTestApp
 
+    from country_workspace.models import User
+    from country_workspace.workspaces.models import CountryBatch
 
-@pytest.fixture()
+
+@pytest.fixture
 def batch():
     from testutils.factories import CountryBatchFactory
 
     return CountryBatchFactory()
 
 
-@pytest.fixture()
+@pytest.fixture
 def app(django_app_factory: "MixinWithInstanceVariables") -> "CWTestApp":
-    django_app = django_app_factory(csrf_checks=False)
-    yield django_app
+    return django_app_factory(csrf_checks=False)
 
 
 def test_autocomplete_view(app, user: "User", batch: "CountryBatch"):

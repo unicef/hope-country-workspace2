@@ -13,6 +13,7 @@ from django.template.response import TemplateResponse
 from django.urls import NoReverseMatch, URLPattern, URLResolver, reverse
 from django.utils.text import capfirst
 from django.utils.translation import gettext_lazy
+from django.views import View
 
 from smart_admin.autocomplete import SmartAutocompleteJsonView
 
@@ -104,8 +105,7 @@ def force_tenant(view_func: "Callable[...]") -> "Callable[...]":
             return redirect("workspace:login")
         if not is_tenant_valid() and "+st" not in request.path:  # TODO: Dry
             return redirect("workspace:select_tenant")
-        response = view_func(request, *args, **kwargs)
-        return response
+        return view_func(request, *args, **kwargs)
 
     return wraps(view_func)(_view_wrapper)
 
@@ -201,7 +201,7 @@ class TenantAdminSite(admin.AdminSite):
     def has_permission(self, request: "HttpRequest") -> bool:
         return request.user.is_active
 
-    def admin_view(self, view, cacheable: bool = True):
+    def admin_view(self, view: View, cacheable: bool = True) -> Callable[..., Any]:
         return force_tenant(super().admin_view(view, cacheable))
 
     @property
@@ -214,7 +214,7 @@ class TenantAdminSite(admin.AdminSite):
         urlpatterns: "list[URLResolver | URLPattern]"
 
         def wrap(view: "Callable[[Any], Any]", cacheable: bool = False) -> "Callable[[Any], Any]":
-            def wrapper(*args: "Any", **kwargs: "Any") -> "Callable[[], Any]":
+            def wrapper(*args: Any, **kwargs: Any) -> "Callable[[], Any]":
                 return self.admin_view(view, cacheable)(*args, **kwargs)
 
             wrapper.admin_site = self  # type: ignore
@@ -228,7 +228,9 @@ class TenantAdminSite(admin.AdminSite):
         return urlpatterns
 
     def login(
-        self, request: "HttpRequest", extra_context: "dict[str, Any] | None" = None
+        self,
+        request: "HttpRequest",
+        extra_context: "dict[str, Any] | None" = None,
     ) -> "HttpResponse|HttpResponseRedirect":
         response = super().login(request, extra_context)
         if request.method == "POST" and request.user.is_authenticated:
@@ -262,13 +264,14 @@ class TenantAdminSite(admin.AdminSite):
         return TemplateResponse(request, "workspace/select_tenant.html", context)
 
     # @method_decorator(never_cache)
-    def select_program(self, request: "HttpRequest") -> "HttpResponse":
+    def select_program(self, request: "HttpRequest") -> "HttpResponseRedirect | None":
         if request.method == "POST":
             form = SelectProgramForm(request.POST, request=request)
             if form.is_valid():
                 co = form.cleaned_data["program"]
                 state.set_selected_program(co)
                 return HttpResponseRedirect(reverse("workspace:index"))
+        return None
 
 
 workspace = TenantAdminSite(name="workspace")

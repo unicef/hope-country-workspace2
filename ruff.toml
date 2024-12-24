@@ -6,31 +6,46 @@ case-sensitive = true
 
 [lint]
 select = [
-    "A", ## prevent using keywords that clobber python builtins
+    "A", # prevent using keywords that clobber python builtins
+    "ANN", # flake8 annotations
     "B", # bugbear: security warnings
     "BLE", # blind exceptions
     "C4", # flake8-comprehensions
-    "C901", # McCabe complexity
+    "C90", # McCabe complexity
+    "COM", # flake8-commas
     "D", # pydocstyle
     "DJ", # flake8-django
     "E", # pycodestylex
     "E4", "E7", "E9",
     "ERA", # eradicate
     "F", # pyflakes
+    "FLY", # flynt
     "FURB", # refurb
     "I", # isort
+    "ICN", # flake8-import-conventions
     "ISC", # implicit string concatenation
+    "N", # Pep* naming
     "PERF", # perflint
     "PIE", # flake8-pie
     "PL", # PyLint
+    "PT", # flake8-pytest-style
+    "Q", # flake8-quotes
+    "R", # PyLint Refactor
+    "RET", # flake8-return
     "S", # bandit,
     "SIM", # flake8-simplify
     "T10", # flake8-debugger
+    "T20", # flake8-print
+    "TC", # flake8-type-checking
     "UP", # pyupgrade
+    "W", # pycodestyle warnings
+    "YTT", # flake8 2020
 ]
 extend-select = ["UP", ]
 ignore = [
+    "ANN401",
     "B904",  # raise-without-from-inside-except: syntax not compatible with py2
+    "COM812",
     "D100", # Missing docstring in public module
     "D101", # Missing docstring in public class
     "D102", #  Missing docstring in public method
@@ -62,4 +77,5 @@ skip-magic-trailing-comma = false
 line-ending = "auto"
 
 [lint.per-file-ignores]
-"tests/**.py" = ["S101", "PLR2004", "S", "SIM117", "D", "UP", "PLR0913"]
+"tests/**.py" = ["S101", "PLR2004", "S", "SIM117", "D", "UP", "PLR0913", "ANN", "N999"]
+"src/**/versioning/**.py" = ["N999", ]

@@ -1,17 +1,18 @@
 from typing import TYPE_CHECKING
 
-from django.db.models import Model
-
 import pytest
-from django_webtest.pytest_plugin import MixinWithInstanceVariables
 from testutils.perms import user_grant_permissions
 
 from country_workspace.cache.manager import CacheManager
-from country_workspace.models import User
 from country_workspace.state import state
 
 if TYPE_CHECKING:
+    from django.db.models import Model
+
+    from django_webtest.pytest_plugin import MixinWithInstanceVariables
     from testutils.types import CWTestApp
+
+    from country_workspace.models import User
 
 
 def pytest_generate_tests(metafunc: "Metafunc") -> None:  # noqa
@@ -32,15 +33,15 @@ def pytest_generate_tests(metafunc: "Metafunc") -> None:  # noqa
         metafunc.parametrize("model", m2, ids=ids)
 
 
-@pytest.fixture()
+@pytest.fixture
 def app(django_app_factory: "MixinWithInstanceVariables", user: "User") -> "CWTestApp":
     django_app = django_app_factory(csrf_checks=False)
     django_app.set_user(user)
     django_app._user = user
-    yield django_app
+    return django_app
 
 
-@pytest.fixture()
+@pytest.fixture
 def program():
     from testutils.factories import CountryProgramFactory
 

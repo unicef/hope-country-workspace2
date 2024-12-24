@@ -1,17 +1,20 @@
 import os
+from typing import TYPE_CHECKING
 from unittest import mock
 
 from django.core.exceptions import ValidationError
-from django.test.client import RequestFactory
 
 import pytest
 
 from country_workspace.state import state
 from country_workspace.utils.flags import debug, env_var, header_key, hostname, superuser, validate_bool
 
+if TYPE_CHECKING:
+    from django.test.client import RequestFactory
+
 
 @pytest.mark.parametrize(
-    "value, result",
+    ("value", "result"),
     [
         ("LOGGING_LEVEL=CRITICAL", True),
         ("LOGGING_LEVEL=WARN", False),
@@ -25,7 +28,7 @@ def test_env_var(value: str, result: str) -> None:
 
 
 @pytest.mark.parametrize(
-    "value, result",
+    ("value", "result"),
     [
         ("CUSTOM_KEY=123", True),
         ("CUSTOM_KEY", True),
@@ -41,7 +44,7 @@ def test_header_key(rf: "RequestFactory", value: str, result: str) -> None:
         assert header_key(value) == result
 
 
-@pytest.mark.parametrize("value, result", [("localhost", True)])
+@pytest.mark.parametrize(("value", "result"), [("localhost", True)])
 def test_hostname(rf: "RequestFactory", value: str, result: str) -> None:
     request = rf.get("/", HTTP_HOST=value)
     with state.configure(request=request):

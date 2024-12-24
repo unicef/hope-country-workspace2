@@ -3,7 +3,6 @@ from typing import TYPE_CHECKING
 from django.urls import reverse
 
 import pytest
-from responses import RequestsMock
 from testutils.perms import user_grant_permissions
 from testutils.utils import select_office
 
@@ -11,6 +10,7 @@ from country_workspace.state import state
 
 if TYPE_CHECKING:
     from django_webtest.pytest_plugin import MixinWithInstanceVariables
+    from responses import RequestsMock
     from testutils.types import CWTestApp
 
     from country_workspace.workspaces.models import CountryHousehold, CountryProgram
@@ -18,16 +18,16 @@ if TYPE_CHECKING:
 pytestmark = [pytest.mark.admin, pytest.mark.smoke, pytest.mark.django_db]
 
 
-@pytest.fixture()
+@pytest.fixture
 def office():
     from testutils.factories import OfficeFactory
 
     co = OfficeFactory()
     state.tenant = co
-    yield co
+    return co
 
 
-@pytest.fixture()
+@pytest.fixture
 def program(office, household_checker, individual_checker):
     from testutils.factories import CountryProgramFactory
 
@@ -39,14 +39,14 @@ def program(office, household_checker, individual_checker):
     )
 
 
-@pytest.fixture()
+@pytest.fixture
 def household(program):
     from testutils.factories import CountryHouseholdFactory
 
     return CountryHouseholdFactory(batch__program=program, batch__country_office=program.country_office)
 
 
-@pytest.fixture()
+@pytest.fixture
 def app(django_app_factory: "MixinWithInstanceVariables", mocked_responses: "RequestsMock") -> "CWTestApp":
     from testutils.factories import SuperUserFactory
 
@@ -54,7 +54,7 @@ def app(django_app_factory: "MixinWithInstanceVariables", mocked_responses: "Req
     admin_user = SuperUserFactory(username="superuser")
     django_app.set_user(admin_user)
     django_app._user = admin_user
-    yield django_app
+    return django_app
 
 
 def test_hh_changelist(app: "CWTestApp", household: "CountryHousehold") -> None:

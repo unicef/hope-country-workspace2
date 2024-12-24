@@ -6,7 +6,6 @@ import pytest
 from pytest_django.fixtures import SettingsWrapper
 from testutils.utils import select_office
 
-from country_workspace.models import AsyncJob
 from country_workspace.state import state
 from country_workspace.workspaces.admin.cleaners.mass_update import mass_update_impl
 
@@ -14,21 +13,22 @@ if TYPE_CHECKING:
     from django_webtest import DjangoTestApp
     from django_webtest.pytest_plugin import MixinWithInstanceVariables
 
+    from country_workspace.models import AsyncJob
     from country_workspace.workspaces.models import CountryHousehold
 
 pytestmark = [pytest.mark.admin, pytest.mark.smoke, pytest.mark.django_db]
 
 
-@pytest.fixture()
+@pytest.fixture
 def office():
     from testutils.factories import OfficeFactory
 
     co = OfficeFactory()
     state.tenant = co
-    yield co
+    return co
 
 
-@pytest.fixture()
+@pytest.fixture
 def program(office, force_migrated_records, household_checker, individual_checker):
     from testutils.factories import CountryProgramFactory
 
@@ -40,14 +40,14 @@ def program(office, force_migrated_records, household_checker, individual_checke
     )
 
 
-@pytest.fixture()
+@pytest.fixture
 def household(program):
     from testutils.factories import CountryHouseholdFactory
 
     return CountryHouseholdFactory(batch__program=program, batch__country_office=program.country_office)
 
 
-@pytest.fixture()
+@pytest.fixture
 def app(
     django_app_factory: "MixinWithInstanceVariables",
     settings: SettingsWrapper,
@@ -58,7 +58,7 @@ def app(
     admin_user = SuperUserFactory(username="superuser")
     django_app.set_user(admin_user)
     django_app._user = admin_user
-    yield django_app
+    return django_app
 
 
 def test_mass_update_impl(household):

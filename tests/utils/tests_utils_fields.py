@@ -6,7 +6,7 @@ TO_REMOVE = ("_h_c", "_h_f", "_i_c", "_i_f")
 
 
 @pytest.mark.parametrize(
-    "input_value, expected_output",
+    ("input_value", "expected_output"),
     [(f"field{substr}_foo", "field_foo") for substr in TO_REMOVE]
     + [(f"FIELD{substr.upper()}_foo", "field_foo") for substr in TO_REMOVE]
     + [

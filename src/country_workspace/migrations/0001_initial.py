@@ -301,7 +301,9 @@ class Migration(migrations.Migration):
                 (
                     "beneficiary_validator",
                     strategy_field.fields.StrategyField(
-                        blank=True, default="country_workspace.validators.registry.NoopValidator", null=True
+                        blank=True,
+                        default="country_workspace.validators.registry.NoopValidator",
+                        null=True,
                     ),
                 ),
                 ("household_search", models.TextField(default="name", help_text="Fields to use for searches")),
@@ -354,7 +356,9 @@ class Migration(migrations.Migration):
             model_name="batch",
             name="program",
             field=models.ForeignKey(
-                on_delete=django.db.models.deletion.CASCADE, related_name="%(class)ss", to="country_workspace.program"
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="%(class)ss",
+                to="country_workspace.program",
             ),
         ),
         migrations.CreateModel(
@@ -375,20 +379,29 @@ class Migration(migrations.Migration):
                 (
                     "last_async_result_id",
                     models.CharField(
-                        blank=True, editable=False, help_text="Latest executed AsyncResult is", max_length=36, null=True
+                        blank=True,
+                        editable=False,
+                        help_text="Latest executed AsyncResult is",
+                        max_length=36,
+                        null=True,
                     ),
                 ),
                 ("datetime_created", models.DateTimeField(auto_now_add=True, help_text="Creation date and time")),
                 (
                     "datetime_queued",
                     models.DateTimeField(
-                        blank=True, help_text="Queueing date and time", null=True, verbose_name="Queued At"
+                        blank=True,
+                        help_text="Queueing date and time",
+                        null=True,
+                        verbose_name="Queued At",
                     ),
                 ),
                 (
                     "repeatable",
                     models.BooleanField(
-                        blank=True, default=False, help_text="Indicate if the job can be repeated as-is"
+                        blank=True,
+                        default=False,
+                        help_text="Indicate if the job can be repeated as-is",
                     ),
                 ),
                 ("celery_history", models.JSONField(blank=True, default=dict, editable=False)),
@@ -406,7 +419,8 @@ class Migration(migrations.Migration):
                 (
                     "type",
                     models.CharField(
-                        choices=[("FQN", "Operation"), ("ACTION", "Action"), ("TASK", "Task")], max_length=50
+                        choices=[("FQN", "Operation"), ("ACTION", "Action"), ("TASK", "Task")],
+                        max_length=50,
                     ),
                 ),
                 ("file", models.FileField(blank=True, null=True, upload_to="updates")),
@@ -437,7 +451,9 @@ class Migration(migrations.Migration):
                 (
                     "program",
                     models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE, related_name="jobs", to="country_workspace.program"
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="jobs",
+                        to="country_workspace.program",
                     ),
                 ),
             ],
@@ -455,7 +471,9 @@ class Migration(migrations.Migration):
                 (
                     "hhs",
                     django.contrib.postgres.fields.ArrayField(
-                        base_field=models.IntegerField(), help_text="List of HH primary key for this RDI", size=None
+                        base_field=models.IntegerField(),
+                        help_text="List of HH primary key for this RDI",
+                        size=None,
                     ),
                 ),
                 (
@@ -532,7 +550,7 @@ class Migration(migrations.Migration):
                         condition=models.Q(("p_code", ""), _negated=True),
                         fields=("p_code",),
                         name="unique_area_p_code_not_blank",
-                    )
+                    ),
                 ],
             },
         ),
@@ -564,15 +582,18 @@ class Migration(migrations.Migration):
                 (
                     "user",
                     models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE, related_name="roles", to=settings.AUTH_USER_MODEL
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="roles",
+                        to=settings.AUTH_USER_MODEL,
                     ),
                 ),
             ],
             options={
                 "constraints": [
                     models.UniqueConstraint(
-                        fields=("user", "country_office", "group"), name="country_workspace_userrole_unique_role"
-                    )
+                        fields=("user", "country_office", "group"),
+                        name="country_workspace_userrole_unique_role",
+                    ),
                 ],
             },
         ),

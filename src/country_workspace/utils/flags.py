@@ -1,16 +1,19 @@
 import logging
 import os
 import re
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
 from django.conf import settings
 from django.core.exceptions import ValidationError
-from django.http import HttpRequest
 
 from adminfilters.utils import parse_bool
 from flags.conditions import conditions
 
 from country_workspace.state import state
+
+if TYPE_CHECKING:
+    from django.http import HttpRequest
+
 
 logger = logging.getLogger(__name__)
 
@@ -52,8 +55,7 @@ def env_var(value: str, **kwargs: Any) -> bool:
     if "=" in value:
         key, value = value.split("=")
         return os.environ.get(key, -1) == value
-    else:
-        return value.strip() in os.environ
+    return value.strip() in os.environ
 
 
 @conditions.register("HTTP Request Header")

@@ -12,7 +12,11 @@ logger = logging.getLogger(__name__)
 
 class ObfuscatedInput(HiddenInput):
     def render(
-        self, name: str, value: Any, attrs: dict[str, str] | None = None, renderer: Any | None = None
+        self,
+        name: str,
+        value: Any,
+        attrs: dict[str, str] | None = None,
+        renderer: Any | None = None,
     ) -> "SafeString":
         context = self.get_context(name, value, attrs)
         context["value"] = str(value)

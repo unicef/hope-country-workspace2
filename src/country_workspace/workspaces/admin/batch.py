@@ -1,5 +1,3 @@
-from typing import TYPE_CHECKING
-
 from django.contrib.admin import register
 from django.db.models import QuerySet
 from django.http import HttpRequest
@@ -14,9 +12,6 @@ from ..options import WorkspaceModelAdmin
 from ..sites import workspace
 from .filters import ChoiceFilter, CWLinkedAutoCompleteFilter, UserAutoCompleteFilter
 from .hh_ind import SelectedProgramMixin
-
-if TYPE_CHECKING:
-    pass
 
 
 class ProgramBatchFilter(CWLinkedAutoCompleteFilter):
@@ -37,7 +32,9 @@ class CountryBatchAdmin(SelectedProgramMixin, WorkspaceModelAdmin):
     list_filter = (("source", ChoiceFilter), ("imported_by", UserAutoCompleteFilter))
     readonly_fields = fields = ("name", "source")
 
-    def get_search_results(self, request, queryset, search_term):
+    def get_search_results(
+        self, request: HttpRequest, queryset: QuerySet[CountryBatch], search_term: str
+    ) -> tuple[QuerySet[CountryBatch], bool]:
         queryset = self.model.objects.filter(program=state.program)
         return queryset, False
 

@@ -3,13 +3,14 @@ from typing import TYPE_CHECKING, Any
 
 from django import forms
 from django.db import transaction
-from django.db.models import QuerySet
 
 from country_workspace.utils.flex_fields import get_checker_fields
 
 from .base import BaseActionForm
 
 if TYPE_CHECKING:
+    from django.db.models import QuerySet
+
     from hope_flex_fields.models import DataChecker
 
     from country_workspace.types import Beneficiary
@@ -40,7 +41,9 @@ class RegexUpdateForm(BaseActionForm):
 
 
 def regex_update_impl(
-    records: "QuerySet[Beneficiary]", config: dict[str, Any], save: bool = True
+    records: "QuerySet[Beneficiary]",
+    config: dict[str, Any],
+    save: bool = True,
 ) -> list[tuple[str, str, str]]:
     if isinstance(config["regex"], str):
         config["regex"] = re.compile(config["regex"])

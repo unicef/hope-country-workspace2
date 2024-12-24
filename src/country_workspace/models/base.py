@@ -14,7 +14,11 @@ from country_workspace.state import state
 from country_workspace.utils.flex_fields import get_obj_checksum
 
 if TYPE_CHECKING:
+    from django.db.models import QuerySet
+
     from hope_flex_fields.models import DataChecker
+
+    from country_workspace.models import Office, Program
 
 
 class BaseQuerySet(models.QuerySet["models.Model"]):
@@ -23,7 +27,7 @@ class BaseQuerySet(models.QuerySet["models.Model"]):
             return super().get(*args, **kwargs)
         except self.model.DoesNotExist:
             raise self.model.DoesNotExist(
-                "%s matching query does not exist. Using %s %s" % (self.model._meta.object_name, args, kwargs)
+                "%s matching query does not exist. Using %s %s" % (self.model._meta.object_name, args, kwargs),
             )
 
 
@@ -32,7 +36,7 @@ class BaseManager(models.Manager["models.Model"]):
 
 
 class ValidableQuerySet(BaseQuerySet["Validable"]):
-    def all(self):
+    def all(self) -> "QuerySet[Validable]":
         return super().all().defer("flex_files")
 
 
@@ -41,13 +45,13 @@ class ValidableManager(models.Manager["Validable"]):
 
 
 class Cachable:
-    def country_office(self):
+    def country_office(self) -> "Office":
         raise NotImplementedError
 
-    def program(self):
+    def program(self) -> "Program":
         raise NotImplementedError
 
-    def get_object_key(self, suffix: str = ""):
+    def get_object_key(self, suffix: str = "") -> str:
         version = str(cache_manager.get_cache_version(program=self.program))
 
         parts = [self.__class__.__name__, version, self.country_office.slug, str(self.program.pk), str(self.pk), suffix]
@@ -79,19 +83,30 @@ class Validable(Cachable, models.Model):
     def __str__(self) -> str:
         return self.name or "%s %s" % (self._meta.verbose_name, self.id)
 
-    def save(self, *args, force_insert=False, force_update=False, using=None, update_fields=None):
+    def save(
+        self,
+        *args: Any,
+        force_insert: bool = False,
+        force_update: bool = False,
+        using: str | None = None,
+        update_fields: list[str] | None = None,
+    ) -> None:
         checksum = get_obj_checksum(self)
         with reversion.create_revision(manage_manually=True):
             if checksum != self._checksum:
                 reversion.add_to_revision(self)
             self.checksum = checksum
             super().save(
-                *args, force_insert=force_insert, force_update=force_update, using=using, update_fields=update_fields
+                *args,
+                force_insert=force_insert,
+                force_update=force_update,
+                using=using,
+                update_fields=update_fields,
             )
             if state.request:
                 reversion.set_user(state.request.user)
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
         self._checksum = self.checksum
 

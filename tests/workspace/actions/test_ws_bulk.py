@@ -7,34 +7,34 @@ from django.urls import reverse
 import openpyxl
 import pytest
 import xlsxwriter
-from pytest_django.fixtures import SettingsWrapper
 from testutils.factories import FlexFieldFactory
 from testutils.utils import select_office
 from webtest import Checkbox, Upload
 
-from country_workspace.models import AsyncJob
 from country_workspace.state import state
 from country_workspace.workspaces.admin.cleaners.bulk_update import TYPES, create_xls_importer
 
 if TYPE_CHECKING:
     from django_webtest import DjangoTestApp
     from django_webtest.pytest_plugin import MixinWithInstanceVariables
+    from pytest_django.fixtures import SettingsWrapper
 
+    from country_workspace.models import AsyncJob
     from country_workspace.workspaces.models import CountryHousehold
 
 pytestmark = [pytest.mark.admin, pytest.mark.smoke, pytest.mark.django_db]
 
 
-@pytest.fixture()
+@pytest.fixture
 def office():
     from testutils.factories import OfficeFactory
 
     co = OfficeFactory()
     state.tenant = co
-    yield co
+    return co
 
 
-@pytest.fixture()
+@pytest.fixture
 def program(office, force_migrated_records, household_checker, individual_checker):
     from testutils.factories import CountryProgramFactory
 
@@ -47,7 +47,7 @@ def program(office, force_migrated_records, household_checker, individual_checke
     )
 
 
-@pytest.fixture()
+@pytest.fixture
 def household(program):
     from testutils.factories import CountryHouseholdFactory
 
@@ -68,12 +68,12 @@ def celery_worker_parameters():
     }
 
 
-@pytest.fixture()
+@pytest.fixture
 def celery_app(celery_app):
     return celery_app
 
 
-@pytest.fixture()
+@pytest.fixture
 def app(django_app_factory: "MixinWithInstanceVariables") -> "DjangoTestApp":
     from testutils.factories import SuperUserFactory
 
@@ -81,10 +81,10 @@ def app(django_app_factory: "MixinWithInstanceVariables") -> "DjangoTestApp":
     admin_user = SuperUserFactory(username="superuser")
     django_app.set_user(admin_user)
     django_app._user = admin_user
-    yield django_app
+    return django_app
 
 
-@pytest.mark.parametrize("field, validator", list(TYPES.items()))
+@pytest.mark.parametrize(("field", "validator"), list(TYPES.items()))
 def test_validator(field, validator):
     flex_field = FlexFieldFactory(definition__field_type=field, definition__attrs={"choices": [("a", "A")]})
     assert validator(flex_field)()
@@ -146,7 +146,7 @@ def test_bulk_update_export(
         job.queue()
 
 
-@pytest.fixture()
+@pytest.fixture
 def data(household):
     buff = io.BytesIO()
     workbook = xlsxwriter.Workbook(buff)

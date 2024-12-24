@@ -1,10 +1,14 @@
 import contextlib
 import time
 from collections import namedtuple
+from typing import TYPE_CHECKING
 
 import pytest
 from selenium.webdriver import Keys
 from selenium.webdriver.common.by import By
+
+if TYPE_CHECKING:
+    from selenium.webdriver.common.timeouts import Timeouts
 
 Proxy = namedtuple("Proxy", "host,port")
 
@@ -16,8 +20,6 @@ def pytest_configure(config):
 
 @contextlib.contextmanager
 def timeouts(driver, wait=None, page=None, script=None):
-    from selenium.webdriver.common.timeouts import Timeouts
-
     _current: Timeouts = driver.timeouts
     if wait:
         driver.implicitly_wait(wait)
@@ -37,7 +39,7 @@ def set_input_value(driver, *args):
 
 
 def find_by_css(selenium, *args):
-    from testutils.utils import wait_for
+    from testutils.selenium import wait_for
 
     return wait_for(selenium, By.CSS_SELECTOR, *args)
 
@@ -83,7 +85,7 @@ SELENIUM_DEFAULT_SCRIPT_TIMEOUT = 1
 
 @pytest.fixture
 def selenium(monkeypatch, live_server, settings, driver):
-    from testutils.utils import wait_for, wait_for_url
+    from testutils.selenium import wait_for, wait_for_url
 
     settings.FLAGS = {"LOCAL_LOGIN": [("boolean", True)]}
 
@@ -95,4 +97,4 @@ def selenium(monkeypatch, live_server, settings, driver):
     driver.find_by_css = find_by_css.__get__(driver)
     driver.select2 = select2.__get__(driver)
 
-    yield driver
+    return driver

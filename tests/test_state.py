@@ -8,7 +8,7 @@ from country_workspace.workspaces.config import conf
 from country_workspace.workspaces.utils import RequestHandler
 
 
-@pytest.fixture()
+@pytest.fixture
 def tenant_user(afghanistan, reporters):
     """User with access to a tenant"""
     from testutils.factories import UserFactory, UserRoleFactory
@@ -18,14 +18,14 @@ def tenant_user(afghanistan, reporters):
     return u
 
 
-@pytest.fixture()
+@pytest.fixture
 def req(rf, tenant_user):
     signer = get_cookie_signer()
 
     req = rf.get("/")
     req.user = tenant_user
     req.COOKIES[conf.TENANT_COOKIE_NAME] = signer.sign(tenant_user.roles.first().country_office.slug)
-    yield req
+    return req
 
 
 def test_set():

@@ -16,21 +16,14 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "country_workspace.config.settin
 class LockedTask(Task):
     lock_key = None
 
-    def acquire_lock(self):
-        """Tenta di acquisire il lock."""
+    def acquire_lock(self) -> bool:
         return cache.lock(self.lock_key, 60 * 60 * 24)  # 1 day TTL
 
-    def release_lock(self):
+    def release_lock(self) -> None:
         if self.lock_key:
             cache.delete(self.lock_key)
 
-    def on_success(self, retval, task_id, args, kwargs):
-        super().on_success(retval, task_id, args, kwargs)
-
-    def on_failure(self, exc, task_id, args, kwargs, einfo):
-        super().on_failure(exc, task_id, args, kwargs, einfo)
-
-    def __call__(self, *args, **kwargs):
+    def __call__(self, *args: Any, **kwargs: Any) -> Any:
         h = hashlib.new("md5")  # noqa: S324
         h.update(json.dumps(kwargs, sort_keys=True).encode("utf-8"))
         self.lock_key = f"lock:{self.name}:{'-'.join(map(str, args)).encode('utf-8')}:{h.hexdigest()}"

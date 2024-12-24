@@ -1,4 +1,4 @@
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
 from django import forms
 from django.conf import settings
@@ -12,7 +12,6 @@ from django.urls import reverse
 from django.utils.translation import gettext as _
 
 from admin_extra_buttons.api import button
-from hope_flex_fields.models import DataChecker
 from strategy_field.utils import fqn
 
 from country_workspace.constants import BATCH_NAME_DEFAULT
@@ -29,12 +28,15 @@ from ..sites import workspace
 from .cleaners.bulk_update import bulk_update_household, bulk_update_individual
 from .forms import ImportFileForm
 
+if TYPE_CHECKING:
+    from hope_flex_fields.models import DataChecker
+
 
 class SelectColumnsForm(forms.Form):
     columns = forms.MultipleChoiceField(choices=(), widget=forms.CheckboxSelectMultiple)
     model_core_fields = [("name", "name"), ("id", "id")]
 
-    def __init__(self, *args: Any, **kwargs: Any):
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
         self.checker: "DataChecker" = kwargs.pop("checker")
         super().__init__(*args, **kwargs)
         columns: list[tuple[str, str]] = []
@@ -105,7 +107,7 @@ class CountryProgramAdmin(WorkspaceModelAdmin):
                 "fields": (
                     ("name", "code"),
                     ("status", "sector", "active"),
-                )
+                ),
             },
         ),
         (_("Validators"), {"fields": ("beneficiary_validator", ("household_checker", "individual_checker"))}),
@@ -121,7 +123,7 @@ class CountryProgramAdmin(WorkspaceModelAdmin):
     )
 
     @property
-    def media(self):
+    def media(self) -> forms.Media:
         extra = "" if settings.DEBUG else ".min"
         base = super().media
         return base + forms.Media(
@@ -140,7 +142,7 @@ class CountryProgramAdmin(WorkspaceModelAdmin):
     def has_delete_permission(self, request: HttpResponse, obj: CountryProgram | None = None) -> bool:
         return False
 
-    def changelist_view(self, request, extra_context=None):
+    def changelist_view(self, request: HttpRequest, extra_context: dict[str, None] | None = None) -> HttpResponse:
         url = reverse("workspace:workspaces_countryprogram_change", args=[state.program.pk])
         return HttpResponseRedirect(url)
 

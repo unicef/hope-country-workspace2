@@ -3,17 +3,17 @@ from typing import TYPE_CHECKING
 from django.urls import reverse
 
 import pytest
-from django_webtest.pytest_plugin import MixinWithInstanceVariables
-from responses import RequestsMock
 
 if TYPE_CHECKING:
     from django_webtest import DjangoTestApp
+    from django_webtest.pytest_plugin import MixinWithInstanceVariables
     from pytest_django.fixtures import SettingsWrapper
+    from responses import RequestsMock
 
 pytestmark = [pytest.mark.django_db]
 
 
-@pytest.fixture()
+@pytest.fixture
 def app(
     django_app_factory: "MixinWithInstanceVariables",
     mocked_responses: "RequestsMock",
@@ -24,8 +24,7 @@ def app(
     settings.SUPERUSERS = ["superuser"]
     UserFactory(username="superuser", is_staff=False, is_superuser=False)
     UserFactory(username="user", is_staff=False, is_superuser=False)
-    django_app = django_app_factory(csrf_checks=False)
-    yield django_app
+    return django_app_factory(csrf_checks=False)
 
 
 def test_login_enable_superuser(app: "DjangoTestApp", settings: "SettingsWrapper") -> None:

@@ -1,9 +1,12 @@
 import logging
+from typing import Any
+
+from django.db.models import Model, QuerySet
 
 logger = logging.getLogger(__name__)
 
 
-def validate_queryset(queryset, **kwargs) -> dict[str, int]:
+def validate_queryset(queryset: QuerySet[Model], **kwargs: Any) -> dict[str, int]:
     valid = invalid = num = 0
     try:
         for __, entry in enumerate(queryset, 1):

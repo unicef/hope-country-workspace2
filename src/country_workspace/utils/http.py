@@ -2,17 +2,16 @@ from typing import TYPE_CHECKING, Any, Sequence
 from urllib.parse import urljoin
 
 from django.conf import settings
-from django.http import HttpRequest
 from django.http.request import split_domain_port
 from django.urls import reverse
 
 from ..state import state
 
 if TYPE_CHECKING:
-    from ..types.http import AnyRequest
+    from django.http import HttpRequest
 
 
-def get_server_host(request: "AnyRequest | None" = None) -> str:
+def get_server_host(request: "HttpRequest | None" = None) -> str:
     req: HttpRequest | None = request or state.request
     host = req.get_host()
     domain, port = split_domain_port(host)

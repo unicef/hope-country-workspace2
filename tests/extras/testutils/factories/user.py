@@ -9,7 +9,7 @@ from .base import AutoRegisterModelFactory
 
 class UserFactory(AutoRegisterModelFactory):
     _password = "password"
-    username = factory.Sequence(lambda n: "m%03d@example.com" % n)
+    username = factory.LazyAttributeSequence(lambda i, n: "m%03d@example.com" % n)
     password = factory.django.Password(_password)
     email = factory.Sequence(lambda n: "m%03d@example.com" % n)
 
@@ -19,6 +19,7 @@ class UserFactory(AutoRegisterModelFactory):
 
     @classmethod
     def _create(cls, model_class, *args, **kwargs):
+        kwargs["email"] = kwargs["username"]
         ret = super()._create(model_class, *args, **kwargs)
         ret._password = cls._password
         return ret

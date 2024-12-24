@@ -1,16 +1,19 @@
+from typing import TYPE_CHECKING
 from unittest.mock import Mock
 
 from django import forms
 
 import pytest
-from hope_flex_fields.models import FieldDefinition
 from strategy_field.utils import fqn
 from testutils.factories import FieldDefinitionFactory
 
 from country_workspace.contrib.hope.remotes.country import CountryAttributeHandler
 
+if TYPE_CHECKING:
+    from hope_flex_fields.models import FieldDefinition
 
-@pytest.mark.vcr()
+
+@pytest.mark.vcr
 @pytest.mark.xdist_group("remote")
 def test_r_country_fetcher():
     f = CountryAttributeHandler(
@@ -25,7 +28,7 @@ def test_r_country_fetcher():
     assert f.get()
 
 
-@pytest.mark.vcr()
+@pytest.mark.vcr
 @pytest.mark.xdist_group("remote")
 def test_r_country():
     fd: FieldDefinition = FieldDefinitionFactory(

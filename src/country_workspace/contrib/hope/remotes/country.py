@@ -21,7 +21,7 @@ class CountryAttributeHandlerConfig(AttributeHandlerConfig):
 class CountryAttributeHandler(AbstractAttributeHandler):
     config_class = CountryAttributeHandlerConfig
 
-    def set(self, value: "Json"):
+    def set(self, value: "Json") -> None:
         pass
 
     def get(self, instance: "FlexField | None" = None) -> "Json":

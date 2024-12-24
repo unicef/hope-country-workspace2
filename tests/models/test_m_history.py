@@ -1,10 +1,13 @@
+from typing import TYPE_CHECKING
+
 import pytest
 
-from country_workspace.models import Household
-from country_workspace.workspaces.models import CountryHousehold
+if TYPE_CHECKING:
+    from country_workspace.models import Household
+    from country_workspace.workspaces.models import CountryHousehold
 
 
-@pytest.fixture()
+@pytest.fixture
 def household() -> "CountryHousehold":
     from testutils.factories.household import CountryHouseholdFactory, get_hh_fields
 

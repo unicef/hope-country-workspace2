@@ -4,23 +4,23 @@ from unittest.mock import Mock
 from django.contrib.admin.sites import site
 from django.contrib.admin.templatetags.admin_urls import admin_urlname
 from django.db.models import Model
-from django.db.models.options import Options
 from django.urls import reverse
 from django.utils.safestring import mark_safe
 
 import pytest
 from admin_extra_buttons.handlers import ButtonHandler, ChoiceHandler
-from admin_extra_buttons.mixins import ExtraButtonsMixin
 from django_regex.utils import RegexList as _RegexList
 from pytest_django.fixtures import SettingsWrapper
-from responses import RequestsMock
 
 if TYPE_CHECKING:
     from django.contrib.admin import ModelAdmin
+    from django.db.models.options import Options
 
+    from admin_extra_buttons.mixins import ExtraButtonsMixin
     from django_webtest import DjangoTestApp, DjangoWebtestResponse
     from django_webtest.pytest_plugin import MixinWithInstanceVariables
-    from pytest import FixtureRequest, Metafunc, MonkeyPatch
+    from responses import RequestsMock
+    from testutils.factories.user import AutoRegisterModelFactory
 
 pytestmark = [pytest.mark.admin, pytest.mark.smoke, pytest.mark.django_db]
 
@@ -60,8 +60,7 @@ KWARGS: Mapping[str, Any] = {}
 def reverse_model_admin(model_admin: "ModelAdmin[Model]", op: str, args: Optional[list[Any]] = None) -> str:
     if args:
         return reverse(admin_urlname(model_admin.model._meta, mark_safe(op)), args=args)
-    else:
-        return reverse(admin_urlname(model_admin.model._meta, mark_safe(op)))
+    return reverse(admin_urlname(model_admin.model._meta, mark_safe(op)))
 
 
 def log_submit_error(res: "DjangoWebtestResponse") -> str:
@@ -120,10 +119,9 @@ def pytest_generate_tests(metafunc: "Metafunc") -> None:  # noqa
         metafunc.parametrize("model_admin", m2, ids=ids)
 
 
-@pytest.fixture()
-def record(db: Any, request: "FixtureRequest") -> Model:
+@pytest.fixture
+def record(db: Any, request: "pytest.FixtureRequest") -> Model:
     from testutils.factories import get_factory_for_model
-    from testutils.factories.user import AutoRegisterModelFactory
 
     model_admin = request.getfixturevalue("model_admin")
     instance: Model = model_admin.model.objects.first()
@@ -137,7 +135,7 @@ def record(db: Any, request: "FixtureRequest") -> Model:
     return instance
 
 
-@pytest.fixture()
+@pytest.fixture
 def app(
     django_app_factory: "MixinWithInstanceVariables",
     mocked_responses: "RequestsMock",
@@ -205,7 +203,7 @@ def test_admin_delete(
     app: "DjangoTestApp",
     model_admin: "ModelAdmin[Model]",
     record: Model,
-    monkeypatch: "MonkeyPatch",
+    monkeypatch: "pytest.MonkeyPatch",
 ) -> None:
     url = reverse(admin_urlname(model_admin.model._meta, mark_safe("delete")), args=[record.pk])
     if model_admin.has_delete_permission(Mock(user=app._user)):
@@ -222,7 +220,7 @@ def test_admin_buttons(
     model_admin: "ExtraButtonsMixin",
     button_handler: "ButtonHandler",
     record: "Model",
-    monkeypatch: "MonkeyPatch",
+    monkeypatch: "pytest.MonkeyPatch",
 ) -> None:
     from admin_extra_buttons.handlers import LinkHandler
 

@@ -1,29 +1,33 @@
 import json
 import re
 from pathlib import Path
+from typing import TYPE_CHECKING
 
 from django.urls import reverse
 
 import pytest
 from constance.test.unittest import override_config
-from django_webtest import DjangoTestApp
-from django_webtest.pytest_plugin import MixinWithInstanceVariables
 from webtest import Upload
 
 from country_workspace.state import state
-from country_workspace.workspaces.models import CountryHousehold
+
+if TYPE_CHECKING:
+    from django_webtest import DjangoTestApp
+    from django_webtest.pytest_plugin import MixinWithInstanceVariables
+
+    from country_workspace.workspaces.models import CountryHousehold
 
 
-@pytest.fixture()
+@pytest.fixture
 def office():
     from testutils.factories import OfficeFactory
 
     co = OfficeFactory()
     state.tenant = co
-    yield co
+    return co
 
 
-@pytest.fixture()
+@pytest.fixture
 def program(office, force_migrated_records, household_checker, individual_checker):
     from testutils.factories import CountryProgramFactory
 
@@ -36,7 +40,7 @@ def program(office, force_migrated_records, household_checker, individual_checke
     )
 
 
-@pytest.fixture()
+@pytest.fixture
 def app(django_app_factory: "MixinWithInstanceVariables") -> "DjangoTestApp":
     from testutils.factories import SuperUserFactory
 
@@ -44,7 +48,7 @@ def app(django_app_factory: "MixinWithInstanceVariables") -> "DjangoTestApp":
     admin_user = SuperUserFactory(username="superuser")
     django_app.set_user(admin_user)
     django_app._user = admin_user
-    yield django_app
+    return django_app
 
 
 def test_import_data_rdi(force_migrated_records, app, program):

@@ -24,8 +24,8 @@ logger = logging.getLogger(__name__)
 register = template.Library()
 
 
-@register.simple_tag(takes_context=True)
-def admin_url(context, obj, **extra):
+@register.simple_tag()
+def admin_url(obj: Model, **extra: dict[str, Any]) -> str:
     url = ""
     filters = ""
     if obj:
@@ -50,7 +50,7 @@ def admin_url(context, obj, **extra):
             return mark_safe(  # noqa
                 f'<a class="admin-change-link" target="_admin" href="{url}?{filters}">'
                 '<span class="icon icon-shield1"></span>'
-                "</a>"
+                "</a>",
             )
         except NoReverseMatch as e:
             logger.exception(e)

@@ -58,7 +58,7 @@ jobs:
         run: pip install ruff
       - name: Check syntax
         # Stop the build if there are Python syntax errors or undefined names
-        run: ruff check src/
+        run: ruff check --output-format concise src/
 
       - name: Warnings
         run: ruff format --check

@@ -12,13 +12,13 @@ def setup_definitions(db):
     FieldDefinitionFactory(field_type=forms.ChoiceField)
 
 
-@pytest.mark.vcr()
+@pytest.mark.vcr
 @pytest.mark.xdist_group("remote")
 def test_sync_all():
     assert sync_all()
 
 
-@pytest.mark.vcr()
+@pytest.mark.vcr
 @pytest.mark.xdist_group("remote")
 def test_sync_programs():
     from country_workspace.models import Office

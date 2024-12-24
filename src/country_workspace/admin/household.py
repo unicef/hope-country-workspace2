@@ -1,5 +1,6 @@
+from typing import TYPE_CHECKING
+
 from django.contrib import admin, messages
-from django.http import HttpRequest, HttpResponse
 from django.urls import reverse
 from django.utils.translation import gettext as _
 
@@ -10,6 +11,9 @@ from adminfilters.autocomplete import LinkedAutoCompleteFilter
 from ..models import Household
 from .base import BaseModelAdmin
 from .filters import IsValidFilter
+
+if TYPE_CHECKING:
+    from django.http import HttpRequest, HttpResponse
 
 
 @admin.register(Household)

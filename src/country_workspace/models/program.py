@@ -1,7 +1,6 @@
 from typing import TYPE_CHECKING
 
 from django.db import models
-from django.db.models import QuerySet
 from django.utils.translation import gettext as _
 
 from hope_flex_fields.models import DataChecker
@@ -13,6 +12,8 @@ from .base import BaseModel, Validable
 from .office import Office
 
 if TYPE_CHECKING:
+    from django.db.models import QuerySet
+
     from .household import Household
     from .individual import Individual
 
@@ -49,7 +50,8 @@ class Program(BaseModel):
     status = models.CharField(max_length=10, choices=STATUS_CHOICE, db_index=True)
     sector = models.CharField(max_length=50, choices=SECTOR_CHOICE, db_index=True)
     active = models.BooleanField(
-        default=False, help_text=_("Whether the program is active. Only active program are visible in the UI")
+        default=False,
+        help_text=_("Whether the program is active. Only active program are visible in the UI"),
     )
 
     # Local Fields
@@ -110,7 +112,6 @@ class Program(BaseModel):
 
         if isinstance(m, (Household | CountryHousehold)) or m in (Household, CountryHousehold):
             return self.household_checker
-        elif isinstance(m, (Individual | CountryIndividual)) or m in (Individual, CountryIndividual):
+        if isinstance(m, (Individual | CountryIndividual)) or m in (Individual, CountryIndividual):
             return self.individual_checker
-        else:
-            raise ValueError(m)
+        raise ValueError(m)

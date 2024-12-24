@@ -3,10 +3,11 @@ from functools import cached_property
 from typing import TYPE_CHECKING
 
 from django.core.signals import setting_changed
-from django.db.models import Model
 
 if TYPE_CHECKING:
     from typing import Any
+
+    from django.db.models import Model
 
     from .backend import TenantBackend
 
@@ -24,7 +25,7 @@ class AppSettings:
         "AUTH": "country_workspace.workspaces.backend.TenantBackend",
     }
 
-    def __init__(self, prefix: str):
+    def __init__(self, prefix: str) -> None:
         self.prefix = prefix
         from django.conf import settings
 

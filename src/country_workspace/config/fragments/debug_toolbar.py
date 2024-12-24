@@ -1,6 +1,9 @@
-from django.http import HttpRequest
+from typing import TYPE_CHECKING
 
 from django_regex.utils import RegexList
+
+if TYPE_CHECKING:
+    from django.http import HttpRequest
 
 
 def show_ddt(request: "HttpRequest") -> bool:  # pragma: no-cover

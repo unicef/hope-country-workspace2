@@ -1,11 +1,13 @@
+from typing import TYPE_CHECKING
 from unittest import mock
-
-from django.db.models import Model
 
 import pytest
 from testutils.factories import get_factory_for_model
 
 from country_workspace.cache.manager import CacheManager
+
+if TYPE_CHECKING:
+    from django.db.models import Model
 
 
 def pytest_generate_tests(metafunc: "Metafunc") -> None:  # noqa

@@ -47,11 +47,11 @@ class Household(Validable, BaseModel):
 
     # Business methods
 
-    def heads(self):
+    def heads(self) -> "QuerySet[Individual]":
         return self.members.filter(flex_fields__relationship="HEAD")
 
-    def collectors_primary(self):
+    def collectors_primary(self) -> "QuerySet[Individual]":
         return self.members.filter(flex_fields__primary_collector_id=self.flex_fields["household_id"])
 
-    def collectors_alternate(self):
+    def collectors_alternate(self) -> "QuerySet[Individual]":
         return self.members.filter(flex_fields__alternate_collector_id=self.flex_fields["household_id"])

@@ -1,11 +1,15 @@
+from typing import TYPE_CHECKING
+
 from django.conf import settings
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
-from django.db.models import Model
 from django.utils import timezone
 
 from country_workspace.models.base import BaseManager, BaseModel
+
+if TYPE_CHECKING:
+    from django.db.models import Model
 
 
 class SyncManager(BaseManager):
@@ -23,7 +27,9 @@ class SyncManager(BaseManager):
         for m in settings.IND_LOOKUPS:
             fd = FieldDefinition.objects.get(name=f"HOPE IND {m}")
             SyncLog.objects.get_or_create(
-                content_type=ct, object_id=fd.pk, data={"remote_url": "lookups/%s" % m.lower()}
+                content_type=ct,
+                object_id=fd.pk,
+                data={"remote_url": "lookups/%s" % m.lower()},
             )
 
     def register_sync(self, model: "type[Model]") -> None:
