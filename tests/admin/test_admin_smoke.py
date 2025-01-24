@@ -45,8 +45,6 @@ GLOBAL_EXCLUDED_MODELS = RegexList(
 GLOBAL_EXCLUDED_BUTTONS = RegexList(
     [
         r"social.SocialProviderAdmin:test",
-        r"bitcaster.*:lock",
-        r"bitcaster.*:unlock",
         r"hope_flex_fields.FieldsetAdmin:detect_changes",
         r"country_workspace.CountryHouseholdAdmin:import_file",
         r".*:sync",
@@ -187,7 +185,7 @@ def test_admin_changeform(app: "DjangoTestApp", model_admin: "ModelAdmin[Model]"
         assert res.status_code in [302, 200]
 
 
-@pytest.mark.skip_models("constance.Config", "bitcaster.MediaFile")
+@pytest.mark.skip_models("constance.Config")
 def test_admin_add(app: "DjangoTestApp", model_admin: "ModelAdmin[Model]") -> None:
     url = reverse_model_admin(model_admin, "add")
     if model_admin.has_add_permission(Mock(user=app._user)):
@@ -198,7 +196,7 @@ def test_admin_add(app: "DjangoTestApp", model_admin: "ModelAdmin[Model]") -> No
         pytest.skip("No 'add' permission")
 
 
-@pytest.mark.skip_models("constance.Config", "webpush.Browser", "bitcaster.Organization")
+@pytest.mark.skip_models("constance.Config")
 def test_admin_delete(
     app: "DjangoTestApp",
     model_admin: "ModelAdmin[Model]",
@@ -214,7 +212,6 @@ def test_admin_delete(
         pytest.skip("No 'delete' permission")
 
 
-@pytest.mark.skip_buttons("bitcaster.EventAdmin:subscribe")
 def test_admin_buttons(
     app: "DjangoTestApp",
     model_admin: "ExtraButtonsMixin",
