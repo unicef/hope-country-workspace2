@@ -3,7 +3,6 @@ import logging
 from typing import TYPE_CHECKING, Any
 
 from django.core.cache import cache
-
 import sentry_sdk
 from redis_lock import Lock
 
