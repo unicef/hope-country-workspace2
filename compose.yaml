@@ -58,7 +58,7 @@ services:
     command: beat
 
   flower:
-    <<: *common
+    <<:  [*common, *env]
     command: flower
     environment:
       - DEBUG=true

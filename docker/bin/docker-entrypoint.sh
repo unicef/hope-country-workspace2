@@ -6,6 +6,10 @@ export STATIC_ROOT="${STATIC_ROOT:-/var/run/app/static}"
 export UWSGI_PROCESSES="${UWSGI_PROCESSES:-"4"}"
 export DJANGO_SETTINGS_MODULE="country_workspace.config.settings"
 
+mkdir -p /app/
+chown -R hope:unicef /app
+cd /app
+
 case "$1" in
     run)
       django-admin upgrade --with-check
