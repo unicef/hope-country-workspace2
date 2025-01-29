@@ -55,7 +55,7 @@ jobs:
         with:
           python-version: '3.12'
       - name: Install requirements
-        run: pip install ruff
+        run: pip install ruff==0.9.3
       - name: Check syntax
         # Stop the build if there are Python syntax errors or undefined names
         run: ruff check --output-format concise src/
