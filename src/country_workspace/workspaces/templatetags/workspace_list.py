@@ -111,7 +111,7 @@ def result_headers(cl: "WorkspaceChangeList | ChangeList") -> "Generator[dict[st
                 aria_label = _("Select all objects on this page for an action")
                 yield {
                     "text": mark_safe(  # noqa: S308
-                        f'<input type="checkbox" id="action-toggle" ' f'aria-label="{aria_label}">',
+                        f'<input type="checkbox" id="action-toggle" aria-label="{aria_label}">',
                     ),
                     "class_attrib": mark_safe(' class="action-checkbox-column"'),  # noqa: S308
                     "sortable": False,

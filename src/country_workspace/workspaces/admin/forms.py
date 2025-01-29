@@ -22,7 +22,7 @@ class ImportFileForm(forms.Form):
     pk_column_name = forms.CharField(
         required=True,
         initial="household_id",
-        help_text="Which column contains the unique identifier of the record." "It is mandatory from Master/detail",
+        help_text="Which column contains the unique identifier of the record.It is mandatory from Master/detail",
     )
 
     master_column_label = forms.CharField(

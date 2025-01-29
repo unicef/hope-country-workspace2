@@ -28,4 +28,4 @@ class OfficeAdmin(BaseModelAdmin):
         from country_workspace.contrib.hope.sync.office import sync_offices
 
         totals = sync_offices()
-        self.message_user(request, f"{totals["add"]} created - {totals["upd"]} updated")
+        self.message_user(request, f"{totals['add']} created - {totals['upd']} updated")
