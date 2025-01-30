@@ -1,11 +1,10 @@
 import functools
 from typing import Any
 
+from debug_toolbar.panels import Panel
 from django.http import HttpRequest, HttpResponse
 from django.utils import timezone
 from django.utils.translation import gettext as _
-
-from debug_toolbar.panels import Panel
 
 from country_workspace.cache.signals import cache_get, cache_set, cache_store
 from country_workspace.state import state

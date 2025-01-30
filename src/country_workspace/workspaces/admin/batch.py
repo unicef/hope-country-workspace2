@@ -1,16 +1,15 @@
+from admin_extra_buttons.buttons import LinkButton
+from admin_extra_buttons.decorators import link
 from django.contrib.admin import register
 from django.db.models import QuerySet
 from django.http import HttpRequest
 from django.urls import reverse
 
-from admin_extra_buttons.buttons import LinkButton
-from admin_extra_buttons.decorators import link
-
 from ...state import state
 from ..models import CountryBatch
 from ..options import WorkspaceModelAdmin
 from ..sites import workspace
-from .filters import ChoiceFilter, CWLinkedAutoCompleteFilter, UserAutoCompleteFilter
+from .filters import CWLinkedAutoCompleteFilter, ChoiceFilter, UserAutoCompleteFilter
 from .hh_ind import SelectedProgramMixin
 
 

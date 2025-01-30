@@ -1,10 +1,9 @@
+import debug_toolbar
+import django_select2.urls
 from django.conf import settings
 from django.conf.urls import include
 from django.contrib import admin
 from django.urls import path
-
-import debug_toolbar
-import django_select2.urls
 
 from country_workspace.workspaces.sites import workspace
 

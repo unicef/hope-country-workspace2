@@ -1,11 +1,10 @@
 import logging
 from typing import Any
 
-from django.forms import ChoiceField, HiddenInput, Textarea, TextInput
+from constance import config
+from django.forms import ChoiceField, HiddenInput, TextInput, Textarea
 from django.template import Context, Template
 from django.utils.safestring import SafeString, mark_safe
-
-from constance import config
 
 logger = logging.getLogger(__name__)
 

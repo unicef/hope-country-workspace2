@@ -1,11 +1,10 @@
 from typing import TYPE_CHECKING
 
+from admin_extra_buttons.api import button, link
+from adminfilters.autocomplete import AutoCompleteFilter
 from django.contrib import admin
 from django.http import HttpRequest, HttpResponse
 from django.urls import reverse
-
-from admin_extra_buttons.api import button, link
-from adminfilters.autocomplete import AutoCompleteFilter
 
 from ..cache.manager import cache_manager
 from ..compat.admin_extra_buttons import confirm_action

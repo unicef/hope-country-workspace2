@@ -1,10 +1,9 @@
 # mypy: disable-error-code="union-attr"
 from typing import TYPE_CHECKING
 
+import pytest
 from django.test.client import RequestFactory
 from django.urls import reverse
-
-import pytest
 from django_webtest import DjangoTestApp
 from django_webtest.pytest_plugin import MixinWithInstanceVariables
 

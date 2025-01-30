@@ -4,9 +4,8 @@ from typing import TYPE_CHECKING, Any
 from django import forms
 from django.db import transaction
 
-from country_workspace.utils.flex_fields import get_checker_fields
-
 from .base import BaseActionForm
+from country_workspace.utils.flex_fields import get_checker_fields
 
 if TYPE_CHECKING:
     from django.db.models import QuerySet

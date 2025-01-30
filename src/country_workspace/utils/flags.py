@@ -3,10 +3,9 @@ import os
 import re
 from typing import TYPE_CHECKING, Any
 
+from adminfilters.utils import parse_bool
 from django.conf import settings
 from django.core.exceptions import ValidationError
-
-from adminfilters.utils import parse_bool
 from flags.conditions import conditions
 
 from country_workspace.state import state

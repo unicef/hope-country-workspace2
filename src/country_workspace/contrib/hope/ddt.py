@@ -2,10 +2,9 @@ import functools
 import time
 from typing import Any
 
+from debug_toolbar.panels import Panel
 from django.http import HttpRequest, HttpResponse
 from django.utils.translation import gettext as _
-
-from debug_toolbar.panels import Panel
 
 from country_workspace.contrib.hope.signals import hope_request_end, hope_request_start
 

@@ -2,9 +2,8 @@ import contextlib
 import logging
 from typing import TYPE_CHECKING, Any
 
-from django.core.cache import cache
-
 import sentry_sdk
+from django.core.cache import cache
 from redis_lock import Lock
 
 from country_workspace.config.celery import app

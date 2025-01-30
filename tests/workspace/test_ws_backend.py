@@ -1,10 +1,9 @@
 from collections import namedtuple
 from typing import TYPE_CHECKING
 
+import pytest
 from django.apps import apps
 from django.contrib.auth.models import AnonymousUser
-
-import pytest
 from testutils.perms import user_grant_permissions
 
 from country_workspace.state import state

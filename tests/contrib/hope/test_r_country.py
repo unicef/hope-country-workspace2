@@ -1,9 +1,8 @@
 from typing import TYPE_CHECKING
 from unittest.mock import Mock
 
-from django import forms
-
 import pytest
+from django import forms
 from strategy_field.utils import fqn
 from testutils.factories import FieldDefinitionFactory
 

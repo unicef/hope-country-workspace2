@@ -1,7 +1,6 @@
+from admin_extra_buttons.decorators import button
 from django.contrib import admin
 from django.http import HttpRequest, HttpResponse
-
-from admin_extra_buttons.decorators import button
 
 from ..models import SyncLog
 from .base import BaseModelAdmin

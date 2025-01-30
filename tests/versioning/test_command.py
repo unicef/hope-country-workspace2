@@ -2,9 +2,8 @@ from io import StringIO
 from pathlib import Path
 from unittest import mock
 
-from django.core.management import call_command
-
 import pytest
+from django.core.management import call_command
 
 
 def test_command_list(version1, test_scripts_folder):

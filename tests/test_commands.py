@@ -5,9 +5,8 @@ from pathlib import Path
 from typing import TYPE_CHECKING
 from unittest import mock
 
-from django.core.management import call_command
-
 import pytest
+from django.core.management import call_command
 from responses import RequestsMock
 
 if TYPE_CHECKING:

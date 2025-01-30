@@ -1,20 +1,18 @@
 import logging
 from typing import TYPE_CHECKING, Any
 
+from constance import config
 from django.core.cache import caches
 from django.core.cache.backends.redis import RedisCacheClient
 from django.http import HttpRequest
 from django.utils import timezone
 from django.utils.text import slugify
-
-from constance import config
 from redis_lock.django_cache import RedisCache
 from sentry_sdk import capture_exception
 
+from .signals import cache_get, cache_invalidate, cache_set
 from country_workspace import VERSION
 from country_workspace.state import state
-
-from .signals import cache_get, cache_invalidate, cache_set
 
 if TYPE_CHECKING:
     from ..models import Office, Program

@@ -1,10 +1,9 @@
-from django.contrib import admin
-from django.http import HttpRequest
-from django.urls import reverse
-
 from admin_extra_buttons.buttons import LinkButton
 from admin_extra_buttons.decorators import link
 from adminfilters.autocomplete import AutoCompleteFilter, LinkedAutoCompleteFilter
+from django.contrib import admin
+from django.http import HttpRequest
+from django.urls import reverse
 
 from ..models import Batch
 from .base import BaseModelAdmin

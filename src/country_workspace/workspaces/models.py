@@ -1,9 +1,9 @@
 from typing import cast
 
+import reversion
 from django.db import models
 from django.utils.functional import cached_property
 
-import reversion
 from hope_flex_fields.models import DataChecker
 
 from country_workspace.models import AsyncJob, Batch, Household, Individual, Office, Program

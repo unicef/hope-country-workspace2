@@ -1,11 +1,10 @@
 from json import JSONDecodeError
 from unittest.mock import Mock, patch
 
-from django.conf import settings
-
 import pytest
 import requests
 from constance.test.unittest import override_config
+from django.conf import settings
 
 from country_workspace.contrib.aurora.client import AuroraClient
 from country_workspace.exceptions import RemoteError

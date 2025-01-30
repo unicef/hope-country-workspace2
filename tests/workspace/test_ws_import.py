@@ -3,10 +3,9 @@ import re
 from pathlib import Path
 from typing import TYPE_CHECKING
 
-from django.urls import reverse
-
 import pytest
 from constance.test.unittest import override_config
+from django.urls import reverse
 from webtest import Upload
 
 from country_workspace.state import state

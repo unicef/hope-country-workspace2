@@ -4,7 +4,6 @@ from unittest.mock import Mock
 
 from django.conf import settings
 from django.contrib.auth.models import Group, Permission
-
 from faker import Faker
 
 from country_workspace.models import Office, Program, UserRole

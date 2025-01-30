@@ -1,13 +1,12 @@
 from typing import TYPE_CHECKING, Any
 
+import dictdiffer
+import reversion
+from concurrency.fields import IntegerVersionField
 from django.db import models
 from django.urls import reverse
 from django.utils import timezone
 from django.utils.translation import gettext as _
-
-import dictdiffer
-import reversion
-from concurrency.fields import IntegerVersionField
 
 from country_workspace.cache.manager import cache_manager
 from country_workspace.state import state
@@ -83,6 +82,10 @@ class Validable(Cachable, models.Model):
     def __str__(self) -> str:
         return self.name or "%s %s" % (self._meta.verbose_name, self.id)
 
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
+        super().__init__(*args, **kwargs)
+        self._checksum = self.checksum
+
     def save(
         self,
         *args: Any,
@@ -105,10 +108,6 @@ class Validable(Cachable, models.Model):
             )
             if state.request:
                 reversion.set_user(state.request.user)
-
-    def __init__(self, *args: Any, **kwargs: Any) -> None:
-        super().__init__(*args, **kwargs)
-        self._checksum = self.checksum
 
     def checker(self) -> "DataChecker":
         raise NotImplementedError

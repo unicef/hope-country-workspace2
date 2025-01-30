@@ -1,9 +1,8 @@
 from typing import Any
 
+from constance import config
 from django.conf import settings
 from django.contrib.auth.models import Group, User
-
-from constance import config
 
 
 def save_to_group(user: User | None = None, **kwargs: Any) -> dict[str, Any]:

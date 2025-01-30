@@ -62,6 +62,14 @@ class Command(BaseCommand):
         )
 
         parser.add_argument(
+            "--no-sync",
+            action="store_false",
+            dest="sync_with_hope",
+            default=True,
+            help="Do not run HOPE synchronisation",
+        )
+
+        parser.add_argument(
             "--admin-email",
             action="store",
             dest="admin_email",
@@ -83,6 +91,7 @@ class Command(BaseCommand):
         self.static = options["static"]
         self.migrate = options["migrate"]
         self.debug = options["debug"]
+        self.sync_with_hope = options["sync_with_hope"]
 
         self.admin_email = str(options["admin_email"] or env("ADMIN_EMAIL", ""))
         self.admin_password = str(options["admin_password"] or env("ADMIN_PASSWORD", ""))
@@ -130,6 +139,9 @@ class Command(BaseCommand):
 
             echo("Remove stale contenttypes")
             call_command("remove_stale_contenttypes", **extra)
+            if self.sync_with_hope:
+                echo("Run HOPE synchronisation")
+                call_command("sync", **extra)
 
             if self.admin_email:
                 if User.objects.filter(email=self.admin_email).exists():

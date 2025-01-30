@@ -1,9 +1,6 @@
 target-version = "py312"
 line-length = 120
 
-[lint.isort]
-case-sensitive = true
-
 [lint]
 select = [
     "A", # prevent using keywords that clobber python builtins
@@ -76,6 +73,22 @@ quote-style = "double"
 indent-style = "space"
 skip-magic-trailing-comma = false
 line-ending = "auto"
+
+[lint.isort]
+case-sensitive = true
+force-wrap-aliases = true
+combine-as-imports = true
+extra-standard-library = ["path"]
+#default-section = "local-folder"
+known-third-party = ['django']
+known-first-party = ['hope_*']
+known-local-folder = ["country_workspace"]
+no-sections = false
+lines-after-imports = 1
+relative-imports-order = "furthest-to-closest"
+
+section-order = ["future", "standard-library", "third-party", "first-party",  "local-folder",]
+
 
 [lint.per-file-ignores]
 "tests/**.py" = ["S101", "PLR2004", "S", "SIM117", "D", "UP", "PLR0913", "ANN", "N999"]

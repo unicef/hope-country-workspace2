@@ -1,6 +1,5 @@
-from django.utils import timezone
-
 import factory
+from django.utils import timezone
 
 from country_workspace.models.batch import Batch
 from country_workspace.workspaces.models import CountryBatch

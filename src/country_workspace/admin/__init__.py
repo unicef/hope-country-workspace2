@@ -1,7 +1,6 @@
 from django.contrib.admin.sites import site
 from django.contrib.auth.models import Permission
 from django.contrib.contenttypes.models import ContentType
-
 from smart_admin.console import panel_migrations, panel_redis, panel_sentry, panel_sysinfo
 from smart_admin.smart_auth.admin import ContentTypeAdmin, PermissionAdmin
 

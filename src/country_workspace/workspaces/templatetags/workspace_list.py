@@ -1,8 +1,8 @@
 import datetime
 from typing import TYPE_CHECKING, Any
 
-from django.contrib.admin.templatetags.admin_list import ResultList as DjangoResultList
 from django.contrib.admin.templatetags.admin_list import (
+    ResultList as DjangoResultList,
     _coerce_field_name,
     admin_actions,
     admin_list_filter,

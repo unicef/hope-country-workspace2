@@ -9,7 +9,6 @@ from country_workspace.utils.http import absolute_reverse, absolute_uri, get_cli
 if TYPE_CHECKING:
     from django.http import HttpRequest
     from django.test.client import RequestFactory
-
     from pytest_django.fixtures import SettingsWrapper
 
 

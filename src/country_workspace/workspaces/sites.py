@@ -14,7 +14,6 @@ from django.urls import NoReverseMatch, URLPattern, URLResolver, reverse
 from django.utils.text import capfirst
 from django.utils.translation import gettext_lazy
 from django.views import View
-
 from smart_admin.autocomplete import SmartAutocompleteJsonView
 
 from ..state import state

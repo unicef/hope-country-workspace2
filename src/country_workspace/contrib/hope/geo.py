@@ -7,10 +7,9 @@ from django.utils.text import slugify
 
 from hope_flex_fields.mixin import ChildFieldMixin
 
-from country_workspace.cache.manager import cache_manager
-
 from ...exceptions import RemoteError
 from .client import HopeClient
+from country_workspace.cache.manager import cache_manager
 
 logger = logging.getLogger(__name__)
 

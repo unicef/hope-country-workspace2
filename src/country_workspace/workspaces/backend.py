@@ -1,10 +1,9 @@
 from typing import TYPE_CHECKING
 
+from dateutil.utils import today
 from django.contrib.auth.backends import BaseBackend
 from django.contrib.auth.models import AnonymousUser, Permission
 from django.db.models import Model, Q, QuerySet
-
-from dateutil.utils import today
 
 from ..models import Office, User
 from ..state import state

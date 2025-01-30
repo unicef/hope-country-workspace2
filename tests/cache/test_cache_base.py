@@ -1,8 +1,7 @@
 from typing import TYPE_CHECKING
 
-from django.urls import reverse
-
 import pytest
+from django.urls import reverse
 from testutils.perms import user_grant_permissions
 from testutils.utils import select_office
 
@@ -10,7 +9,6 @@ from country_workspace.cache.manager import CacheManager
 
 if TYPE_CHECKING:
     from django.db.models import Model
-
     from django_webtest import DjangoTestApp
     from django_webtest.pytest_plugin import MixinWithInstanceVariables
     from testutils.types import CWTestApp

@@ -1,9 +1,8 @@
+from admin_extra_buttons.buttons import LinkButton
+from admin_extra_buttons.decorators import button, link
 from django.contrib import admin
 from django.http import HttpRequest
 from django.urls import reverse
-
-from admin_extra_buttons.buttons import LinkButton
-from admin_extra_buttons.decorators import button, link
 
 from ..models import Office
 from .base import BaseModelAdmin

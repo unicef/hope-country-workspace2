@@ -1,10 +1,9 @@
 from typing import TYPE_CHECKING
 
-from django.contrib import admin
-from django.urls import reverse
-
 from admin_extra_buttons.decorators import link
 from adminfilters.autocomplete import LinkedAutoCompleteFilter
+from django.contrib import admin
+from django.urls import reverse
 
 from ..models import Individual
 from .base import BaseModelAdmin

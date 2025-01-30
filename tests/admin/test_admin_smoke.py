@@ -1,22 +1,20 @@
 from typing import TYPE_CHECKING, Any, Iterable, Mapping, Optional
 from unittest.mock import Mock
 
+import pytest
+from admin_extra_buttons.handlers import ButtonHandler, ChoiceHandler
 from django.contrib.admin.sites import site
 from django.contrib.admin.templatetags.admin_urls import admin_urlname
 from django.db.models import Model
 from django.urls import reverse
 from django.utils.safestring import mark_safe
-
-import pytest
-from admin_extra_buttons.handlers import ButtonHandler, ChoiceHandler
 from django_regex.utils import RegexList as _RegexList
 from pytest_django.fixtures import SettingsWrapper
 
 if TYPE_CHECKING:
+    from admin_extra_buttons.mixins import ExtraButtonsMixin
     from django.contrib.admin import ModelAdmin
     from django.db.models.options import Options
-
-    from admin_extra_buttons.mixins import ExtraButtonsMixin
     from django_webtest import DjangoTestApp, DjangoWebtestResponse
     from django_webtest.pytest_plugin import MixinWithInstanceVariables
     from responses import RequestsMock

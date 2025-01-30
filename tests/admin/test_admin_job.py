@@ -1,8 +1,7 @@
 from typing import TYPE_CHECKING
 
-from django.urls import reverse
-
 import pytest
+from django.urls import reverse
 
 if TYPE_CHECKING:
     from django_webtest.pytest_plugin import MixinWithInstanceVariables

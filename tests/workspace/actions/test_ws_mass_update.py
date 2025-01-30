@@ -1,8 +1,7 @@
 from typing import TYPE_CHECKING
 
-from django.urls import reverse
-
 import pytest
+from django.urls import reverse
 from pytest_django.fixtures import SettingsWrapper
 from testutils.utils import select_office
 

@@ -1,7 +1,6 @@
+import factory.fuzzy
 from django.contrib.contenttypes.models import ContentType
 from django.utils import timezone
-
-import factory.fuzzy
 
 from country_workspace.models import SyncLog
 

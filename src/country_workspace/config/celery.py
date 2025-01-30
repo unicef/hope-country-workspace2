@@ -3,10 +3,9 @@ import json
 import os
 from typing import Any
 
-from django.core.cache import cache
-
 import sentry_sdk
 from celery import Celery, Task, signals
+from django.core.cache import cache
 
 from country_workspace.config import settings
 

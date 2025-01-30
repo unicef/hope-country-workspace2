@@ -1,8 +1,7 @@
 from typing import TYPE_CHECKING
 
-from django.contrib.admin import register
-
 from admin_extra_buttons.decorators import button
+from django.contrib.admin import register
 from django_celery_boost.admin import CeleryTaskModelAdmin
 
 from ..models import CountryAsyncJob

@@ -1,12 +1,11 @@
 from typing import TYPE_CHECKING
 
+from admin_extra_buttons.buttons import LinkButton
+from admin_extra_buttons.decorators import link
 from django.contrib.admin import register
 from django.http import HttpRequest
 from django.urls import reverse
 from django.utils.translation import gettext as _
-
-from admin_extra_buttons.buttons import LinkButton
-from admin_extra_buttons.decorators import link
 
 from ...state import state
 from ..models import CountryHousehold

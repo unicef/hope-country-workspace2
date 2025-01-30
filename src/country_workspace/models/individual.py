@@ -1,9 +1,8 @@
 from typing import TYPE_CHECKING
 
+import reversion
 from django.db import models
 from django.utils.functional import cached_property
-
-import reversion
 
 from .base import BaseModel, Validable
 from .household import Household

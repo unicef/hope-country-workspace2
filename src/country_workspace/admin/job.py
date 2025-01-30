@@ -1,8 +1,7 @@
 from typing import TYPE_CHECKING, Sequence
 
-from django.contrib import admin
-
 from adminfilters.autocomplete import AutoCompleteFilter, LinkedAutoCompleteFilter
+from django.contrib import admin
 from django_celery_boost.admin import CeleryTaskModelAdmin
 
 from ..models import AsyncJob

@@ -10,11 +10,6 @@ repos:
     -   id: djade
         args: [--target-version, "5.1"]  # Use current Django version
 
-  - repo: https://github.com/PyCQA/isort
-    rev: 5.13.2
-    hooks:
-      - id: isort
-        stages: [pre-commit]
   - repo: https://github.com/twisted/towncrier
     rev: 24.8.0
     hooks:

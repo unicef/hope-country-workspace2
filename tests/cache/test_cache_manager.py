@@ -8,7 +8,6 @@ from country_workspace.state import state
 
 if TYPE_CHECKING:
     from django.db.models import Model
-
     from django_webtest.pytest_plugin import MixinWithInstanceVariables
     from testutils.types import CWTestApp
 

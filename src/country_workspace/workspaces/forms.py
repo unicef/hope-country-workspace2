@@ -6,7 +6,6 @@ from django.core.exceptions import ValidationError
 from django.db.models import QuerySet
 from django.http import HttpRequest
 from django.utils.translation import gettext_lazy as _
-
 from django_select2 import forms as s2forms
 
 from ..models import Program

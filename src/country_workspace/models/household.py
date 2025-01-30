@@ -1,9 +1,8 @@
 from functools import cached_property
 from typing import TYPE_CHECKING
 
-from django.db import models
-
 import reversion
+from django.db import models
 
 from .base import BaseModel, Validable
 

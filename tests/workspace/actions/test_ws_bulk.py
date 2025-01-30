@@ -2,11 +2,10 @@ import io
 import os
 from typing import TYPE_CHECKING
 
-from django.urls import reverse
-
 import openpyxl
 import pytest
 import xlsxwriter
+from django.urls import reverse
 from testutils.factories import FlexFieldFactory
 from testutils.utils import select_office
 from webtest import Checkbox, Upload

@@ -2,9 +2,8 @@ import os
 from typing import TYPE_CHECKING
 from unittest import mock
 
-from django.core.exceptions import ValidationError
-
 import pytest
+from django.core.exceptions import ValidationError
 
 from country_workspace.state import state
 from country_workspace.utils.flags import debug, env_var, header_key, hostname, superuser, validate_bool

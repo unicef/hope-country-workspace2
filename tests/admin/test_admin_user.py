@@ -1,9 +1,8 @@
 from typing import TYPE_CHECKING
 
-from django.urls import reverse
-
 import factory
 import pytest
+from django.urls import reverse
 from testutils.perms import user_grant_permissions
 
 if TYPE_CHECKING:

@@ -1,6 +1,5 @@
-from django.contrib.auth.models import Group
-
 import factory.fuzzy
+from django.contrib.auth.models import Group
 
 from country_workspace.models import User
 

@@ -1,9 +1,8 @@
 from typing import TYPE_CHECKING
 
-from django.urls import reverse
-
 import freezegun
 import pytest
+from django.urls import reverse
 from testutils.utils import select_office
 
 from country_workspace.state import state

@@ -19,7 +19,6 @@ class Command(BaseCommand):
 
     def handle(self, *args: Any, **options: Any) -> None:
         from django.contrib.sites.models import Site
-
         from flags.models import FlagState
 
         from country_workspace.models import Office, User

@@ -1,6 +1,5 @@
-from django import forms
-
 import pytest
+from django import forms
 
 from country_workspace.contrib.hope.sync.office import sync_all, sync_offices, sync_programs
 

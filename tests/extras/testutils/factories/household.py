@@ -1,9 +1,8 @@
 import sys
 from random import getrandbits, randint
 
-from django.utils import timezone
-
 import factory
+from django.utils import timezone
 from faker import Faker
 
 from country_workspace.models import Household

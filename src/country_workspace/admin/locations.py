@@ -1,14 +1,13 @@
 import logging
 from typing import TYPE_CHECKING
 
+from adminfilters.autocomplete import AutoCompleteFilter
+from adminfilters.filters import NumberFilter
+from adminfilters.mixin import AdminFiltersMixin
 from django.contrib import admin
 from django.contrib.admin import ModelAdmin, RelatedFieldListFilter
 from django.db.models import Field
 from django.forms import FileField, FileInput, Form
-
-from adminfilters.autocomplete import AutoCompleteFilter
-from adminfilters.filters import NumberFilter
-from adminfilters.mixin import AdminFiltersMixin
 
 from country_workspace.models.locations import Area, AreaType, Country
 

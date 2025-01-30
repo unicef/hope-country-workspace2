@@ -1,7 +1,6 @@
+import pytest
 from django.core.signing import get_cookie_signer
 from django.http import HttpResponse
-
-import pytest
 
 from country_workspace.state import State, state
 from country_workspace.workspaces.config import conf

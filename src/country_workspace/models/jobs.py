@@ -1,10 +1,9 @@
 from typing import Any, Callable
 
+import sentry_sdk
 from django.apps import apps
 from django.db import models
 from django.utils.module_loading import import_string
-
-import sentry_sdk
 from django_celery_boost.models import CeleryTaskModel
 
 

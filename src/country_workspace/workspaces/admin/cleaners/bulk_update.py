@@ -6,11 +6,11 @@ from django import forms
 from django.apps import apps
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.files.storage import default_storage
+from xlsxwriter import Workbook
 
 from hope_flex_fields.models import DataChecker, FlexField
 from hope_flex_fields.xlsx import get_format_for_field
 from hope_smart_import.readers import open_xls
-from xlsxwriter import Workbook
 
 from country_workspace.models import AsyncJob, Program
 from country_workspace.workspaces.admin.cleaners.base import BaseActionForm
