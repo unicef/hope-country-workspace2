@@ -79,14 +79,12 @@ case-sensitive = true
 force-wrap-aliases = true
 combine-as-imports = true
 extra-standard-library = ["path"]
-#default-section = "local-folder"
 known-third-party = ['django']
 known-first-party = ['hope_*']
 known-local-folder = ["country_workspace"]
 no-sections = false
 lines-after-imports = 1
 relative-imports-order = "furthest-to-closest"
-
 section-order = ["future", "standard-library", "third-party", "first-party",  "local-folder",]
 
 
