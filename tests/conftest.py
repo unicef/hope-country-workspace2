@@ -53,14 +53,13 @@ def pytest_configure(config):
     os.environ["CELERY_TASK_ALWAYS_EAGER"] = "1"
     os.environ["CELERY_TASK_STORE_EAGER_RESULT"] = "1"
     os.environ["SECURE_HSTS_PRELOAD"] = "0"
-    os.environ["AURORA_API_TOKEN"] = "aurora_token"
-    os.environ["HOPE_API_TOKEN"] = "kugiugiuygiuygiuygiuhgiuhgiuhgiugiu"
-
     os.environ["SECRET_KEY"] = "kugiugiuygiuygiuygiuhgiuhgiuhgiugiu"
     os.environ["FILE_STORAGE_DEFAULT"] = "django.core.files.storage.FileSystemStorage?location=./~tests/storage/"
     os.environ["FILE_STORAGE_MEDIA"] = "django.core.files.storage.FileSystemStorage?location=./~tests/storage/"
-
     os.environ["LOGGING_LEVEL"] = "CRITICAL"
+    os.environ.setdefault("HOPE_API_TOKEN", "kugiugiuygiuygiuygiuhgiuhgiuhgiugiu")
+    os.environ.setdefault("AURORA_API_TOKEN", "aurora_token")
+
     import django
     from django.conf import settings
 
