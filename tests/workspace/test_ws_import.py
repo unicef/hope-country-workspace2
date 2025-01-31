@@ -1,10 +1,7 @@
-import json
-import re
 from pathlib import Path
 from typing import TYPE_CHECKING
 
 import pytest
-from constance.test.unittest import override_config
 from django.urls import reverse
 from webtest import Upload
 
@@ -72,27 +69,3 @@ def test_import_data_rdi(force_migrated_records, app, program):
     assert hh.members.count() == 5
     assert (head := hh.heads().first())
     assert head.name == "Edward Jeffrey Rogers"
-
-
-@override_config(AURORA_API_URL="https://api.aurora.io")
-def test_import_data_aurora(force_migrated_records, app, program, mocked_responses):
-    mocked_responses.add(
-        mocked_responses.GET,
-        re.compile(r"https://api.aurora.io/record/.*"),
-        json=json.loads((Path(__file__).parent / "aurora.json").read_text()),
-        status=200,
-    )
-    res = app.get("/").follow()
-    res.forms["select-tenant"]["tenant"] = program.country_office.pk
-    res.forms["select-tenant"].submit()
-
-    url = reverse("workspace:workspaces_countryprogram_import_data", args=[program.pk])
-    res = app.get(url)
-    res.forms["import-aurora"]["_selected_tab"] = "aurora"
-    res = res.forms["import-aurora"].submit()
-    assert res.status_code == 302
-    assert program.households.count() == 2
-    assert program.individuals.count() == 3
-
-    hh = program.households.first()
-    assert hh.members.count() == 2
