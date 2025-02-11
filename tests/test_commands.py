@@ -75,6 +75,7 @@ def test_upgrade_init(
             stdout=out,
             checks=False,
             verbosity=verbosity,
+            sync_with_hope=False,
         )
     assert "error" not in str(out.getvalue())
 
