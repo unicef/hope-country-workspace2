@@ -1,0 +1,457 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.32.3
+    method: GET
+    uri: https://dev-hope.unitst.org/api/rest/lookups/country/
+  response:
+    body:
+      string: "{\"count\":250,\"next\":\"http://dev-hope.unitst.org/api/rest/lookups/country/?limit=50&offset=50\",\"previous\":null,\"results\":[{\"id\":\"b902840f-68d3-40a0-b74d-0fb14096a11e\",\"name\":\"Afghanistan\",\"short_name\":\"Afghanistan\",\"iso_code2\":\"AF\",\"iso_code3\":\"AFG\",\"iso_num\":\"0004\",\"valid_from\":\"2021-10-28T09:39:12.210000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:12.210000Z\"},{\"id\":\"039ef092-4a6d-4f95-aa69-d4d50ac76968\",\"name\":\"\xC5land
+        Islands\",\"short_name\":\"\xC5land Islands\",\"iso_code2\":\"AX\",\"iso_code3\":\"ALA\",\"iso_num\":\"0248\",\"valid_from\":\"2021-10-28T09:39:12.221000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:12.221000Z\"},{\"id\":\"f5f4c536-4404-4779-96cd-51e01c8e4ec0\",\"name\":\"Albania\",\"short_name\":\"Albania\",\"iso_code2\":\"AL\",\"iso_code3\":\"ALB\",\"iso_num\":\"0008\",\"valid_from\":\"2021-10-28T09:39:12.226000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:12.226000Z\"},{\"id\":\"760e6efc-ea4f-48e3-bcfb-d14d288742a5\",\"name\":\"Algeria\",\"short_name\":\"Algeria\",\"iso_code2\":\"DZ\",\"iso_code3\":\"DZA\",\"iso_num\":\"0012\",\"valid_from\":\"2021-10-28T09:39:12.232000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:12.232000Z\"},{\"id\":\"06eb3442-e8a4-4f1f-b265-7502085de101\",\"name\":\"American
+        Samoa\",\"short_name\":\"American Samoa\",\"iso_code2\":\"AS\",\"iso_code3\":\"ASM\",\"iso_num\":\"0016\",\"valid_from\":\"2021-10-28T09:39:12.237000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:12.237000Z\"},{\"id\":\"04044914-d309-4d76-ad95-a80a3169c678\",\"name\":\"Andorra\",\"short_name\":\"Andorra\",\"iso_code2\":\"AD\",\"iso_code3\":\"AND\",\"iso_num\":\"0020\",\"valid_from\":\"2021-10-28T09:39:12.243000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:12.243000Z\"},{\"id\":\"f4c0b280-c0d0-4eea-a6f0-d2f49ec978e2\",\"name\":\"Angola\",\"short_name\":\"Angola\",\"iso_code2\":\"AO\",\"iso_code3\":\"AGO\",\"iso_num\":\"0024\",\"valid_from\":\"2021-10-28T09:39:12.249000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:12.249000Z\"},{\"id\":\"fa94df9c-b539-4599-8228-dfe9383abde3\",\"name\":\"Anguilla\",\"short_name\":\"Anguilla\",\"iso_code2\":\"AI\",\"iso_code3\":\"AIA\",\"iso_num\":\"0660\",\"valid_from\":\"2021-10-28T09:39:12.254000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:12.254000Z\"},{\"id\":\"a6c8c5f4-f1e0-478d-9664-b9a4a7d61c4b\",\"name\":\"Antarctica\",\"short_name\":\"Antarctica\",\"iso_code2\":\"AQ\",\"iso_code3\":\"ATA\",\"iso_num\":\"0010\",\"valid_from\":\"2021-10-28T09:39:12.260000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:12.260000Z\"},{\"id\":\"a76f75ff-36f6-4f27-804c-38a99e261588\",\"name\":\"Antigua
+        and Barbuda\",\"short_name\":\"Antigua and Barbuda\",\"iso_code2\":\"AG\",\"iso_code3\":\"ATG\",\"iso_num\":\"0028\",\"valid_from\":\"2021-10-28T09:39:12.265000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:12.265000Z\"},{\"id\":\"d83c38bd-7288-40e7-af65-58371b0685a8\",\"name\":\"Argentina\",\"short_name\":\"Argentina\",\"iso_code2\":\"AR\",\"iso_code3\":\"ARG\",\"iso_num\":\"0032\",\"valid_from\":\"2021-10-28T09:39:12.270000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:12.270000Z\"},{\"id\":\"3736b9fb-eb1a-4dbb-b924-36e4ffb29050\",\"name\":\"Armenia\",\"short_name\":\"Armenia\",\"iso_code2\":\"AM\",\"iso_code3\":\"ARM\",\"iso_num\":\"0051\",\"valid_from\":\"2021-10-28T09:39:12.276000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:12.276000Z\"},{\"id\":\"db1939be-0040-4444-b820-ea0984f5366c\",\"name\":\"Aruba\",\"short_name\":\"Aruba\",\"iso_code2\":\"AW\",\"iso_code3\":\"ABW\",\"iso_num\":\"0533\",\"valid_from\":\"2021-10-28T09:39:12.282000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:12.282000Z\"},{\"id\":\"5eb07f25-2304-4a44-ae50-77277fb69ad4\",\"name\":\"Australia\",\"short_name\":\"Australia\",\"iso_code2\":\"AU\",\"iso_code3\":\"AUS\",\"iso_num\":\"0036\",\"valid_from\":\"2021-10-28T09:39:12.288000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:12.288000Z\"},{\"id\":\"23ee8e7f-e659-45aa-b66a-55b44f9b9e2a\",\"name\":\"Austria\",\"short_name\":\"Austria\",\"iso_code2\":\"AT\",\"iso_code3\":\"AUT\",\"iso_num\":\"0040\",\"valid_from\":\"2021-10-28T09:39:12.294000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:12.294000Z\"},{\"id\":\"c754fe48-691e-4ae4-b036-85cd3308fe4c\",\"name\":\"Azerbaijan\",\"short_name\":\"Azerbaijan\",\"iso_code2\":\"AZ\",\"iso_code3\":\"AZE\",\"iso_num\":\"0031\",\"valid_from\":\"2021-10-28T09:39:12.299000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:12.299000Z\"},{\"id\":\"b99086ea-e62f-4d60-925f-54a6b8103182\",\"name\":\"Bahamas\",\"short_name\":\"Bahamas\",\"iso_code2\":\"BS\",\"iso_code3\":\"BHS\",\"iso_num\":\"0044\",\"valid_from\":\"2021-10-28T09:39:12.305000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:12.305000Z\"},{\"id\":\"df4efb03-f23c-4c02-b753-5d23fa21658e\",\"name\":\"Bahrain\",\"short_name\":\"Bahrain\",\"iso_code2\":\"BH\",\"iso_code3\":\"BHR\",\"iso_num\":\"0048\",\"valid_from\":\"2021-10-28T09:39:12.311000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:12.311000Z\"},{\"id\":\"da122556-a1df-4a2a-8fb0-867141a3a744\",\"name\":\"Bangladesh\",\"short_name\":\"Bangladesh\",\"iso_code2\":\"BD\",\"iso_code3\":\"BGD\",\"iso_num\":\"0050\",\"valid_from\":\"2021-10-28T09:39:12.317000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:12.317000Z\"},{\"id\":\"4b9d8f1f-1cd8-4569-8b60-853f5a8d286c\",\"name\":\"Barbados\",\"short_name\":\"Barbados\",\"iso_code2\":\"BB\",\"iso_code3\":\"BRB\",\"iso_num\":\"0052\",\"valid_from\":\"2021-10-28T09:39:12.323000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:12.323000Z\"},{\"id\":\"dc586ddf-6609-46f9-8508-d3974d0c6616\",\"name\":\"Belarus\",\"short_name\":\"Belarus\",\"iso_code2\":\"BY\",\"iso_code3\":\"BLR\",\"iso_num\":\"0112\",\"valid_from\":\"2021-10-28T09:39:12.329000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:12.329000Z\"},{\"id\":\"28364645-27e6-4d67-82ae-df459e907a9c\",\"name\":\"Belgium\",\"short_name\":\"Belgium\",\"iso_code2\":\"BE\",\"iso_code3\":\"BEL\",\"iso_num\":\"0056\",\"valid_from\":\"2021-10-28T09:39:12.335000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:12.334000Z\"},{\"id\":\"55f84d8e-99ff-4e59-91e3-a9dd2dd0987b\",\"name\":\"Belize\",\"short_name\":\"Belize\",\"iso_code2\":\"BZ\",\"iso_code3\":\"BLZ\",\"iso_num\":\"0084\",\"valid_from\":\"2021-10-28T09:39:12.341000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:12.341000Z\"},{\"id\":\"b7a5a7b9-225b-41f6-9a55-d6ee8fc93dcf\",\"name\":\"Benin\",\"short_name\":\"Benin\",\"iso_code2\":\"BJ\",\"iso_code3\":\"BEN\",\"iso_num\":\"0204\",\"valid_from\":\"2021-10-28T09:39:12.347000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:12.347000Z\"},{\"id\":\"084a096f-2748-4288-8142-17e6d6fa00bc\",\"name\":\"Bermuda\",\"short_name\":\"Bermuda\",\"iso_code2\":\"BM\",\"iso_code3\":\"BMU\",\"iso_num\":\"0060\",\"valid_from\":\"2021-10-28T09:39:12.353000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:12.353000Z\"},{\"id\":\"9a1914ba-80b6-40c5-98c3-c134c426e1fd\",\"name\":\"Bhutan\",\"short_name\":\"Bhutan\",\"iso_code2\":\"BT\",\"iso_code3\":\"BTN\",\"iso_num\":\"0064\",\"valid_from\":\"2021-10-28T09:39:12.358000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:12.358000Z\"},{\"id\":\"5116d4c9-5570-49b8-9098-c244e4fd1c41\",\"name\":\"Bolivia\",\"short_name\":\"Bolivia\",\"iso_code2\":\"BO\",\"iso_code3\":\"BOL\",\"iso_num\":\"0068\",\"valid_from\":\"2021-10-28T09:39:12.364000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:12.364000Z\"},{\"id\":\"4de8e251-25ee-442e-ab85-c1aab6c61f21\",\"name\":\"Bonaire,
+        Sint Eustatius and Saba\",\"short_name\":\"Bonaire, Sint Eustatius and Saba\",\"iso_code2\":\"BQ\",\"iso_code3\":\"BES\",\"iso_num\":\"0535\",\"valid_from\":\"2021-10-28T09:39:12.369000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:12.369000Z\"},{\"id\":\"69540ded-f9a0-4e54-b46a-fe25f3ac6556\",\"name\":\"Bosnia
+        and Herzegovina\",\"short_name\":\"Bosnia and Herzegovina\",\"iso_code2\":\"BA\",\"iso_code3\":\"BIH\",\"iso_num\":\"0070\",\"valid_from\":\"2021-10-28T09:39:12.375000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:12.375000Z\"},{\"id\":\"6fe128c1-6dc9-42f9-9203-6b7c6a54ba7a\",\"name\":\"Botswana\",\"short_name\":\"Botswana\",\"iso_code2\":\"BW\",\"iso_code3\":\"BWA\",\"iso_num\":\"0072\",\"valid_from\":\"2021-10-28T09:39:12.380000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:12.380000Z\"},{\"id\":\"d06b7b6d-e6ce-44e7-b7bd-dd6695b70021\",\"name\":\"Bouvet
+        Island\",\"short_name\":\"Bouvet Island\",\"iso_code2\":\"BV\",\"iso_code3\":\"BVT\",\"iso_num\":\"0074\",\"valid_from\":\"2021-10-28T09:39:12.386000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:12.386000Z\"},{\"id\":\"6823b0a6-e4a0-4bb8-8304-eff0a6acb079\",\"name\":\"Brazil\",\"short_name\":\"Brazil\",\"iso_code2\":\"BR\",\"iso_code3\":\"BRA\",\"iso_num\":\"0076\",\"valid_from\":\"2021-10-28T09:39:12.391000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:12.391000Z\"},{\"id\":\"d72a7993-1fbd-4e36-b1b4-3e164c4a21c8\",\"name\":\"British
+        Indian Ocean Territory\",\"short_name\":\"British Indian Ocean Territory\",\"iso_code2\":\"IO\",\"iso_code3\":\"IOT\",\"iso_num\":\"0086\",\"valid_from\":\"2021-10-28T09:39:12.397000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:12.396000Z\"},{\"id\":\"d78dd9e8-e073-48e9-b285-27ede0e11f77\",\"name\":\"Brunei\",\"short_name\":\"Brunei\",\"iso_code2\":\"BN\",\"iso_code3\":\"BRN\",\"iso_num\":\"0096\",\"valid_from\":\"2021-10-28T09:39:12.402000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:12.402000Z\"},{\"id\":\"75d98f99-ae09-4904-bddd-7d118a00074a\",\"name\":\"Bulgaria\",\"short_name\":\"Bulgaria\",\"iso_code2\":\"BG\",\"iso_code3\":\"BGR\",\"iso_num\":\"0100\",\"valid_from\":\"2021-10-28T09:39:12.408000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:12.408000Z\"},{\"id\":\"9bfb726b-1c37-422d-973b-8e44fe381d28\",\"name\":\"Burkina
+        Faso\",\"short_name\":\"Burkina Faso\",\"iso_code2\":\"BF\",\"iso_code3\":\"BFA\",\"iso_num\":\"0854\",\"valid_from\":\"2021-10-28T09:39:12.413000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:12.413000Z\"},{\"id\":\"4c50a88f-1c6d-474a-b446-f50e16fac606\",\"name\":\"Burundi\",\"short_name\":\"Burundi\",\"iso_code2\":\"BI\",\"iso_code3\":\"BDI\",\"iso_num\":\"0108\",\"valid_from\":\"2021-10-28T09:39:12.418000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:12.418000Z\"},{\"id\":\"0d84a1f9-0f88-4c6f-ba07-d78d9071468c\",\"name\":\"Cabo
+        Verde\",\"short_name\":\"Cabo Verde\",\"iso_code2\":\"CV\",\"iso_code3\":\"CPV\",\"iso_num\":\"0132\",\"valid_from\":\"2021-10-28T09:39:12.423000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:12.423000Z\"},{\"id\":\"f09b270a-55f1-4a7f-9e3b-c2b6af729d59\",\"name\":\"Cambodia\",\"short_name\":\"Cambodia\",\"iso_code2\":\"KH\",\"iso_code3\":\"KHM\",\"iso_num\":\"0116\",\"valid_from\":\"2021-10-28T09:39:12.429000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:12.429000Z\"},{\"id\":\"1ad47281-acbf-4aeb-a8bf-855a70b721e5\",\"name\":\"Cameroon\",\"short_name\":\"Cameroon\",\"iso_code2\":\"CM\",\"iso_code3\":\"CMR\",\"iso_num\":\"0120\",\"valid_from\":\"2021-10-28T09:39:12.434000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:12.434000Z\"},{\"id\":\"1e99c723-4b38-4d7d-be51-15f5ce3fe96d\",\"name\":\"Canada\",\"short_name\":\"Canada\",\"iso_code2\":\"CA\",\"iso_code3\":\"CAN\",\"iso_num\":\"0124\",\"valid_from\":\"2021-10-28T09:39:12.440000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:12.440000Z\"},{\"id\":\"cfd32214-7b01-4393-8f08-e7a0562b39e9\",\"name\":\"Cayman
+        Islands\",\"short_name\":\"Cayman Islands\",\"iso_code2\":\"KY\",\"iso_code3\":\"CYM\",\"iso_num\":\"0136\",\"valid_from\":\"2021-10-28T09:39:12.445000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:12.445000Z\"},{\"id\":\"b64a5652-5d14-4bfd-8a1d-be424256afde\",\"name\":\"Central
+        African Republic\",\"short_name\":\"Central African Republic\",\"iso_code2\":\"CF\",\"iso_code3\":\"CAF\",\"iso_num\":\"0140\",\"valid_from\":\"2021-10-28T09:39:12.451000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:12.451000Z\"},{\"id\":\"fd333c5f-5048-4040-8532-75299b5f2b82\",\"name\":\"Chad\",\"short_name\":\"Chad\",\"iso_code2\":\"TD\",\"iso_code3\":\"TCD\",\"iso_num\":\"0148\",\"valid_from\":\"2021-10-28T09:39:12.456000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:12.456000Z\"},{\"id\":\"77b69afe-0671-48c8-9bec-65322e39404e\",\"name\":\"Chile\",\"short_name\":\"Chile\",\"iso_code2\":\"CL\",\"iso_code3\":\"CHL\",\"iso_num\":\"0152\",\"valid_from\":\"2021-10-28T09:39:12.466000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:12.466000Z\"},{\"id\":\"9eaddaa6-a48c-4651-9e40-f596583b9ae8\",\"name\":\"China\",\"short_name\":\"China\",\"iso_code2\":\"CN\",\"iso_code3\":\"CHN\",\"iso_num\":\"0156\",\"valid_from\":\"2021-10-28T09:39:12.472000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:12.472000Z\"},{\"id\":\"87a74ab2-0e7e-45b1-b1ce-b7fa6998219e\",\"name\":\"Christmas
+        Island\",\"short_name\":\"Christmas Island\",\"iso_code2\":\"CX\",\"iso_code3\":\"CXR\",\"iso_num\":\"0162\",\"valid_from\":\"2021-10-28T09:39:12.478000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:12.478000Z\"},{\"id\":\"edb539d1-60fe-492c-bbfa-898319e357e1\",\"name\":\"Cocos
+        (Keeling) Islands\",\"short_name\":\"Cocos (Keeling) Islands\",\"iso_code2\":\"CC\",\"iso_code3\":\"CCK\",\"iso_num\":\"0166\",\"valid_from\":\"2021-10-28T09:39:12.484000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:12.484000Z\"},{\"id\":\"51c5c5a2-0d9b-4048-abbc-25fc8c8ffc69\",\"name\":\"Colombia\",\"short_name\":\"Colombia\",\"iso_code2\":\"CO\",\"iso_code3\":\"COL\",\"iso_num\":\"0170\",\"valid_from\":\"2021-10-28T09:39:12.490000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:12.490000Z\"},{\"id\":\"6e25e5a1-0452-4b3e-9720-9bd0cb21f21d\",\"name\":\"Comoros\",\"short_name\":\"Comoros\",\"iso_code2\":\"KM\",\"iso_code3\":\"COM\",\"iso_num\":\"0174\",\"valid_from\":\"2021-10-28T09:39:12.496000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:12.496000Z\"}]}"
+    headers:
+      Allow:
+      - GET, HEAD, OPTIONS
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '12590'
+      Content-Security-Policy-Report-Only:
+      - 'manifest-src ''self''; frame-ancestors ''none''; img-src ''self'' data: cdn.datatables.net
+        map1a.vis.earthdata.nasa.gov map1b.vis.earthdata.nasa.gov map1c.vis.earthdata.nasa.gov;
+        style-src ''self'' ''unsafe-inline'' ''unsafe-eval'' fonts.googleapis.com
+        cdn.jsdelivr.net cdnjs.cloudflare.com maxcdn.bootstrapcdn.com unpkg.com; font-src
+        ''self'' data: fonts.gstatic.com maxcdn.bootstrapcdn.com; default-src ''self'';
+        media-src ''self''; script-src ''self'' ''unsafe-inline'' ''unsafe-eval''
+        js-agent.newrelic.com cdn.jsdelivr.net cdnjs.cloudflare.com unpkg.com; connect-src
+        sentry.io gov-bam.nr-data.net cdn.jsdelivr.net'
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 04 Dec 2024 05:00:12 GMT
+      Referrer-Policy:
+      - same-origin
+      Server:
+      - gunicorn
+      Vary:
+      - Accept, Cookie, Origin
+      X-Content-Type-Options:
+      - nosniff
+      X-Hope-Backend-Version:
+      - None
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.32.3
+    method: GET
+    uri: http://dev-hope.unitst.org/api/rest/lookups/country/?limit=50&offset=50
+  response:
+    body:
+      string: "<html>\r\n<head><title>301 Moved Permanently</title></head>\r\n<body>\r\n<center><h1>301
+        Moved Permanently</h1></center>\r\n<hr><center>Microsoft-Azure-Application-Gateway/v2</center>\r\n</body>\r\n</html>\r\n"
+    headers:
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '195'
+      Content-Type:
+      - text/html
+      Date:
+      - Wed, 04 Dec 2024 05:00:12 GMT
+      Location:
+      - https://dev-hope.unitst.org/api/rest/lookups/country/?limit=50&offset=50
+      Server:
+      - Microsoft-Azure-Application-Gateway/v2
+    status:
+      code: 301
+      message: Moved Permanently
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.32.3
+    method: GET
+    uri: https://dev-hope.unitst.org/api/rest/lookups/country/?limit=50&offset=50
+  response:
+    body:
+      string: "{\"count\":250,\"next\":\"http://dev-hope.unitst.org/api/rest/lookups/country/?limit=50&offset=100\",\"previous\":\"http://dev-hope.unitst.org/api/rest/lookups/country/?limit=50\",\"results\":[{\"id\":\"62625ad9-6c81-497d-853c-23495f599059\",\"name\":\"Congo\",\"short_name\":\"Congo\",\"iso_code2\":\"CG\",\"iso_code3\":\"COG\",\"iso_num\":\"0178\",\"valid_from\":\"2021-10-28T09:39:12.503000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:12.503000Z\"},{\"id\":\"75f33019-3ed1-4a8a-bb74-83919c4fc205\",\"name\":\"Congo
+        (the Democratic Republic of the)\",\"short_name\":\"DRC\",\"iso_code2\":\"CD\",\"iso_code3\":\"COD\",\"iso_num\":\"0180\",\"valid_from\":\"2021-10-28T09:39:12.510000Z\",\"valid_until\":null,\"updated_at\":\"2022-06-24T09:21:09.553000Z\"},{\"id\":\"40b9a005-c79a-4172-b645-53621184f06e\",\"name\":\"Cook
+        Islands\",\"short_name\":\"Cook Islands\",\"iso_code2\":\"CK\",\"iso_code3\":\"COK\",\"iso_num\":\"0184\",\"valid_from\":\"2021-10-28T09:39:12.516000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:12.516000Z\"},{\"id\":\"33fded26-ef8a-4292-ac19-91dcb86dd07f\",\"name\":\"Costa
+        Rica\",\"short_name\":\"Costa Rica\",\"iso_code2\":\"CR\",\"iso_code3\":\"CRI\",\"iso_num\":\"0188\",\"valid_from\":\"2021-10-28T09:39:12.522000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:12.522000Z\"},{\"id\":\"390b52c4-ae7e-4878-aebd-1cf0f23e6681\",\"name\":\"C\xF4te
+        d'Ivoire\",\"short_name\":\"Cote D'Ivoire\",\"iso_code2\":\"CI\",\"iso_code3\":\"CIV\",\"iso_num\":\"0384\",\"valid_from\":\"2021-10-28T09:39:12.528000Z\",\"valid_until\":null,\"updated_at\":\"2022-06-24T09:21:09.536000Z\"},{\"id\":\"7f5ba6e0-7afb-475c-99a1-be67b019fffb\",\"name\":\"Croatia\",\"short_name\":\"Croatia\",\"iso_code2\":\"HR\",\"iso_code3\":\"HRV\",\"iso_num\":\"0191\",\"valid_from\":\"2021-10-28T09:39:12.533000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:12.533000Z\"},{\"id\":\"8006d3cd-1950-4438-a957-c5a0fdaa08c1\",\"name\":\"Cuba\",\"short_name\":\"Cuba\",\"iso_code2\":\"CU\",\"iso_code3\":\"CUB\",\"iso_num\":\"0192\",\"valid_from\":\"2021-10-28T09:39:12.538000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:12.538000Z\"},{\"id\":\"282205e0-8446-44bc-a6e8-dc79a0f65c37\",\"name\":\"Cura\xE7ao\",\"short_name\":\"Cura\xE7ao\",\"iso_code2\":\"CW\",\"iso_code3\":\"CUW\",\"iso_num\":\"0531\",\"valid_from\":\"2021-10-28T09:39:12.543000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:12.543000Z\"},{\"id\":\"12dfb2ad-4683-4bbc-b55a-6588e351ffe7\",\"name\":\"Cyprus\",\"short_name\":\"Cyprus\",\"iso_code2\":\"CY\",\"iso_code3\":\"CYP\",\"iso_num\":\"0196\",\"valid_from\":\"2021-10-28T09:39:12.549000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:12.549000Z\"},{\"id\":\"d1516f6d-1be7-4c86-a181-2f93b93da931\",\"name\":\"Czechia\",\"short_name\":\"Czechia\",\"iso_code2\":\"CZ\",\"iso_code3\":\"CZE\",\"iso_num\":\"0203\",\"valid_from\":\"2021-10-28T09:39:12.555000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:12.555000Z\"},{\"id\":\"cf646c13-ff3c-4dc1-ab14-28d5d6bf8746\",\"name\":\"Denmark\",\"short_name\":\"Denmark\",\"iso_code2\":\"DK\",\"iso_code3\":\"DNK\",\"iso_num\":\"0208\",\"valid_from\":\"2021-10-28T09:39:12.565000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:12.565000Z\"},{\"id\":\"a07fb9a0-92a5-4641-8b4e-a9f0f34b0023\",\"name\":\"Djibouti\",\"short_name\":\"Djibouti\",\"iso_code2\":\"DJ\",\"iso_code3\":\"DJI\",\"iso_num\":\"0262\",\"valid_from\":\"2021-10-28T09:39:12.570000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:12.570000Z\"},{\"id\":\"85a5ce1e-97ab-42c0-bd50-1f6edc0f06be\",\"name\":\"Dominica\",\"short_name\":\"Dominica\",\"iso_code2\":\"DM\",\"iso_code3\":\"DMA\",\"iso_num\":\"0212\",\"valid_from\":\"2021-10-28T09:39:12.576000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:12.576000Z\"},{\"id\":\"66590a67-93dc-4c72-b6bb-42fc644e5b7e\",\"name\":\"Dominican
+        Republic\",\"short_name\":\"Dominican Republic\",\"iso_code2\":\"DO\",\"iso_code3\":\"DOM\",\"iso_num\":\"0214\",\"valid_from\":\"2021-10-28T09:39:12.581000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:12.581000Z\"},{\"id\":\"c58b99fc-f79c-4332-9b43-b4434c059641\",\"name\":\"Ecuador\",\"short_name\":\"Ecuador\",\"iso_code2\":\"EC\",\"iso_code3\":\"ECU\",\"iso_num\":\"0218\",\"valid_from\":\"2021-10-28T09:39:12.586000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:12.586000Z\"},{\"id\":\"c48fcc03-8745-4f77-89d2-f684768b7160\",\"name\":\"Egypt\",\"short_name\":\"Egypt\",\"iso_code2\":\"EG\",\"iso_code3\":\"EGY\",\"iso_num\":\"0818\",\"valid_from\":\"2021-10-28T09:39:12.595000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:12.595000Z\"},{\"id\":\"052254c9-e821-4b8a-b7f5-4b7087397278\",\"name\":\"El
+        Salvador\",\"short_name\":\"El Salvador\",\"iso_code2\":\"SV\",\"iso_code3\":\"SLV\",\"iso_num\":\"0222\",\"valid_from\":\"2021-10-28T09:39:12.601000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:12.601000Z\"},{\"id\":\"2fe0b52f-50eb-4bbe-a9ea-88ed2f94f304\",\"name\":\"Equatorial
+        Guinea\",\"short_name\":\"Equatorial Guinea\",\"iso_code2\":\"GQ\",\"iso_code3\":\"GNQ\",\"iso_num\":\"0226\",\"valid_from\":\"2021-10-28T09:39:12.606000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:12.606000Z\"},{\"id\":\"1070a516-9b5b-4628-a861-abbcf6bb6c72\",\"name\":\"Eritrea\",\"short_name\":\"Eritrea\",\"iso_code2\":\"ER\",\"iso_code3\":\"ERI\",\"iso_num\":\"0232\",\"valid_from\":\"2021-10-28T09:39:12.611000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:12.611000Z\"},{\"id\":\"4f0a79b0-e16f-42b0-bada-ffaf2df13f3f\",\"name\":\"Estonia\",\"short_name\":\"Estonia\",\"iso_code2\":\"EE\",\"iso_code3\":\"EST\",\"iso_num\":\"0233\",\"valid_from\":\"2021-10-28T09:39:12.616000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:12.616000Z\"},{\"id\":\"5c6ada1f-953d-4e1c-848a-4ba09e6217da\",\"name\":\"Eswatini\",\"short_name\":\"Eswatini\",\"iso_code2\":\"SZ\",\"iso_code3\":\"SWZ\",\"iso_num\":\"0748\",\"valid_from\":\"2021-10-28T09:39:12.621000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:12.621000Z\"},{\"id\":\"b0737bbd-358a-4fec-af55-278c5e2c0389\",\"name\":\"Ethiopia\",\"short_name\":\"Ethiopia\",\"iso_code2\":\"ET\",\"iso_code3\":\"ETH\",\"iso_num\":\"0231\",\"valid_from\":\"2021-10-28T09:39:12.626000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:12.626000Z\"},{\"id\":\"7eb7864e-1ea0-4fff-91f0-56b6b89bfa77\",\"name\":\"Falkland
+        Islands (Malvinas)\",\"short_name\":\"Falkland Islands (Malvinas)\",\"iso_code2\":\"FK\",\"iso_code3\":\"FLK\",\"iso_num\":\"0238\",\"valid_from\":\"2021-10-28T09:39:12.631000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:12.631000Z\"},{\"id\":\"5b6c9f4b-fbad-4991-9fe0-3d08187186bc\",\"name\":\"Faroe
+        Islands\",\"short_name\":\"Faroe Islands\",\"iso_code2\":\"FO\",\"iso_code3\":\"FRO\",\"iso_num\":\"0234\",\"valid_from\":\"2021-10-28T09:39:12.636000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:12.636000Z\"},{\"id\":\"26fead03-3c1f-4437-9762-47b24103b06d\",\"name\":\"Fiji\",\"short_name\":\"Fiji\",\"iso_code2\":\"FJ\",\"iso_code3\":\"FJI\",\"iso_num\":\"0242\",\"valid_from\":\"2021-10-28T09:39:12.641000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:12.641000Z\"},{\"id\":\"6a3e83bd-c42a-4dc1-b0ea-85868c263bf6\",\"name\":\"Finland\",\"short_name\":\"Finland\",\"iso_code2\":\"FI\",\"iso_code3\":\"FIN\",\"iso_num\":\"0246\",\"valid_from\":\"2021-10-28T09:39:12.646000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:12.646000Z\"},{\"id\":\"8c8579ed-479a-40ad-900a-16a045e0131a\",\"name\":\"France\",\"short_name\":\"France\",\"iso_code2\":\"FR\",\"iso_code3\":\"FRA\",\"iso_num\":\"0250\",\"valid_from\":\"2021-10-28T09:39:12.651000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:12.651000Z\"},{\"id\":\"ce6f9504-58c5-4351-a547-2aedef83c8a5\",\"name\":\"French
+        Guiana\",\"short_name\":\"French Guiana\",\"iso_code2\":\"GF\",\"iso_code3\":\"GUF\",\"iso_num\":\"0254\",\"valid_from\":\"2021-10-28T09:39:12.656000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:12.656000Z\"},{\"id\":\"2aaf9b9c-7184-47be-be49-1c74a31e4357\",\"name\":\"French
+        Polynesia\",\"short_name\":\"French Polynesia\",\"iso_code2\":\"PF\",\"iso_code3\":\"PYF\",\"iso_num\":\"0258\",\"valid_from\":\"2021-10-28T09:39:12.661000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:12.661000Z\"},{\"id\":\"38528b7a-5e66-42e0-b4d3-de64c6fdd5e0\",\"name\":\"French
+        Southern Territories\",\"short_name\":\"French Southern Territories\",\"iso_code2\":\"TF\",\"iso_code3\":\"ATF\",\"iso_num\":\"0260\",\"valid_from\":\"2021-10-28T09:39:12.666000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:12.666000Z\"},{\"id\":\"d9576f13-e99d-4dec-b198-65382102b5ff\",\"name\":\"Gabon\",\"short_name\":\"Gabon\",\"iso_code2\":\"GA\",\"iso_code3\":\"GAB\",\"iso_num\":\"0266\",\"valid_from\":\"2021-10-28T09:39:12.672000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:12.672000Z\"},{\"id\":\"a337ac6f-67ca-4932-8444-4fd2e740fbff\",\"name\":\"Gambia\",\"short_name\":\"Gambia\",\"iso_code2\":\"GM\",\"iso_code3\":\"GMB\",\"iso_num\":\"0270\",\"valid_from\":\"2021-10-28T09:39:12.677000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:12.677000Z\"},{\"id\":\"475a0759-9820-45ec-8f86-40a3d9767040\",\"name\":\"Georgia\",\"short_name\":\"Georgia\",\"iso_code2\":\"GE\",\"iso_code3\":\"GEO\",\"iso_num\":\"0268\",\"valid_from\":\"2021-10-28T09:39:12.682000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:12.682000Z\"},{\"id\":\"86a1ba2a-e089-4291-850c-ffbd4f476d5c\",\"name\":\"Germany\",\"short_name\":\"Germany\",\"iso_code2\":\"DE\",\"iso_code3\":\"DEU\",\"iso_num\":\"0276\",\"valid_from\":\"2021-10-28T09:39:12.687000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:12.687000Z\"},{\"id\":\"0188bfe8-e4f3-4294-99f5-d2d133f202e5\",\"name\":\"Ghana\",\"short_name\":\"Ghana\",\"iso_code2\":\"GH\",\"iso_code3\":\"GHA\",\"iso_num\":\"0288\",\"valid_from\":\"2021-10-28T09:39:12.692000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:12.692000Z\"},{\"id\":\"f6b49b30-4507-4796-8e4c-50933e8628fb\",\"name\":\"Gibraltar\",\"short_name\":\"Gibraltar\",\"iso_code2\":\"GI\",\"iso_code3\":\"GIB\",\"iso_num\":\"0292\",\"valid_from\":\"2021-10-28T09:39:12.697000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:12.697000Z\"},{\"id\":\"176523ae-5982-4071-8513-d7ed380838c9\",\"name\":\"Greece\",\"short_name\":\"Greece\",\"iso_code2\":\"GR\",\"iso_code3\":\"GRC\",\"iso_num\":\"0300\",\"valid_from\":\"2021-10-28T09:39:12.702000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:12.702000Z\"},{\"id\":\"6c1e194d-578a-46ee-aea4-39df94715c96\",\"name\":\"Greenland\",\"short_name\":\"Greenland\",\"iso_code2\":\"GL\",\"iso_code3\":\"GRL\",\"iso_num\":\"0304\",\"valid_from\":\"2021-10-28T09:39:12.707000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:12.707000Z\"},{\"id\":\"eb379e28-09b5-4a1d-9c7f-975e9ffbd208\",\"name\":\"Grenada\",\"short_name\":\"Grenada\",\"iso_code2\":\"GD\",\"iso_code3\":\"GRD\",\"iso_num\":\"0308\",\"valid_from\":\"2021-10-28T09:39:12.712000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:12.712000Z\"},{\"id\":\"3207a501-995e-4717-97af-4d4f1d953174\",\"name\":\"Guadeloupe\",\"short_name\":\"Guadeloupe\",\"iso_code2\":\"GP\",\"iso_code3\":\"GLP\",\"iso_num\":\"0312\",\"valid_from\":\"2021-10-28T09:39:12.719000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:12.719000Z\"},{\"id\":\"09b6b41c-81de-4bea-ba71-c6e74d8ee4cc\",\"name\":\"Guam\",\"short_name\":\"Guam\",\"iso_code2\":\"GU\",\"iso_code3\":\"GUM\",\"iso_num\":\"0316\",\"valid_from\":\"2021-10-28T09:39:12.724000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:12.724000Z\"},{\"id\":\"b6fdfe0f-6723-4b65-9345-afb00adf1f49\",\"name\":\"Guatemala\",\"short_name\":\"Guatemala\",\"iso_code2\":\"GT\",\"iso_code3\":\"GTM\",\"iso_num\":\"0320\",\"valid_from\":\"2021-10-28T09:39:12.729000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:12.729000Z\"},{\"id\":\"a44713b8-3b6e-4344-885c-da1eca8c0045\",\"name\":\"Guernsey\",\"short_name\":\"Guernsey\",\"iso_code2\":\"GG\",\"iso_code3\":\"GGY\",\"iso_num\":\"0831\",\"valid_from\":\"2021-10-28T09:39:12.734000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:12.734000Z\"},{\"id\":\"16aedef9-47c2-44ea-95f0-8648a52dad7b\",\"name\":\"Guinea\",\"short_name\":\"Guinea\",\"iso_code2\":\"GN\",\"iso_code3\":\"GIN\",\"iso_num\":\"0324\",\"valid_from\":\"2021-10-28T09:39:12.740000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:12.740000Z\"},{\"id\":\"b9209084-524e-4d77-afe3-8ddfd0d9d962\",\"name\":\"Guinea-Bissau\",\"short_name\":\"Guinea
+        Bissau\",\"iso_code2\":\"GW\",\"iso_code3\":\"GNB\",\"iso_num\":\"0624\",\"valid_from\":\"2021-10-28T09:39:12.745000Z\",\"valid_until\":null,\"updated_at\":\"2022-06-24T09:21:09.550000Z\"},{\"id\":\"83244cfa-7e68-4ee2-aa68-12a8d8e73cc7\",\"name\":\"Guyana\",\"short_name\":\"Guyana\",\"iso_code2\":\"GY\",\"iso_code3\":\"GUY\",\"iso_num\":\"0328\",\"valid_from\":\"2021-10-28T09:39:12.750000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:12.750000Z\"},{\"id\":\"7caed999-4769-4d70-bc05-c21160f90461\",\"name\":\"Haiti\",\"short_name\":\"Haiti\",\"iso_code2\":\"HT\",\"iso_code3\":\"HTI\",\"iso_num\":\"0332\",\"valid_from\":\"2021-10-28T09:39:12.755000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:12.755000Z\"},{\"id\":\"c53db685-76a9-4d97-825a-e7be390a9fcf\",\"name\":\"Heard
+        Island and McDonald Islands\",\"short_name\":\"Heard Island and McDonald Islands\",\"iso_code2\":\"HM\",\"iso_code3\":\"HMD\",\"iso_num\":\"0334\",\"valid_from\":\"2021-10-28T09:39:12.760000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:12.760000Z\"},{\"id\":\"e2962f3e-f8d9-4e3d-aa4a-1f5984d19f6a\",\"name\":\"Holy
+        See\",\"short_name\":\"Holy See\",\"iso_code2\":\"VA\",\"iso_code3\":\"VAT\",\"iso_num\":\"0336\",\"valid_from\":\"2021-10-28T09:39:12.765000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:12.764000Z\"},{\"id\":\"e85265a1-3f21-412a-b075-a0dda80633c7\",\"name\":\"Honduras\",\"short_name\":\"Honduras\",\"iso_code2\":\"HN\",\"iso_code3\":\"HND\",\"iso_num\":\"0340\",\"valid_from\":\"2021-10-28T09:39:12.769000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:12.769000Z\"}]}"
+    headers:
+      Allow:
+      - GET, HEAD, OPTIONS
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '12608'
+      Content-Security-Policy-Report-Only:
+      - 'connect-src sentry.io gov-bam.nr-data.net cdn.jsdelivr.net; media-src ''self'';
+        default-src ''self''; font-src ''self'' data: fonts.gstatic.com maxcdn.bootstrapcdn.com;
+        style-src ''self'' ''unsafe-inline'' ''unsafe-eval'' fonts.googleapis.com
+        cdn.jsdelivr.net cdnjs.cloudflare.com maxcdn.bootstrapcdn.com unpkg.com; frame-ancestors
+        ''none''; script-src ''self'' ''unsafe-inline'' ''unsafe-eval'' js-agent.newrelic.com
+        cdn.jsdelivr.net cdnjs.cloudflare.com unpkg.com; manifest-src ''self''; img-src
+        ''self'' data: cdn.datatables.net map1a.vis.earthdata.nasa.gov map1b.vis.earthdata.nasa.gov
+        map1c.vis.earthdata.nasa.gov'
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 04 Dec 2024 05:00:14 GMT
+      Referrer-Policy:
+      - same-origin
+      Server:
+      - gunicorn
+      Vary:
+      - Accept, Cookie, Origin
+      X-Content-Type-Options:
+      - nosniff
+      X-Hope-Backend-Version:
+      - None
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.32.3
+    method: GET
+    uri: http://dev-hope.unitst.org/api/rest/lookups/country/?limit=50&offset=100
+  response:
+    body:
+      string: "<html>\r\n<head><title>301 Moved Permanently</title></head>\r\n<body>\r\n<center><h1>301
+        Moved Permanently</h1></center>\r\n<hr><center>Microsoft-Azure-Application-Gateway/v2</center>\r\n</body>\r\n</html>\r\n"
+    headers:
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '195'
+      Content-Type:
+      - text/html
+      Date:
+      - Wed, 04 Dec 2024 05:00:15 GMT
+      Location:
+      - https://dev-hope.unitst.org/api/rest/lookups/country/?limit=50&offset=100
+      Server:
+      - Microsoft-Azure-Application-Gateway/v2
+    status:
+      code: 301
+      message: Moved Permanently
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.32.3
+    method: GET
+    uri: https://dev-hope.unitst.org/api/rest/lookups/country/?limit=50&offset=100
+  response:
+    body:
+      string: '{"count":250,"next":"http://dev-hope.unitst.org/api/rest/lookups/country/?limit=50&offset=150","previous":"http://dev-hope.unitst.org/api/rest/lookups/country/?limit=50&offset=50","results":[{"id":"7894670e-e717-42fd-88f9-8de55d7b9791","name":"Hong
+        Kong","short_name":"Hong Kong","iso_code2":"HK","iso_code3":"HKG","iso_num":"0344","valid_from":"2021-10-28T09:39:12.775000Z","valid_until":null,"updated_at":"2021-10-28T09:39:12.775000Z"},{"id":"4a5b8962-1ea1-4bee-befd-ab4d6874bc30","name":"Hungary","short_name":"Hungary","iso_code2":"HU","iso_code3":"HUN","iso_num":"0348","valid_from":"2021-10-28T09:39:12.780000Z","valid_until":null,"updated_at":"2021-10-28T09:39:12.780000Z"},{"id":"69a38490-f49d-41e5-908b-aaf4e12ad860","name":"Iceland","short_name":"Iceland","iso_code2":"IS","iso_code3":"ISL","iso_num":"0352","valid_from":"2021-10-28T09:39:12.784000Z","valid_until":null,"updated_at":"2021-10-28T09:39:12.784000Z"},{"id":"cbad3a9a-f005-42c6-93cd-bbcf120bc83e","name":"India","short_name":"India","iso_code2":"IN","iso_code3":"IND","iso_num":"0356","valid_from":"2021-10-28T09:39:12.789000Z","valid_until":null,"updated_at":"2021-10-28T09:39:12.789000Z"},{"id":"513e9f6f-5dff-4306-9f1b-fa36c4e6a6fa","name":"Indonesia","short_name":"Indonesia","iso_code2":"ID","iso_code3":"IDN","iso_num":"0360","valid_from":"2021-10-28T09:39:12.794000Z","valid_until":null,"updated_at":"2021-10-28T09:39:12.794000Z"},{"id":"624c4056-b907-4d56-809d-7ef94bc69065","name":"Iran","short_name":"Iran","iso_code2":"IR","iso_code3":"IRN","iso_num":"0364","valid_from":"2021-10-28T09:39:12.799000Z","valid_until":null,"updated_at":"2021-10-28T09:39:12.799000Z"},{"id":"80e1d943-fb7f-4d3c-8819-aa0df78dd462","name":"Iraq","short_name":"Iraq","iso_code2":"IQ","iso_code3":"IRQ","iso_num":"0368","valid_from":"2021-10-28T09:39:12.804000Z","valid_until":null,"updated_at":"2021-10-28T09:39:12.804000Z"},{"id":"2fb44f6d-8631-4191-96b2-c9b91404ade6","name":"Ireland","short_name":"Ireland","iso_code2":"IE","iso_code3":"IRL","iso_num":"0372","valid_from":"2021-10-28T09:39:12.809000Z","valid_until":null,"updated_at":"2021-10-28T09:39:12.809000Z"},{"id":"2fc6c5cf-edab-49a2-b275-38b14ac50866","name":"Isle
+        of Man","short_name":"Isle of Man","iso_code2":"IM","iso_code3":"IMN","iso_num":"0833","valid_from":"2021-10-28T09:39:12.814000Z","valid_until":null,"updated_at":"2021-10-28T09:39:12.814000Z"},{"id":"93d40e54-7f80-4505-8879-b59a14857e31","name":"Israel","short_name":"Israel","iso_code2":"IL","iso_code3":"ISR","iso_num":"0376","valid_from":"2021-10-28T09:39:12.819000Z","valid_until":null,"updated_at":"2021-10-28T09:39:12.819000Z"},{"id":"ce26cec9-f833-4c53-8e43-d53646aedd50","name":"Italy","short_name":"Italy","iso_code2":"IT","iso_code3":"ITA","iso_num":"0380","valid_from":"2021-10-28T09:39:12.824000Z","valid_until":null,"updated_at":"2021-10-28T09:39:12.824000Z"},{"id":"f57f5020-e8dd-4e24-af5b-9fd9cebc454b","name":"Jamaica","short_name":"Jamaica","iso_code2":"JM","iso_code3":"JAM","iso_num":"0388","valid_from":"2021-10-28T09:39:12.829000Z","valid_until":null,"updated_at":"2021-10-28T09:39:12.829000Z"},{"id":"0507e0ef-2b11-4142-9d8a-829fa67feb08","name":"Japan","short_name":"Japan","iso_code2":"JP","iso_code3":"JPN","iso_num":"0392","valid_from":"2021-10-28T09:39:12.834000Z","valid_until":null,"updated_at":"2021-10-28T09:39:12.834000Z"},{"id":"f28ea316-15d0-4eb7-9b5c-e7893d577c12","name":"Jersey","short_name":"Jersey","iso_code2":"JE","iso_code3":"JEY","iso_num":"0832","valid_from":"2021-10-28T09:39:12.839000Z","valid_until":null,"updated_at":"2021-10-28T09:39:12.839000Z"},{"id":"161339ad-713e-494c-be53-372bc0a282ec","name":"Jordan","short_name":"Jordan","iso_code2":"JO","iso_code3":"JOR","iso_num":"0400","valid_from":"2021-10-28T09:39:12.845000Z","valid_until":null,"updated_at":"2021-10-28T09:39:12.845000Z"},{"id":"40b20ff3-7311-4491-9406-4bade9ffc8b5","name":"Kazakhstan","short_name":"Kazakhstan","iso_code2":"KZ","iso_code3":"KAZ","iso_num":"0398","valid_from":"2021-10-28T09:39:12.850000Z","valid_until":null,"updated_at":"2021-10-28T09:39:12.850000Z"},{"id":"a3680b83-c178-486a-9251-396098c635ed","name":"Kenya","short_name":"Kenya","iso_code2":"KE","iso_code3":"KEN","iso_num":"0404","valid_from":"2021-10-28T09:39:12.855000Z","valid_until":null,"updated_at":"2021-10-28T09:39:12.855000Z"},{"id":"84bdce28-41e8-4868-86f4-3658b630582a","name":"Kiribati","short_name":"Kiribati","iso_code2":"KI","iso_code3":"KIR","iso_num":"0296","valid_from":"2021-10-28T09:39:12.861000Z","valid_until":null,"updated_at":"2021-10-28T09:39:12.861000Z"},{"id":"88f6f9b6-34b2-4a4d-91bb-bc39909baf2f","name":"Kuwait","short_name":"Kuwait","iso_code2":"KW","iso_code3":"KWT","iso_num":"0414","valid_from":"2021-10-28T09:39:12.866000Z","valid_until":null,"updated_at":"2021-10-28T09:39:12.866000Z"},{"id":"f1ece73e-41de-4a5b-a9ee-934357429ab8","name":"Kyrgyzstan","short_name":"Kyrgyzstan","iso_code2":"KG","iso_code3":"KGZ","iso_num":"0417","valid_from":"2021-10-28T09:39:12.871000Z","valid_until":null,"updated_at":"2021-10-28T09:39:12.871000Z"},{"id":"dbae3c6b-82ed-403a-bfc8-38242f7953cf","name":"Laos","short_name":"Lao
+        PDR","iso_code2":"LA","iso_code3":"LAO","iso_num":"0418","valid_from":"2021-10-28T09:39:12.877000Z","valid_until":null,"updated_at":"2022-06-24T09:21:09.540000Z"},{"id":"cc6a1db6-a1c4-44f8-a6ef-e67bb0d0fba8","name":"Latvia","short_name":"Latvia","iso_code2":"LV","iso_code3":"LVA","iso_num":"0428","valid_from":"2021-10-28T09:39:12.882000Z","valid_until":null,"updated_at":"2021-10-28T09:39:12.882000Z"},{"id":"22079b4c-e0aa-4c84-8b09-d3e36b1a855b","name":"Lebanon","short_name":"Lebanon","iso_code2":"LB","iso_code3":"LBN","iso_num":"0422","valid_from":"2021-10-28T09:39:12.887000Z","valid_until":null,"updated_at":"2021-10-28T09:39:12.887000Z"},{"id":"971fdfde-8bed-46ab-b197-72efc733dfd3","name":"Lesotho","short_name":"Lesotho","iso_code2":"LS","iso_code3":"LSO","iso_num":"0426","valid_from":"2021-10-28T09:39:12.892000Z","valid_until":null,"updated_at":"2021-10-28T09:39:12.892000Z"},{"id":"f1c5ea44-f238-4558-9a50-38f48addfe68","name":"Liberia","short_name":"Liberia","iso_code2":"LR","iso_code3":"LBR","iso_num":"0430","valid_from":"2021-10-28T09:39:12.897000Z","valid_until":null,"updated_at":"2021-10-28T09:39:12.897000Z"},{"id":"1a96bbd6-c000-4bd0-9c6b-547b79f1b60b","name":"Libya","short_name":"Libya","iso_code2":"LY","iso_code3":"LBY","iso_num":"0434","valid_from":"2021-10-28T09:39:12.903000Z","valid_until":null,"updated_at":"2021-10-28T09:39:12.903000Z"},{"id":"91a44612-f73a-47b9-b130-58e59bba66fe","name":"Liechtenstein","short_name":"Liechtenstein","iso_code2":"LI","iso_code3":"LIE","iso_num":"0438","valid_from":"2021-10-28T09:39:12.909000Z","valid_until":null,"updated_at":"2021-10-28T09:39:12.909000Z"},{"id":"8e78e20e-b582-4ae8-ad12-d5a2f147d9e8","name":"Lithuania","short_name":"Lithuania","iso_code2":"LT","iso_code3":"LTU","iso_num":"0440","valid_from":"2021-10-28T09:39:12.914000Z","valid_until":null,"updated_at":"2021-10-28T09:39:12.914000Z"},{"id":"85d4be80-20e0-4bdf-a22e-636af38b511b","name":"Luxembourg","short_name":"Luxembourg","iso_code2":"LU","iso_code3":"LUX","iso_num":"0442","valid_from":"2021-10-28T09:39:12.920000Z","valid_until":null,"updated_at":"2021-10-28T09:39:12.919000Z"},{"id":"edf43578-bd66-422b-b2a6-f34a66cd0a2a","name":"Macao","short_name":"Macao","iso_code2":"MO","iso_code3":"MAC","iso_num":"0446","valid_from":"2021-10-28T09:39:12.925000Z","valid_until":null,"updated_at":"2021-10-28T09:39:12.925000Z"},{"id":"04cc1fa1-8677-4bd4-9ebf-97988c92857f","name":"Madagascar","short_name":"Madagascar","iso_code2":"MG","iso_code3":"MDG","iso_num":"0450","valid_from":"2021-10-28T09:39:12.930000Z","valid_until":null,"updated_at":"2021-10-28T09:39:12.930000Z"},{"id":"6e3fdb76-e2c6-49e8-bbf0-4665b2df081b","name":"Malawi","short_name":"Malawi","iso_code2":"MW","iso_code3":"MWI","iso_num":"0454","valid_from":"2021-10-28T09:39:12.935000Z","valid_until":null,"updated_at":"2021-10-28T09:39:12.935000Z"},{"id":"6a01cf20-64aa-49a8-b1b4-9a18adbcb91f","name":"Malaysia","short_name":"Malaysia","iso_code2":"MY","iso_code3":"MYS","iso_num":"0458","valid_from":"2021-10-28T09:39:12.940000Z","valid_until":null,"updated_at":"2021-10-28T09:39:12.940000Z"},{"id":"e37e4460-68b5-4b7c-a1cc-6707e5aa2312","name":"Maldives","short_name":"Maldives","iso_code2":"MV","iso_code3":"MDV","iso_num":"0462","valid_from":"2021-10-28T09:39:12.946000Z","valid_until":null,"updated_at":"2021-10-28T09:39:12.946000Z"},{"id":"23feb9e5-fde8-414a-a033-8f61ba61ae6f","name":"Mali","short_name":"Mali","iso_code2":"ML","iso_code3":"MLI","iso_num":"0466","valid_from":"2021-10-28T09:39:12.951000Z","valid_until":null,"updated_at":"2021-10-28T09:39:12.951000Z"},{"id":"0df9f6e3-dac0-4596-b8eb-224ce6310b55","name":"Malta","short_name":"Malta","iso_code2":"MT","iso_code3":"MLT","iso_num":"0470","valid_from":"2021-10-28T09:39:12.957000Z","valid_until":null,"updated_at":"2021-10-28T09:39:12.956000Z"},{"id":"a3b4c4c7-c7ec-41fe-8e29-a3c46f72f024","name":"Marshall
+        Islands","short_name":"Marshall Islands","iso_code2":"MH","iso_code3":"MHL","iso_num":"0584","valid_from":"2021-10-28T09:39:12.961000Z","valid_until":null,"updated_at":"2021-10-28T09:39:12.961000Z"},{"id":"2257103a-416a-4450-ac6e-88f0b7cf6b3e","name":"Martinique","short_name":"Martinique","iso_code2":"MQ","iso_code3":"MTQ","iso_num":"0474","valid_from":"2021-10-28T09:39:12.966000Z","valid_until":null,"updated_at":"2021-10-28T09:39:12.966000Z"},{"id":"1feb87b6-bb10-4e68-ba11-d035cdf4663b","name":"Mauritania","short_name":"Mauritania","iso_code2":"MR","iso_code3":"MRT","iso_num":"0478","valid_from":"2021-10-28T09:39:12.972000Z","valid_until":null,"updated_at":"2021-10-28T09:39:12.972000Z"},{"id":"075f5c01-5510-4783-8219-f1462d61c42c","name":"Mauritius","short_name":"Mauritius","iso_code2":"MU","iso_code3":"MUS","iso_num":"0480","valid_from":"2021-10-28T09:39:12.977000Z","valid_until":null,"updated_at":"2021-10-28T09:39:12.977000Z"},{"id":"0d983966-955c-4d0f-b4bb-d284e783c195","name":"Mayotte","short_name":"Mayotte","iso_code2":"YT","iso_code3":"MYT","iso_num":"0175","valid_from":"2021-10-28T09:39:12.982000Z","valid_until":null,"updated_at":"2021-10-28T09:39:12.982000Z"},{"id":"c2567027-5b7f-4d2f-aef0-c8929dc75f96","name":"Mexico","short_name":"Mexico","iso_code2":"MX","iso_code3":"MEX","iso_num":"0484","valid_from":"2021-10-28T09:39:12.987000Z","valid_until":null,"updated_at":"2021-10-28T09:39:12.987000Z"},{"id":"b228b4fb-4a3d-48e7-9d5d-9ef4c26dc13e","name":"Micronesia
+        (Federated States of)","short_name":"Micronesia (Federated States of)","iso_code2":"FM","iso_code3":"FSM","iso_num":"0583","valid_from":"2021-10-28T09:39:12.992000Z","valid_until":null,"updated_at":"2021-10-28T09:39:12.992000Z"},{"id":"b3e21032-78c4-4bb8-93aa-84421951bdf6","name":"Moldova","short_name":"Moldova","iso_code2":"MD","iso_code3":"MDA","iso_num":"0498","valid_from":"2021-10-28T09:39:12.997000Z","valid_until":null,"updated_at":"2021-10-28T09:39:12.997000Z"},{"id":"245ef697-cafd-4fea-94b9-fe51f91bf0d3","name":"Monaco","short_name":"Monaco","iso_code2":"MC","iso_code3":"MCO","iso_num":"0492","valid_from":"2021-10-28T09:39:13.002000Z","valid_until":null,"updated_at":"2021-10-28T09:39:13.002000Z"},{"id":"9a5c3f14-58cf-4875-8cde-148c56588bb9","name":"Mongolia","short_name":"Mongolia","iso_code2":"MN","iso_code3":"MNG","iso_num":"0496","valid_from":"2021-10-28T09:39:13.007000Z","valid_until":null,"updated_at":"2021-10-28T09:39:13.007000Z"},{"id":"4c89f7e6-8d39-4883-b788-50c0a2d845d1","name":"Montenegro","short_name":"Republic
+        of Montenegro","iso_code2":"ME","iso_code3":"MNE","iso_num":"0499","valid_from":"2021-10-28T09:39:13.013000Z","valid_until":null,"updated_at":"2022-06-24T09:21:09.548000Z"},{"id":"cbda5853-3141-45bc-b169-62efb9330fcc","name":"Montserrat","short_name":"Montserrat","iso_code2":"MS","iso_code3":"MSR","iso_num":"0500","valid_from":"2021-10-28T09:39:13.018000Z","valid_until":null,"updated_at":"2021-10-28T09:39:13.018000Z"},{"id":"1d222420-6baa-435c-a214-ab123c158f08","name":"Morocco","short_name":"Morocco","iso_code2":"MA","iso_code3":"MAR","iso_num":"0504","valid_from":"2021-10-28T09:39:13.024000Z","valid_until":null,"updated_at":"2021-10-28T09:39:13.023000Z"},{"id":"a61f323f-264e-4c58-98ef-e8109b9822e9","name":"Mozambique","short_name":"Mozambique","iso_code2":"MZ","iso_code3":"MOZ","iso_num":"0508","valid_from":"2021-10-28T09:39:13.029000Z","valid_until":null,"updated_at":"2021-10-28T09:39:13.029000Z"}]}'
+    headers:
+      Allow:
+      - GET, HEAD, OPTIONS
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '12455'
+      Content-Security-Policy-Report-Only:
+      - 'manifest-src ''self''; frame-ancestors ''none''; img-src ''self'' data: cdn.datatables.net
+        map1a.vis.earthdata.nasa.gov map1b.vis.earthdata.nasa.gov map1c.vis.earthdata.nasa.gov;
+        style-src ''self'' ''unsafe-inline'' ''unsafe-eval'' fonts.googleapis.com
+        cdn.jsdelivr.net cdnjs.cloudflare.com maxcdn.bootstrapcdn.com unpkg.com; font-src
+        ''self'' data: fonts.gstatic.com maxcdn.bootstrapcdn.com; default-src ''self'';
+        media-src ''self''; script-src ''self'' ''unsafe-inline'' ''unsafe-eval''
+        js-agent.newrelic.com cdn.jsdelivr.net cdnjs.cloudflare.com unpkg.com; connect-src
+        sentry.io gov-bam.nr-data.net cdn.jsdelivr.net'
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 04 Dec 2024 05:00:16 GMT
+      Referrer-Policy:
+      - same-origin
+      Server:
+      - gunicorn
+      Vary:
+      - Accept, Cookie, Origin
+      X-Content-Type-Options:
+      - nosniff
+      X-Hope-Backend-Version:
+      - None
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.32.3
+    method: GET
+    uri: http://dev-hope.unitst.org/api/rest/lookups/country/?limit=50&offset=150
+  response:
+    body:
+      string: "<html>\r\n<head><title>301 Moved Permanently</title></head>\r\n<body>\r\n<center><h1>301
+        Moved Permanently</h1></center>\r\n<hr><center>Microsoft-Azure-Application-Gateway/v2</center>\r\n</body>\r\n</html>\r\n"
+    headers:
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '195'
+      Content-Type:
+      - text/html
+      Date:
+      - Wed, 04 Dec 2024 05:00:16 GMT
+      Location:
+      - https://dev-hope.unitst.org/api/rest/lookups/country/?limit=50&offset=150
+      Server:
+      - Microsoft-Azure-Application-Gateway/v2
+    status:
+      code: 301
+      message: Moved Permanently
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.32.3
+    method: GET
+    uri: https://dev-hope.unitst.org/api/rest/lookups/country/?limit=50&offset=150
+  response:
+    body:
+      string: "{\"count\":250,\"next\":\"http://dev-hope.unitst.org/api/rest/lookups/country/?limit=50&offset=200\",\"previous\":\"http://dev-hope.unitst.org/api/rest/lookups/country/?limit=50&offset=100\",\"results\":[{\"id\":\"e7491517-b328-4a31-b680-f4324ebb8119\",\"name\":\"Myanmar\",\"short_name\":\"Myanmar\",\"iso_code2\":\"MM\",\"iso_code3\":\"MMR\",\"iso_num\":\"0104\",\"valid_from\":\"2021-10-28T09:39:13.035000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:13.035000Z\"},{\"id\":\"df6fb463-29c9-46d8-bdfc-d49cb5644292\",\"name\":\"Namibia\",\"short_name\":\"Namibia\",\"iso_code2\":\"NA\",\"iso_code3\":\"NAM\",\"iso_num\":\"0516\",\"valid_from\":\"2021-10-28T09:39:13.040000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:13.040000Z\"},{\"id\":\"ddbac466-8d8e-48f8-9780-6bf8d5ae2246\",\"name\":\"Nauru\",\"short_name\":\"Nauru\",\"iso_code2\":\"NR\",\"iso_code3\":\"NRU\",\"iso_num\":\"0520\",\"valid_from\":\"2021-10-28T09:39:13.045000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:13.045000Z\"},{\"id\":\"12bb672e-648d-459b-8b7f-e3c8aa6ec758\",\"name\":\"Nepal\",\"short_name\":\"Nepal\",\"iso_code2\":\"NP\",\"iso_code3\":\"NPL\",\"iso_num\":\"0524\",\"valid_from\":\"2021-10-28T09:39:13.052000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:13.052000Z\"},{\"id\":\"018b1863-57bb-4ed0-b3bf-3e2d9c39fe5e\",\"name\":\"Netherlands\",\"short_name\":\"Netherlands\",\"iso_code2\":\"NL\",\"iso_code3\":\"NLD\",\"iso_num\":\"0528\",\"valid_from\":\"2021-10-28T09:39:13.058000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:13.058000Z\"},{\"id\":\"a7ad5c3b-39b9-46d1-bbe8-a378699ccc46\",\"name\":\"New
+        Caledonia\",\"short_name\":\"New Caledonia\",\"iso_code2\":\"NC\",\"iso_code3\":\"NCL\",\"iso_num\":\"0540\",\"valid_from\":\"2021-10-28T09:39:13.065000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:13.065000Z\"},{\"id\":\"b2e33eaa-329e-44b1-8e62-8f823d9dbe90\",\"name\":\"New
+        Zealand\",\"short_name\":\"New Zealand\",\"iso_code2\":\"NZ\",\"iso_code3\":\"NZL\",\"iso_num\":\"0554\",\"valid_from\":\"2021-10-28T09:39:13.070000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:13.070000Z\"},{\"id\":\"f6490021-d100-458b-84d6-77adf3d4f3bd\",\"name\":\"Nicaragua\",\"short_name\":\"Nicaragua\",\"iso_code2\":\"NI\",\"iso_code3\":\"NIC\",\"iso_num\":\"0558\",\"valid_from\":\"2021-10-28T09:39:13.077000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:13.077000Z\"},{\"id\":\"eab05c68-610a-4874-af56-bd1466c70806\",\"name\":\"Niger\",\"short_name\":\"Niger\",\"iso_code2\":\"NE\",\"iso_code3\":\"NER\",\"iso_num\":\"0562\",\"valid_from\":\"2021-10-28T09:39:13.090000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:13.090000Z\"},{\"id\":\"187aae83-1a4c-4e98-bb01-e2b02e2b4400\",\"name\":\"Nigeria\",\"short_name\":\"Nigeria\",\"iso_code2\":\"NG\",\"iso_code3\":\"NGA\",\"iso_num\":\"0566\",\"valid_from\":\"2021-10-28T09:39:13.097000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:13.097000Z\"},{\"id\":\"4fcc6b27-e5dd-4936-a6d6-434ea13ca45e\",\"name\":\"Niue\",\"short_name\":\"Niue\",\"iso_code2\":\"NU\",\"iso_code3\":\"NIU\",\"iso_num\":\"0570\",\"valid_from\":\"2021-10-28T09:39:13.102000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:13.102000Z\"},{\"id\":\"f6434c6c-d84f-4529-8fff-8ac2c342380e\",\"name\":\"Norfolk
+        Island\",\"short_name\":\"Norfolk Island\",\"iso_code2\":\"NF\",\"iso_code3\":\"NFK\",\"iso_num\":\"0574\",\"valid_from\":\"2021-10-28T09:39:13.108000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:13.108000Z\"},{\"id\":\"06acf78d-baa6-465a-8f04-2d475573f3ac\",\"name\":\"Northern
+        Mariana Islands\",\"short_name\":\"Northern Mariana Islands\",\"iso_code2\":\"MP\",\"iso_code3\":\"MNP\",\"iso_num\":\"0580\",\"valid_from\":\"2021-10-28T09:39:13.125000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:13.125000Z\"},{\"id\":\"c05e7acf-12dd-46cb-abb5-1b0e9ec91ee1\",\"name\":\"North
+        Korea\",\"short_name\":\"North Korea\",\"iso_code2\":\"KP\",\"iso_code3\":\"PRK\",\"iso_num\":\"0408\",\"valid_from\":\"2021-10-28T09:39:13.113000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:13.113000Z\"},{\"id\":\"5365b0e0-4f6e-4473-a245-a191ca825aac\",\"name\":\"North
+        Macedonia\",\"short_name\":\"North Macedonia\",\"iso_code2\":\"MK\",\"iso_code3\":\"MKD\",\"iso_num\":\"0807\",\"valid_from\":\"2021-10-28T09:39:13.119000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:13.119000Z\"},{\"id\":\"66c6c3db-8bde-41c3-b920-34ca10e7ece0\",\"name\":\"Norway\",\"short_name\":\"Norway\",\"iso_code2\":\"NO\",\"iso_code3\":\"NOR\",\"iso_num\":\"0578\",\"valid_from\":\"2021-10-28T09:39:13.130000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:13.130000Z\"},{\"id\":\"c3509ed2-47fa-4d42-ae2d-87866cb5fa98\",\"name\":\"Oman\",\"short_name\":\"Oman\",\"iso_code2\":\"OM\",\"iso_code3\":\"OMN\",\"iso_num\":\"0512\",\"valid_from\":\"2021-10-28T09:39:13.136000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:13.136000Z\"},{\"id\":\"0caf1756-91e4-4080-a5e7-8226c4dde853\",\"name\":\"Pakistan\",\"short_name\":\"Pakistan\",\"iso_code2\":\"PK\",\"iso_code3\":\"PAK\",\"iso_num\":\"0586\",\"valid_from\":\"2021-10-28T09:39:13.141000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:13.141000Z\"},{\"id\":\"a6ccd53f-0fd4-401e-8933-b5bdbcbea8a6\",\"name\":\"Palau\",\"short_name\":\"Palau\",\"iso_code2\":\"PW\",\"iso_code3\":\"PLW\",\"iso_num\":\"0585\",\"valid_from\":\"2021-10-28T09:39:13.146000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:13.146000Z\"},{\"id\":\"539ac4b6-09e4-4ab4-b176-d0d7b9af8d90\",\"name\":\"Palestine,
+        State of\",\"short_name\":\"Palestine\",\"iso_code2\":\"PS\",\"iso_code3\":\"PSE\",\"iso_num\":\"0275\",\"valid_from\":\"2021-10-28T09:39:13.151000Z\",\"valid_until\":null,\"updated_at\":\"2022-06-24T09:21:09.546000Z\"},{\"id\":\"f72bad33-1238-4be0-8eb1-e7401c950d62\",\"name\":\"Panama\",\"short_name\":\"Panama\",\"iso_code2\":\"PA\",\"iso_code3\":\"PAN\",\"iso_num\":\"0591\",\"valid_from\":\"2021-10-28T09:39:13.157000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:13.157000Z\"},{\"id\":\"875d2c7c-6e64-4ec9-a910-98d80bd582c6\",\"name\":\"Papua
+        New Guinea\",\"short_name\":\"Papua New Guinea\",\"iso_code2\":\"PG\",\"iso_code3\":\"PNG\",\"iso_num\":\"0598\",\"valid_from\":\"2021-10-28T09:39:13.162000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:13.162000Z\"},{\"id\":\"172e2d0d-2ad5-40ed-a1d2-e373cd87d117\",\"name\":\"Paraguay\",\"short_name\":\"Paraguay\",\"iso_code2\":\"PY\",\"iso_code3\":\"PRY\",\"iso_num\":\"0600\",\"valid_from\":\"2021-10-28T09:39:13.168000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:13.168000Z\"},{\"id\":\"2bb1689f-d1ff-4cc4-adb6-988e64578299\",\"name\":\"Peru\",\"short_name\":\"Peru\",\"iso_code2\":\"PE\",\"iso_code3\":\"PER\",\"iso_num\":\"0604\",\"valid_from\":\"2021-10-28T09:39:13.173000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:13.173000Z\"},{\"id\":\"450443ac-eb9b-4a9e-8c69-1982d5def027\",\"name\":\"Philippines\",\"short_name\":\"Philippines\",\"iso_code2\":\"PH\",\"iso_code3\":\"PHL\",\"iso_num\":\"0608\",\"valid_from\":\"2021-10-28T09:39:13.178000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:13.178000Z\"},{\"id\":\"25fd06cf-0111-4048-b9e9-5074094b4ffc\",\"name\":\"Pitcairn\",\"short_name\":\"Pitcairn\",\"iso_code2\":\"PN\",\"iso_code3\":\"PCN\",\"iso_num\":\"0612\",\"valid_from\":\"2021-10-28T09:39:13.184000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:13.184000Z\"},{\"id\":\"d1eb1574-8146-4c70-a804-caf163d451a6\",\"name\":\"Poland\",\"short_name\":\"Poland\",\"iso_code2\":\"PL\",\"iso_code3\":\"POL\",\"iso_num\":\"0616\",\"valid_from\":\"2021-10-28T09:39:13.189000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:13.189000Z\"},{\"id\":\"456f198a-88ff-4cca-b279-7a8202d9e7ae\",\"name\":\"Portugal\",\"short_name\":\"Portugal\",\"iso_code2\":\"PT\",\"iso_code3\":\"PRT\",\"iso_num\":\"0620\",\"valid_from\":\"2021-10-28T09:39:13.194000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:13.194000Z\"},{\"id\":\"8b9fed85-aafd-4363-9f13-afed4e715b05\",\"name\":\"Puerto
+        Rico\",\"short_name\":\"Puerto Rico\",\"iso_code2\":\"PR\",\"iso_code3\":\"PRI\",\"iso_num\":\"0630\",\"valid_from\":\"2021-10-28T09:39:13.199000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:13.199000Z\"},{\"id\":\"2aa86592-328c-478a-a843-e0fece3fe77e\",\"name\":\"Qatar\",\"short_name\":\"Qatar\",\"iso_code2\":\"QA\",\"iso_code3\":\"QAT\",\"iso_num\":\"0634\",\"valid_from\":\"2021-10-28T09:39:13.213000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:13.213000Z\"},{\"id\":\"d7591077-567b-4088-98a4-714c598ef2f9\",\"name\":\"R\xE9union\",\"short_name\":\"R\xE9union\",\"iso_code2\":\"RE\",\"iso_code3\":\"REU\",\"iso_num\":\"0638\",\"valid_from\":\"2021-10-28T09:39:13.219000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:13.219000Z\"},{\"id\":\"3082e1d6-1eaa-4d88-b55c-7292aa4060bf\",\"name\":\"Romania\",\"short_name\":\"Romania\",\"iso_code2\":\"RO\",\"iso_code3\":\"ROU\",\"iso_num\":\"0642\",\"valid_from\":\"2021-10-28T09:39:13.224000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:13.224000Z\"},{\"id\":\"f660e06a-bd07-4fe9-8f31-4ce48460b7ce\",\"name\":\"Russia\",\"short_name\":\"Russia\",\"iso_code2\":\"RU\",\"iso_code3\":\"RUS\",\"iso_num\":\"0643\",\"valid_from\":\"2021-10-28T09:39:13.229000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:13.229000Z\"},{\"id\":\"9a6f650c-6331-467d-85f6-e8575029a30e\",\"name\":\"Rwanda\",\"short_name\":\"Rwanda\",\"iso_code2\":\"RW\",\"iso_code3\":\"RWA\",\"iso_num\":\"0646\",\"valid_from\":\"2021-10-28T09:39:13.235000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:13.235000Z\"},{\"id\":\"cffc6ba7-3d03-47e1-8fac-f11c910a6dbc\",\"name\":\"Saint
+        Barth\xE9lemy\",\"short_name\":\"Saint Barth\xE9lemy\",\"iso_code2\":\"BL\",\"iso_code3\":\"BLM\",\"iso_num\":\"0652\",\"valid_from\":\"2021-10-28T09:39:13.240000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:13.240000Z\"},{\"id\":\"6f108d73-295e-4bd9-b883-dc21d2941f9f\",\"name\":\"Saint
+        Helena, Ascension and Tristan da Cunha\",\"short_name\":\"Saint Helena, Ascension
+        and Tristan da Cunha\",\"iso_code2\":\"SH\",\"iso_code3\":\"SHN\",\"iso_num\":\"0654\",\"valid_from\":\"2021-10-28T09:39:13.246000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:13.246000Z\"},{\"id\":\"4f5b8b93-b763-4dde-8985-6e59097e07a3\",\"name\":\"Saint
+        Kitts and Nevis\",\"short_name\":\"Saint Kitts and Nevis\",\"iso_code2\":\"KN\",\"iso_code3\":\"KNA\",\"iso_num\":\"0659\",\"valid_from\":\"2021-10-28T09:39:13.251000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:13.251000Z\"},{\"id\":\"788c6fde-a013-4b7c-bff7-ea77fc6abc23\",\"name\":\"Saint
+        Lucia\",\"short_name\":\"Saint Lucia\",\"iso_code2\":\"LC\",\"iso_code3\":\"LCA\",\"iso_num\":\"0662\",\"valid_from\":\"2021-10-28T09:39:13.256000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:13.256000Z\"},{\"id\":\"4c7be048-02c2-49d4-b138-24ba03e1143b\",\"name\":\"Saint
+        Martin (French part)\",\"short_name\":\"Saint Martin (French part)\",\"iso_code2\":\"MF\",\"iso_code3\":\"MAF\",\"iso_num\":\"0663\",\"valid_from\":\"2021-10-28T09:39:13.262000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:13.262000Z\"},{\"id\":\"18509cac-648e-45c6-90a7-1a98734a08e5\",\"name\":\"Saint
+        Pierre and Miquelon\",\"short_name\":\"Saint Pierre and Miquelon\",\"iso_code2\":\"PM\",\"iso_code3\":\"SPM\",\"iso_num\":\"0666\",\"valid_from\":\"2021-10-28T09:39:13.267000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:13.267000Z\"},{\"id\":\"f0be63c9-ffff-4905-901c-88a8b33903a8\",\"name\":\"Saint
+        Vincent and the Grenadines\",\"short_name\":\"Saint Vincent and the Grenadines\",\"iso_code2\":\"VC\",\"iso_code3\":\"VCT\",\"iso_num\":\"0670\",\"valid_from\":\"2021-10-28T09:39:13.272000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:13.272000Z\"},{\"id\":\"80d9c412-9c7b-4bbd-b68e-11960f42d932\",\"name\":\"Samoa\",\"short_name\":\"Samoa\",\"iso_code2\":\"WS\",\"iso_code3\":\"WSM\",\"iso_num\":\"0882\",\"valid_from\":\"2021-10-28T09:39:13.278000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:13.278000Z\"},{\"id\":\"69e8682a-c974-4591-8a7e-36bb0cd7eb47\",\"name\":\"San
+        Marino\",\"short_name\":\"San Marino\",\"iso_code2\":\"SM\",\"iso_code3\":\"SMR\",\"iso_num\":\"0674\",\"valid_from\":\"2021-10-28T09:39:13.285000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:13.285000Z\"},{\"id\":\"775f102f-80fe-4ce6-bb84-010412895c2b\",\"name\":\"Sao
+        Tome and Principe\",\"short_name\":\"Sao Tome and Principe\",\"iso_code2\":\"ST\",\"iso_code3\":\"STP\",\"iso_num\":\"0678\",\"valid_from\":\"2021-10-28T09:39:13.290000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:13.290000Z\"},{\"id\":\"51510650-25c6-4e4f-90de-854a011f35ab\",\"name\":\"Saudi
+        Arabia\",\"short_name\":\"Saudi Arabia\",\"iso_code2\":\"SA\",\"iso_code3\":\"SAU\",\"iso_num\":\"0682\",\"valid_from\":\"2021-10-28T09:39:13.295000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:13.295000Z\"},{\"id\":\"13f402cd-a2c6-46ab-bb0f-5ed451cb762c\",\"name\":\"Senegal\",\"short_name\":\"Senegal\",\"iso_code2\":\"SN\",\"iso_code3\":\"SEN\",\"iso_num\":\"0686\",\"valid_from\":\"2021-10-28T09:39:13.300000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:13.300000Z\"},{\"id\":\"7c402f49-2c0c-43bf-9da6-04855d808cf9\",\"name\":\"Serbia\",\"short_name\":\"Serbia\",\"iso_code2\":\"RS\",\"iso_code3\":\"SRB\",\"iso_num\":\"0688\",\"valid_from\":\"2021-10-28T09:39:13.305000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:13.305000Z\"},{\"id\":\"8eadbb47-bc4c-4949-8e2f-6a3f9693dfef\",\"name\":\"Seychelles\",\"short_name\":\"Seychelles\",\"iso_code2\":\"SC\",\"iso_code3\":\"SYC\",\"iso_num\":\"0690\",\"valid_from\":\"2021-10-28T09:39:13.311000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:13.311000Z\"},{\"id\":\"0705d1c6-a04c-4296-8ca0-6c77833fbe00\",\"name\":\"Sierra
+        Leone\",\"short_name\":\"Sierra Leone\",\"iso_code2\":\"SL\",\"iso_code3\":\"SLE\",\"iso_num\":\"0694\",\"valid_from\":\"2021-10-28T09:39:13.316000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:13.316000Z\"},{\"id\":\"19ecf8f5-9236-4938-b796-6db9db2b68b7\",\"name\":\"Singapore\",\"short_name\":\"Singapore\",\"iso_code2\":\"SG\",\"iso_code3\":\"SGP\",\"iso_num\":\"0702\",\"valid_from\":\"2021-10-28T09:39:13.321000Z\",\"valid_until\":null,\"updated_at\":\"2021-10-28T09:39:13.321000Z\"}]}"
+    headers:
+      Allow:
+      - GET, HEAD, OPTIONS
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '12769'
+      Content-Security-Policy-Report-Only:
+      - 'connect-src sentry.io gov-bam.nr-data.net cdn.jsdelivr.net; media-src ''self'';
+        default-src ''self''; font-src ''self'' data: fonts.gstatic.com maxcdn.bootstrapcdn.com;
+        style-src ''self'' ''unsafe-inline'' ''unsafe-eval'' fonts.googleapis.com
+        cdn.jsdelivr.net cdnjs.cloudflare.com maxcdn.bootstrapcdn.com unpkg.com; frame-ancestors
+        ''none''; script-src ''self'' ''unsafe-inline'' ''unsafe-eval'' js-agent.newrelic.com
+        cdn.jsdelivr.net cdnjs.cloudflare.com unpkg.com; manifest-src ''self''; img-src
+        ''self'' data: cdn.datatables.net map1a.vis.earthdata.nasa.gov map1b.vis.earthdata.nasa.gov
+        map1c.vis.earthdata.nasa.gov'
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 04 Dec 2024 05:00:16 GMT
+      Referrer-Policy:
+      - same-origin
+      Server:
+      - gunicorn
+      Vary:
+      - Accept, Cookie, Origin
+      X-Content-Type-Options:
+      - nosniff
+      X-Hope-Backend-Version:
+      - None
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.32.3
+    method: GET
+    uri: http://dev-hope.unitst.org/api/rest/lookups/country/?limit=50&offset=200
+  response:
+    body:
+      string: "<html>\r\n<head><title>301 Moved Permanently</title></head>\r\n<body>\r\n<center><h1>301
+        Moved Permanently</h1></center>\r\n<hr><center>Microsoft-Azure-Application-Gateway/v2</center>\r\n</body>\r\n</html>\r\n"
+    headers:
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '195'
+      Content-Type:
+      - text/html
+      Date:
+      - Wed, 04 Dec 2024 05:00:17 GMT
+      Location:
+      - https://dev-hope.unitst.org/api/rest/lookups/country/?limit=50&offset=200
+      Server:
+      - Microsoft-Azure-Application-Gateway/v2
+    status:
+      code: 301
+      message: Moved Permanently
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.32.3
+    method: GET
+    uri: https://dev-hope.unitst.org/api/rest/lookups/country/?limit=50&offset=200
+  response:
+    body:
+      string: '{"count":250,"next":null,"previous":"http://dev-hope.unitst.org/api/rest/lookups/country/?limit=50&offset=150","results":[{"id":"bf3d77fb-5ee4-4168-80dc-c5de58495a50","name":"Sint
+        Maarten (Dutch part)","short_name":"Sint Maarten (Dutch part)","iso_code2":"SX","iso_code3":"SXM","iso_num":"0534","valid_from":"2021-10-28T09:39:13.326000Z","valid_until":null,"updated_at":"2021-10-28T09:39:13.326000Z"},{"id":"4c7e3faa-9653-4716-a857-18b2278bedf4","name":"Slovakia","short_name":"Slovakia","iso_code2":"SK","iso_code3":"SVK","iso_num":"0703","valid_from":"2021-10-28T09:39:13.331000Z","valid_until":null,"updated_at":"2021-10-28T09:39:13.331000Z"},{"id":"c6dd3d3f-777f-462d-9931-9964df0f5ac3","name":"Slovenia","short_name":"Slovenia","iso_code2":"SI","iso_code3":"SVN","iso_num":"0705","valid_from":"2021-10-28T09:39:13.336000Z","valid_until":null,"updated_at":"2021-10-28T09:39:13.336000Z"},{"id":"a2427196-b245-4444-aec3-2d04577d8e11","name":"Solomon
+        Islands","short_name":"Solomon Islands","iso_code2":"SB","iso_code3":"SLB","iso_num":"0090","valid_from":"2021-10-28T09:39:13.341000Z","valid_until":null,"updated_at":"2021-10-28T09:39:13.341000Z"},{"id":"68752bf3-19df-400d-9a4b-76cede42baad","name":"Somalia","short_name":"Somalia","iso_code2":"SO","iso_code3":"SOM","iso_num":"0706","valid_from":"2021-10-28T09:39:13.347000Z","valid_until":null,"updated_at":"2021-10-28T09:39:13.347000Z"},{"id":"82000002-a044-4660-952d-831cd77811f9","name":"South
+        Africa","short_name":"South Africa","iso_code2":"ZA","iso_code3":"ZAF","iso_num":"0710","valid_from":"2021-10-28T09:39:13.352000Z","valid_until":null,"updated_at":"2021-10-28T09:39:13.352000Z"},{"id":"19108fc8-003c-45ea-8ec7-79c9ad6f9f0b","name":"South
+        Georgia and the South Sandwich Islands","short_name":"South Georgia and the
+        South Sandwich Islands","iso_code2":"GS","iso_code3":"SGS","iso_num":"0239","valid_from":"2021-10-28T09:39:13.357000Z","valid_until":null,"updated_at":"2021-10-28T09:39:13.357000Z"},{"id":"f3b1cfb8-acdc-43d1-b059-b43248281cb4","name":"South
+        Korea","short_name":"South Korea","iso_code2":"KR","iso_code3":"KOR","iso_num":"0410","valid_from":"2021-10-28T09:39:13.362000Z","valid_until":null,"updated_at":"2021-10-28T09:39:13.362000Z"},{"id":"dd1e57aa-5022-49ce-bae0-dcd69438c4fd","name":"South
+        Sudan","short_name":"South Sudan","iso_code2":"SS","iso_code3":"SSD","iso_num":"0728","valid_from":"2021-10-28T09:39:13.367000Z","valid_until":null,"updated_at":"2021-10-28T09:39:13.367000Z"},{"id":"c76b1089-5614-42a8-be6e-cecc36bc0f7b","name":"Spain","short_name":"Spain","iso_code2":"ES","iso_code3":"ESP","iso_num":"0724","valid_from":"2021-10-28T09:39:13.372000Z","valid_until":null,"updated_at":"2021-10-28T09:39:13.372000Z"},{"id":"f9b0bfaa-cc6b-46eb-a486-0c29ba0ca642","name":"Sri
+        Lanka","short_name":"Sri Lanka","iso_code2":"LK","iso_code3":"LKA","iso_num":"0144","valid_from":"2021-10-28T09:39:13.377000Z","valid_until":null,"updated_at":"2021-10-28T09:39:13.377000Z"},{"id":"6eb0912e-db00-4a03-8ed8-f7022f7a0aba","name":"Sudan","short_name":"Sudan","iso_code2":"SD","iso_code3":"SDN","iso_num":"0729","valid_from":"2021-10-28T09:39:13.383000Z","valid_until":null,"updated_at":"2021-10-28T09:39:13.383000Z"},{"id":"8d847566-b8ea-4602-86e1-1946ffc78c34","name":"Suriname","short_name":"Suriname","iso_code2":"SR","iso_code3":"SUR","iso_num":"0740","valid_from":"2021-10-28T09:39:13.388000Z","valid_until":null,"updated_at":"2021-10-28T09:39:13.388000Z"},{"id":"52743518-f94e-44b8-966e-99cc6f87a597","name":"Svalbard
+        and Jan Mayen","short_name":"Svalbard and Jan Mayen","iso_code2":"SJ","iso_code3":"SJM","iso_num":"0744","valid_from":"2021-10-28T09:39:13.394000Z","valid_until":null,"updated_at":"2021-10-28T09:39:13.394000Z"},{"id":"e0dd664d-f18a-4058-afb3-12fedc3680cb","name":"Sweden","short_name":"Sweden","iso_code2":"SE","iso_code3":"SWE","iso_num":"0752","valid_from":"2021-10-28T09:39:13.399000Z","valid_until":null,"updated_at":"2021-10-28T09:39:13.399000Z"},{"id":"95645090-cdc6-486e-9736-11092e1a13da","name":"Switzerland","short_name":"Switzerland","iso_code2":"CH","iso_code3":"CHE","iso_num":"0756","valid_from":"2021-10-28T09:39:13.404000Z","valid_until":null,"updated_at":"2021-10-28T09:39:13.404000Z"},{"id":"e4a74179-116a-4a2b-b440-6fa7ba0104bc","name":"Syria","short_name":"Syria","iso_code2":"SY","iso_code3":"SYR","iso_num":"0760","valid_from":"2021-10-28T09:39:13.409000Z","valid_until":null,"updated_at":"2021-10-28T09:39:13.409000Z"},{"id":"7f405783-0704-4d4f-ac46-d6d8f33bda66","name":"Taiwan","short_name":"Taiwan","iso_code2":"TW","iso_code3":"TWN","iso_num":"0158","valid_from":"2021-10-28T09:39:13.413000Z","valid_until":null,"updated_at":"2021-10-28T09:39:13.413000Z"},{"id":"8aa9d49e-a25f-4c10-892c-fe3f090ae31c","name":"Tajikistan","short_name":"Tajikistan","iso_code2":"TJ","iso_code3":"TJK","iso_num":"0762","valid_from":"2021-10-28T09:39:13.418000Z","valid_until":null,"updated_at":"2021-10-28T09:39:13.418000Z"},{"id":"45c5108c-7716-40e2-8580-1dbaacf28ca4","name":"Tanzania","short_name":"Tanzania","iso_code2":"TZ","iso_code3":"TZA","iso_num":"0834","valid_from":"2021-10-28T09:39:13.423000Z","valid_until":null,"updated_at":"2021-10-28T09:39:13.423000Z"},{"id":"d5d71374-1195-40e0-a450-777a237cf56b","name":"Thailand","short_name":"Thailand","iso_code2":"TH","iso_code3":"THA","iso_num":"0764","valid_from":"2021-10-28T09:39:13.429000Z","valid_until":null,"updated_at":"2021-10-28T09:39:13.428000Z"},{"id":"268aa059-e80d-4c36-ac6d-d2103effb63a","name":"Timor-Leste","short_name":"Timor
+        Leste","iso_code2":"TL","iso_code3":"TLS","iso_num":"0626","valid_from":"2021-10-28T09:39:13.434000Z","valid_until":null,"updated_at":"2022-06-24T09:21:09.543000Z"},{"id":"06c69f3e-7e34-49a7-9867-11a147a8cd2d","name":"Togo","short_name":"Togo","iso_code2":"TG","iso_code3":"TGO","iso_num":"0768","valid_from":"2021-10-28T09:39:13.439000Z","valid_until":null,"updated_at":"2021-10-28T09:39:13.439000Z"},{"id":"3adc2956-d0b4-46c3-aa2b-74dc2d711d3a","name":"Tokelau","short_name":"Tokelau","iso_code2":"TK","iso_code3":"TKL","iso_num":"0772","valid_from":"2021-10-28T09:39:13.445000Z","valid_until":null,"updated_at":"2021-10-28T09:39:13.445000Z"},{"id":"6d18ea8f-3eb5-4380-b8d3-fc989a5a5ab9","name":"Tonga","short_name":"Tonga","iso_code2":"TO","iso_code3":"TON","iso_num":"0776","valid_from":"2021-10-28T09:39:13.450000Z","valid_until":null,"updated_at":"2021-10-28T09:39:13.450000Z"},{"id":"0bbcd4bf-c75d-43ec-bd84-32ec352d8f94","name":"Trinidad
+        and Tobago","short_name":"Trinidad and Tobago","iso_code2":"TT","iso_code3":"TTO","iso_num":"0780","valid_from":"2021-10-28T09:39:13.455000Z","valid_until":null,"updated_at":"2021-10-28T09:39:13.455000Z"},{"id":"9d77a65e-1c73-410b-b4d8-c3d7ba98bffb","name":"Tunisia","short_name":"Tunisia","iso_code2":"TN","iso_code3":"TUN","iso_num":"0788","valid_from":"2021-10-28T09:39:13.460000Z","valid_until":null,"updated_at":"2021-10-28T09:39:13.460000Z"},{"id":"93967758-ee84-4f55-90ba-a5629db57337","name":"Turkey","short_name":"Turkey","iso_code2":"TR","iso_code3":"TUR","iso_num":"0792","valid_from":"2021-10-28T09:39:13.465000Z","valid_until":null,"updated_at":"2021-10-28T09:39:13.465000Z"},{"id":"40357a91-48ad-4c9f-964a-88a40501bef3","name":"Turkmenistan","short_name":"Turkmenistan","iso_code2":"TM","iso_code3":"TKM","iso_num":"0795","valid_from":"2021-10-28T09:39:13.470000Z","valid_until":null,"updated_at":"2021-10-28T09:39:13.470000Z"},{"id":"17a782ea-0597-44da-a862-1038bba468e7","name":"Turks
+        and Caicos Islands","short_name":"Turks and Caicos Islands","iso_code2":"TC","iso_code3":"TCA","iso_num":"0796","valid_from":"2021-10-28T09:39:13.475000Z","valid_until":null,"updated_at":"2021-10-28T09:39:13.475000Z"},{"id":"84d46073-f56a-4ad9-88a3-d891fa604bb9","name":"Tuvalu","short_name":"Tuvalu","iso_code2":"TV","iso_code3":"TUV","iso_num":"0798","valid_from":"2021-10-28T09:39:13.480000Z","valid_until":null,"updated_at":"2021-10-28T09:39:13.480000Z"},{"id":"30537997-ccd5-4f8a-b291-2bcff81df73a","name":"Uganda","short_name":"Uganda","iso_code2":"UG","iso_code3":"UGA","iso_num":"0800","valid_from":"2021-10-28T09:39:13.486000Z","valid_until":null,"updated_at":"2021-10-28T09:39:13.486000Z"},{"id":"fea412b2-a617-4c23-b773-d0001f36a932","name":"Ukraine","short_name":"Ukraine","iso_code2":"UA","iso_code3":"UKR","iso_num":"0804","valid_from":"2021-10-28T09:39:13.492000Z","valid_until":null,"updated_at":"2021-10-28T09:39:13.492000Z"},{"id":"9099b6c7-eb2d-41b0-99dc-a544488ec557","name":"United
+        Arab Emirates","short_name":"United Arab Emirates","iso_code2":"AE","iso_code3":"ARE","iso_num":"0784","valid_from":"2021-10-28T09:39:13.497000Z","valid_until":null,"updated_at":"2021-10-28T09:39:13.497000Z"},{"id":"91727f11-0ca9-4c0b-94b2-b9172a0511d4","name":"United
+        Kingdom","short_name":"United Kingdom","iso_code2":"GB","iso_code3":"GBR","iso_num":"0826","valid_from":"2021-10-28T09:39:13.502000Z","valid_until":null,"updated_at":"2021-10-28T09:39:13.502000Z"},{"id":"7d53681c-66e7-4fc1-8a3f-2ee624d6f6d0","name":"United
+        States Minor Outlying Islands","short_name":"United States Minor Outlying
+        Islands","iso_code2":"UM","iso_code3":"UMI","iso_num":"0581","valid_from":"2021-10-28T09:39:13.507000Z","valid_until":null,"updated_at":"2021-10-28T09:39:13.507000Z"},{"id":"24532b94-0d92-4c26-9db0-b86c7d39985a","name":"United
+        States of America","short_name":"United States of America","iso_code2":"US","iso_code3":"USA","iso_num":"0840","valid_from":"2021-10-28T09:39:13.514000Z","valid_until":null,"updated_at":"2021-10-28T09:39:13.514000Z"},{"id":"ada41885-bb17-4ac6-bc94-b52d6e66aa06","name":"Unknown
+        or Not Applicable","short_name":"Unknown or Not Applicable","iso_code2":"U","iso_code3":"U","iso_num":"None","valid_from":"2021-10-28T09:39:13.519000Z","valid_until":null,"updated_at":"2021-10-28T09:39:13.519000Z"},{"id":"2da36641-a5a3-4093-aa5e-be402d032926","name":"Uruguay","short_name":"Uruguay","iso_code2":"UY","iso_code3":"URY","iso_num":"0858","valid_from":"2021-10-28T09:39:13.524000Z","valid_until":null,"updated_at":"2021-10-28T09:39:13.524000Z"},{"id":"e3ea0210-b4e5-4c65-bfb8-dfa3d34264d4","name":"Uzbekistan","short_name":"Republic
+        of Uzbekistan","iso_code2":"UZ","iso_code3":"UZB","iso_num":"0860","valid_from":"2021-10-28T09:39:13.529000Z","valid_until":null,"updated_at":"2022-06-24T09:21:09.533000Z"},{"id":"c1de8e39-8637-45bb-b5c9-ae235e51be23","name":"Vanuatu","short_name":"Vanuatu","iso_code2":"VU","iso_code3":"VUT","iso_num":"0548","valid_from":"2021-10-28T09:39:13.534000Z","valid_until":null,"updated_at":"2021-10-28T09:39:13.534000Z"},{"id":"f6f2c836-d153-4f0a-ad4e-6456e8cc12a4","name":"Venezuela","short_name":"Venezuela","iso_code2":"VE","iso_code3":"VEN","iso_num":"0862","valid_from":"2021-10-28T09:39:13.539000Z","valid_until":null,"updated_at":"2021-10-28T09:39:13.539000Z"},{"id":"420c27a0-0145-494e-918c-893d3277f5ea","name":"Vietnam","short_name":"Vietnam","iso_code2":"VN","iso_code3":"VNM","iso_num":"0704","valid_from":"2021-10-28T09:39:13.544000Z","valid_until":null,"updated_at":"2021-10-28T09:39:13.544000Z"},{"id":"528e730e-cad7-4763-93ae-0770a66031b7","name":"Virgin
+        Islands (British)","short_name":"Virgin Islands (British)","iso_code2":"VG","iso_code3":"VGB","iso_num":"0092","valid_from":"2021-10-28T09:39:13.548000Z","valid_until":null,"updated_at":"2021-10-28T09:39:13.548000Z"},{"id":"cae01ce4-b67f-4ffc-90f5-8ecf77c6adf7","name":"Virgin
+        Islands (U.S.)","short_name":"Virgin Islands (U.S.)","iso_code2":"VI","iso_code3":"VIR","iso_num":"0850","valid_from":"2021-10-28T09:39:13.553000Z","valid_until":null,"updated_at":"2021-10-28T09:39:13.553000Z"},{"id":"9e3f2f5b-6e60-4c47-89a0-2a37132ddd79","name":"Wallis
+        and Futuna","short_name":"Wallis and Futuna","iso_code2":"WF","iso_code3":"WLF","iso_num":"0876","valid_from":"2021-10-28T09:39:13.559000Z","valid_until":null,"updated_at":"2021-10-28T09:39:13.559000Z"},{"id":"b66536ef-8f37-42a7-b5e6-f09dafe38206","name":"Western
+        Sahara","short_name":"Western Sahara","iso_code2":"EH","iso_code3":"ESH","iso_num":"0732","valid_from":"2021-10-28T09:39:13.565000Z","valid_until":null,"updated_at":"2021-10-28T09:39:13.565000Z"},{"id":"7e88ad60-a97a-44ab-9807-d6f361b6dd0b","name":"Yemen","short_name":"Yemen","iso_code2":"YE","iso_code3":"YEM","iso_num":"0887","valid_from":"2021-10-28T09:39:13.570000Z","valid_until":null,"updated_at":"2021-10-28T09:39:13.570000Z"},{"id":"a98e47a1-a8da-496e-a6f9-f8cb7aeee40e","name":"Zambia","short_name":"Zambia","iso_code2":"ZM","iso_code3":"ZMB","iso_num":"0894","valid_from":"2021-10-28T09:39:13.575000Z","valid_until":null,"updated_at":"2021-10-28T09:39:13.575000Z"},{"id":"03919bf6-0794-4989-82b0-415a34895080","name":"Zimbabwe","short_name":"Zimbabwe","iso_code2":"ZW","iso_code3":"ZWE","iso_num":"0716","valid_from":"2021-10-28T09:39:13.580000Z","valid_until":null,"updated_at":"2021-10-28T09:39:13.580000Z"}]}'
+    headers:
+      Allow:
+      - GET, HEAD, OPTIONS
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '12806'
+      Content-Security-Policy-Report-Only:
+      - 'manifest-src ''self''; frame-ancestors ''none''; img-src ''self'' data: cdn.datatables.net
+        map1a.vis.earthdata.nasa.gov map1b.vis.earthdata.nasa.gov map1c.vis.earthdata.nasa.gov;
+        style-src ''self'' ''unsafe-inline'' ''unsafe-eval'' fonts.googleapis.com
+        cdn.jsdelivr.net cdnjs.cloudflare.com maxcdn.bootstrapcdn.com unpkg.com; font-src
+        ''self'' data: fonts.gstatic.com maxcdn.bootstrapcdn.com; default-src ''self'';
+        media-src ''self''; script-src ''self'' ''unsafe-inline'' ''unsafe-eval''
+        js-agent.newrelic.com cdn.jsdelivr.net cdnjs.cloudflare.com unpkg.com; connect-src
+        sentry.io gov-bam.nr-data.net cdn.jsdelivr.net'
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 04 Dec 2024 05:00:17 GMT
+      Referrer-Policy:
+      - same-origin
+      Server:
+      - gunicorn
+      Vary:
+      - Accept, Cookie, Origin
+      X-Content-Type-Options:
+      - nosniff
+      X-Hope-Backend-Version:
+      - None
+    status:
+      code: 200
+      message: OK
+version: 1

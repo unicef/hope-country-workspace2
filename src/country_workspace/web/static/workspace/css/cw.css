@@ -1,0 +1,188 @@
+html[data-theme],
+:root {
+  --header-bg: #37B0F8FF;
+  --accent: white;
+  --header-color: #e8e8e8;
+  --unicef-blue: #37B0F8FF;
+}
+
+html[data-tenant=yes][data-theme],
+:root {
+  --primary: #0f2f3b;
+  --header-bg: #1E3A8AFF;
+  --breadcrumbs-bg: #0f2f3b;
+  --link-fg: #37b0f8;
+  --accent: #f5dd5d;
+  --header-color: #ffc ;
+}
+
+html, body {
+  min-height: 100vh;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+body.tenant {
+  --primary: rgb(30, 58, 138);
+  --link-fg: rgb(30, 58, 138);
+}
+body.tenant #header {
+  background-color: rgb(30, 58, 138);
+}
+body.tenant nav .breadcrumbs {
+  background-color: rgb(31, 41, 55);
+}
+body.tenant .module caption, body.tenant .module h2 {
+  background-color: rgb(30, 58, 138);
+}
+body.tenant .theme-toggle svg.theme-icon-when-auto, body.tenant .theme-toggle svg.theme-icon-when-dark, body.tenant .theme-toggle svg.theme-icon-when-light {
+  color: rgb(30, 58, 138);
+}
+
+#celery-status {
+  padding: 10px 40px;
+  background-color: #1f2937;
+}
+#celery-status.STARTED {
+  background-color: #37b0f8;
+}
+#celery-status.FAILURE {
+  background-color: rgba(255, 37, 37, 0.65);
+}
+#celery-status.INTERRUPTED {
+  background-color: rgb(255, 196, 0);
+  color: black;
+}
+#celery-status.SUCCESS {
+  background-color: rgba(0, 255, 13, 0.57);
+}
+#celery-status .popup {
+  position: absolute;
+  z-index: 200;
+  right: 20px;
+  background-color: var(--body-bg);
+  margin-top: 20px;
+  width: 200px;
+  padding: 2px;
+  display: block;
+  float: right;
+  border: 1px solid var(--primary);
+  border-radius: 10px;
+}
+#celery-status .popup.hidden {
+  display: none;
+}
+#celery-status .popup .p-2 {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+#celery-status .popup .center {
+  text-align: center;
+}
+#celery-status .popup table {
+  width: 90%;
+  margin: 5px;
+}
+#celery-status .popup table th {
+  text-align: center;
+}
+
+#id_code_container {
+  width: 100%;
+}
+#id_code_container .CodeMirror {
+  width: 100%;
+}
+
+.w-screen {
+  width: 100%;
+}
+
+.container {
+  height: 300px;
+  width: 100%;
+  position: relative;
+}
+
+.center-h {
+  position: absolute;
+  left: 50%;
+}
+
+.center-v {
+  position: relative;
+  top: 50%;
+}
+
+.center-screen {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+
+a.button {
+  padding: 10px 15px;
+}
+
+.h10 {
+  height: 3em;
+  line-height: 3em;
+}
+
+.object-tools a.superuser-only {
+  background-color: var(--delete-button-bg);
+}
+
+.center {
+  margin: auto;
+  padding: 10px;
+}
+
+.center-y {
+  vertical-align: middle;
+}
+
+.center-x {
+  margin-right: auto;
+  margin-left: auto;
+  padding: 10px;
+  text-align: center;
+}
+
+.colMX {
+  margin-right: 400px;
+}
+
+.boxed {
+  border: 1px solid rgb(30, 58, 138);
+}
+
+#footer {
+  position: sticky;
+  top: 95vh;
+  text-align: right;
+  margin-right: 10px;
+  bottom: 20px;
+}
+
+.submit-row a, .submit-row input {
+  background-color: rgb(30, 58, 138);
+}
+
+div.tenant {
+  width: 300px;
+  padding: 30px;
+  position: relative;
+  top: 50px;
+  height: 100px;
+}
+div.tenant select {
+  width: 100%;
+}
+div.tenant .submit-row {
+  margin-top: 15px;
+  text-align: center;
+}
+
+/*# sourceMappingURL=cw.css.map */

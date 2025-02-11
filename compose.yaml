@@ -1,0 +1,101 @@
+x-env: &env
+  environment:
+    - DEBUG=true
+    - ADMIN_EMAIL=adm@hcw.org
+    - ADMIN_PASSWORD=123
+    - ALLOWED_HOSTS=localhost
+    - CSRF_COOKIE_SECURE=False
+    - CSRF_TRUSTED_ORIGINS=http://localhost
+    - AUTHENTICATION_BACKENDS=country_workspace.security.backends.AnyUserAuthBackend
+    - HOPE_API_TOKEN=${HOPE_API_TOKEN}
+    - CACHE_URL=redis://redis:6379/1
+    - CELERY_BROKER_URL=redis://redis:6379/9
+    - CELERY_TASK_ALWAYS_EAGER=False
+    - DATABASE_URL=postgres://hcw:password@db:5432/country_workspace
+    - MEDIA_ROOT=/var/country_workspace/media
+    - SECRET_KEY=sensitive-secret-key
+    - STATIC_ROOT=/var/country_workspace/static
+
+x-common: &common
+  build:
+    context: .
+    dockerfile: docker/Dockerfile
+    target: dist
+  platform: linux/amd64
+
+  #  volumes:
+  #    - ./src/:/app/src/
+  #    - ./tests/:/app/tests/
+  #    - ./pyproject.toml:/app/pyproject.toml
+  #    - ./uv.lock:/app/uv.lock
+  #    - /var/run/docker.sock:/var/run/docker.sock
+  restart: always
+  depends_on:
+    db:
+      condition: service_healthy
+    redis:
+      condition: service_healthy
+
+services:
+  backend:
+    <<:  [*common, *env]
+    ports:
+      - 8000:8000
+    command: run
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8000/healthcheck" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  celery_worker:
+    <<:  [*common, *env]
+    # entrypoint: ["sh", "-c", "exec docker-entrypoint.sh \"$0\" \"$@\""]
+    command: worker
+
+  celery-beat:
+    <<:  [*common, *env]
+    command: beat
+
+  flower:
+    <<:  [*common, *env]
+    command: flower
+    environment:
+      - DEBUG=true
+      - DATABASE_URL="sqlite://:memory:"
+
+  db:
+    image: postgres:14
+    environment:
+      - POSTGRES_USER=hcw
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=country_workspace
+    volumes:
+      - postgres_data14:/var/lib/postgresql14/data/
+    #    ports:
+    #      - 5432:5432
+    restart: always
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-U", "hcw", "-d", "country_workspace" ]
+      start_period: 5s
+      start_interval: 1s
+      interval: 5s
+      timeout: 4s
+      retries: 5
+
+  redis:
+    image: redis:7.2
+    #    ports:
+    #      - 6379:6379
+    restart: always
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+      start_period: 5s
+      start_interval: 1s
+      interval: 5s
+      timeout: 4s
+      retries: 5
+
+
+volumes:
+  postgres_data14:

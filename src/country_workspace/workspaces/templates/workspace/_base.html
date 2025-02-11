@@ -1,0 +1,96 @@
+{% extends "workspace/layout.html" %}{% load feature_flags i18n workspace_urls %}
+{% block header %}
+    {{ program_form.media.css }}
+    <div class="pr-10 flex-grow align-middle pt-3">
+        <form id="select-tenant" method="post" action="{% url "workspace:select_tenant" %}">
+            {% csrf_token %}
+            <span class="flex align-middle">{{ tenant_form.tenant }}{% admin_url active_tenant %}</span>
+        </form>
+    </div>
+    {% if active_tenant %}
+        <div class="pr-10 flex-grow align-middle pt-3">
+            <form id="select-program" method="post" action="{% url "workspace:select_program" %}">
+                {% csrf_token %}
+                <span class="flex align-middle">{{ program_form.program }}{% admin_url active_program %}</span>
+            </form>
+            {{ program_form.media.js }}
+        </div>
+    {% endif %}
+{% endblock header %}
+
+{% block menu %}
+    <ul class="menu p-0 w-full h-5/6 mt-10">
+        <li class="flex h-12">
+            <a class="flex w-full px-4" href="{% url "workspace:index" %}">
+                <span class="flex text-2xl pt-2 pr-4 icon icon-home"></span>
+                <div class="flex-grow pt-3 display-open">{% translate "Home" %}</div>
+            </a>
+        </li>
+        {% if active_program %}
+            <li>
+                <a class="flex w-full px-4" href="{% url "workspace:workspaces_countryhousehold_changelist" %}">
+                    <span class="flex text-2xl pt-2 pr-4 icon icon-members"></span>
+                    <div class="flex-grow pt-3 display-open">{% translate "Households" %}</div>
+                </a>
+            </li>
+            <li class="pl-5">
+                <a class="flex w-full px-4" href="{% url "workspace:workspaces_countryindividual_changelist" %}">
+                    <span class="flex text-2xl pt-2 pr-4 icon icon-user"></span>
+                    <div class="flex-grow pt-3 display-open">{% translate "Individuals" %}</div>
+                </a>
+            </li>
+            <li class="flex">
+                <a class="flex w-full px-4"
+                   href="{% url "workspace:workspaces_countryprogram_change" active_program.pk %}">
+                    <span class="flex text-2xl pt-2 pr-4 icon icon-equalizer"></span>
+                    <div class="flex-grow pt-3 display-open">{% translate "Program" %}</div>
+                </a>
+            </li>
+            <li class="flex">
+                <a class="flex w-full px-4" href="{% url "workspace:workspaces_countrybatch_changelist" %}">
+                    <span class="flex text-2xl pt-2 pr-4 icon icon-sign"></span>
+                    <div class="flex-grow pt-3 display-open">{% translate "Batch" %}</div>
+                </a>
+            </li>
+            <li class="flex">
+                <a class="flex w-full px-4" href="{% url "workspace:workspaces_countryasyncjob_changelist" %}">
+                    <span class="flex text-2xl pt-2 pr-4 icon icon-globe"></span>
+                    <div class="flex-grow pt-3 display-open">{% translate "Jobs" %}</div>
+                </a>
+            </li>
+        {% endif %}
+
+        <li class="flex">
+            <form method="post" action="{% url "admin:logout" %}">
+                {% csrf_token %}
+                <span class="flex w-full px-4">
+                <span class="flex text-2xl pt-2 pr-4 icon icon-logout"></span>
+                    <button class="display-open" type="submit">logout</button>
+                </span>
+            </form>
+        </li>
+    </ul>
+    <ul class="menu d-block block">
+        {% if user.is_staff %}
+            <li class="flex">
+                <a class="flex w-full px-4" target="_admin" href="{% url "admin:index" %}">
+                    <span class="flex text-2xl pt-2 pr-4 icon icon-shield1"></span>
+                    <div class="flex-grow  pt-3 display-open">{% translate "Admin" %}</div>
+                </a>
+            </li>
+        {% endif %}
+{# <li class="flex items-center border-t-black display-open"> #}
+{# <div class="m-auto text-gray-400 "> #}
+{# <span>HOPE Workspace</span> #}
+{# <span>{{ app.version }}</span> #}
+{# <span>{{ app.release_date }}</span> #}
+{# </div> #}
+{# </li> #}
+    </ul>
+{% endblock menu %}
+
+{% block page-top %}
+        <div class="title-top">
+            <h2>{% block page-title %}{{ title|default_if_none:"" }}{% endblock %}</h2>
+        </div>
+{% endblock page-top %}

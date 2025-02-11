@@ -1,0 +1,25 @@
+#tabs {
+  @apply mb-4 border-b border-gray-200 dark:border-gray-700 flex;
+  ul {
+    @apply flex flex-wrap -mb-px text-sm font-medium text-center;
+    li {
+      button {
+        @apply inline-block p-4 border-b-2 rounded-t-lg hover:text-unicef-blue hover:border-unicef-dark dark:hover:text-gray-300;
+        &.selected {
+          @apply border-unicef-dark;
+        }
+      }
+    }
+  }
+}
+
+#tab-content {
+  @apply mb-4 border-b border-gray-200 dark:border-gray-700 block min-w-full;
+
+  div {
+    @apply p-4 rounded-lg bg-gray-50 dark:bg-gray-800 block min-w-full;
+    &.hidden {
+      display: none;
+    }
+  }
+}

@@ -1,0 +1,40 @@
+{% extends 'workspace/_base.html' %}{% load admin_list admin_urls i18n static %}
+{% block breadcrumbs %}
+    {# <div class="breadcrumbs"> #}
+    {# <a href="{% url 'admin:index' %}">{% trans 'Home' %}</a> #}
+    {# &rsaquo; #}
+    {# <a href="{% url 'admin:app_list' app_label=opts.app_label %}">{{ opts.app_label|capfirst|escape }}</a> #}
+    {# &rsaquo; #}
+    {# {% trans 'Confirmation' as confirmation %} #}
+    {# {{ title|default_if_none:confirmation }} #}
+    {# </div> #}
+{% endblock breadcrumbs %}
+
+{% block content %}
+    <div id="content">
+        <div id="content-main">
+            <div class="block">
+                <h1 class="text-2xl">{% translate 'Warning' %}</h1>
+                <div class="block p-5">
+                    <h2>{{ message }}</h2>
+                    {% if description %}
+                        <br>
+                        <div><h3>{{ description }}</h3></div>
+                        <hr>
+                    {% endif %}
+                    <div class="mt-10">
+                        <form method="post">
+                            {% csrf_token %}
+                            <input type="submit" class="button" value="Confirm">
+                            <input type="button" class="button closelink"
+                                   onclick="javascript:history.back()"
+                                   value="Go Back">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+{% endblock content %}

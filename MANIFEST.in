@@ -1,0 +1,33 @@
+exclude *
+exclude requirements.txt
+exclude src/country_workspace/workspaces/theme/static_src
+exclude __pycache__
+exclude node_modules
+
+include README.md
+include MANIFEST.in
+include AUTHORS
+include CHANGES.md
+include LICENSE.md
+include pyproject.toml
+include *.py
+include uv.lock
+
+
+recursive-include src/country_workspace *
+recursive-include src/country_workspace *.html
+
+recursive-exclude src/**/node_modules *.*
+
+prune **/~*
+prune src/**/node_modules
+prune tests
+prune src/**/__pycache__
+prune src/**/theme/static_src
+
+global-exclude .*
+global-exclude .pyi
+global-exclude *.scss
+global-exclude *~
+global-exclude ~*
+exclude manage.py
