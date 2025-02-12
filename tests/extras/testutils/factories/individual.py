@@ -35,7 +35,7 @@ def get_ind_fields(individual: "CountryIndividual"):
 
 class IndividualFactory(AutoRegisterModelFactory):
     household = factory.SubFactory(HouseholdFactory)
-    name = factory.LazyAttribute(lambda o: "%s %s" % (fake.first_name(), o.household.name))
+    name = factory.LazyAttributeSequence(lambda o, n: f"{fake.first_name()} {o.household.name} {n}")
     flex_fields = factory.LazyAttribute(get_ind_fields)
 
     class Meta:
